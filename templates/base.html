@@ -2,7 +2,8 @@
 <meta charset="utf-8">
 
 <link rel="stylesheet" href="/static/css/normalize.css" />
-<link rel="stylesheet" href="/static/css/hq.css" />
+<link rel="stylesheet" href="/static/css/style.css" />
+
 
 
 <title>{% block title %}{% endblock %}</title>
@@ -10,6 +11,15 @@
 <head>
     <h1>Rodolphe Janssen</h1>
 </head>
+<nav class="main">
+	<ul class="nav">
+		<li><a href="">current</a></li>
+		<li><a href="">upcoming</a></li>
+		<li><a href="">past</a></li>
+		<li><a href="/artists/">artists</a></li>
+		<li><a href="">about</a></li>
+	</ul>
+</nav>
 <section>
     {% block body %}{% endblock %}
 </section>
