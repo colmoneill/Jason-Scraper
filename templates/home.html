@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Foo Bar{% endblock %}
+{% block body %}
+{% for artwork in artworks %}
+<h2>{{ artwork.id }} {{ artwork.title }}, {{ artwork.artist }}</h2>
+
+<figure>
+    <img src="{{ artwork.img_url }}"/>
+</figure>
+
+{% endfor %}
+{% endblock %}
