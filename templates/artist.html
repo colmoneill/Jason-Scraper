@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}{{ artist.artist }}{% endblock %}
+{% block body %}
+<h2><a href="/artists/{{ artist.slug }}/">{{ artist.artist }}</a></h2>
+
+{% endblock %}

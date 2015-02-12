@@ -11,6 +11,7 @@ from datetime import datetime
 import pymongo
 import pytz
 
+from utils import slugify
 # from utils import logger
 
 client = pymongo.MongoClient()
@@ -20,6 +21,7 @@ def fetch_artworks():
     # logger.debug("downloading artwork data from Artlogic")
     
     artworks = []
+    artists = []
     url = "http://feeds.artlogic.net/artworks/artlogiconline/json/"
     
     while True:
@@ -52,9 +54,17 @@ def fetch_artworks():
             del artwork['artworks.description2']
         # upsert int the database:
         db.artworks.update({"id": artwork['id']}, artwork, upsert=True)
+        
+        
+        # artwork['artist_id'] is not functioning properly
+        db.artists.update({"artist": artwork['artist']},
+                          {"artist_sort": artwork['artist_sort'],
+                           "artist":  artwork['artist'],
+                           "slug": slugify(artwork['artist'])},
+                          upsert=True)
     
     # db.meta.update({"subject": "artworks"}, {"updated": datetime.now(pytz.utc), "subject": "artworks"}, upsert=True)
-    return True
+    return artworks
 
 if __name__ == "__main__":
     fetch_artworks()

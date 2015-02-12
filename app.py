@@ -21,5 +21,15 @@ def home():
     artworks = db.artworks.find().sort("id", -1)[:10]
     return render_template("home.html", artworks=artworks)
 
+@app.route("/artists/")
+def artists():
+    artists = db.artists.find().sort("artist_sort", 1)
+    return render_template("artists.html", artists=artists)
+
+@app.route("/artists/<slug>/")
+def artist(slug):
+    artist = db.artists.find_one({ "slug": slug})
+    return render_template("artist.html", artist=artist)
+
 if __name__ == '__main__':
     app.run(debug=True)
