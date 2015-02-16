@@ -5,7 +5,7 @@ import os
 from datetime import datetime
 
 # Dependencies: Flask + PIL or Pillow
-from flask import Flask, send_from_directory, redirect as redirect_flask, render_template
+from flask import *
 import pymongo
 
 # Local imports
@@ -17,7 +17,7 @@ client = pymongo.MongoClient()
 db = client.artlogic
 
 @app.route('/', methods=['GET', 'POST'])
-def exhibition():
+def enterexhibition():
     exhibition = None
     new = False
     if request.method == 'POST' and 'exhibition' in request.form:
