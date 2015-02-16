@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>exhibition names</title>
+  </head>
+  <body>
+    <form method="POST" action="">
+      Name of new exhibition <input type="text" name="exhibition">
+      <input type="submit" name="submit" value="Submit">
+    </form>
+    {% if exhibition %}
+      <h1>ok you added {{exhibition}}!</h1>
+      {% if new %}
+        <p>First time logging this exhibition</p>
+      {% else %}
+        <p>You've added this name already</p>
+      {% endif %}
+    {% endif %}
+  </body>
+</html>
