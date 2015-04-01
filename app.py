@@ -29,7 +29,8 @@ def artists():
 @app.route("/artists/<slug>/")
 def artist(slug):
     artist = db.artists.find_one({ "slug": slug})
-    return render_template("artist.html", artist=artist)
+    artworks = db.artworks.find({"artist": artist["artist"]}).sort("id", -1)[:10]
+    return render_template("artist.html", artist=artist, artworks=artworks)
 
 # route for handling the login page logic
 @app.route('/login', methods=['GET', 'POST'])
