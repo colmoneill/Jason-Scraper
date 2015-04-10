@@ -33,6 +33,21 @@ def artist(slug):
     artworks = db.artworks.find({"artist": artist["artist"]}).sort("id", -1)[:10]
     return render_template("artist.html", artist=artist, artworks=artworks)
 
+@app.route('/exhibition', methods=['GET', 'POST'])
+def enterexhibition():
+    allexhibition = db.exhibition.find()
+    artists = db.artists.find().sort("artist_sort", 1)
+    exhibition = None
+    new = False
+    if request.method == 'POST' and 'exhibition' in request.form:
+        exhibition = request.form['exhibition']
+        if db.exhibition.find_one({'exhibition': exhibition}) is None:
+            # this is a new exhibition, add it to the database
+            db.exhibition.insert({'exhibition': exhibition})
+            new = True
+    return render_template('exhibition.html', exhibition=exhibition, allexhibition=allexhibition, artists=artists, new=new)
+
+
 # route for handling the login page logic
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -42,7 +57,7 @@ def login():
             error = 'Invalid Credentials. Please try again.'
         else:
             return redirect(url_for('home'))
-    return render_template('login.html', error=error)
+    return render_template('exhibitions', error=error)
 
 
 

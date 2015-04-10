@@ -4,8 +4,8 @@
     <title>exhibition names</title>
   </head>
   <body>
-    <form method="POST" action="">
-      Name of new exhibition <input type="text" name="exhibition">
+      <form method="POST" action="">
+      <h3>Name of new exhibition </h3><input type="text" name="exhibition">
       <input type="submit" name="submit" value="Submit">
     </form>
     {% if exhibition %}
@@ -16,5 +16,18 @@
         <p>You've added this name already</p>
       {% endif %}
     {% endif %}
+
+    <hr>
+
+        {% for allexhibition in allexhibition %}
+        <h2>{{ allexhibition.exhibition }}<h2>
+        {% endfor %}
+    <hr>
+    <h3>List of artists from ArtLogic</h3>
+      <ul>
+        {% for artist in artists %}
+          <li><a href="/artists/{{ artist.slug }}/">{{ artist.artist }}</a></li>
+        {% endfor %}
+      </ul>
   </body>
 </html>
