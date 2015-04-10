@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Exhibition form</title>
+    </head>
+    <body>
+        <form method="post">
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" />
+            <label for="name">Name:</label>
+            <ul>
+                {% for artist in artists %}
+                    <li>
+                        <input name="artists" type="checkbox" value="{{ artist.slug }}" id="{{ artist.slug }}" />
+                        <label for="{{ artist.slug }}">{{ artist.artist }}</label>
+                    </li>
+                {% endfor %}
+            </ul>
+            <input type="submit" value="save" />
+        </form>
+    </body>
+</html>

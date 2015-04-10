@@ -2,8 +2,8 @@
 {% block title %}Artists{% endblock %}
 {% block body %}
 <ul>
-{% for artist in artists %}
-    <li><a href="/artists/{{ artist.slug }}/">{{ artist.artist }}</a></li>
-{% endfor %}
+    {% for artist in artists %}
+        <li><a href="/artists/{{ artist.slug }}/">{{ artist.artist }}</a></li>
+    {% endfor %}
 </ul>
 {% endblock %}

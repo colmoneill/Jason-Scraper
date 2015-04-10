@@ -6,8 +6,11 @@ import os
 from datetime import datetime
 
 # Dependencies: Flask + PIL or Pillow
-from flask import Flask, send_from_directory, redirect as redirect_flask, render_template, url_for, request
+from flask import Flask, send_from_directory, redirect as redirect_flask, render_template, url_for, request, abort
 import pymongo
+import admin
+
+from utils import slugify
 
 # Local imports
 # from settings import *
@@ -19,7 +22,7 @@ db = client.artlogic
 
 @app.route("/")
 def home():
-    artworks = db.artworks.find().sort("id", -1)[:10]
+    artworks = db.artworks.find().sort("id", -1).limit(10)
     return render_template("home.html", artworks=artworks)
 
 @app.route("/artists/")
@@ -30,22 +33,22 @@ def artists():
 @app.route("/artists/<slug>/")
 def artist(slug):
     artist = db.artists.find_one({ "slug": slug})
-    artworks = db.artworks.find({"artist": artist["artist"]}).sort("id", -1)[:10]
+    artworks = db.artworks.find({"artist": artist["artist"]}).sort("id", -1).limit(10)
     return render_template("artist.html", artist=artist, artworks=artworks)
 
-@app.route('/exhibition', methods=['GET', 'POST'])
-def enterexhibition():
-    allexhibition = db.exhibition.find()
-    artists = db.artists.find().sort("artist_sort", 1)
-    exhibition = None
-    new = False
-    if request.method == 'POST' and 'exhibition' in request.form:
-        exhibition = request.form['exhibition']
-        if db.exhibition.find_one({'exhibition': exhibition}) is None:
-            # this is a new exhibition, add it to the database
-            db.exhibition.insert({'exhibition': exhibition})
-            new = True
-    return render_template('exhibition.html', exhibition=exhibition, allexhibition=allexhibition, artists=artists, new=new)
+#@app.route('/exhibition', methods=['GET', 'POST'])
+#def adminexhibition():
+    #allexhibition = db.exhibition.find()
+    #artists = db.artists.find().sort("artist_sort", 1)
+    #exhibition = None
+    #new = False
+    #if request.method == 'POST' and 'exhibition' in request.form:
+        #exhibition = request.form['exhibition']
+        #if db.exhibition.find_one({'exhibition': exhibition}) is None:
+            ## this is a new exhibition, add it to the database
+            #db.exhibition.insert({'exhibition': exhibition})
+            #new = True
+    #return render_template('exhibition.html', exhibition=exhibition, allexhibition=allexhibition, artists=artists, new=new)
 
 
 # route for handling the login page logic
@@ -53,13 +56,43 @@ def enterexhibition():
 def login():
     error = None
     if request.method == 'POST':
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+        if request.form['username'] <> 'admin' or request.form['password'] <> 'admin':
             error = 'Invalid Credentials. Please try again.'
         else:
-            return redirect(url_for('home'))
-    return render_template('exhibitions', error=error)
+            return redirect_flask(url_for('home'))
+    return render_template('login.html', error=error)
 
+@app.route("/exhibition/<slug>/")
+def viewExhibition(slug):
+    exhibition = db.exhibitions.find_one({'slug': slug})
+    
+    if exhibition <> None:
+        return render_template('exhibition.html', exhibition=exhibition)
+    else:
+        abort(404)
 
+### ADMIN FUNCTIONALITY ###
+@app.route('/exhibition/create/', methods=['GET', 'POST'])
+def createExhibition ():
+    if request.method == 'POST':
+        exhibition = {
+            'name': request.form['name'],
+            'slug': slugify(request.form['name']),
+            'artists': []
+        }
+        
+        for slug in request.form.getlist('artists'):
+            artist = db.artists.find_one({'slug': slug})
+            if artist <> None:
+                exhibition['artists'].append(artist)
+        
+        db.exhibitions.insert(exhibition)
+        
+        return redirect_flask(url_for('viewExhibition', slug=exhibition['slug']))   
+    
+    else:
+        artists = db.artists.find()
+        return render_template('admin/exhibition/form.html', artists=artists)
 
 if __name__ == '__main__':
     app.run(debug=True)

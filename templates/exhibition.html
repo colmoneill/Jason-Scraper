@@ -1,33 +1,8 @@
-<!DOCTYPE HTML>
-<html>
-  <head>
-    <title>exhibition names</title>
-  </head>
-  <body>
-      <form method="POST" action="">
-      <h3>Name of new exhibition </h3><input type="text" name="exhibition">
-      <input type="submit" name="submit" value="Submit">
-    </form>
-    {% if exhibition %}
-      <h1>ok you added {{exhibition}}!</h1>
-      {% if new %}
-        <p>First time logging this exhibition</p>
-      {% else %}
-        <p>You've added this name already</p>
-      {% endif %}
-    {% endif %}
-
-    <hr>
-
-        {% for allexhibition in allexhibition %}
-        <h2>{{ allexhibition.exhibition }}<h2>
-        {% endfor %}
-    <hr>
-    <h3>List of artists from ArtLogic</h3>
-      <ul>
-        {% for artist in artists %}
-          <li><a href="/artists/{{ artist.slug }}/">{{ artist.artist }}</a></li>
-        {% endfor %}
-      </ul>
-  </body>
-</html>
+{% extends "base.html" %}
+{% block title %}{{ exhibition.name }}{% endblock %}
+{% block body %}
+    <h2>{{ exhibition.name }}<h2>
+    {% for artist in exhibition.artists %}
+        <li><a href="/artists/{{ artist.slug }}/">{{ artist.artist }}</a></li>
+    {% endfor %}
+{% endblock %}

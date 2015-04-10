@@ -1,1 +1,4 @@
 *.pyc
+os
+pymongo
+venv
