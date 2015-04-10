@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 Synch the local MongoDB database with the remote ArtLogic Feed
