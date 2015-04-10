@@ -74,13 +74,16 @@ def viewExhibition(slug):
 ### ADMIN FUNCTIONALITY ###
 @app.route('/exhibition/create/', methods=['GET', 'POST'])
 def createExhibition ():
+    exhibition = {
+        'name': '',
+        'slug': '',
+        'artists': []
+    }
+    
     if request.method == 'POST':
-        exhibition = {
-            'name': request.form['name'],
-            'slug': slugify(request.form['name']),
-            'artists': []
-        }
-        
+        exhibition['name'] = request.form['name']
+        exhibition['slug'] = slugify(request.form['name'])
+
         for slug in request.form.getlist('artists'):
             artist = db.artists.find_one({'slug': slug})
             if artist <> None:
@@ -90,9 +93,37 @@ def createExhibition ():
         
         return redirect_flask(url_for('viewExhibition', slug=exhibition['slug']))   
     
+    artists = db.artists.find()
+    return render_template('admin/exhibition/form.html', exhibition=exhibition, artists=artists)
+
+@app.route('/exhibition/update/<slug>/', methods=['GET', 'POST'])
+def updateExhibition (slug):
+    exhibition = db.exhibitions.find_one({'slug': slug})
+    
+    if request.method == 'POST':
+        exhibition['name'] = request.form['name']
+        exhibition['slug'] = slugify(request.form['name'])
+        exhibition['artists'] = []
+        
+        for slug in request.form.getlist('artists'):
+            artist = db.artists.find_one({'slug': slug})
+            if artist <> None:
+                exhibition['artists'].append(artist)
+        
+        db.exhibitions.update(
+            {'_id': exhibition['_id']},
+            exhibition
+        )
+        
+        return redirect_flask(url_for('viewExhibition', slug=exhibition['slug']))   
+    
+    artists = db.artists.find()
+    
+    if exhibition <> None:
+        return render_template('admin/exhibition/form.html', exhibition=exhibition, artists=artists)
     else:
-        artists = db.artists.find()
-        return render_template('admin/exhibition/form.html', artists=artists)
+        abort(404)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

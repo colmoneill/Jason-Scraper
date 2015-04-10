@@ -6,12 +6,12 @@
     <body>
         <form method="post">
             <label for="name">Name:</label>
-            <input type="text" name="name" id="name" />
+            <input type="text" name="name" id="name" value="{{ exhibition.name }}" />
             <label for="name">Name:</label>
             <ul>
                 {% for artist in artists %}
                     <li>
-                        <input name="artists" type="checkbox" value="{{ artist.slug }}" id="{{ artist.slug }}" />
+                        <input name="artists" type="checkbox" value="{{ artist.slug }}" id="{{ artist.slug }}" {{ 'checked' if artist in exhibition.artists else '' }} />
                         <label for="{{ artist.slug }}">{{ artist.artist }}</label>
                     </li>
                 {% endfor %}
