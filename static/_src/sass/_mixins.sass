@@ -1,0 +1,24 @@
+// Placeholder text
+// -------------------------
+=placeholder($color: inherit, $font: inherit)
+	&:-moz-placeholder
+		color: $color
+		font: $font
+	&:-ms-input-placeholder
+		color: $color
+		font: $font
+	&::-webkit-input-placeholder
+		color: $color
+		font: $font
+
+// Text overflow
+// -------------------------
+// Requires inline-block or block for proper styling
+=text-overflow
+	overflow: hidden
+	text-overflow: ellipsis
+	white-space: nowrap
+
+=border-box-everywhere
+	*, *:before, *:after, input[type='search']
+		+box-sizing(border-box)

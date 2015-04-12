@@ -1,0 +1,48 @@
+@import base
+
++establish-baseline($base-font-size)
+
+html, body
+	color: black
+
+body
+	font-family: $base-ff
+	font-weight: 400
+	font-style: normal
+	line-height: inherit
+
+strong, b
+	font-weight: 700
+
+
+// LINKS
+a
+	color: inherit
+	text-decoration: underline
+	&:visited, &:active, &:hover
+		color: inherit
+	&.active
+		cursor: default
+	.no-touch &[href^='tel:']
+		text-decoration: none !important
+		cursor: default
+
+// LISTS
+ul
+	list-style: none
+	padding: 0
+	margin: 0
+
+// TYPOGRAPHY
+// Headings, body text, lists, code, and more for a versatile and durable typography system
+// ----------------------------------------------------------------------------------------
+
+// BODY TEXT
+p
+	margin: 0
+
+// HEADINGS
+h1, h2, h3, h4, h5, h6
+	margin: 0
+	font-weight: 400
+	font-size: 1em

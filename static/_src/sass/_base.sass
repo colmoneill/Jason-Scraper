@@ -1,0 +1,45 @@
+// IMPORTS PLUGIN FROM COMPASS
+@import "compass"
+@import "h5bp"
+@import mixins
+@import retina-sprites
+
+// VARIABLES
+// --------------------------------------------------
+
+// Typography using compass Vertical Rhythm
+// http://compass-style.org/reference/compass/typography/vertical_rhythm/
+$base-font-size: 18px
+$base-line-height: 22px
+$bru: rhythm()
+$phi: 1.6180339887
+$Phi: 0.6180339887
+$round-to-nearest-half-line: true
+
+// Images path
+$img_path: unquote("img")
+
+$sprites: sprite-map("sprites/*.png", $spacing: 6px)
+$sprites2x: sprite-map("sprites-retina/*.png", $spacing: 12px)
+$experimental-support-for-svg: true
+
+// Colors
+$black: rgb(0, 0, 0) !default
+$white: rgb(255,255,255) !default
+$color: #E5E5E5 !default
+
+$selected-background-color: $color
+$selected-font-color: $black
+
+$base-ff: "my-font", Helvetica, Arial, sans-serif !default
+
+// Media-queries
+$mobile: "only screen and (min-width : 384px)" // 6 * 64 = 24 * 16 = 384
+$phablet: "only screen and (min-width : 512px)" // 8 * 64 = 32 * 16 = 512
+$tablet: "only screen and (min-width : 768px)" // 12 * 64 = 48 * 16 = 768
+$desktop: "only screen and (min-width : 1024px)" // 16 * 64 = 64 * 16 = 1024
+$large: "only screen and (min-width : 1280px)" // 20 * 64 = 80 * 16 = 1280
+$huge: "only screen and (min-width : 1536px)" // 24 * 64 = 96 * 16 = 1536
+$max: "only screen and (min-width : 2048px)" // 32 * 64 = 128 * 16 = 2048
+
+$retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)"
