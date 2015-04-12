@@ -1,0 +1,23 @@
+{% extends "admin.html" %}
+{% block title %}
+    Exhibition form
+{% endblock %}
+
+{% block body %}
+<div class="col-md-6">
+    <form method="post">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" value="{{ exhibition.name }}" />
+        <label for="name">Name:</label>
+        <ul class="list-group">
+            {% for artist in artists %}
+                <li class="list-group-item">
+                    <input name="artists" type="checkbox" value="{{ artist.slug }}" id="{{ artist.slug }}" {{ 'checked' if artist in exhibition.artists else '' }} />
+                    <label for="{{ artist.slug }}">{{ artist.artist }}</label>
+                </li>
+            {% endfor %}
+        </ul>
+        <input type="submit" value="save" />
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+	{% block title %}Current{% endblock %}
+
+	{% block body %}
+
+	{% for current_exhibition in current_exhibition %}
+        <h2>{{ current_exhibition.exhibition }}<h2>
+    {% endfor %}
+
+	{% endblock %}
