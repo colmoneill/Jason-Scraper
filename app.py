@@ -23,7 +23,8 @@ db = client.artlogic
 @app.route("/")
 def home():
     artworks = db.artworks.find().sort("id", -1).limit(10)
-    return render_template("front/home.html", artworks=artworks)
+    exhibition = db.exhibition.find()
+    return render_template("front/exhibition.html", artworks=artworks, exhibition=exhibition)
 
 @app.route("/artists/")
 def artists():
