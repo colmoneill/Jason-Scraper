@@ -37,6 +37,11 @@ def artist(slug):
     artworks = db.artworks.find({"artist": artist["artist"]}).sort("id", -1).limit(10)
     return render_template("front/artist.html", artist=artist, artworks=artworks)
 
+@app.route("/current/")
+def current():
+    current_exhibition = db.exhibitions.find()
+    return render_template("front/current.html", current_exhibition=current_exhibition)
+
 @app.route('/exhibition', methods=['GET', 'POST'])
 def adminexhibition():
     allexhibition = db.exhibition.find()
@@ -78,7 +83,13 @@ def createExhibition ():
     exhibition = {
         'name': '',
         'slug': '',
-        'artists': []
+        'artists': [],
+        'datestart': '',
+        'dateend': '',
+        'keyimage': '',
+        'maintext': '',
+        'exhibitionviews': '',
+        'pressrelease': '',
     }
 
     if request.method == 'POST':

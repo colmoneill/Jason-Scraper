@@ -18,9 +18,9 @@
         </ul>
         <hr>
         <label>exhibition dates</label>
-        <input type="text" class="form-control" name="name" id="name" value="{{ exhibition.datestart }}" />
-        <input type="text" class="form-control" name="name" id="name" value="{{ exhibition.dateend }}" />
-        <label for="name">Name of the exhibition</label>
+        <input type="text" placeholder="from" name="name" id="name" value="{{ exhibition.datestart }}" />
+        <input type="text" placeholder="to" name="name" id="name" value="{{ exhibition.dateend }}" />
+        <br><br><label for="name">Name of the exhibition</label>
         <input type="text" class="form-control" name="name" id="name" value="{{ exhibition.name }}" />
         <label for="exampleInputFile">Exhibition key image</label>
         <input type="file" id="exampleInputFile" value="{{ exhibition.keyimage }}">
