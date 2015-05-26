@@ -1,0 +1,31 @@
+// Placeholder text
+// -------------------------
+@mixin placeholder($color: inherit, $font: inherit){
+	&:-moz-placeholder{
+		color: $color;
+		font: $font;
+	}
+	&:-ms-input-placeholder{
+		color: $color;
+		font: $font;
+	}
+	&::-webkit-input-placeholder{
+		color: $color;
+		font: $font;
+	}
+}
+
+// Text overflow
+// -------------------------
+// Requires inline-block or block for proper styling
+@mixin text-overflow{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+@mxin border-box-everywhere{
+	*, *:before, *:after, input[type='search']{
+		@include border-box-sizing;
+	}
+}
