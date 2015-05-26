@@ -13,7 +13,7 @@ $number-of-col__c					:	2;
 // 5 Column grid (max-vp -> a-vp)
 $susy: (
   columns: $number-of-col__max,
-  gutters: 1/5,
+  gutters: 1/8,
   debug: (image: show),
   global-box-sizing: border-box,
   use-custom: (px: true),
@@ -22,14 +22,14 @@ $susy: (
 // 4 Column grid (a-vp -> c-vp)
 $susy-a: (
   columns: $number-of-col__a,
-  gutters: 1/4,
+  gutters: 1/6,
   debug: (image: show),
 );
 
 // 2 Column grid (c-vp)
 $susy-c: (
   columns: $number-of-col__c,
-  gutters: 1/4,
+  gutters: 1/8,
   debug: (image: show),
 );
 

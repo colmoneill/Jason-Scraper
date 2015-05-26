@@ -27,7 +27,7 @@ fonts_dir       = "../fonts"
 preferred_syntax = :scss
 
 # output option: nested, expanded, compact, compressed
-output_style = :compressed
+output_style = :nested
 
 # The environment mode.
 # Defaults to :production, can also be :development
