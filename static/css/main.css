@@ -67,152 +67,152 @@
   margin-right: 0; }
 
 @media (min-width: 949px) and (max-width: 1300px) {
-  .col5--span1of1 {
+  .col5__span1of1 {
     width: 100%;
     float: left;
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 949px) and (max-width: 1300px) {
-  .col5--span1of2 {
+  .col5__span1of2 {
     width: 47.05882%;
     float: left;
     margin-right: 5.88235%; } }
 @media (min-width: 949px) and (max-width: 1300px) {
-  .col5--span2of2 {
+  .col5__span2of2 {
     width: 100%;
     float: left;
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 949px) and (max-width: 1300px) {
-  .col5--span1of3 {
+  .col5__span1of3 {
     width: 30.76923%;
     float: left;
     margin-right: 3.84615%; } }
 @media (min-width: 949px) and (max-width: 1300px) {
-  .col5--span2of3 {
+  .col5__span2of3 {
     width: 65.38462%;
     float: left;
     margin-right: 3.84615%; } }
 @media (min-width: 949px) and (max-width: 1300px) {
-  .col5--span3of3 {
+  .col5__span3of3 {
     width: 100%;
     float: left;
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 949px) and (max-width: 1300px) {
-  .col5--span1of4 {
+  .col5__span1of4 {
     width: 22.85714%;
     float: left;
     margin-right: 2.85714%; } }
 @media (min-width: 949px) and (max-width: 1300px) {
-  .col5--span2of4 {
+  .col5__span2of4 {
     width: 48.57143%;
     float: left;
     margin-right: 2.85714%; } }
 @media (min-width: 949px) and (max-width: 1300px) {
-  .col5--span3of4 {
+  .col5__span3of4 {
     width: 74.28571%;
     float: left;
     margin-right: 2.85714%; } }
 @media (min-width: 949px) and (max-width: 1300px) {
-  .col5--span4of4 {
+  .col5__span4of4 {
     width: 100%;
     float: left;
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 949px) and (max-width: 1300px) {
-  .col5--span1of5 {
+  .col5__span1of5 {
     width: 18.18182%;
     float: left;
     margin-right: 2.27273%; } }
 @media (min-width: 949px) and (max-width: 1300px) {
-  .col5--span2of5 {
+  .col5__span2of5 {
     width: 38.63636%;
     float: left;
     margin-right: 2.27273%; } }
 @media (min-width: 949px) and (max-width: 1300px) {
-  .col5--span3of5 {
+  .col5__span3of5 {
     width: 59.09091%;
     float: left;
     margin-right: 2.27273%; } }
 @media (min-width: 949px) and (max-width: 1300px) {
-  .col5--span4of5 {
+  .col5__span4of5 {
     width: 79.54545%;
     float: left;
     margin-right: 2.27273%; } }
 @media (min-width: 949px) and (max-width: 1300px) {
-  .col5--span5of5 {
+  .col5__span5of5 {
     width: 100%;
     float: left;
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4--span1of1 {
+  .col4__span1of1 {
     width: 100%;
     float: left;
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4--span1of2 {
+  .col4__span1of2 {
     width: 46.15385%;
     float: left;
     margin-right: 7.69231%; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4--span2of2 {
+  .col4__span2of2 {
     width: 100%;
     float: left;
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4--span1of3 {
+  .col4__span1of3 {
     width: 30%;
     float: left;
     margin-right: 5%; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4--span2of3 {
+  .col4__span2of3 {
     width: 65.0%;
     float: left;
     margin-right: 5%; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4--span3of3 {
+  .col4__span3of3 {
     width: 100%;
     float: left;
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4--span1of4 {
+  .col4__span1of4 {
     width: 22.22222%;
     float: left;
     margin-right: 3.7037%; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4--span2of4 {
+  .col4__span2of4 {
     width: 48.14815%;
     float: left;
     margin-right: 3.7037%; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4--span3of4 {
+  .col4__span3of4 {
     width: 74.07407%;
     float: left;
     margin-right: 3.7037%; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4--span4of4 {
+  .col4__span4of4 {
     width: 100%;
     float: left;
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 0) and (max-width: 500px) {
-  .col2--span1of1 {
+  .col2__span1of1 {
     width: 100%;
     float: left;
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 0) and (max-width: 500px) {
-  .col2--span1of2 {
+  .col2__span1of2 {
     width: 47.05882%;
     float: left;
     margin-right: 5.88235%; } }
 @media (min-width: 0) and (max-width: 500px) {
-  .col2--span2of2 {
+  .col2__span2of2 {
     width: 100%;
     float: left;
     margin-left: 0;

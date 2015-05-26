@@ -63,21 +63,21 @@ $number-of-col__list	:	($number-of-col__max, $number-of-col__a, $number-of-col__
 		@for $z from 1 through $y{
 			@if $number-of-col == 2{
 				@include susy-breakpoint(0 $c-vp, $susy-c){
-					.col#{$number-of-col}--span#{$z}of#{$y}{
+					.col#{$number-of-col}__span#{$z}of#{$y}{
 						@include span($z of $y);
 					}
 				}
 			}
 			@else if $number-of-col == 4{
 				@include susy-breakpoint(($c-vp + 1) $a-vp, $susy-a){
-					.col#{$number-of-col}--span#{$z}of#{$y}{
+					.col#{$number-of-col}__span#{$z}of#{$y}{
 						@include span($z of $y);
 					}
 				}
 			}
 			@else if $number-of-col == 5{
 				@include susy-breakpoint(($a-vp - 1) $max-vp, $susy){
-					.col#{$number-of-col}--span#{$z}of#{$y}{
+					.col#{$number-of-col}__span#{$z}of#{$y}{
 						@include span($z of $y);
 					}
 				}
