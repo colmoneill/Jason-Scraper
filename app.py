@@ -24,7 +24,8 @@ db = client.artlogic
 def home():
     artworks = db.artworks.find().sort("id", -1).limit(10)
     exhibition = db.exhibition.find()
-    return render_template("front/exhibition.html", artworks=artworks, exhibition=exhibition)
+    current_exhibition = db.exhibitions.find()
+    return render_template("front/current.html", current_exhibition=current_exhibition)
 
 @app.route("/artists/")
 def artists():
@@ -41,6 +42,12 @@ def artist(slug):
 def current():
     current_exhibition = db.exhibitions.find()
     return render_template("front/current.html", current_exhibition=current_exhibition)
+
+@app.route("/current/<slug>/")
+def exhibition(slug):
+    exhibition = db.exhibition.find_one({ "slug: slug"})
+    artworks = db.exhibition.find()
+    return render_template("front/exhibition.html")
 
 @app.route('/exhibition', methods=['GET', 'POST'])
 def adminexhibition():

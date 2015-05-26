@@ -1,13 +1,9 @@
 {% extends "base.html" %}
 {% block title %}{{ exhibition.name }}{% endblock %}
 {% block body %}
-	<section>
-		{{ exhibition.exhibition }}
-	</section>
-
     <ul>
-    {% for artist in exhibition.artists %}
-        <li><a href="/artists/{{ artist.slug }}/">{{ artist.artist }}</a></li>
-    {% endfor %}
+    	{% for artist in exhibition.artists %}
+        	<li><a href="/artists/{{ artist.slug }}/">{{ artist.artist }}</a></li>
+    	{% endfor %}
     </ul>
 {% endblock %}

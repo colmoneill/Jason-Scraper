@@ -4,7 +4,9 @@
 	{% block body %}
 
 	{% for current_exhibition in current_exhibition %}
-	<li><a href="/exhibition/{{ current_exhibition.slug }}/">{{ current_exhibition.name }}</li>
-    {% endfor %}
+		<ul>
+			<li><a href="/exhibition/{{ current_exhibition.slug }}/">{{ current_exhibition.name }}</li>
+  	</ul>
+	{% endfor %}
 
 	{% endblock %}
