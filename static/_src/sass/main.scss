@@ -7,22 +7,23 @@
 // To exclude a components from the compiled stylesheet, commment the import
 
 
-
 // :: Imports
 // ------------------------------------------------------------
-
 @import "compass";
+@import "compass/css3";
 @import "h5bp";
 @import "breakpoint";
 @import "susy";
-@import "mixins";
-@import "retina-sprites";
-@import "base";
+@import "compass/reset";
+
+@import "libs/mixins";
+@import "libs/retina-sprites";
+@import "libs/base";
+@import "libs/grid";
 
 
 // :: HTML5 ✰ Boilerplate
 // ------------------------------------------------------------
-@include h5bp-normalize;
 //@include h5bp-chromeframe;
 
 

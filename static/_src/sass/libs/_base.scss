@@ -34,16 +34,21 @@ $experimental-support-for-svg		: true;
 
 $black								: rgb(0, 0, 0) !default;
 $white								: rgb(255,255,255) !default;
-$color								: #E5E5E5 !default;
+$gray-1								: rgb(50, 50, 50);
+$gray-2								: #646464;
 
-$selected-background-color			: $color;
-$selected-font-color				: $black;
+$background-color					: $white;
+$body-color 						: $gray-1;
+$action								: $gray-2;
+$highlight-color 					: rgb(240,240,240);
 
 
 // :: Fonts
 // ------------------------------------------------------------
 
-$base-ff: "my-font", Helvetica, Arial, sans-serif !default;
+.font-body 					{  font-family: Helvetica, Arial, sans-serif; }
+.font-bold					{  font-family: Helvetica, Arial, sans-serif; font-weight: bold;}
+.font-mono 					{  font-family: monospace; }
 
 
 // :: Breakpoints
@@ -56,3 +61,41 @@ $c-vp								: 500px;
 $max-vp 							: 1300px;
 
 //$retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
+
+
+// :: Media Queries Mixin
+// -------------------------------------------------------
+
+
+@mixin mq($dimensions-name) {
+  @if $dimensions-name == max {
+    @media only screen and (min-width: $max-vp)	{ @content; }
+  }
+  @else if $dimensions-name == a {
+    @media only screen and (max-width: $a-vp)	{ @content; }
+  }
+  @else if $dimensions-name == b {
+    @media only screen and (max-width: $b-vp)	{ @content; }
+  }
+  @else if $dimensions-name == c {
+    @media only screen and (max-width: $c-vp)	{ @content; }
+  }
+}
+
+
+// :: Transition Mixin
+// -------------------------------------------------------
+
+@mixin _transition($prop:all, $duration:0.2s, $timing:ease-in-out, $delay:0s) {
+	@include transition($prop $duration $timing $delay);
+}
+
+
+// :: Opacity Hover Mixin
+// -------------------------------------------------------
+
+@mixin _hover{
+	opacity: 0.6;
+	@include _transition;
+}
+

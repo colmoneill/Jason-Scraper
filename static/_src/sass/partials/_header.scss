@@ -6,9 +6,12 @@ header{
 ul.nav{
 	li{
 		float: left;
-		padding: 8px;
-	}
-	li:first-of-type{
-		font-weight: bold;
+		padding-right: 8px;
+		&:last-of-type{
+			padding-right: 0px;
+		}
+		&:first-of-type{
+			font-weight: bold;
+		}
 	}
 }

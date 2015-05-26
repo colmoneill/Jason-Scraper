@@ -1,8 +1,21 @@
-//+border-box-everywhere
+// --------------------------------------------------
+// LAYOUT
+// --------------------------------------------------
+
+
+@include border-box-everywhere;
+@include establish-baseline($base-font-size);
+
+
+// :: Basic Elements
+// ------------------------------------------------------------
 
 body, html{
 	position: relative;
 	height: 100%;
+	//
+	color: $body-color;
+	background-color: $background-color;
 }
 
 body{
@@ -11,6 +24,11 @@ body{
 	min-width: 300px;
 	overflow-y: scroll;
 	overflow-x: hidden;
+	//
+	@extend .font-body;
+	font-weight: 400;
+	font-style: normal;
+	line-height: inherit;
 }
 
 .chromeframe{
@@ -25,12 +43,67 @@ body{
 	//+adjust-font-size-to(14px, .75);
 }
 
-.container{
-	width: 90%;
+.wrapper{
+	width: 95%;
+	max-width: $max-vp;
 	margin: 0 auto;
+	@include mq(a){
+		width: 94%;
+	}
+	@include mq(b){
+		width: 92%;
+	}
+	@include mq(c){
+		width: 88%;
+	}
 }
 
 div.body{
 	clear: both;
 	padding-top: $bru*2;
 }
+
+
+// :: Typography
+// ----------------------------------------------------------------------------------------
+
+// BODY TEXT
+p{
+
+}
+
+// HEADINGS
+h1, h2, h3{
+	@extend .font-bold;
+}
+
+h4, h5, h6{
+	@extend .font-mono;
+}
+
+
+// :: Links
+// ------------------------------------------------------------
+
+a{
+	color: $body-color;
+	text-decoration: none;
+	&:visited, &:active, &:hover{
+		color: $body-color;
+	}
+	&.active{
+		cursor: default;
+	}
+	.no-touch &[href^='tel:']{
+		text-decoration: none !important;
+		cursor: default;
+	}
+}
+
+
+// :: Selection
+// ----------------------------------------------------------------------------------------
+
+::selection			{background: $highlight-color;}
+::-moz-selection	{background: $highlight-color;}
+a:focus				{outline: none;}

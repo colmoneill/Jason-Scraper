@@ -32,8 +32,20 @@
 	white-space: nowrap;
 }
 
-@mxin border-box-everywhere{
+@mixin border-box-everywhere{
 	*, *:before, *:after, input[type='search']{
 		@include border-box-sizing;
 	}
+}
+
+
+// :: Vertical Align
+// ------------------------------------------------------------
+
+@mixin vertical-align {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }

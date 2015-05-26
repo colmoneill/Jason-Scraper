@@ -1,0 +1,57 @@
+// ------------------------------------------------------------
+// Base Styles
+// ------------------------------------------------------------
+
+
+html { font-size: 100%; }
+
+body { 
+	@extend .font-body;
+	color: $body-color;
+}
+
+.big_wrap{
+	width: 95%;
+	max-width: $max-vp;
+	margin: 0 auto 50px auto;
+	background-color: $background-color;
+	@include mq(1){
+		width: 94%;
+	}
+	@include mq(2){
+		width: 92%;
+	}
+	@include mq(3){
+		width: 88%;
+	}
+}
+
+p { @include adjust-font-size-to(13px); margin-bottom: 10px; }
+
+li { @include adjust-font-size-to(13px); }
+
+a { text-decoration: none; }
+
+p a, 
+li a {
+	//color: $action;
+	color: $body-color;
+	@include link-active-styles {
+		color: $action-respond;
+	}
+}
+
+h1 {}
+
+h2{}
+
+h3{
+	@extend .font-bold;
+	@include adjust-font-size-to(13px);
+}
+
+::selection			{background: $highlight-color;}
+::-moz-selection	{background: $highlight-color;}
+a:focus				{outline: none;}
+
+section {}
