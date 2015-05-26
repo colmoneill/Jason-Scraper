@@ -22,6 +22,7 @@ sass_dir        = "sass"
 images_dir      = "../img"
 javascripts_dir = "../js"
 fonts_dir       = "../fonts"
+preferred_syntax = :scss
 
 # output option: nested, expanded, compact, compressed
 output_style = :compressed
@@ -29,7 +30,7 @@ output_style = :compressed
 # The environment mode.
 # Defaults to :production, can also be :development
 # Use :development to see line numbers, file names, etc
-environment = :production
+environment = :development
 
 # Enable/Disable line comments
 line_comments = false
