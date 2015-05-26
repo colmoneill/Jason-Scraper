@@ -20,6 +20,10 @@ app = Flask(__name__)
 client = pymongo.MongoClient()
 db = client.artlogic
 
+@app.route("/test/")
+def test():
+    return render_template("front/tests.html")
+
 @app.route("/")
 def home():
     artworks = db.artworks.find().sort("id", -1).limit(10)
@@ -85,8 +89,8 @@ def viewExhibition(slug):
         abort(404)
 
 ### ADMIN FUNCTIONALITY ###
-@app.route('/exhibition/create/', methods=['GET', 'POST'])
-def createExhibition ():
+@app.route("/exhibition/create/", methods=['GET', 'POST'])
+def createExhibition():
     exhibition = {
         'name': '',
         'slug': '',
