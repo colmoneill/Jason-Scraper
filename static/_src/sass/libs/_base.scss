@@ -56,3 +56,23 @@ $c-vp								: 500px;
 $max-vp 							: 1300px;
 
 //$retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
+
+
+// :: Media queries Mixin
+// -------------------------------------------------------
+
+
+@mixin mq($dimensions-name) {
+  @if $dimensions-name == max {
+    @media only screen and (min-width: $max-vp)	{ @content; }
+  }
+  @else if $dimensions-name == a {
+    @media only screen and (max-width: $a-vp)	{ @content; }
+  }
+  @else if $dimensions-name == b {
+    @media only screen and (max-width: $b-vp)	{ @content; }
+  }
+  @else if $dimensions-name == c {
+    @media only screen and (max-width: $c-vp)	{ @content; }
+  }
+}

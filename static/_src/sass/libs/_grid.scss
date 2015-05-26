@@ -13,7 +13,7 @@ $number-of-col__c					:	2;
 // 5 Column grid (max-vp -> a-vp)
 $susy: (
   columns: $number-of-col__max,
-  gutters: 1/8,
+  gutters: 1/10,
   debug: (image: show),
   global-box-sizing: border-box,
   use-custom: (px: true),
@@ -22,14 +22,14 @@ $susy: (
 // 4 Column grid (a-vp -> c-vp)
 $susy-a: (
   columns: $number-of-col__a,
-  gutters: 1/6,
+  gutters: 1/8,
   debug: (image: show),
 );
 
 // 2 Column grid (c-vp)
 $susy-c: (
   columns: $number-of-col__c,
-  gutters: 1/8,
+  gutters: 1/12,
   debug: (image: show),
 );
 
@@ -76,7 +76,7 @@ $number-of-col__list	:	($number-of-col__max, $number-of-col__a, $number-of-col__
 				}
 			}
 			@else if $number-of-col == 5{
-				@include susy-breakpoint(($a-vp - 1) $max-vp, $susy){
+				@include susy-breakpoint(($a-vp - 1) ($max-vp + 1), $susy){
 					.col#{$number-of-col}__span#{$z}of#{$y}{
 						@include span($z of $y);
 					}

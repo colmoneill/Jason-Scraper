@@ -1,4 +1,4 @@
-//+border-box-everywhere
+@include border-box-everywhere;
 
 body, html{
 	position: relative;

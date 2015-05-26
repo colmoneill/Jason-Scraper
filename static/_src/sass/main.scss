@@ -15,6 +15,7 @@
 @import "h5bp";
 @import "breakpoint";
 @import "susy";
+@import "compass/reset";
 
 @import "libs/mixins";
 @import "libs/retina-sprites";
@@ -24,7 +25,6 @@
 
 // :: HTML5 ✰ Boilerplate
 // ------------------------------------------------------------
-@include h5bp-normalize;
 //@include h5bp-chromeframe;
 
 
