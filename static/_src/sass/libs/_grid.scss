@@ -1,0 +1,87 @@
+// --------------------------------------------------
+// GRID
+// --------------------------------------------------
+
+
+// :: Grids Set-Up
+// ------------------------------------------------------------
+
+$number-of-col__max					:	5;
+$number-of-col__a					:	4;
+$number-of-col__c					:	2;
+
+// 5 Column grid (max-vp -> a-vp)
+$susy: (
+  columns: $number-of-col__max,
+  gutters: 1/5,
+  debug: (image: show),
+  global-box-sizing: border-box,
+  use-custom: (px: true),
+ );
+
+// 4 Column grid (a-vp -> c-vp)
+$susy-a: (
+  columns: $number-of-col__a,
+  gutters: 1/4,
+  debug: (image: show),
+);
+
+// 2 Column grid (c-vp)
+$susy-c: (
+  columns: $number-of-col__c,
+  gutters: 1/4,
+  debug: (image: show),
+);
+
+
+// :: Basic Styles
+// ------------------------------------------------------------
+
+.container {
+  @include container();
+  @include clearfix; 
+  @include susy-breakpoint(($c-vp + 1) $a-vp, $susy-a) {
+  	 @include container();
+  }
+  @include susy-breakpoint(0 $c-vp, $susy-c) {
+  	 @include container();
+  }
+}
+
+.last{
+	@include last;
+}
+
+
+// :: Grid Mixin
+// ------------------------------------------------------------
+
+$number-of-col__list	:	($number-of-col__max, $number-of-col__a, $number-of-col__c);
+
+@each $number-of-col in $number-of-col__list{
+	@for $y from 1 through $number-of-col{
+		@for $z from 1 through $y{
+			@if $number-of-col == 2{
+				@include susy-breakpoint(0 $c-vp, $susy-c){
+					.col#{$number-of-col}--span#{$z}of#{$y}{
+						@include span($z of $y);
+					}
+				}
+			}
+			@else if $number-of-col == 4{
+				@include susy-breakpoint(($c-vp + 1) $a-vp, $susy-a){
+					.col#{$number-of-col}--span#{$z}of#{$y}{
+						@include span($z of $y);
+					}
+				}
+			}
+			@else if $number-of-col == 5{
+				@include susy-breakpoint(($a-vp - 1) $max-vp, $susy){
+					.col#{$number-of-col}--span#{$z}of#{$y}{
+						@include span($z of $y);
+					}
+				}
+			}
+		}
+	}
+}
