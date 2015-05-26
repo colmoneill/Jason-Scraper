@@ -1,5 +1,11 @@
-// Placeholder text
-// -------------------------
+// --------------------------------------------------
+// MIXINS
+// --------------------------------------------------
+
+
+// :: Placeholder Text
+// ------------------------------------------------------------
+
 @mixin placeholder($color: inherit, $font: inherit){
 	&:-moz-placeholder{
 		color: $color;
@@ -15,9 +21,11 @@
 	}
 }
 
-// Text overflow
-// -------------------------
+
+// :: Text overflow
+// ------------------------------------------------------------
 // Requires inline-block or block for proper styling
+
 @mixin text-overflow{
 	overflow: hidden;
 	text-overflow: ellipsis;

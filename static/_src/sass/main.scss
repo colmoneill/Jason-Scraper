@@ -1,7 +1,16 @@
+// --------------------------------------------------
+// MAIN
+// --------------------------------------------------
+
+
 // This is the stylesheet for the website, not the CMS
 // To exclude a components from the compiled stylesheet, commment the import
 
-// Imports
+
+
+// :: Imports
+// ------------------------------------------------------------
+
 @import "compass";
 @import "h5bp";
 @import "breakpoint";
@@ -10,15 +19,21 @@
 @import "retina-sprites";
 @import "base";
 
-// HTML5 ✰ Boilerplate
+
+// :: HTML5 ✰ Boilerplate
+// ------------------------------------------------------------
 @include h5bp-normalize;
 //@include h5bp-chromeframe;
 
-// Imports website style
+
+// :: Imports website style
+// ------------------------------------------------------------
 @import "partials/typo";
 @import "partials/layout";
 @import "partials/header";
 @include h5bp-helpers;
 
-// the last import must be the print version
+
+// :: Print
+// ------------------------------------------------------------
 @include h5bp-media;

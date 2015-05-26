@@ -3,7 +3,6 @@
 // --------------------------------------------------
 
 
-
 // :: Typography using compass Vertical Rhythm
 // ------------------------------------------------------------
 // http://compass-style.org/reference/compass/typography/vertical_rhythm/
@@ -16,12 +15,10 @@ $Phi								: 0.6180339887;
 $round-to-nearest-half-line			: true;
 
 
-
 // :: Image Path
 // ------------------------------------------------------------
 
 $img_path							: unquote("img");
-
 
 
 // :: Sprites
@@ -30,7 +27,6 @@ $img_path							: unquote("img");
 $sprites							: sprite-map("sprites/*.png", $spacing: 6px);
 $sprites2x							: sprite-map("sprites-retina/*.png", $spacing: 12px);
 $experimental-support-for-svg		: true;
-
 
 
 // :: Colours
@@ -44,12 +40,10 @@ $selected-background-color			: $color;
 $selected-font-color				: $black;
 
 
-
 // :: Fonts
 // ------------------------------------------------------------
 
 $base-ff: "my-font", Helvetica, Arial, sans-serif !default;
-
 
 
 // :: Breakpoints
