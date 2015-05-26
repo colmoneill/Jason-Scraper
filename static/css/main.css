@@ -45,6 +45,16 @@ a img {
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block; }
 
+.font-body, body {
+  font-family: Helvetica, Arial, sans-serif; }
+
+.font-bold, h1, h2, h3 {
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: bold; }
+
+.font-mono, h4, h5, h6 {
+  font-family: monospace; }
+
 .container {
   max-width: 100%;
   margin-left: auto;
@@ -278,7 +288,8 @@ html {
 body, html {
   position: relative;
   height: 100%;
-  color: black; }
+  color: #323232;
+  background-color: white; }
 
 body {
   margin: 0;
@@ -286,7 +297,6 @@ body {
   min-width: 300px;
   overflow-y: scroll;
   overflow-x: hidden;
-  font-family: "my-font", Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-style: normal;
   line-height: inherit; }
@@ -301,9 +311,19 @@ body {
   background: red;
   color: white; }
 
-.container {
-  width: 90%;
+.wrapper {
+  width: 95%;
+  max-width: 1300px;
   margin: 0 auto; }
+  @media only screen and (max-width: 950px) {
+    .wrapper {
+      width: 94%; } }
+  @media only screen and (max-width: 750px) {
+    .wrapper {
+      width: 92%; } }
+  @media only screen and (max-width: 500px) {
+    .wrapper {
+      width: 88%; } }
 
 div.body {
   clear: both;
@@ -320,15 +340,26 @@ a {
     text-decoration: none !important;
     cursor: default; }
 
+::selection {
+  background: #f0f0f0; }
+
+::-moz-selection {
+  background: #f0f0f0; }
+
+a:focus {
+  outline: none; }
+
 header {
   margin-top: 1.22222em;
   margin-bottom: 1.22222em; }
 
 ul.nav li {
   float: left;
-  padding: 8px; }
-ul.nav li:first-of-type {
-  font-weight: bold; }
+  padding-right: 8px; }
+  ul.nav li:last-of-type {
+    padding-right: 0px; }
+  ul.nav li:first-of-type {
+    font-weight: bold; }
 
 .hidden {
   display: none !important;

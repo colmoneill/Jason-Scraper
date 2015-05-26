@@ -14,7 +14,8 @@ body, html{
 	position: relative;
 	height: 100%;
 	//
-	color: black;
+	color: $body-color;
+	background-color: $background-color;
 }
 
 body{
@@ -24,7 +25,7 @@ body{
 	overflow-y: scroll;
 	overflow-x: hidden;
 	//
-	font-family: $base-ff;
+	@extend .font-body;
 	font-weight: 400;
 	font-style: normal;
 	line-height: inherit;
@@ -42,9 +43,19 @@ body{
 	//+adjust-font-size-to(14px, .75);
 }
 
-.container{
-	width: 90%;
+.wrapper{
+	width: 95%;
+	max-width: $max-vp;
 	margin: 0 auto;
+	@include mq(a){
+		width: 94%;
+	}
+	@include mq(b){
+		width: 92%;
+	}
+	@include mq(c){
+		width: 88%;
+	}
 }
 
 div.body{
@@ -52,6 +63,23 @@ div.body{
 	padding-top: $bru*2;
 }
 
+
+// :: Typography
+// ----------------------------------------------------------------------------------------
+
+// BODY TEXT
+p{
+
+}
+
+// HEADINGS
+h1, h2, h3{
+	@extend .font-bold;
+}
+
+h4, h5, h6{
+	@extend .font-mono;
+}
 
 
 // :: Links
@@ -73,14 +101,9 @@ a{
 }
 
 
-
-// :: Typography
+// :: Selection
 // ----------------------------------------------------------------------------------------
 
-// BODY TEXT
-p{
-}
-
-// HEADINGS
-h1, h2, h3, h4, h5, h6{
-}
+::selection			{background: $highlight-color;}
+::-moz-selection	{background: $highlight-color;}
+a:focus				{outline: none;}

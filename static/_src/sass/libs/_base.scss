@@ -35,16 +35,20 @@ $experimental-support-for-svg		: true;
 $black								: rgb(0, 0, 0) !default;
 $white								: rgb(255,255,255) !default;
 $gray-1								: rgb(50, 50, 50);
+$gray-2								: #646464;
 
 $background-color					: $white;
 $body-color 						: $gray-1;
+$action								: $gray-2;
 $highlight-color 					: rgb(240,240,240);
 
 
 // :: Fonts
 // ------------------------------------------------------------
 
-$base-ff: "my-font", Helvetica, Arial, sans-serif !default;
+.font-body 					{  font-family: Helvetica, Arial, sans-serif; }
+.font-bold					{  font-family: Helvetica, Arial, sans-serif; font-weight: bold;}
+.font-mono 					{  font-family: monospace; }
 
 
 // :: Breakpoints
