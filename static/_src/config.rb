@@ -10,6 +10,8 @@
 # Require any additional compass plugins here.
 require 'compass-notify'
 require 'compass-h5bp'
+require 'susy'
+require 'breakpoint'
 
 # Can be :stand_alone or :rails. Defaults to :stand_alone
 project_type = :stand_alone
