@@ -34,10 +34,11 @@ $experimental-support-for-svg		: true;
 
 $black								: rgb(0, 0, 0) !default;
 $white								: rgb(255,255,255) !default;
-$color								: #E5E5E5 !default;
+$gray-1								: rgb(50, 50, 50);
 
-$selected-background-color			: $color;
-$selected-font-color				: $black;
+$background-color					: $white;
+$body-color 						: $gray-1;
+$highlight-color 					: rgb(240,240,240);
 
 
 // :: Fonts
@@ -58,7 +59,7 @@ $max-vp 							: 1300px;
 //$retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
 
 
-// :: Media queries Mixin
+// :: Media Queries Mixin
 // -------------------------------------------------------
 
 
@@ -76,3 +77,21 @@ $max-vp 							: 1300px;
     @media only screen and (max-width: $c-vp)	{ @content; }
   }
 }
+
+
+// :: Transition Mixin
+// -------------------------------------------------------
+
+@mixin _transition($prop:all, $duration:0.2s, $timing:ease-in-out, $delay:0s) {
+	@include transition($prop $duration $timing $delay);
+}
+
+
+// :: Opacity Hover Mixin
+// -------------------------------------------------------
+
+@mixin _hover{
+	opacity: 0.6;
+	@include _transition;
+}
+

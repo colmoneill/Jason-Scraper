@@ -1,8 +1,20 @@
+// --------------------------------------------------
+// LAYOUT
+// --------------------------------------------------
+
+
 @include border-box-everywhere;
+@include establish-baseline($base-font-size);
+
+
+// :: Basic Elements
+// ------------------------------------------------------------
 
 body, html{
 	position: relative;
 	height: 100%;
+	//
+	color: black;
 }
 
 body{
@@ -11,6 +23,11 @@ body{
 	min-width: 300px;
 	overflow-y: scroll;
 	overflow-x: hidden;
+	//
+	font-family: $base-ff;
+	font-weight: 400;
+	font-style: normal;
+	line-height: inherit;
 }
 
 .chromeframe{
@@ -33,4 +50,37 @@ body{
 div.body{
 	clear: both;
 	padding-top: $bru*2;
+}
+
+
+
+// :: Links
+// ------------------------------------------------------------
+
+a{
+	color: $body-color;
+	text-decoration: none;
+	&:visited, &:active, &:hover{
+		color: $body-color;
+	}
+	&.active{
+		cursor: default;
+	}
+	.no-touch &[href^='tel:']{
+		text-decoration: none !important;
+		cursor: default;
+	}
+}
+
+
+
+// :: Typography
+// ----------------------------------------------------------------------------------------
+
+// BODY TEXT
+p{
+}
+
+// HEADINGS
+h1, h2, h3, h4, h5, h6{
 }
