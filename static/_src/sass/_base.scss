@@ -50,15 +50,15 @@ $selected-font-color				: $black;
 
 $base-ff: "my-font", Helvetica, Arial, sans-serif !default;
 
-// Media-queries
-/*
-$mobile: "only screen and (min-width : 384px)" // 6 * 64 = 24 * 16 = 384;
-$phablet: "only screen and (min-width : 512px)" // 8 * 64 = 32 * 16 = 512;
-$tablet: "only screen and (min-width : 768px)" // 12 * 64 = 48 * 16 = 768;
-$desktop: "only screen and (min-width : 1024px)" // 16 * 64 = 64 * 16 = 1024;
-$large: "only screen and (min-width : 1280px)" // 20 * 64 = 80 * 16 = 1280;
-$huge: "only screen and (min-width : 1536px)" // 24 * 64 = 96 * 16 = 1536;
-$max: "only screen and (min-width : 2048px)" // 32 * 64 = 128 * 16 = 2048;
 
-$retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
-*/
+
+// :: Breakpoints
+// ------------------------------------------------------------
+
+$a-vp								: 950px;
+$b-vp								: 750px;
+$c-vp								: 500px;
+
+$max-vp 							: 1300px;
+
+//$retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";

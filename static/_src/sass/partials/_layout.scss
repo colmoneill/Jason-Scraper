@@ -1,0 +1,37 @@
+//@import base
+//+border-box-everywhere
+
+body, html{
+	position: relative;
+	height: 100%;
+}
+
+body{
+	margin: 0;
+	width: 100%;
+	min-width: 300px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+.chromeframe{
+	z-index: 10000;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	background: red;
+	color: white;
+	//+adjust-font-size-to(14px, .75);
+}
+
+.container{
+	width: 90%;
+	margin: 0 auto;
+}
+
+div.body{
+	clear: both;
+	padding-top: $bru*2;
+}
