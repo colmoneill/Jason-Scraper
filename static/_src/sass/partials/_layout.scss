@@ -29,6 +29,7 @@ body{
 	font-weight: 400;
 	font-style: normal;
 	line-height: inherit;
+	@include adjust-font-size-to($base-font-size);
 }
 
 .chromeframe{
@@ -60,7 +61,39 @@ body{
 
 div.body{
 	clear: both;
-	padding-top: $bru*2;
+	//padding-top: $bru*2;
+}
+
+.not-mobile{
+	@include mq(c){
+		display: none;
+	}
+}
+
+.separation-rule{
+	border-top: 1px solid $rule-color;
+	@include margin-leader(2);
+	@include padding-leader(1);
+}
+
+.subnav{
+	@extend .separation-rule;
+	border-top-style: dotted;
+	@extend .col5__span1of5;
+	@extend .col4__span1of4;
+	@extend .col2__span2of2;
+	@extend .last;
+}
+
+.subcontent{
+	@extend .col5__span4of5;
+	@extend .col4__span3of4;
+	@extend .col2__span2of2;
+	&:__all-col{
+		@extend .col5__span4of4;
+		@extend .col4__span3of3;
+		@extend .col2__span2of2;
+	}
 }
 
 
@@ -69,16 +102,34 @@ div.body{
 
 // BODY TEXT
 p{
-
 }
 
 // HEADINGS
 h1, h2, h3{
-	@extend .font-bold;
+	text-transform: lowercase;
+}
+
+h1{	
+	@extend .font-bold;										
+	@include adjust-font-size-to(18px);
+}
+
+h2{
+	@include adjust-font-size-to(16px);
 }
 
 h4, h5, h6{
 	@extend .font-mono;
+	text-transform: uppercase;
+}
+
+h4{
+	@include adjust-font-size-to($base-font-size);
+	text-transform: uppercase;
+}
+
+h5{
+	@include adjust-font-size-to(11px);
 }
 
 

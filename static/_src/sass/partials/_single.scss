@@ -1,0 +1,24 @@
+// --------------------------------------------------
+// SINGLE
+// --------------------------------------------------
+// Styles for Single Exhibition and Single Artist
+
+
+// :: Text Block
+// ------------------------------------------------------------
+
+.text-block{
+	@extend .clearfix;
+	@include margin-trailer(1);
+	h5{
+		@extend .col5__span1of4;
+		@extend .col4__span1of3;
+		@extend .col2__span2of2;
+	}
+	p{
+		@extend .col5__span3of4;
+		@extend .col4__span2of3;
+		@extend .col2__span2of2;
+		@extend .last;
+	}
+}

@@ -7,11 +7,15 @@
 // ------------------------------------------------------------
 // http://compass-style.org/reference/compass/typography/vertical_rhythm/
 
-$base-font-size						: 18px;
-$base-line-height					: 22px;
+$base-font-size						: 13px;
+$base-line-height					: 19px;
+
+$rhythm-unit						: "em";
+$default-rhythm-border-width		: 1px;
+
 $bru								: rhythm();
-$phi								: 1.6180339887;
-$Phi								: 0.6180339887;
+//$phi								: 1.6180339887;
+//$Phi								: 0.6180339887;
 $round-to-nearest-half-line			: true;
 
 
@@ -35,12 +39,14 @@ $experimental-support-for-svg		: true;
 $black								: rgb(0, 0, 0) !default;
 $white								: rgb(255,255,255) !default;
 $gray-1								: rgb(50, 50, 50);
-$gray-2								: #646464;
+$gray-2								: rgb(100,100,100);
+$gray-3								: rgb(122,122,122);
 
 $background-color					: $white;
 $body-color 						: $gray-1;
 $action								: $gray-2;
 $highlight-color 					: rgb(240,240,240);
+$rule-color							: $gray-3;
 
 
 // :: Fonts

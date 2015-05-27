@@ -84,3 +84,9 @@ $number-of-col__list	:	($number-of-col__max, $number-of-col__a, $number-of-col__
 .last{
 	@include last;
 }
+
+.all-col{
+	@extend .col5__span5of5;
+	@extend .col4__span4of4;
+	@extend .col2__span2of2;
+}
