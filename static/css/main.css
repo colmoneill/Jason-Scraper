@@ -114,85 +114,81 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
         display: block;
         clear: both; } }
 
-.last {
-  float: right;
-  margin-right: 0; }
-
-@media (min-width: 949px) and (max-width: 1301px) {
+@media (min-width: 949px) {
   .col5__span1of1 {
     width: 100%;
     float: left;
     margin-left: 0;
     margin-right: 0; } }
-@media (min-width: 949px) and (max-width: 1301px) {
+@media (min-width: 949px) {
   .col5__span1of2 {
     width: 47.61905%;
     float: left;
     margin-right: 4.7619%; } }
-@media (min-width: 949px) and (max-width: 1301px) {
+@media (min-width: 949px) {
   .col5__span2of2 {
     width: 100%;
     float: left;
     margin-left: 0;
     margin-right: 0; } }
-@media (min-width: 949px) and (max-width: 1301px) {
+@media (min-width: 949px) {
   .col5__span1of3 {
     width: 31.25%;
     float: left;
     margin-right: 3.125%; } }
-@media (min-width: 949px) and (max-width: 1301px) {
+@media (min-width: 949px) {
   .col5__span2of3 {
     width: 65.625%;
     float: left;
     margin-right: 3.125%; } }
-@media (min-width: 949px) and (max-width: 1301px) {
+@media (min-width: 949px) {
   .col5__span3of3 {
     width: 100%;
     float: left;
     margin-left: 0;
     margin-right: 0; } }
-@media (min-width: 949px) and (max-width: 1301px) {
+@media (min-width: 949px) {
   .col5__span1of4 {
     width: 23.25581%;
     float: left;
     margin-right: 2.32558%; } }
-@media (min-width: 949px) and (max-width: 1301px) {
+@media (min-width: 949px) {
   .col5__span2of4 {
     width: 48.83721%;
     float: left;
     margin-right: 2.32558%; } }
-@media (min-width: 949px) and (max-width: 1301px) {
+@media (min-width: 949px) {
   .col5__span3of4 {
     width: 74.4186%;
     float: left;
     margin-right: 2.32558%; } }
-@media (min-width: 949px) and (max-width: 1301px) {
+@media (min-width: 949px) {
   .col5__span4of4 {
     width: 100%;
     float: left;
     margin-left: 0;
     margin-right: 0; } }
-@media (min-width: 949px) and (max-width: 1301px) {
+@media (min-width: 949px) {
   .col5__span1of5 {
     width: 18.51852%;
     float: left;
     margin-right: 1.85185%; } }
-@media (min-width: 949px) and (max-width: 1301px) {
+@media (min-width: 949px) {
   .col5__span2of5 {
     width: 38.88889%;
     float: left;
     margin-right: 1.85185%; } }
-@media (min-width: 949px) and (max-width: 1301px) {
+@media (min-width: 949px) {
   .col5__span3of5 {
     width: 59.25926%;
     float: left;
     margin-right: 1.85185%; } }
-@media (min-width: 949px) and (max-width: 1301px) {
+@media (min-width: 949px) {
   .col5__span4of5 {
     width: 79.62963%;
     float: left;
     margin-right: 1.85185%; } }
-@media (min-width: 949px) and (max-width: 1301px) {
+@media (min-width: 949px) {
   .col5__span5of5 {
     width: 100%;
     float: left;
@@ -269,6 +265,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     float: left;
     margin-left: 0;
     margin-right: 0; } }
+.last {
+  float: right;
+  margin-right: 0; }
+
 /*
 ul{
 	list-style: none;
@@ -360,6 +360,11 @@ ul.nav li {
     padding-right: 0px; }
   ul.nav li:first-of-type {
     font-weight: bold; }
+
+.container div {
+  text-align: center;
+  color: white;
+  background: rgba(229, 229, 229, 0.65); }
 
 .hidden {
   display: none !important;

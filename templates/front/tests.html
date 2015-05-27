@@ -2,6 +2,21 @@
 	{% block title %}Layout testing{% endblock %}
 
 	{% block body %}
-		<h1>Coucou Virgile, voici ton terrain de jeu!</h1>
-		N'hésite pas à changer la structure des docs, le header et le footer sont dans base.html
+	<div class="container">
+		<div class="col5__span5of5 col4__span4of4 col2__span2of2">
+			<h1>col5__span5of5</h1>
+			<div class="col5__span3of5 col4__span2of4 col2__span2of2">
+				<h1>col5__span3of5</h1>
+			</div>
+			<div class="col5__span2of5 col4__span2of4 col2__span2of2 last">
+				<h1>col5__span3of5</h1>
+				<div class="col5__span1of2 col4__span1of2 col2__span1of2">
+					<h1>col5__span1of2</h1>
+				</div>
+				<div class="col5__span1of2 col4__span1of2 col2__span1of2 last">
+					<h1>col5__span1of2</h1>
+				</div>
+			</div>
+		</div>
+	</div>
 	{% endblock %}
