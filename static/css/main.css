@@ -327,9 +327,6 @@ body {
     .wrapper {
       width: 88%; } }
 
-div.body {
-  clear: both; }
-
 @media only screen and (max-width: 500px) {
   .not-mobile {
     display: none; } }
@@ -370,6 +367,8 @@ a {
   text-decoration: none; }
   a:visited, a:active, a:hover {
     color: #323232; }
+  a:active {
+    opacity: 0.4; }
   .no-touch a[href^='tel:'] {
     text-decoration: none !important;
     cursor: default; }
@@ -400,6 +399,8 @@ header {
   width: 280px;
   height: auto;
   float: left; }
+  #logo a:active {
+    opacity: 1; }
   @media only screen and (max-width: 750px) {
     #logo {
       margin-top: 20px; } }
@@ -442,7 +443,7 @@ nav {
           padding-bottom: 10px;
           padding-right: 10px; }
           nav ul li a:hover {
-            opacity: 0.6;
+            opacity: 0.4;
             -moz-transition: all 0.2s ease-in-out 0s;
             -o-transition: all 0.2s ease-in-out 0s;
             -webkit-transition: all 0.2s ease-in-out;
@@ -457,7 +458,7 @@ nav {
   width: 40px;
   height: 30px;
   padding: 15px;
-  background: url("../img/hamburger.svg") no-repeat right top; }
+  background: url('../img/hamburger.svg') no-repeat right top; }
 
 .nav-collapse.opened {
   max-height: 9999px; }

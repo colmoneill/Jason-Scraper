@@ -59,11 +59,6 @@ body{
 	}
 }
 
-div.body{
-	clear: both;
-	//padding-top: $bru*2;
-}
-
 .not-mobile{
 	@include mq(c){
 		display: none;
@@ -71,7 +66,7 @@ div.body{
 }
 
 .separation-rule{
-	border-top: 1px solid $rule-color;
+	border-top: $rule-style;
 	@include margin-leader(2);
 	@include padding-leader(1);
 }
@@ -142,8 +137,8 @@ a{
 	&:visited, &:active, &:hover{
 		color: $body-color;
 	}
-	&.active{
-		//cursor: default;
+	&:active{
+		opacity: $links-opacity;
 	}
 	.no-touch &[href^='tel:']{
 		text-decoration: none !important;

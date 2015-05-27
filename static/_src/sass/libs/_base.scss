@@ -19,12 +19,6 @@ $bru								: rhythm();
 $round-to-nearest-half-line			: true;
 
 
-// :: Image Path
-// ------------------------------------------------------------
-
-$img_path							: unquote("../img");
-
-
 // :: Sprites
 // ------------------------------------------------------------
 
@@ -48,6 +42,11 @@ $action								: $gray-2;
 $highlight-color 					: rgb(240,240,240);
 $rule-color							: $gray-3;
 
+
+// :: Fonts
+// ------------------------------------------------------------
+
+$rule-style							: 1px solid $rule-color;
 
 // :: Fonts
 // ------------------------------------------------------------
@@ -100,8 +99,15 @@ $max-vp 							: 1300px;
 // :: Opacity Hover Mixin
 // -------------------------------------------------------
 
+$links-opacity						: 0.4;
+
 @mixin _hover{
-	opacity: 0.6;
+	opacity: $links-opacity;
 	@include _transition;
 }
 
+@mixin no-click{
+	a:active{
+		opacity: 1;
+	}
+}
