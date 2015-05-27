@@ -48,6 +48,7 @@ body{
 	width: 95%;
 	max-width: $max-vp;
 	margin: 0 auto;
+	padding-bottom: 50px;
 	@include mq(a){
 		width: 94%;
 	}

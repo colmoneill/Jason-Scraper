@@ -49,3 +49,11 @@
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
+
+@mixin background-cover {
+	background: no-repeat center center; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}

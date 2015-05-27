@@ -71,7 +71,7 @@ $number-of-col__list	:	($number-of-col__max, $number-of-col__a, $number-of-col__
 				}
 			}
 			@else if $number-of-col == 5{
-				@include susy-breakpoint(($a-vp - 1), $susy){
+				@include susy-breakpoint(($a-vp + 1), $susy){
 					.col#{$number-of-col}__span#{$z}of#{$y}{
 						@include span($z of $y);
 					}

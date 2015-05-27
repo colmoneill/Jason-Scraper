@@ -1,0 +1,30 @@
+// --------------------------------------------------
+// ARTISTS
+// --------------------------------------------------
+
+.artist-block{
+	@extend .col5__span1of5;
+	@extend .col4__span1of4;
+	@extend .col2__span2of2;
+	@include mq-large{
+		&:nth-of-type(5n){
+			clear: right;
+			@include last;
+		}
+	}
+	@include mq-medium{
+		&:nth-of-type(4n){
+			clear: right;
+			@include last;
+		}
+	}
+	&__image{
+		width: 100%;
+		padding-bottom: 67%;
+		@include background-cover;
+		@include mq(c){
+			display: none;
+		}
+	}
+	p{}
+}
