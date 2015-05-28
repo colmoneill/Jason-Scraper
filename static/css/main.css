@@ -149,7 +149,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 951px) {
-  .col5__span1of4, .text-block h5 {
+  .col5__span1of4, .image-block, .text-block h5 {
     width: 23.25581%;
     float: left;
     margin-right: 2.32558%; } }
@@ -213,7 +213,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4__span1of3, .text-block h5 {
+  .col4__span1of3, .image-block, .text-block h5 {
     width: 30.76923%;
     float: left;
     margin-right: 3.84615%; } }
@@ -256,7 +256,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 0) and (max-width: 500px) {
-  .col2__span1of2 {
+  .col2__span1of2, .image-block {
     width: 48%;
     float: left;
     margin-right: 4.0%; } }
@@ -532,6 +532,27 @@ nav {
         border-bottom: 1px solid #7a7a7a; } }
 
 /* @import "partials/test"; */
+.image-block {
+  margin-top: 15px; }
+  @media only screen and (min-width: 951px) {
+    .image-block:nth-of-type(-n+4) {
+      margin-top: 0; }
+    .image-block:nth-of-type(4n) {
+      float: right;
+      margin-right: 0; } }
+  @media only screen and (min-width: 501px) and (max-width: 950px) {
+    .image-block:nth-of-type(-n+3) {
+      margin-top: 0; }
+    .image-block:nth-of-type(3n) {
+      float: right;
+      margin-right: 0; } }
+  @media only screen and (min-width: 0) and (max-width: 500px) {
+    .image-block:nth-of-type(-n+2) {
+      margin-top: 0; }
+    .image-block:nth-of-type(2n) {
+      float: right;
+      margin-right: 0; } }
+
 .text-block {
   margin-bottom: 1.46154em; }
 

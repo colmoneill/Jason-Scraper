@@ -4,6 +4,42 @@
 // Styles for Single Exhibition and Single Artist
 
 
+// :: Image Grid
+// ------------------------------------------------------------
+
+.image-block{
+	@extend .col5__span1of4;
+	@extend .col4__span1of3;
+	@extend .col2__span1of2;
+	margin-top: 15px;						//test !!! needs changing
+	//
+	@include mq-large{
+		&:nth-of-type(-n+4){
+			margin-top: 0;
+		}
+		&:nth-of-type(4n){
+			@include last;
+		}
+	}
+	@include mq-medium{
+		&:nth-of-type(-n+3){
+			margin-top: 0;
+		}
+		&:nth-of-type(3n){
+			@include last;
+		}
+	}
+	@include mq-small{
+		&:nth-of-type(-n+2){
+			margin-top: 0;
+		}
+		&:nth-of-type(2n){
+			@include last;
+		}
+	}
+}
+
+
 // :: Text Block
 // ------------------------------------------------------------
 
