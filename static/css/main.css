@@ -490,14 +490,11 @@ nav {
     display: none; } }
 .subnav {
   border-top-style: dashed;
-  text-transform: uppercase;
-  text-align: right;
   font-size: 1em;
   line-height: 1.46154em;
+  text-transform: uppercase;
+  text-align: right;
   padding-top: 10px; }
-  @media only screen and (max-width: 500px) {
-    .subnav.is_stuck {
-      border-top: none; } }
   @media only screen and (max-width: 500px) {
     .subnav {
       text-align: left;
@@ -506,30 +503,36 @@ nav {
       border-bottom-style: dashed;
       padding-bottom: 10px;
       margin-top: 0; } }
+  @media only screen and (max-width: 500px) {
+    .subnav.is_stuck {
+      border-top: none; } }
   .subnav ul li {
     margin-bottom: 0; }
     @media only screen and (max-width: 500px) {
       .subnav ul li {
-        display: inline-block;
+        float: left;
         margin-right: 15px; }
         .subnav ul li:last-of-type {
           margin-right: 0; } }
+    @media only screen and (max-width: 500px) {
+      .subnav ul li a {
+        padding-bottom: 3px; } }
     .subnav ul li a.points-to:before {
       content: "→ "; }
       @media only screen and (max-width: 500px) {
         .subnav ul li a.points-to:before {
           content: none; } }
     @media only screen and (max-width: 500px) {
-      .subnav ul li a {
-        padding-bottom: 3px; } }
-    @media only screen and (max-width: 500px) {
-      .subnav ul li a:hover {
+      .subnav ul li a.points-to {
         border-bottom: 1px solid #7a7a7a; } }
     .subnav ul li a:hover:before {
       content: "→ "; }
       @media only screen and (max-width: 500px) {
         .subnav ul li a:hover:before {
           content: none; } }
+    @media only screen and (max-width: 500px) {
+      .subnav ul li a:hover {
+        border-bottom: 1px solid #7a7a7a; } }
 
 /*
 .container{

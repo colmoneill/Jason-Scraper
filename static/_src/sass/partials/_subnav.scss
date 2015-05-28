@@ -5,9 +5,14 @@
 // Maybe doesn't need its own partial
 
 @mixin points_to{
-	content:"→ ";
+	&:before{
+		content:"→ ";
+		@include mq(c){
+			content: none;
+		}
+	}
 	@include mq(c){
-		content: none;
+		border-bottom: $rule-style;
 	}
 }
 
@@ -19,17 +24,11 @@
 	@extend .col2__span2of2;
 	@extend .last;
 	//
-	text-transform: uppercase;
-	text-align: right;
 	@include adjust-font-size-to(13px);
 	@extend .font-mono;
+	text-transform: uppercase;
+	text-align: right;
 	padding-top: 10px;
-	//
-	&.is_stuck{
-		@include mq(c){
-			border-top: none;
-		}
-	}
 	//
 	@include mq(c){
 		text-align: left;
@@ -39,30 +38,31 @@
 		padding-bottom: 10px;
 		margin-top: 0;
 	}
+	//
+	&.is_stuck{
+		@include mq(c){
+			border-top: none;
+		}
+	}
 	ul{
 		li{
 			margin-bottom: 0;		//3px on old styles - to see when right font
 			@include mq(c){
-				display: inline-block;
+				float: left;
 				margin-right: 15px;
 				&:last-of-type{
 					margin-right: 0;
 				}
-		}
+			}
 			a{
-				&.points-to:before{
-					@include points_to;
-				}
 				@include mq(c){
 					padding-bottom: 3px;
 				}
+				&.points-to{
+					@include points_to;
+				}
 				&:hover{
-					@include mq(c){
-						border-bottom: $rule-style;
-					}
-					&:before{
-						@include points_to;
-					}	
+					@include points_to;
 				}
 			}
 		}
