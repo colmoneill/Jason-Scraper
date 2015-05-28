@@ -72,20 +72,11 @@ body{
 	@include padding-leader(1);
 }
 
-.subnav{
-	@extend .separation-rule;
-	border-top-style: dotted;
-	@extend .col5__span1of5;
-	@extend .col4__span1of4;
-	@extend .col2__span2of2;
-	@extend .last;
-}
-
 .subcontent{
 	@extend .col5__span4of5;
 	@extend .col4__span3of4;
 	@extend .col2__span2of2;
-	&:__all-col{
+	&__all-col{
 		@extend .col5__span4of4;
 		@extend .col4__span3of3;
 		@extend .col2__span2of2;

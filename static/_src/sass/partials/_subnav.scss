@@ -1,0 +1,70 @@
+// --------------------------------------------------
+// SUBNAV
+// --------------------------------------------------
+// Sub-menu on Single Artists, Single Exhibition and Past Exhibitions Templates
+// Maybe doesn't need its own partial
+
+@mixin points_to{
+	content:"→ ";
+	@include mq(c){
+		content: none;
+	}
+}
+
+.subnav{
+	@extend .separation-rule;
+	border-top-style: dashed;
+	@extend .col5__span1of5;
+	@extend .col4__span1of4;
+	@extend .col2__span2of2;
+	@extend .last;
+	//
+	text-transform: uppercase;
+	text-align: right;
+	@include adjust-font-size-to(13px);
+	@extend .font-mono;
+	padding-top: 10px;
+	//
+	&.is_stuck{
+		@include mq(c){
+			border-top: none;
+		}
+	}
+	//
+	@include mq(c){
+		text-align: left;
+		background: $white;
+		border-bottom: $rule-style;
+		border-bottom-style: dashed;
+		padding-bottom: 10px;
+		margin-top: 0;
+	}
+	ul{
+		li{
+			margin-bottom: 0;		//3px on old styles - to see when right font
+			@include mq(c){
+				display: inline-block;
+				margin-right: 15px;
+				&:last-of-type{
+					margin-right: 0;
+				}
+		}
+			a{
+				&.points-to:before{
+					@include points_to;
+				}
+				@include mq(c){
+					padding-bottom: 3px;
+				}
+				&:hover{
+					@include mq(c){
+						border-bottom: $rule-style;
+					}
+					&:before{
+						@include points_to;
+					}	
+				}
+			}
+		}
+	}
+}
