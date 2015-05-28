@@ -1,3 +1,10 @@
+<!--
+I know it's messy.
+This is a test page. That's what it's made for...
+Don't judge me you Irish fuck.
+-->
+
+
 {% extends "base.html" %}
 	{% block title %}Layout testing{% endblock %}
 
@@ -16,6 +23,14 @@
 		</div>
 		<div class="subcontent">
 			<section class="subcontent__all-col" id="informations">
+			
+						<div class="col5__span2of4 col4__span1of3 col2__span2of2">
+			<form class="newsletter">
+				<input type="text" name="firstname" placeholder="Name"><input type="text" name="lastname" placeholder="E-Mail"><input type="submit" class="newsletter__button" value="Subscribe">
+				
+			</form>
+			</div>
+			
 				<div class="separation-rule"></div>
 				<div class="text-block">
 					<h5>informations</h5>
@@ -33,12 +48,22 @@
 				<h4>02.04.15 > 16.05.15</h4>
 			</section>
 		</div>
+
 				<a href="">
 				<div class="artist-block">
 					<div class="artist-block__image"></div>
 					<p>lucas blalock</p>
 				</div>
 				</a>
+				
+		<div class="col5__span2of4 staff_member">
+			<h3>Rodolphe Janssen</h3>
+			<p class="staff_member__title">— Director</p>
+			<p class="staff_member__mail"><a href="">rodolphe@rodolphe.rodolphe</a></p>
+		</div>
+		
+
+				
 				<div class="artist-block">
 					<div class="artist-block__image"></div>
 					<p>lucas blalock</p>
@@ -55,7 +80,7 @@
 					<div class="artist-block__image"></div>
 					<p>lucas blalock</p>
 				</div>
-				<div class="all-col">
+				<div class="">
 					<div class="artist-block__image"></div>
 					<p>lucas blalock</p>
 				</div>

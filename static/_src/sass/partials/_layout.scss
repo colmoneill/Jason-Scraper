@@ -60,6 +60,17 @@ body{
 	}
 }
 
+.subcontent{
+	@extend .col5__span4of5;
+	@extend .col4__span3of4;
+	@extend .col2__span2of2;
+	&__all-col{
+		@extend .col5__span4of4;
+		@extend .col4__span3of3;
+		@extend .col2__span2of2;
+	}
+}
+
 .not-mobile{
 	@include mq(c){
 		display: none;
@@ -72,17 +83,6 @@ body{
 	@include padding-leader(1);
 }
 
-.subcontent{
-	@extend .col5__span4of5;
-	@extend .col4__span3of4;
-	@extend .col2__span2of2;
-	&__all-col{
-		@extend .col5__span4of4;
-		@extend .col4__span3of3;
-		@extend .col2__span2of2;
-	}
-}
-
 
 // :: Typography
 // ----------------------------------------------------------------------------------------
@@ -92,7 +92,7 @@ p{
 }
 
 // HEADINGS
-h1, h2, h3{
+h1, h2{
 	text-transform: lowercase;
 }
 
@@ -103,6 +103,11 @@ h1{
 
 h2{
 	@include adjust-font-size-to(16px);
+}
+
+h3{
+	@extend .font-bold;
+	@include adjust-font-size-to(13px);
 }
 
 h4, h5, h6{
@@ -130,7 +135,7 @@ a{
 		color: $body-color;
 	}
 	&:active{
-		opacity: $links-opacity;
+		opacity: ($links-opacity + 0.2);
 	}
 	.no-touch &[href^='tel:']{
 		text-decoration: none !important;

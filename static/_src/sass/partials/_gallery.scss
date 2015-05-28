@@ -1,0 +1,71 @@
+// --------------------------------------------------
+// GALLERY
+// --------------------------------------------------
+// Gallery Page (currently named About)
+
+
+// :: Contact
+// ------------------------------------------------------------
+
+.staff_member{
+	h3{
+		display: inline;
+	}
+	&__title{
+		display: inline;		
+	}
+	&__mail{
+		@extend .font-mono;
+		@include adjust-font-size-to($base-font-size);
+		a{
+			color: $gray-3;
+			&:hover{
+				@include _hover;
+			}
+		}
+	}
+}
+
+
+// :: Nexsletter Field
+// ------------------------------------------------------------
+
+.newsletter{
+	input{
+		@include adjust-font-size-to($base-font-size);
+		width: 39%;
+		@extend .font-body;
+		padding: 1px;
+		margin: 0;
+		margin-right: 1%;
+		&:focus{
+			outline-style: solid;
+			outline-width: 1px;
+			outline-color: $gray-4;
+		}
+	}
+	input.newsletter__button{
+		cursor: pointer;
+		background-color: $white;
+		border-width: 1px;
+		border-style: solid;
+		-moz-border-top-colors: none;
+		-moz-border-right-colors: none;
+		-moz-border-bottom-colors: none;
+		-moz-border-left-colors: none;
+		border-image: none;
+		border-radius: 0;
+		width: 20%;
+		margin-right: 0;
+		padding: 2px;
+		&:focus{
+			outline-width: 0;
+			border-color: $gray-4;
+		}
+		&:active{
+		}
+		&:hover{
+			@include _hover;
+		}
+	}
+}

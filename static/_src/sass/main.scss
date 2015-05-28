@@ -15,7 +15,7 @@
 @import "breakpoint";
 @import "susy";
 @import "compass/reset";
-
+//
 @import "libs/mixins";
 @import "libs/retina-sprites";
 @import "libs/base";
@@ -29,13 +29,13 @@
 
 // :: Imports website style
 // ------------------------------------------------------------
-@import "partials/typo";
 @import "partials/layout";
 @import "partials/header";
 @import "partials/subnav";
-@import "partials/test";
+/* @import "partials/test"; */
 @import "partials/single";
 @import "partials/artists";
+@import "partials/gallery";
 @include h5bp-helpers;
 
 
