@@ -1,0 +1,26 @@
+{% macro render_field(field) %}
+
+<div class="form-group {{ 'has-error' if field.errors }}">
+    {% if field.errors %}
+        {% for error in field.errors %}
+            <p class="text-danger">{{ error }}</p>
+        {% endfor %}
+    {% endif %}
+    {{ field.label(class_="control-label") }}
+    {{ field(class_="form-control", **kwargs) }}
+</div>
+
+{% endmacro %}
+
+{% macro render_datepicker(field) %}
+
+<div class="form-group {{ 'has-error' if field.errors }}">
+    <div class="input-group datepicker">
+        <input type="text" name="{{ field.name }}" class="form-control" />
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+    </div>
+</div>
+
+{% endmacro%}
