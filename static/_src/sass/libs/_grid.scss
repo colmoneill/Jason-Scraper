@@ -14,7 +14,7 @@ $number-of-col__c					:	2;
 $susy: (
   columns: $number-of-col__max,
   gutters: 1/10,
-  debug: (image: show),
+ /*  debug: (image: show), */
   global-box-sizing: border-box,
   use-custom: (px: true),
  );
@@ -23,14 +23,14 @@ $susy: (
 $susy-a: (
   columns: $number-of-col__a,
   gutters: 1/8,
-  debug: (image: show),
+  /* debug: (image: show), */
 );
 
 // 2 Column grid (c-vp)
 $susy-c: (
   columns: $number-of-col__c,
   gutters: 1/12,
-  debug: (image: show),
+ /*  debug: (image: show), */
 );
 
 
@@ -78,6 +78,12 @@ $number-of-col__list	:	($number-of-col__max, $number-of-col__a, $number-of-col__
 				}
 			}
 		}
+	}
+}
+
+@mixin full_on_mq_b{
+	@include mq(b){
+		@include span(4 of 4)
 	}
 }
 

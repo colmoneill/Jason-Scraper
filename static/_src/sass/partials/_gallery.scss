@@ -4,6 +4,23 @@
 // Gallery Page (currently named About)
 
 
+// :: Sections
+// ------------------------------------------------------------
+
+.gallery__left{
+	@extend .col5__span3of5;
+	@extend .col4__span2of4;
+	@include full_on_mq_b;
+	@extend .col2__span2of2;
+}
+.gallery__right{
+	@extend .col5__span2of5;
+	@extend .col4__span2of4;
+	@include full_on_mq_b;
+	@extend .col2__span2of2;
+	@include last;
+}
+
 // :: Contact
 // ------------------------------------------------------------
 

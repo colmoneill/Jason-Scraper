@@ -49,6 +49,16 @@ $rule-color							: $gray-3;
 
 $rule-style							: 1px solid $rule-color;
 
+
+// :: Margins
+// ------------------------------------------------------------
+
+$margin_top							: 22px;
+$margin_bottom						: 20px;
+$p_margin_bottom					: 10px;
+$h5_margin_bottom					: 6px;
+$image_ratio						: 67%;
+
 // :: Fonts
 // ------------------------------------------------------------
 
@@ -94,6 +104,10 @@ $max-vp 							: 1300px;
 
 @mixin mq-medium{
 	@media only screen and (min-width: ($c-vp + 1)) and (max-width: $a-vp){@content;}
+}
+
+@mixin mq-medium-b{
+	@media only screen and (min-width: ($c-vp + 1)) and (max-width: $b-vp){@content;}
 }
 
 @mixin mq-large{

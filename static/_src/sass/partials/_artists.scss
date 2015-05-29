@@ -6,10 +6,16 @@
 	@extend .col5__span1of5;
 	@extend .col4__span1of4;
 	@extend .col2__span2of2;
+	//
+	margin-top: $margin_bottom;
+	//
 	@include mq-large{
 		&:nth-of-type(5n){
 			clear: right;
 			@include last;
+		}
+		&:nth-of-type(-n+5){
+			margin-top: 0;
 		}
 	}
 	@include mq-medium{
@@ -17,13 +23,21 @@
 			clear: right;
 			@include last;
 		}
+		&:nth-of-type(-n+4){
+			margin-top: 0;
+		}
+	}
+	@include mq-small{
+		&:first-of-type{
+			margin-top: 0;
+		}
 	}
 	a &:hover{
 		@include _hover;
 	}
 	&__image{
 		width: 100%;
-		padding-bottom: 67%;
+		padding-bottom: $image_ratio;
 		@include background-cover;
 		@include mq(c){
 			display: none;
