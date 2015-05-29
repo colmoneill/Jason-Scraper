@@ -13,6 +13,7 @@ import pymongo
 from utils import slugify
 
 from forms import ExhibitionForm
+from forms import GalleryInfo
 
 # Local imports
 # from settings import *
@@ -32,7 +33,7 @@ def test():
 def home():
     artworks = db.artworks.find().sort("id", -1).limit(10)
     exhibition = db.exhibition.find()
-    current_exhibition = db.exhibitions.find()
+    current_exhibition = db.exhibitions.find() #.limit(2)
     return render_template("front/current.html", current_exhibition=current_exhibition)
 
 @app.route("/artists/")
@@ -48,13 +49,12 @@ def artist(slug):
 
 @app.route("/current/")
 def current():
-    current_exhibition = db.exhibitions.find()
+    current_exhibition = db.exhibitions.find()#.limit(2)
     return render_template("front/current.html", current_exhibition=current_exhibition)
 
 @app.route("/current/<slug>/")
 def exhibition(slug):
-    exhibition = db.exhibition.find_one({ "slug: slug"})
-    artworks = db.exhibition.find()
+    exhibition = db.exhibition.find_one({ "slug": slug})
     return render_template("front/exhibition.html")
 
 @app.route('/exhibition', methods=['GET', 'POST'])
@@ -92,24 +92,31 @@ def viewExhibition(slug):
     else:
         abort(404)
 
+@app.route("/gallery/")
+def GalleryInfo():
+
+    teammember = db.teammember.find()
+
+    return render_template('front/gallery.html', teammember=teammember)
+
 ### ADMIN FUNCTIONALITY ###
 @app.route("/exhibition/create/", methods=['GET', 'POST'])
 def createExhibition():
-    
+
     form = ExhibitionForm()
-    
+
     if form.validate_on_submit():
         exhibition = form.data
         exhibition['slug'] = slugify(exhibition['name'])
-        
+
         db.exhibitions.insert(exhibition)
-        
+
         return redirect_flask(url_for('viewExhibition', slug=exhibition['slug']))
-        
+
     artists = db.artists.find()
-    
+
     return render_template('admin/exhibition/exhibitionForm.html', form=form, artists=artists)
-    
+
     #exhibition = {
         #'name': '',
         #'slug': '',
@@ -126,7 +133,7 @@ def createExhibition():
         #exhibition['name'] = request.form['name']
         #exhibition['slug'] = slugify(request.form['name'])
         #exhibition['description'] = request.form['description']
-            
+
         #for slug in request.form.getlist('artists'):
             #artist = db.artists.find_one({'slug': slug})
             #if artist <> None:
@@ -166,6 +173,22 @@ def updateExhibition (slug):
         return render_template('admin/exhibition/exhibitionForm.html', exhibition=exhibition, artists=artists)
     else:
         abort(404)
+
+@app.route("/admin/manage-gallery-info", methods=['GET', 'POST'])
+def createTeamMember():
+
+    form = GalleryInfo()
+
+    if form.validate_on_submit():
+        teamMember = form.data
+        teamMember['slug'] = slugify(teamMember['name'])
+
+        db.teammember.insert(teammember)
+
+    #    return redirect_flask(url_for('galleryInfo'))
+
+    return render_template('admin/exhibition/exhibitionForm.html', form=form, artists=artists)
+
 
 
 if __name__ == '__main__':

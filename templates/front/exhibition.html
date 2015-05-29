@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ exhibition.name }}{% endblock %}
 {% block body %}
+Single exhibition
     <ul>
     	{% for artist in exhibition.artists %}
         	<li><a href="/artists/{{ artist.slug }}/">{{ artist.artist }}</a></li>

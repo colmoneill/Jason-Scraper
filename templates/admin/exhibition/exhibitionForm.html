@@ -8,7 +8,7 @@
     <form method="post">
         <p>List of items to encode a new exhibition:<br>Artist name,<br>period of exhibition,<br>name of exhibition,<br>exhibition key image,<br>exhibition description text,<br>exhibition views,<br>press release pdf,<br>link to artist page</p>
         {{ form.csrf_token }}
-        
+
         {% if form.name.errors %}
             <ul class=errors>
                 {% for error in form.name.errors %}
@@ -16,13 +16,13 @@
                 {% endfor %}
             </ul>
         {% endif %}
-        
+
         {{ form.name.label }} {{ form.name(size=60) }}
-        
+
         <ul class="list-group">
             {% for artist in artists %}
                 <li class="list-group-item">
-                    <input name="artists" type="checkbox" value="{{ artist.slug }}" id="{{ artist.slug }}" {{ 'checked' if artist in exhibition.artists else '' }} />
+                    <input name="artists" type="checkbox" value="{{ artist.slug }}" id="{{ artist.slug }}" />
                     <label for="{{ artist.slug }}">{{ artist.artist }}</label>
                 </li>
             {% endfor %}
