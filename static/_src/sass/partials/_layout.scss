@@ -64,6 +64,7 @@ body{
 	@extend .col5__span4of5;
 	@extend .col4__span3of4;
 	@extend .col2__span2of2;
+	margin-right: 0;
 	&__all-col{
 		@extend .col5__span4of4;
 		@extend .col4__span3of3;
@@ -79,8 +80,8 @@ body{
 
 .separation-rule{
 	border-top: $rule-style;
-	@include margin-leader(2);
-	@include padding-leader(1);
+	margin-top: $margin_top;
+	padding-top: $margin_bottom;
 }
 
 
@@ -122,6 +123,7 @@ h4{
 
 h5{
 	@include adjust-font-size-to(11px);
+	margin-bottom: $h5_margin_bottom;
 }
 
 
