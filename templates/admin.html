@@ -1,44 +1,57 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/admin.css">
+    
+    <title>edit GJR | {% block title %}{% endblock %}</title>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">editing Rodolphe Janssen.com</a>
+        </div>
 
-<title>edit GJR | {% block title %}{% endblock %}</title>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li><a href="">login</a></li>
+                <li><a href="">edit exhibitions</a></li>
+        </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+    </nav>
 
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">editing Rodolphe Janssen.com</a>
+    <div class="container">
+        <div class="page-header">
+        <h1>Galerie Rodolphe Janssen <small>editing the website content</small></h1>
+        </div>
+        <section>
+            {% block body %}{% endblock %}
+        </section>
     </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a href="">login</a></li>
-		    <li><a href="">edit exhibitions</a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-
-<div class="container">
-	<div class="page-header">
-  	<h1>Galerie Rodolphe Janssen <small>editing the website content</small></h1>
-	</div>
-	<section>
-    	{% block body %}{% endblock %}
-	</section>
-</div>
-
-<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-<script src="/static/js/scripts.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    
+    <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="/static/js/vendor/moment.min.js"></script>
+    <script src="/static/js/vendor/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function () {
+            $('.datepicker').datetimepicker({
+                format: 'DD-mm-YYYY'
+            });
+        });
+    </script>
+</body>
