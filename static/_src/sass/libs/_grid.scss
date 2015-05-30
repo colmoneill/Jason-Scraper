@@ -14,7 +14,7 @@ $number-of-col__c					:	2;
 $susy: (
   columns: $number-of-col__max,
   gutters: 1/10,
- /*  debug: (image: show), */
+  /* debug: (image: show), */
   global-box-sizing: border-box,
   use-custom: (px: true),
  );

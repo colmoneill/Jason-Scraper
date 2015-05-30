@@ -21,10 +21,33 @@
 	@include last;
 }
 
+
+// :: Text-Block Gallery (Original in _single.scss)
+// ------------------------------------------------------------
+
+.gallery__left{ 
+	.text-block{
+		h5{
+			@extend .col5__span1of3;
+			@extend .col4__span2of2;
+			@include full_on_mq_b;
+			@extend .col2__span2of2;	
+		}
+		p{
+			@extend .col5__span2of3;
+			@extend .col4__span2of2;
+			@include full_on_mq_b;
+			@extend .col2__span2of2;
+			@include last;
+		}
+	}
+}
+
 // :: Contact
 // ------------------------------------------------------------
 
 .staff_member{
+	margin-bottom: $margin-bottom;
 	h3{
 		display: inline;
 	}
@@ -48,6 +71,14 @@
 // ------------------------------------------------------------
 
 .newsletter{
+	@include last;
+	@extend .col5__span2of3;
+	@extend .col4__span2of2;
+	@include mq-medium-b{
+		@include span(3 of 4);
+		@include first;
+	}
+	@extend .col2__span2of2;
 	input{
 		@include adjust-font-size-to($base-font-size);
 		width: 39%;

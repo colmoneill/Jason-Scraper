@@ -78,6 +78,10 @@ body{
 	}
 }
 
+.no-margin-top{
+	margin-top: -($margin_top);
+}
+
 .separation-rule{
 	border-top: $rule-style;
 	margin-top: $margin_top;
