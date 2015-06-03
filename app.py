@@ -12,8 +12,7 @@ import pymongo
 
 from utils import slugify
 
-from forms import ExhibitionForm
-from forms import GalleryInfo
+import forms
 
 # Local imports
 # from settings import *
@@ -107,7 +106,7 @@ def viewAdmin():
 @app.route("/exhibition/create/", methods=['GET', 'POST'])
 def createExhibition():
 
-    form = ExhibitionForm()
+    form = forms.ExhibitionForm()
 
     if form.validate_on_submit():
         exhibition = form.data
@@ -178,22 +177,20 @@ def updateExhibition (slug):
     else:
         abort(404)
 
-@app.route("/admin/manage-gallery-info", methods=['GET', 'POST'])
+@app.route("/admin/manage-gallery-info/", methods=['GET', 'POST'])
 def createTeamMember():
 
-    form = GalleryInfo()
+    form = forms.GalleryInfo()
 
     if form.validate_on_submit():
         teamMember = form.data
         teamMember['slug'] = slugify(teamMember['name'])
 
-        db.teammember.insert(teammember)
+        db.teammember.insert(teamMember)
 
-    #    return redirect_flask(url_for('galleryInfo'))
+    teammember = db.teammember.find()
 
-    return render_template('admin/exhibition/exhibitionForm.html', form=form, artists=artists)
-
-
+    return render_template('admin/gallery.html', form=form, teammember=teammember,)
 
 if __name__ == '__main__':
     app.run(debug=True)
