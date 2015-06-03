@@ -94,9 +94,9 @@ def viewExhibition(slug):
 @app.route("/gallery/")
 def GalleryInfo():
 
-    teammember = db.teammember.find()
+    teammembers = db.teammember.find()
 
-    return render_template('front/gallery.html', teammember=teammember)
+    return render_template('front/gallery.html', teammembers=teammembers)
 
 ### ADMIN FUNCTIONALITY ###
 @app.route("/admin/")

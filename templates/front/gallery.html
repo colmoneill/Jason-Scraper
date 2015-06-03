@@ -10,7 +10,7 @@ Don't judge me you Irish fuck.
 
 	{% block body %}
 	<div class="container no-margin-top">
-	
+
 		<div class="gallery__left">
 			<section class="contact">
 			<div class="separation-rule"></div>
@@ -43,7 +43,7 @@ Don't judge me you Irish fuck.
 					<input type="text" name="firstname" placeholder="Name"><input type="text" name="lastname" placeholder="E-Mail"><input type="submit" value="Subscribe" class="newsletter__button">
 				</form>
 			</div>
-			
+
 			<div class="text-block">
 				<h5>Facebook</h5>
 				<div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
@@ -53,42 +53,16 @@ Don't judge me you Irish fuck.
 
 	<div class="gallery__right">
 	<div class="separation-rule"></div>
-		<div class="staff_member">
-			<h3>Rodolphe Janssen</h3>
-			<p class="staff_member__mail"><a href="#">rodolphe@rodolphejanssen.com</a></p>
-		</div>
-		<div class="staff_member">
-			<h3>Sibylle du Roy</h3>
-			<p class="staff_member__title"> — Director</p>
-			<p class="staff_member__mail"><a href="#">sibylle@rodolphejanssen.com</a></p>
-		</div>
-		<div class="staff_member">
-			<h3>Stéphanie Jezierski</h3>
-			<p class="staff_member__title"> — Gallery Manager / Account</p>
-			<p class="staff_member__mail"><a href="#">stephanie@rodolphejanssen.com</a></p>
-		</div>
-		<div class="staff_member">
-			<h3>Gaël Leininger</h3>
-			<p class="staff_member__title">— Operation & Logistic Manager</p>
-			<p class="staff_member__mail"><a href="#">gael@rodolphejanssen.com</a></p>
-		</div>
-		<div class="staff_member">
-			<h3>Eléonore Jacquard </h3>
-			<p class="staff_member__title">— Press / Public Relations</p>
-			<p class="staff_member__mail"><a href="#">eleonore@rodolphejanssen.com</a></p>
-		</div>
-		<div class="staff_member">
-			<h3>Julie Senden</h3>
-			<p class="staff_member__title">— Assistant</p>
-			<p class="staff_member__mail"><a href="#">julie@rodolphejanssen.com</a></p>
-		</div>
-		<div class="staff_member">
-			<h3>Vanessa Weckx</h3>
-			<p class="staff_member__mail"><a href="#">vanessa@rodolphejanssen.com</a></p>
-		</div>
+		{% for teammember in teammembers %}
+			<div class="staff_member">
+				<h3>{{ teammember.name }}</h3>
+				<p class="staff_member__title"> — {{ teammember.role }}</p>
+				<p class="staff_member__mail"><a href="mailto:{{ teammember.email }}">{{ teammember.email }}</a></p>
+			</div>
+		{% endfor %}
 	</div>
 
-	</section>
+</section>
 		</div>
 	</div>
 

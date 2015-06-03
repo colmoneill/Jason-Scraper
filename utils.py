@@ -7,7 +7,7 @@ import re
 
 def slugify(value):
     """ Note: This was modified from django.utils.text slugify """
-    value = unicode(value.decode('UTF-8'))
+    #value = unicode(value.decode('UTF-8'))
     value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
     value = value.decode('ascii')
     value = re.sub('[^\w\s-]', '', value).strip().lower()
