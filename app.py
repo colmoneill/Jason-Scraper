@@ -100,6 +100,10 @@ def GalleryInfo():
     return render_template('front/gallery.html', teammember=teammember)
 
 ### ADMIN FUNCTIONALITY ###
+@app.route("/admin/")
+def viewAdmin():
+    return render_template('admin.html')
+
 @app.route("/exhibition/create/", methods=['GET', 'POST'])
 def createExhibition():
 

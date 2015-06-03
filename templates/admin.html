@@ -6,7 +6,7 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/admin.css">
-    
+
     <title>edit GJR | {% block title %}{% endblock %}</title>
 </head>
 <body>
@@ -38,15 +38,19 @@
         <h1>Galerie Rodolphe Janssen <small>editing the website content</small></h1>
         </div>
         <section>
-            {% block body %}{% endblock %}
+            {% block body %}
+            Welcome to the administration tool for rodolphejanssen.com<br>
+            From here you can create and edit exhibitions, add and modify artists, and manage the general gallery information page.
+            <button>Sync available info from Art Logic</button>
+            {% endblock %}
         </section>
     </div>
-    
+
     <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="/static/js/vendor/moment.min.js"></script>
     <script src="/static/js/vendor/bootstrap-datetimepicker.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    
+
     <script type="text/javascript">
         $(function () {
             $('.datepicker').datetimepicker({
