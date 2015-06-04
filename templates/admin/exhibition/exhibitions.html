@@ -1,0 +1,9 @@
+{% extends "admin.html" %}
+{% block title %}{% endblock %}
+{% block body %}
+    <ul>
+    	{% for artist in exhibition.artists %}
+        	<li><a href="/artists/{{ artist.slug }}/">{{ artist.artist }}</a></li>
+    	{% endfor %}
+    </ul>
+{% endblock %}

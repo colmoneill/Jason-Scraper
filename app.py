@@ -70,18 +70,6 @@ def adminexhibition():
             new = True
     return render_template('front/exhibition.html', exhibition=exhibition, allexhibition=allexhibition, artists=artists, new=new)
 
-
-# route for handling the login page logic
-#@app.route('/login', methods=['GET', 'POST'])
-#def login():
-    #error = None
-    #if request.method == 'POST':
-        #if request.form['username'] <> 'admin' or request.form['password'] <> 'admin':
-            #error = 'Invalid Credentials. Please try again.'
-        #else:
-            #return redirect_flask(url_for('home'))
-    #return render_template('front/login.html', error=error)
-
 @app.route("/exhibition/<slug>/")
 def viewExhibition(slug):
     exhibition = db.exhibitions.find_one({'slug': slug})
@@ -103,7 +91,19 @@ def GalleryInfo():
 def viewAdmin():
     return render_template('admin.html')
 
-@app.route("/exhibition/create/", methods=['GET', 'POST'])
+@app.route("/admin/")
+def admin():
+    return render_template('admin.html')
+
+@app.route("/admin/exhibitions/")
+def exhibitionAdmin():
+    all_exhibitions = db.exhibition.find()
+    artists = db.artists.find().sort("artist_sort", 1)
+    exhibition = None
+    new = False
+    return render_template('admin/exhibition/exhibitions.html', all_exhibitions=all_exhibitions, exhibition=exhibition, artists=artists, new=new)
+
+@app.route("/admin/exhibition/create/", methods=['GET', 'POST'])
 def createExhibition():
 
     form = forms.ExhibitionForm()
@@ -149,7 +149,7 @@ def createExhibition():
     #artists = db.artists.find()
     #return render_template('admin/exhibition/exhibitionForm.html', exhibition=exhibition, artists=artists)
 
-@app.route('/exhibition/update/<slug>/', methods=['GET', 'POST'])
+@app.route('/admin/exhibition/update/<slug>/', methods=['GET', 'POST'])
 def updateExhibition (slug):
     exhibition = db.exhibitions.find_one({'slug': slug})
 
