@@ -1,3 +1,7 @@
-node_modules
-.idea
-data
+/.idea
+/screenshots
+/templates
+/test
+.editorconfig
+.jshintrc
+.travis.yml
