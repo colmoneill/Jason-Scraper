@@ -3,7 +3,7 @@
 {% block body %}
     <h3>exhibitions</h3>
     <ul>
-      <button><a href="/admin/exhibition/create/">create nex exhibition</a></button>
+      <a href="/admin/exhibition/create/">create new exhibition</a>
       <p>existing exhibitions:</p>
       {% for artist in exhibition.artists %}
         	<li><a href="/artists/{{ artist.slug }}/">{{ artist.artist }}</a></li>
