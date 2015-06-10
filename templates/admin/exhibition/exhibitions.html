@@ -1,8 +1,11 @@
 {% extends "admin.html" %}
 {% block title %}{% endblock %}
 {% block body %}
+    <h3>exhibitions</h3>
     <ul>
-    	{% for artist in exhibition.artists %}
+      <button><a href="/admin/exhibition/create/">create nex exhibition</a></button>
+      <p>existing exhibitions:</p>
+      {% for artist in exhibition.artists %}
         	<li><a href="/artists/{{ artist.slug }}/">{{ artist.artist }}</a></li>
     	{% endfor %}
     </ul>
