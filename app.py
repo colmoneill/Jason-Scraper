@@ -91,10 +91,6 @@ def GalleryInfo():
 def viewAdmin():
     return render_template('admin.html')
 
-@app.route("/admin/")
-def admin():
-    return render_template('admin.html')
-
 @app.route("/admin/exhibitions/")
 def exhibitionAdmin():
     all_exhibitions = db.exhibition.find()
@@ -119,35 +115,6 @@ def createExhibition():
     artists = db.artists.find()
 
     return render_template('admin/exhibition/exhibitionForm.html', form=form, artists=artists)
-
-    #exhibition = {
-        #'name': '',
-        #'slug': '',
-        #'artists': [],
-        #'datestart': '',
-        #'dateend': '',
-        #'keyimage': '',
-        #'maintext': '',
-        #'exhibitionviews': '',
-        #'pressrelease': '',
-    #}
-
-    #if request.method == 'POST':
-        #exhibition['name'] = request.form['name']
-        #exhibition['slug'] = slugify(request.form['name'])
-        #exhibition['description'] = request.form['description']
-
-        #for slug in request.form.getlist('artists'):
-            #artist = db.artists.find_one({'slug': slug})
-            #if artist <> None:
-                #exhibition['artists'].append(artist)
-
-        #db.exhibitions.insert(exhibition)
-
-        #return redirect_flask(url_for('viewExhibition', slug=exhibition['slug']))
-
-    #artists = db.artists.find()
-    #return render_template('admin/exhibition/exhibitionForm.html', exhibition=exhibition, artists=artists)
 
 @app.route('/admin/exhibition/update/<slug>/', methods=['GET', 'POST'])
 def updateExhibition (slug):
@@ -176,6 +143,11 @@ def updateExhibition (slug):
         return render_template('admin/exhibition/exhibitionForm.html', exhibition=exhibition, artists=artists)
     else:
         abort(404)
+
+@app.route("/admin/artists/")
+def adminArtists():
+
+    return render_template('admin/artists/artists.html')
 
 @app.route("/admin/manage-gallery-info/", methods=['GET', 'POST'])
 def createTeamMember():
