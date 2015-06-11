@@ -43,9 +43,18 @@
         </div>
         <section>
             {% block body %}
-            Welcome to the administration tool for rodolphejanssen.com<br>
-            From here you can create and edit exhibitions, add and modify artists, and manage the general gallery information page.
-            <button>Sync available info from Art Logic</button>
+            <p>Welcome to the administration tool for rodolphejanssen.com<br>
+            From here you can create and edit exhibitions, add and modify artists, and manage the general gallery information page.</p>
+            <a class="btn btn-primary" href="">Sync available info from Art Logic</a>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
             {% endblock %}
         </section>
     </div>

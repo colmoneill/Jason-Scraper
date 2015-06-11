@@ -6,7 +6,7 @@ import os
 from datetime import datetime
 
 # Dependencies: Flask + PIL or Pillowexhibition/create/
-from flask import Flask, send_from_directory, redirect as redirect_flask, render_template, url_for, request, abort
+from flask import Flask, flash, send_from_directory, redirect as redirect_flask, render_template, url_for, request, abort
 import pymongo
 #import admin
 
@@ -90,6 +90,7 @@ def GalleryInfo():
 ### ADMIN FUNCTIONALITY ###
 @app.route("/admin/")
 def viewAdmin():
+    #flash('You were successfully logged in')
     return render_template('admin.html')
 
 @app.route("/admin/exhibitions/")
@@ -155,20 +156,23 @@ def adminGalleryInfo():
 
     return render_template('admin/gallery.html')
 
-@app.route("/admin/manage-gallery-teammembers/", methods=['GET', 'POST'])
+@app.route("/admin/edit-gallery-teammembers/", methods=['GET', 'POST'])
 def createTeamMember():
-
     form = forms.GalleryEmployees()
 
     if form.validate_on_submit():
         teamMember = form.data
         teamMember['slug'] = slugify(teamMember['name'])
-
         db.teammember.insert(teamMember)
+        return redirect_flask(url_for('listTeamMembers'))
+    return render_template('admin/galleryTeamMember.html', form=form)
 
+@app.route("/admin/manage-gallery-teammembers/")
+def listTeamMembers():
+    form = forms.GalleryEmployees()
     teammember = db.teammember.find()
 
-    return render_template('admin/galleryTeamMember.html', form=form, teammember=teammember,)
+    return render_template('admin/galleryTeamMember.html', form=form, teammember=teammember)
 
 @app.route("/admin/edit-opening-hours/", methods=['GET', 'POST'])
 def createOpeningHours():
@@ -204,6 +208,7 @@ def updateOpeningHours(_id):
                 },
                 upsert=True
             )
+            flash('You successfully updated the opening hour entry')
             return redirect_flask(url_for('listOpeningHours'))
     else:
         data = db.openinghours.find_one({"_id": ObjectId(_id)})
@@ -211,6 +216,5 @@ def updateOpeningHours(_id):
 
     return render_template('admin/galleryOpeningHoursEdit.html', form=form, galleryHoursId=_id)
 
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)

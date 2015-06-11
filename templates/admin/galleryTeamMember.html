@@ -23,8 +23,8 @@
         <ul class="list-group">
             {% for name in teammember %}
                 <li class="list-group-item">
-                    <input name="artists" type="checkbox" value="{{ name.slug }}" id="{{ name.slug }}" />
-                    <label for="{{ name.slug }}">{{ name.name }}</label>
+                    {{ name.name }}
+                    <a class="btn btn-primary btn-sm edit-btn" href="/admin/">edit</a>
                 </li>
             {% endfor %}
         </ul>

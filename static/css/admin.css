@@ -6,6 +6,11 @@ body{
   margin-top: 100px;
 }
 
+a.edit-btn{
+  margin-top: -5px;
+  float: right;
+}
+
 /*!
  * Datetimepicker for Bootstrap 3
  * ! version : 4.7.14

@@ -9,12 +9,19 @@
         <ul class="list-group">
             {% for openinghour in openinghours %}
                 <li class="list-group-item">
-                  <a href="/admin/edit-opening-hours/{{ openinghour._id }}">
-                    {{ openinghour.period}} {{ openinghour.hours}}
-                  </a>
+                    {{ openinghour.period}} // {{ openinghour.hours}}
+                    <a class="btn btn-primary btn-sm edit-btn" href="/admin/edit-opening-hours/{{ openinghour._id }}">edit</a>
                 </li>
             {% endfor %}
         </ul>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-success" role="alert">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
         <h3>add opening hour</h3>
         {% include 'admin/galleryOpeningHoursForm.html' %}
 </div>
