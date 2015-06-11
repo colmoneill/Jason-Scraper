@@ -1,0 +1,8 @@
+{% from "helpers/_form.html" import render_field %}
+<form method="post" action="/admin/edit-opening-hours/{{ galleryHoursId }}">
+    {{ form.csrf_token }}
+    {{ render_field(form.period) }}
+    {{ render_field(form.hours) }}
+
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
