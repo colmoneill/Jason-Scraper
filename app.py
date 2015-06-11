@@ -183,6 +183,7 @@ def createOpeningHours():
         db.openinghours.insert(openinghour)
         return redirect_flask(url_for('listOpeningHours'))
     return render_template('admin/galleryOpeningHoursCreate.html', form=form)
+    flash('You successfully created the opening hour entry')
 
 @app.route("/admin/manage-opening-hours/")
 def listOpeningHours():
