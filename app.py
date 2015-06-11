@@ -83,8 +83,9 @@ def viewExhibition(slug):
 def GalleryInfo():
 
     teammembers = db.teammember.find()
+    openinghours = db.openinghours.find()
 
-    return render_template('front/gallery.html', teammembers=teammembers)
+    return render_template('front/gallery.html', teammembers=teammembers, openinghours=openinghours)
 
 ### ADMIN FUNCTIONALITY ###
 @app.route("/admin/")

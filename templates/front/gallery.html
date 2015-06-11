@@ -16,7 +16,7 @@ Don't judge me you Irish fuck.
 			<div class="separation-rule"></div>
 				<div class="text-block">
 					<h5>Adress</h5>
-					<p>Rue Livourne 35 & 32 Livornostraat<br>
+					<p>Rue Livourne 35 &amp; 32 Livornostraat<br>
 						1050 Brussels, Belgium<br>
 						<a href="http://maps.google.co.uk" target="_blank">directions →</a>
 					</p>
@@ -30,8 +30,9 @@ Don't judge me you Irish fuck.
 
 			<div class="text-block">
 				<h5>Opening Hours</h5>
-				<p>Tuesday to Friday - 12 > 18 <br>
-				Saturday - 14 > 18</p>
+				{% for openinghour in openinghours %}
+					{{ openinghour.period}} &mdash; {{ openinghour.hours}}<br>
+				{% endfor %}
 			</div>
 		</section>
 
