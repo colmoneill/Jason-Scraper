@@ -27,7 +27,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
             <li><a href="/admin/exhibitions/">edit exhibitions</a></li>
-            <li><a href="/admin/artists/">edit artists</a></li>
+            <li><a href="/admin/artist/">edit artists</a></li>
             <li><a href="/admin/manage-gallery-info/">edit gallery info</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -43,6 +43,7 @@
         </div>
         <section>
             {% block body %}
+            {% include 'helpers/_flashMessage.html' %}
             <p>Welcome to the administration tool for rodolphejanssen.com<br>
             From here you can create and edit exhibitions, add and modify artists, and manage the general gallery information page.</p>
             <a class="btn btn-primary" href="">Sync available info from Art Logic</a>

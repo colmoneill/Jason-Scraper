@@ -23,6 +23,9 @@ app.secret_key = "@My*C7KNeC@74#HC$F7FkpEEmECaZ@jH#ePwwz#Fo^#T3%(!bM^xSAG^&!#x*i
 client = pymongo.MongoClient()
 db = client.artlogic
 
+###
+### PUBLIC VIEWS ###
+###
 
 @app.route("/test/")
 def test():
@@ -87,10 +90,13 @@ def GalleryInfo():
 
     return render_template('front/gallery.html', teammembers=teammembers, openinghours=openinghours)
 
+###
 ### ADMIN FUNCTIONALITY ###
+###
+
 @app.route("/admin/")
 def viewAdmin():
-    #flash('You were successfully logged in')
+    flash('we still need to make a login method')
     return render_template('admin.html')
 
 @app.route("/admin/exhibitions/")
@@ -101,6 +107,7 @@ def exhibitionAdmin():
     new = False
     return render_template('admin/exhibition/exhibitions.html', all_exhibitions=all_exhibitions, exhibition=exhibition, artists=artists, new=new)
 
+### exhibitions ###
 @app.route("/admin/exhibition/create/", methods=['GET', 'POST'])
 def createExhibition():
 
@@ -146,14 +153,30 @@ def updateExhibition (slug):
     else:
         abort(404)
 
-@app.route("/admin/artists/")
-def adminArtists():
+### ADMIN FUNCTIONALITY ###
 
-    return render_template('admin/artists/artists.html')
+@app.route("/admin/artist/")
+def listArtists():
+    artist = db.artist.find()
+    return render_template('admin/artists/artists.html', artist=artist)
+
+@app.route("/admin/artist-create/")
+def artistCreate():
+    form = forms.artistCreate()
+
+    if form.validate_on_submit():
+        artist = form.data
+        artist['slug'] = slugify(artist['name'])
+        db.artist.insert(artist)
+        return redirect_flask(url_for('listArtists'))
+    return render_template('admin/artists/artists.html', form=form)
+
+#@app.route("/admin/artist-update/")
+#def artistUpdate():
+
 
 @app.route("/admin/manage-gallery-info/", methods=['GET', 'POST'])
 def adminGalleryInfo():
-
     return render_template('admin/gallery.html')
 
 @app.route("/admin/edit-gallery-teammembers/", methods=['GET', 'POST'])
