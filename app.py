@@ -11,7 +11,7 @@ import pymongo
 #import admin
 
 from utils import slugify
-
+from bson import ObjectId
 import forms
 
 # Local imports
@@ -150,9 +150,14 @@ def adminArtists():
     return render_template('admin/artists/artists.html')
 
 @app.route("/admin/manage-gallery-info/", methods=['GET', 'POST'])
+def adminGalleryInfo():
+
+    return render_template('admin/gallery.html')
+
+@app.route("/admin/manage-gallery-teammembers/", methods=['GET', 'POST'])
 def createTeamMember():
 
-    form = forms.GalleryInfo()
+    form = forms.GalleryEmployees()
 
     if form.validate_on_submit():
         teamMember = form.data
@@ -162,7 +167,48 @@ def createTeamMember():
 
     teammember = db.teammember.find()
 
-    return render_template('admin/gallery.html', form=form, teammember=teammember,)
+    return render_template('admin/galleryTeamMember.html', form=form, teammember=teammember,)
+
+@app.route("/admin/manage-opening-hours/")
+def listOpeningHours():
+    form = forms.GalleryHours()
+    openinghours = db.openinghours.find()
+
+    return render_template('admin/galleryOpeningHours.html', openinghours=openinghours, form=form)
+
+@app.route("/admin/edit-opening-hours/<_id>", methods=['GET', 'POST'])
+def updateOpeningHours(_id):
+    if request.method == 'POST':
+        form = forms.GalleryHours()
+
+        if form.validate_on_submit():
+            data = form.data
+            db.openinghours.update(
+                {
+                    "_id": ObjectId(_id)
+                },
+                {
+                    "period": data['period'],
+                    "hours": data['hours']
+                },
+                upsert=True
+            )
+            return redirect_flask(url_for('listOpeningHours'))
+    else:
+        data = db.openinghours.find_one({"_id": ObjectId(_id)})
+        form = forms.GalleryHours(data=data)
+
+    return render_template('admin/galleryOpeningHoursEdit.html', form=form, galleryHoursId=_id)
+
+@app.route("/admin/edit-opening-hours/", methods=['GET', 'POST'])
+def createOpeningHours():
+    form = forms.GalleryHours()
+
+    if form.validate_on_submit():
+        openinghour = form.data
+        db.openinghours.insert(openinghour)
+        return redirect_flask(url_for('listOpeningHours'))
+    return render_template('admin/galleryOpeningHoursCreate.html', form=form)
 
 if __name__ == '__main__':
     app.run(debug=True)
