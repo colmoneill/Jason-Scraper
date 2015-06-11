@@ -170,6 +170,16 @@ def createTeamMember():
 
     return render_template('admin/galleryTeamMember.html', form=form, teammember=teammember,)
 
+@app.route("/admin/edit-opening-hours/", methods=['GET', 'POST'])
+def createOpeningHours():
+    form = forms.GalleryHours()
+
+    if form.validate_on_submit():
+        openinghour = form.data
+        db.openinghours.insert(openinghour)
+        return redirect_flask(url_for('listOpeningHours'))
+    return render_template('admin/galleryOpeningHoursCreate.html', form=form)
+
 @app.route("/admin/manage-opening-hours/")
 def listOpeningHours():
     form = forms.GalleryHours()
@@ -201,15 +211,6 @@ def updateOpeningHours(_id):
 
     return render_template('admin/galleryOpeningHoursEdit.html', form=form, galleryHoursId=_id)
 
-@app.route("/admin/edit-opening-hours/", methods=['GET', 'POST'])
-def createOpeningHours():
-    form = forms.GalleryHours()
-
-    if form.validate_on_submit():
-        openinghour = form.data
-        db.openinghours.insert(openinghour)
-        return redirect_flask(url_for('listOpeningHours'))
-    return render_template('admin/galleryOpeningHoursCreate.html', form=form)
 
 if __name__ == '__main__':
     app.run(debug=True)

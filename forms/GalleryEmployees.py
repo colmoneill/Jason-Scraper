@@ -3,6 +3,6 @@ from wtforms import StringField
 from wtforms.validators import DataRequired
 
 class GalleryEmployees(Form):
-    name = StringField('Team member name', validators=[DataRequired()])
-    role = StringField('Team member role')
-    email = StringField('Team member email', validators=[DataRequired()])
+    name = StringField(u'Team member name // example: Rodolphe Janssen *', validators=[DataRequired()])
+    role = StringField(u'Team member role // example: Operation & Logistic Manager')
+    email = StringField(u'Team member email *', validators=[DataRequired()])

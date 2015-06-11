@@ -10,8 +10,8 @@
     <title>edit GJR | {% block title %}{% endblock %}</title>
 </head>
 <body>
-    <nav class="navbar navbar-default">
-    <div class="container-fluid">
+    <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -20,7 +20,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/admin/">Rodolphe Janssen website administration</a>
+        <a class="navbar-brand" href="/admin/">GRJ website administration</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -31,15 +31,15 @@
             <li><a href="/admin/manage-gallery-info/">edit gallery info</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="/">to the website</a></li>
+          <li><a href="/">view public website</a></li>
         </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
     </nav>
 
     <div class="container">
-        <div class="page-header">
-        <h1>Galerie Rodolphe Janssen <small>editing the website content</small></h1>
+        <div id="banner" class="page-header">
+          <h2>admin</h2>
         </div>
         <section>
             {% block body %}
