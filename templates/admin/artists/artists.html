@@ -7,4 +7,9 @@
       <p>existing artists:</p>
       <li><a href=""></a></li>
     </ul>
+    <ul>
+      {% for artist in artists %}
+      <li>{{ artist.name }}</li>
+      {% endfor %}
+    </ul>
 {% endblock %}

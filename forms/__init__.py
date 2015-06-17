@@ -1,2 +1,3 @@
 from ExhibitionForm import ExhibitionForm
-from GalleryInfo import GalleryInfo
+from GalleryEmployees import GalleryEmployees
+from GalleryHours import GalleryHours

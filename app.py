@@ -6,12 +6,16 @@ import os
 from datetime import datetime
 
 # Dependencies: Flask + PIL or Pillowexhibition/create/
-from flask import Flask, send_from_directory, redirect as redirect_flask, render_template, url_for, request, abort
+from flask import   Flask, flash, send_from_directory, \
+                    redirect as redirect_flask, \
+                    render_template, url_for, request, \
+                    abort
+                    
 import pymongo
 #import admin
 
-from werkzeug import secure_filename
 import utils
+from bson import ObjectId
 import forms
 
 # Local imports
@@ -29,6 +33,10 @@ app.config['UPLOAD'] = {
         'upload_folder': 'static/uploads/press/'
     }
 }
+    
+###
+### PUBLIC VIEWS ###
+###
 
 @app.route("/test/")
 def test():
@@ -90,14 +98,18 @@ def viewExhibition(slug):
 
 @app.route("/gallery/")
 def GalleryInfo():
-
     teammembers = db.teammember.find()
+    openinghours = db.openinghours.find()
 
-    return render_template('front/gallery.html', teammembers=teammembers)
+    return render_template('front/gallery.html', teammembers=teammembers, openinghours=openinghours)
 
+###
 ### ADMIN FUNCTIONALITY ###
+###
+
 @app.route("/admin/")
 def viewAdmin():
+    flash('we still need to make a login method')
     return render_template('admin.html')
 
 @app.route("/admin/exhibitions/")
@@ -108,6 +120,7 @@ def exhibitionAdmin():
     new = False
     return render_template('admin/exhibition/exhibitions.html', all_exhibitions=all_exhibitions, exhibition=exhibition, artists=artists, new=new)
 
+### exhibitions ###
 @app.route("/admin/exhibition/create/", methods=['GET', 'POST'])
 def createExhibition():
     form = forms.ExhibitionForm()
@@ -159,25 +172,102 @@ def updateExhibition (slug):
     else:
         abort(404)
 
-@app.route("/admin/artists/")
-def adminArtists():
-    return render_template('admin/artists/artists.html')
+### ADMIN FUNCTIONALITY ###
+
+@app.route("/admin/artist/")
+def listArtists():
+    artist = db.artist.find()
+    return render_template('admin/artists/artists.html', artist=artist)
+
+@app.route("/admin/artist-create/")
+def artistCreate():
+    form = forms.artistCreate()
+
+    if form.validate_on_submit():
+        artist = form.data
+        artist['slug'] = utils.slugify(artist['name'])
+        db.artist.insert(artist)
+        return redirect_flask(url_for('listArtists'))
+    return render_template('admin/artists/artists.html', form=form)
+
+#@app.route("/admin/artist-update/")
+#def artistUpdate():
+
 
 @app.route("/admin/manage-gallery-info/", methods=['GET', 'POST'])
-@app.route("/admin/manage-gallery-info", methods=['GET', 'POST'])
-def createTeamMember():
+def adminGalleryInfo():
+    return render_template('admin/gallery.html')
 
-    form = forms.GalleryInfo()
+@app.route("/admin/edit-gallery-teammembers/", methods=['GET', 'POST'])
+def createTeamMember():
+    form = forms.GalleryEmployees()
 
     if form.validate_on_submit():
         teamMember = form.data
         teamMember['slug'] = utils.slugify(teamMember['name'])
-
         db.teammember.insert(teamMember)
+        return redirect_flask(url_for('listTeamMembers'))
+    return render_template('admin/galleryTeamMember.html', form=form)
 
+@app.route("/admin/manage-gallery-teammembers/")
+def listTeamMembers():
+    form = forms.GalleryEmployees()
     teammember = db.teammember.find()
 
-    return render_template('admin/gallery.html', form=form, teammember=teammember,)
+    return render_template('admin/galleryTeamMember.html', form=form, teammember=teammember)
+
+@app.route("/admin/manage-opening-hours/")
+def listOpeningHours():
+    form = forms.GalleryHours()
+    openinghours = db.openinghours.find()
+
+    return render_template('admin/galleryOpeningHours.html', openinghours=openinghours, form=form)
+
+@app.route("/admin/edit-opening-hours/", methods=['GET', 'POST'])
+def createOpeningHours():
+    form = forms.GalleryHours()
+
+    if form.validate_on_submit():
+        formdata = form.data
+        openinghour = utils.handle_form_data({}, formdata)
+        db.openinghours.insert(openinghour)
+        flash('You successfully created the opening hour entry')
+        return redirect_flask(url_for('listOpeningHours'))
+    
+    return render_template('admin/galleryOpeningHoursCreate.html', form=form)
+
+@app.route("/admin/edit-opening-hours/<opening_hour_id>", methods=['GET', 'POST'])
+def updateOpeningHours(opening_hour_id):
+    opening_hour = db.openinghours.find_one({"_id": ObjectId(opening_hour_id)})
+    
+    if request.method == 'POST':
+        form = forms.GalleryHours()
+        
+        if form.validate_on_submit():
+            formdata = form.data
+            db.openinghours.update(
+                {
+                    "_id": ObjectId(opening_hour_id)
+                },
+                utils.handle_form_data(opening_hour, formdata),
+                upsert=True
+            )
+            flash('You successfully updated the opening hour entry')
+            return redirect_flask(url_for('listOpeningHours'))
+    else:
+        form = forms.GalleryHours(data=opening_hour)
+
+    return render_template('admin/galleryOpeningHoursEdit.html', form=form, galleryHoursId=opening_hour_id)
+
+@app.route("/admin/delete-opening-hours/<opening_hour_id>", methods=['GET', 'POST'])
+def deleteOpeningHours(opening_hour_id):
+    if request.method == 'POST':
+        print opening_hour_id
+        db.openinghours.remove({"_id": ObjectId(opening_hour_id)})
+        flash('You successfully deleted the opening hour entry')
+        return redirect_flask(url_for('listOpeningHours'))
+
+    return render_template('admin/galleryOpeningHoursDelete.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
