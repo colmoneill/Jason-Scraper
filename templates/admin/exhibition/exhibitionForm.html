@@ -4,9 +4,9 @@
 {% endblock %}
 
 {% block body %}
-<div class="col-md-8">
+<div class="col-xs-12 col-sm-8">
     {% from "helpers/_form.html" import render_field, render_datepicker %}
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <p>List of items to encode a new exhibition:<br>Artist name,<br>period of exhibition,<br>name of exhibition,<br>exhibition key image,<br>exhibition description text,<br>exhibition views,<br>press release pdf,<br>link to artist page</p>
         {{ form.csrf_token }}
 
@@ -18,11 +18,18 @@
             </ul>
         {% endif %}
 
-        {{ form.name.label }} {{ form.name(size=60) }}
         {{ render_field(form.name) }}
-        {{ render_datepicker(form.start) }}
-        {{ render_datepicker(form.end) }}
-
+        <div class="row">
+            <div class="col-xs-5 col-sm-4">
+                {{ render_datepicker(form.start) }}
+            </div>
+            <div class="col-xs-5 col-xs-offset-1 col-sm-4 col-sm-offset-2">
+                {{ render_datepicker(form.end) }}
+            </div>
+        </div>
+        {{ render_field(form.description) }}
+        {{ render_field(form.press_release_file) }}
+        
         <ul class="list-group">
             {% for artist in artists %}
                 <li class="list-group-item">
@@ -34,4 +41,14 @@
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
 </div>
+<script type="text/javascript">
+    window.addEventListener('load', function linkDatePickers () {
+        console.log('hey there');
+        window.removeEventListener('load', linkDatePickers, false)
+        $('#datepicker-start').on('dp.change', function (e) {
+            $('#datepicker-end').data("DateTimePicker").minDate(e.date);
+        });
+        
+    }, false);
+</script>
 {% endblock %}

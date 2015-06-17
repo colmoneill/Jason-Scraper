@@ -15,8 +15,9 @@
 {% macro render_datepicker(field) %}
 
 <div class="form-group {{ 'has-error' if field.errors }}">
-    <div class="input-group datepicker">
-        <input type="text" name="{{ field.name }}" class="form-control" />
+    {{ field.label(class_="control-label") }}
+    <div class="input-group datepicker" id="datepicker-{{ field.name }}">
+        {{ field(class_='form-control') }}
         <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
         </span>

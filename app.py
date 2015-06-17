@@ -10,8 +10,8 @@ from flask import Flask, send_from_directory, redirect as redirect_flask, render
 import pymongo
 #import admin
 
-from utils import slugify
-
+from werkzeug import secure_filename
+import utils
 import forms
 
 # Local imports
@@ -23,6 +23,12 @@ app.secret_key = "@My*C7KNeC@74#HC$F7FkpEEmECaZ@jH#ePwwz#Fo^#T3%(!bM^xSAG^&!#x*i
 client = pymongo.MongoClient()
 db = client.artlogic
 
+app.config['UPLOAD'] = {
+    'PRESS_RELEASE': {
+        'allowed_extensions': ['pdf'],
+        'upload_folder': 'static/uploads/press/'
+    }
+}
 
 @app.route("/test/")
 def test():
@@ -56,10 +62,11 @@ def exhibition(slug):
     exhibition = db.exhibition.find_one({ "slug": slug})
     return render_template("front/exhibition.html")
 
+# Deprecated?
 @app.route('/exhibition', methods=['GET', 'POST'])
 def adminexhibition():
-    all_exhibitions = db.exhibition.find()
     artists = db.artists.find().sort("artist_sort", 1)
+    all_exhibitions = db.exhibition.find()
     exhibition = None
     new = False
     if request.method == 'POST' and 'exhibition' in request.form:
@@ -68,6 +75,8 @@ def adminexhibition():
             # this is a new exhibition, add it to the database
             db.exhibition.insert({'exhibition': exhibition})
             new = True
+            
+            
     return render_template('front/exhibition.html', exhibition=exhibition, allexhibition=allexhibition, artists=artists, new=new)
 
 @app.route("/exhibition/<slug>/")
@@ -101,13 +110,20 @@ def exhibitionAdmin():
 
 @app.route("/admin/exhibition/create/", methods=['GET', 'POST'])
 def createExhibition():
-
     form = forms.ExhibitionForm()
 
-    if form.validate_on_submit():
-        exhibition = form.data
-        exhibition['slug'] = slugify(exhibition['name'])
-
+    if form.validate_on_submit():        
+        form_data = form.data
+        exhibition = utils.handle_form_data({}, form_data, ['press_release_file'])
+        exhibition['slug'] = utils.slugify(exhibition['name'])
+        
+        if request.files['press_release_file']:
+            exhibition['press_release'] = utils.handle_uploaded_file(
+                request.files['press_release_file'],
+                app.config['UPLOAD']['PRESS_RELEASE'],
+                '{0}.pdf'.format(exhibition['slug'])
+            )
+        
         db.exhibitions.insert(exhibition)
 
         return redirect_flask(url_for('viewExhibition', slug=exhibition['slug']))
@@ -119,44 +135,43 @@ def createExhibition():
 @app.route('/admin/exhibition/update/<slug>/', methods=['GET', 'POST'])
 def updateExhibition (slug):
     exhibition = db.exhibitions.find_one({'slug': slug})
-
-    if request.method == 'POST':
-        exhibition['name'] = request.form['name']
-        exhibition['slug'] = slugify(request.form['name'])
-        exhibition['artists'] = []
-
-        for slug in request.form.getlist('artists'):
-            artist = db.artists.find_one({'slug': slug})
-            if artist <> None:
-                exhibition['artists'].append(artist)
-
-        db.exhibitions.update(
-            {'_id': exhibition['_id']},
-            exhibition
-        )
-
-        return redirect_flask(url_for('viewExhibition', slug=exhibition['slug']))
-
-    artists = db.artists.find()
-
+    
     if exhibition <> None:
-        return render_template('admin/exhibition/exhibitionForm.html', exhibition=exhibition, artists=artists)
+        form = ExhibitionForm(data=exhibition)
+
+        if form.validate_on_submit():
+            form_data = form.data
+            exhibition = utils.handle_form_data(exhibition, form_data, ['press_release_file'])
+            
+            if request.files['press_release_file']:
+                exhibition['press_release'] = utils.handle_uploaded_file(
+                    request.files['press_release_file'],
+                    app.config['UPLOAD']['PRESS_RELEASE'],
+                    '{0}.pdf'.format(exhibtion['slug'])
+                )
+                
+            
+            db.exhibitions.update({_id: exhibition['_id']}, exhibition, upsert=true )
+            return redirect_flask(url_for('viewExhibition', slug=exhibition['slug']))
+
+        artists = db.artists.find()
+        return render_template('admin/exhibition/exhibitionForm.html', form=form, artists=artists)
     else:
         abort(404)
 
 @app.route("/admin/artists/")
 def adminArtists():
-
     return render_template('admin/artists/artists.html')
 
 @app.route("/admin/manage-gallery-info/", methods=['GET', 'POST'])
+@app.route("/admin/manage-gallery-info", methods=['GET', 'POST'])
 def createTeamMember():
 
     form = forms.GalleryInfo()
 
     if form.validate_on_submit():
         teamMember = form.data
-        teamMember['slug'] = slugify(teamMember['name'])
+        teamMember['slug'] = utils.slugify(teamMember['name'])
 
         db.teammember.insert(teamMember)
 
