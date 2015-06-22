@@ -10,7 +10,8 @@ from flask import   Flask, flash, send_from_directory, \
                     redirect as redirect_flask, \
                     render_template, url_for, request, \
                     abort
-                    
+from flask_pagedown import PageDown
+
 import pymongo
 #import admin
 
@@ -22,6 +23,7 @@ import forms
 # from settings import *
 
 app = Flask(__name__)
+pagedown = PageDown(app)
 app.secret_key = "@My*C7KNeC@74#HC$F7FkpEEmECaZ@jH#ePwwz#Fo^#T3%(!bM^xSAG^&!#x*i#*"
 
 client = pymongo.MongoClient()
@@ -33,7 +35,7 @@ app.config['UPLOAD'] = {
         'upload_folder': 'static/uploads/press/'
     }
 }
-    
+
 ###
 ### PUBLIC VIEWS ###
 ###
@@ -83,8 +85,8 @@ def adminexhibition():
             # this is a new exhibition, add it to the database
             db.exhibition.insert({'exhibition': exhibition})
             new = True
-            
-            
+
+
     return render_template('front/exhibition.html', exhibition=exhibition, allexhibition=allexhibition, artists=artists, new=new)
 
 @app.route("/exhibition/<slug>/")
@@ -125,18 +127,18 @@ def exhibitionAdmin():
 def createExhibition():
     form = forms.ExhibitionForm()
 
-    if form.validate_on_submit():        
+    if form.validate_on_submit():
         form_data = form.data
         exhibition = utils.handle_form_data({}, form_data, ['press_release_file'])
         exhibition['slug'] = utils.slugify(exhibition['name'])
-        
+
         if request.files['press_release_file']:
             exhibition['press_release'] = utils.handle_uploaded_file(
                 request.files['press_release_file'],
                 app.config['UPLOAD']['PRESS_RELEASE'],
                 '{0}.pdf'.format(exhibition['slug'])
             )
-        
+
         db.exhibitions.insert(exhibition)
 
         return redirect_flask(url_for('viewExhibition', slug=exhibition['slug']))
@@ -148,22 +150,22 @@ def createExhibition():
 @app.route('/admin/exhibition/update/<slug>/', methods=['GET', 'POST'])
 def updateExhibition (slug):
     exhibition = db.exhibitions.find_one({'slug': slug})
-    
+
     if exhibition <> None:
         form = ExhibitionForm(data=exhibition)
 
         if form.validate_on_submit():
             form_data = form.data
             exhibition = utils.handle_form_data(exhibition, form_data, ['press_release_file'])
-            
+
             if request.files['press_release_file']:
                 exhibition['press_release'] = utils.handle_uploaded_file(
                     request.files['press_release_file'],
                     app.config['UPLOAD']['PRESS_RELEASE'],
                     '{0}.pdf'.format(exhibtion['slug'])
                 )
-                
-            
+
+
             db.exhibitions.update({_id: exhibition['_id']}, exhibition, upsert=true )
             return redirect_flask(url_for('viewExhibition', slug=exhibition['slug']))
 
@@ -233,16 +235,16 @@ def createOpeningHours():
         db.openinghours.insert(openinghour)
         flash('You successfully created the opening hour entry')
         return redirect_flask(url_for('listOpeningHours'))
-    
+
     return render_template('admin/galleryOpeningHoursCreate.html', form=form)
 
 @app.route("/admin/edit-opening-hours/<opening_hour_id>", methods=['GET', 'POST'])
 def updateOpeningHours(opening_hour_id):
     opening_hour = db.openinghours.find_one({"_id": ObjectId(opening_hour_id)})
-    
+
     if request.method == 'POST':
         form = forms.GalleryHours()
-        
+
         if form.validate_on_submit():
             formdata = form.data
             db.openinghours.update(
