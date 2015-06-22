@@ -174,8 +174,6 @@ def updateExhibition (slug):
     else:
         abort(404)
 
-### ADMIN FUNCTIONALITY ###
-
 @app.route("/admin/artist/")
 def listArtists():
     artist = db.artist.find()
@@ -198,7 +196,7 @@ def artistCreate():
 
 @app.route("/admin/manage-gallery-info/", methods=['GET', 'POST'])
 def adminGalleryInfo():
-    return render_template('admin/gallery.html')
+    return render_template('admin/gallery/gallery.html')
 
 @app.route("/admin/edit-gallery-teammembers/", methods=['GET', 'POST'])
 def createTeamMember():
@@ -208,22 +206,21 @@ def createTeamMember():
         teamMember = form.data
         teamMember['slug'] = utils.slugify(teamMember['name'])
         db.teammember.insert(teamMember)
-        return redirect_flask(url_for('listTeamMembers'))
-    return render_template('admin/galleryTeamMember.html', form=form)
+    return render_template('admin/gallery/teammembers/galleryTeamMember.html', form=form)
 
 @app.route("/admin/manage-gallery-teammembers/")
 def listTeamMembers():
     form = forms.GalleryEmployees()
     teammember = db.teammember.find()
 
-    return render_template('admin/galleryTeamMember.html', form=form, teammember=teammember)
+    return render_template('admin/gallery/teammembers/galleryTeamMember.html', form=form, teammember=teammember)
 
 @app.route("/admin/manage-opening-hours/")
 def listOpeningHours():
     form = forms.GalleryHours()
     openinghours = db.openinghours.find()
 
-    return render_template('admin/galleryOpeningHours.html', openinghours=openinghours, form=form)
+    return render_template('admin/gallery/openinghours/galleryOpeningHours.html', openinghours=openinghours, form=form)
 
 @app.route("/admin/edit-opening-hours/", methods=['GET', 'POST'])
 def createOpeningHours():
@@ -236,7 +233,7 @@ def createOpeningHours():
         flash('You successfully created the opening hour entry')
         return redirect_flask(url_for('listOpeningHours'))
 
-    return render_template('admin/galleryOpeningHoursCreate.html', form=form)
+    return render_template('admin/gallery/openinghours/galleryOpeningHoursCreate.html', form=form)
 
 @app.route("/admin/edit-opening-hours/<opening_hour_id>", methods=['GET', 'POST'])
 def updateOpeningHours(opening_hour_id):
@@ -259,7 +256,7 @@ def updateOpeningHours(opening_hour_id):
     else:
         form = forms.GalleryHours(data=opening_hour)
 
-    return render_template('admin/galleryOpeningHoursEdit.html', form=form, galleryHoursId=opening_hour_id)
+    return render_template('admin/gallery/openinghours/galleryOpeningHoursEdit.html', form=form, galleryHoursId=opening_hour_id)
 
 @app.route("/admin/delete-opening-hours/<opening_hour_id>", methods=['GET', 'POST'])
 def deleteOpeningHours(opening_hour_id):
@@ -269,7 +266,7 @@ def deleteOpeningHours(opening_hour_id):
         flash('You successfully deleted the opening hour entry')
         return redirect_flask(url_for('listOpeningHours'))
 
-    return render_template('admin/galleryOpeningHoursDelete.html')
+    return render_template('admin/gallery/openinghours/galleryOpeningHoursDelete.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
