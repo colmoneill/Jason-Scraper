@@ -1,5 +1,5 @@
 {% from "helpers/_form.html" import render_field %}
-<form method="post" action="/admin/edit-gallery-teammembers/{{ galleryNameId }}">
+<form method="post" action="/admin/edit-gallery-teammember/{{ teamMemberId }}">
     {{ form.csrf_token }}
     {{ render_field(form.name) }}
     {{ render_field(form.role) }}

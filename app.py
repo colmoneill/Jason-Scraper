@@ -222,7 +222,7 @@ def updateTeamMembers(teammember_id):
     teammember = db.teammember.find_one({"_id": ObjectId(teammember_id)})
 
     if request.method == 'POST':
-        form = forms.GalleryEmployees
+        form = forms.GalleryEmployees()
 
         if form.validate_on_submit():
             formdata = form.data
@@ -240,6 +240,16 @@ def updateTeamMembers(teammember_id):
         form = forms.GalleryEmployees(data=teammember)
 
     return render_template('admin/gallery/teammembers/galleryTeamMemberEdit.html', form=form, teamMemberId=teammember_id)
+
+@app.route("/admin/delete-gallery-teammember/<teammember_id>", methods=['GET', 'POST'])
+def deleteTeamMembers(teammember_id):
+    if request.method == 'POST':
+        print teammember_id
+        db.teammember.remove({"_id": ObjectId(teammember_id)})
+        flash('You deleted the team member')
+        return redirect_flask(url_for('listTeamMembers'))
+
+    return render_template('admin/gallery/teammembers/galleryTeamMemberDelete.html')
 
 ### opening hours ###
 @app.route("/admin/manage-opening-hours/")
