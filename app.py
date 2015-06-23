@@ -117,6 +117,7 @@ def viewAdmin():
     flash('we still need to make a login method')
     return render_template('admin.html')
 
+### exhibitions general ###
 @app.route("/admin/exhibitions/")
 def viewExhibition():
     form = forms.ExhibitionForm()
@@ -124,14 +125,13 @@ def viewExhibition():
 
     return render_template('admin/exhibition/exhibitions.html', exhibition=exhibition)
 
-### exhibitions ###
 @app.route("/admin/exhibition/create/", methods=['GET', 'POST'])
 def createExhibition():
     form = forms.ExhibitionForm()
 
     if form.validate_on_submit():
-        form_data = form.data
-        exhibition = utils.handle_form_data({}, form_data, ['press_release_file'])
+        formdata = form.data
+        exhibition = utils.handle_form_data({}, formdata, ['press_release_file'])
         exhibition['slug'] = utils.slugify(exhibition['name'])
 
         if request.files['press_release_file']:
@@ -145,34 +145,42 @@ def createExhibition():
         flash('You successfully created an exhibition')
         return redirect_flask(url_for('viewExhibition'))
 
-    return render_template('admin/exhibition/exhibitionForm.html', form=form)
+    return render_template('admin/exhibition/exhibitionCreate.html', form=form)
 
-@app.route('/admin/exhibition/update/<slug>/', methods=['GET', 'POST'])
-def updateExhibition (slug):
-    exhibition = db.exhibitions.find_one({'slug': slug})
+@app.route("/admin/exhibition/update/<exhibition_id>", methods=['GET', 'POST'])
+def updateExhibition(exhibition_id):
+    exhibition = db.exhibitions.find_one({"_id": ObjectId(exhibition_id)})
 
-    if exhibition <> None:
-        form = ExhibitionForm(data=exhibition)
+    if request.method == 'POST':
+        form = forms.ExhibitionForm()
 
         if form.validate_on_submit():
-            form_data = form.data
-            exhibition = utils.handle_form_data(exhibition, form_data, ['press_release_file'])
+            formdata = form.data
+            db.exhibitions.update(
+            {
+                "_id": ObjectId(exhibition_id)
+            },
+            utils.handle_form_data(exhibition, formdata),
+            upsert=True
+        )
+        flash('You successfully updated the exhibition data')
+        return redirect_flask(url_for('viewExhibition'))
 
-            if request.files['press_release_file']:
-                exhibition['press_release'] = utils.handle_uploaded_file(
-                    request.files['press_release_file'],
-                    app.config['UPLOAD']['PRESS_RELEASE'],
-                    '{0}.pdf'.format(exhibtion['slug'])
-                )
-
-
-            db.exhibitions.update({_id: exhibition['_id']}, exhibition, upsert=true )
-            return redirect_flask(url_for('viewExhibition', slug=exhibition['slug']))
-
-        artists = db.artists.find()
-        return render_template('admin/exhibition/exhibitionForm.html', form=form, artists=artists)
     else:
-        abort(404)
+        form = forms.ExhibitionForm(data=exhibition)
+
+    return render_template('admin/exhibition/exhibitionEdit.html', form=form, singleExhibitionId=exhibition_id)
+
+@app.route("/admin/exhibition/delete/<exhibition_id>", methods=['GET', 'POST'])
+def deleteExhibition(exhibition_id):
+    if request.method == 'POST':
+        print exhibition_id
+        db.exhibitions.remove({"_id": ObjectId(exhibition_id)})
+        flash('You deleted the exhibition')
+        return redirect_flask(url_for('viewExhibition'))
+
+    return render_template('admin/exhibition/exhibitionDelete.html')
+
 
 @app.route("/admin/artist/")
 def listArtists():

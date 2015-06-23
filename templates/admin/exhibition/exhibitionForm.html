@@ -6,7 +6,7 @@
 {% block body %}
 <div class="col-xs-12">
     {% from "helpers/_form.html" import render_field, render_datepicker %}
-    <form method="post" action="/admin/createExbibition/" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data">
         {{ form.csrf_token }}
         {{ render_field(form.name) }}
         <div class="row">
