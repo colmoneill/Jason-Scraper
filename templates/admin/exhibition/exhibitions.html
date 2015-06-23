@@ -1,12 +1,29 @@
 {% extends "admin.html" %}
-{% block title %}{% endblock %}
+{% block title %}
+    Exhibitions
+{% endblock %}
+
 {% block body %}
 <div class="col-md-8">
-    <h3>edit exhibitions</h3>
-      <a href="/admin/exhibition/create/">create new exhibition</a>
-      <p>existing exhibitions:</p>
-      {% for artist in exhibition.artists %}
-        	<li><a href="/artists/{{ artist.slug }}/">{{ artist.artist }}</a></li>
+  <h3>edit exhibitions</h3>
+    <ul class="list-group">
+      {% for exhibitions in exhibition %}
+        <li class="list-group-item row">
+          <div class="col-xs-8">
+            {{ exhibitions.name }}
+            <br> {{ exhibitions.start }} &rarr; {{ exhibitions.end }}
+          </div>
+          <div class="col-xs-4 text-right">
+            <a class="btn btn-primary btn-sm" href="/admin/edit-exhibition/">edit</a>
+            <a class="btn btn-danger btn-sm" href="/admin/delete-exhibition/">delete</a>
+          </div>
+        </li>
     	{% endfor %}
+    </ul>
+    {% include 'helpers/_flashMessage.html' %}
+
+    <br>
+    <a class="btn btn-success" href="/admin/exhibition/create/">create new exhibition</a>
+
 </div>
 {% endblock %}

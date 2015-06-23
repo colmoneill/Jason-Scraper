@@ -36,9 +36,11 @@ app.config['UPLOAD'] = {
     }
 }
 
-###
+####################################################################################
+
 ### PUBLIC VIEWS ###
-###
+
+####################################################################################
 
 @app.route("/test/")
 def test():
@@ -90,7 +92,7 @@ def adminexhibition():
     return render_template('front/exhibition.html', exhibition=exhibition, allexhibition=allexhibition, artists=artists, new=new)
 
 @app.route("/exhibition/<slug>/")
-def viewExhibition(slug):
+def publicviewExhibition(slug):
     exhibition = db.exhibitions.find_one({'slug': slug})
 
     if exhibition <> None:
@@ -104,10 +106,11 @@ def GalleryInfo():
     openinghours = db.openinghours.find()
 
     return render_template('front/gallery.html', teammembers=teammembers, openinghours=openinghours)
+####################################################################################
 
-###
 ### ADMIN FUNCTIONALITY ###
-###
+
+####################################################################################
 
 @app.route("/admin/")
 def viewAdmin():
@@ -115,12 +118,11 @@ def viewAdmin():
     return render_template('admin.html')
 
 @app.route("/admin/exhibitions/")
-def exhibitionAdmin():
-    all_exhibitions = db.exhibition.find()
-    artists = db.artists.find().sort("artist_sort", 1)
-    exhibition = None
-    new = False
-    return render_template('admin/exhibition/exhibitions.html', all_exhibitions=all_exhibitions, exhibition=exhibition, artists=artists, new=new)
+def viewExhibition():
+    form = forms.ExhibitionForm()
+    exhibition = db.exhibitions.find()
+
+    return render_template('admin/exhibition/exhibitions.html', exhibition=exhibition)
 
 ### exhibitions ###
 @app.route("/admin/exhibition/create/", methods=['GET', 'POST'])
@@ -140,12 +142,10 @@ def createExhibition():
             )
 
         db.exhibitions.insert(exhibition)
+        flash('You successfully created an exhibition')
+        return redirect_flask(url_for('viewExhibition'))
 
-        return redirect_flask(url_for('viewExhibition', slug=exhibition['slug']))
-
-    artists = db.artists.find()
-
-    return render_template('admin/exhibition/exhibitionForm.html', form=form, artists=artists)
+    return render_template('admin/exhibition/exhibitionForm.html', form=form)
 
 @app.route('/admin/exhibition/update/<slug>/', methods=['GET', 'POST'])
 def updateExhibition (slug):
@@ -217,7 +217,7 @@ def createTeamMember():
 
     return render_template('admin/gallery/teammembers/galleryTeamMemberCreate.html', form=form)
 
-@app.route("/admin/edit-gallery-teammember/<teammember_id>", methods=['GET', 'POST'])
+@app.route("/admin/edit-gallery-teammembers/<teammember_id>", methods=['GET', 'POST'])
 def updateTeamMembers(teammember_id):
     teammember = db.teammember.find_one({"_id": ObjectId(teammember_id)})
 
@@ -241,7 +241,7 @@ def updateTeamMembers(teammember_id):
 
     return render_template('admin/gallery/teammembers/galleryTeamMemberEdit.html', form=form, teamMemberId=teammember_id)
 
-@app.route("/admin/delete-gallery-teammember/<teammember_id>", methods=['GET', 'POST'])
+@app.route("/admin/delete-gallery-teammembers/<teammember_id>", methods=['GET', 'POST'])
 def deleteTeamMembers(teammember_id):
     if request.method == 'POST':
         print teammember_id

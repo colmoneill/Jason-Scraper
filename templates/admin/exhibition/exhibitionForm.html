@@ -6,18 +6,8 @@
 {% block body %}
 <div class="col-xs-12">
     {% from "helpers/_form.html" import render_field, render_datepicker %}
-    <form method="post" enctype="multipart/form-data">
-        <p>List of items to encode a new exhibition:<br>Artist name,<br>period of exhibition,<br>name of exhibition,<br>exhibition key image,<br>exhibition description text,<br>exhibition views,<br>press release pdf,<br>link to artist page</p>
+    <form method="post" action="/admin/createExbibition/" enctype="multipart/form-data">
         {{ form.csrf_token }}
-
-        {% if form.name.errors %}
-            <ul class=errors>
-                {% for error in form.name.errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-
         {{ render_field(form.name) }}
         <div class="row">
             <div class="col-xs-5 col-sm-4">
@@ -30,7 +20,6 @@
         <hr>
         <div class="row">
           <div class="col-xs-6">
-            <!-- Deprecated since markdown parser for text fields {{ render_field(form.description) }} -->
             <label>Exhibition main text</label> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers">markdown enabled</a>
             {{ form.wysiwig_description(only_input=True, rows=20) }}
           </div>
@@ -41,17 +30,12 @@
         </div>
         <hr>
         {{ render_field(form.press_release_file) }}
-        <ul class="list-group">
-            {% for artist in artists %}
-                <li class="list-group-item">
-                    <input name="artists" type="checkbox" value="{{ artist.slug }}" id="{{ artist.slug }}" />
-                    <label for="{{ artist.slug }}">{{ artist.artist }}</label>
-                </li>
-            {% endfor %}
-        </ul>
+
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
 </div>
+
+
 <script type="text/javascript">
     window.addEventListener('load', function linkDatePickers () {
         console.log('hey there');
