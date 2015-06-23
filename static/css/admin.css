@@ -11,7 +11,12 @@ a.edit-btn{
   float: right;
 }
 
-textarea#flask-pagedown-wysiwig_description{
+img.small-vignette{
+  width: 30px;
+  height: auto;
+}
+
+textarea.flask-pagedown-input{
   display: block;
   width: 100%;
   padding: 6px 12px;

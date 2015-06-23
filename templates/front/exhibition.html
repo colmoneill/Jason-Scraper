@@ -3,8 +3,9 @@
 {% block body %}
 Single exhibition
     <ul>
-    	{% for artist in exhibition.artists %}
-        	<li><a href="/artists/{{ artist.slug }}/">{{ artist.artist }}</a></li>
+    	{% for exhibitions in exhibition %}
+        	<li><a href="#"><b>{{ exhibitions.artist }}</b> <br> {{ exhibitions.name }}
+          <br> {{ exhibitions.start }} > {{ exhibitions.end }}</a></li>
     	{% endfor %}
     </ul>
 {% endblock %}

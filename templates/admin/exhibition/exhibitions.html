@@ -10,8 +10,8 @@
       {% for exhibitions in exhibition %}
         <li class="list-group-item row">
           <div class="col-xs-8">
-            {{ exhibitions.name }}
-            <br> {{ exhibitions.start }} &rarr; {{ exhibitions.end }}
+            <b>{{ exhibitions.artist }}</b> <br> {{ exhibitions.name }}
+            <br> {{ exhibitions.start }} > {{ exhibitions.end }}
           </div>
           <div class="col-xs-4 text-right">
             <a class="btn btn-primary btn-sm" href="/admin/exhibition/update/{{ exhibitions._id }}">edit</a>
