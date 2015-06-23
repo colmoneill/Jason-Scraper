@@ -156,13 +156,22 @@ def updateExhibition(exhibition_id):
 
         if form.validate_on_submit():
             formdata = form.data
+
+            if request.files['press_release_file']:
+                exhibition['press_release'] = utils.handle_uploaded_file(
+                    request.files['press_release_file'],
+                    app.config['UPLOAD']['PRESS_RELEASE'],
+                    '{0}.pdf'.format(exhibition['slug'])
+            )
+
             db.exhibitions.update(
             {
                 "_id": ObjectId(exhibition_id)
             },
             utils.handle_form_data(exhibition, formdata, ['press_release_file']),
             upsert=True
-        )
+            )
+
         flash('You successfully updated the exhibition data')
         return redirect_flask(url_for('viewExhibition'))
 
