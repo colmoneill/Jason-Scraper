@@ -190,24 +190,12 @@ def artistCreate():
         return redirect_flask(url_for('listArtists'))
     return render_template('admin/artists/artists.html', form=form)
 
-#@app.route("/admin/artist-update/")
-#def artistUpdate():
-
-
+### gallery general ###
 @app.route("/admin/manage-gallery-info/", methods=['GET', 'POST'])
 def adminGalleryInfo():
     return render_template('admin/gallery/gallery.html')
 
-@app.route("/admin/edit-gallery-teammembers/", methods=['GET', 'POST'])
-def createTeamMember():
-    form = forms.GalleryEmployees()
-
-    if form.validate_on_submit():
-        teamMember = form.data
-        teamMember['slug'] = utils.slugify(teamMember['name'])
-        db.teammember.insert(teamMember)
-    return render_template('admin/gallery/teammembers/galleryTeamMember.html', form=form)
-
+### team members ###
 @app.route("/admin/manage-gallery-teammembers/")
 def listTeamMembers():
     form = forms.GalleryEmployees()
@@ -215,6 +203,45 @@ def listTeamMembers():
 
     return render_template('admin/gallery/teammembers/galleryTeamMember.html', form=form, teammember=teammember)
 
+@app.route("/admin/edit-gallery-teammembers/", methods=['GET', 'POST'])
+def createTeamMember():
+    form = forms.GalleryEmployees()
+
+    if form.validate_on_submit():
+        formdata = form.data
+        teammember = utils.handle_form_data({}, formdata)
+        teammember['slug'] = utils.slugify(teammember['name'])
+        db.teammember.insert(teammember)
+        flash('You successfully created a new team member')
+        return redirect_flask(url_for('listTeamMembers'))
+
+    return render_template('admin/gallery/teammembers/galleryTeamMemberCreate.html', form=form)
+
+@app.route("/admin/edit-gallery-teammember/<teammember_id>", methods=['GET', 'POST'])
+def updateTeamMembers(teammember_id):
+    teammember = db.teammember.find_one({"_id": ObjectId(teammember_id)})
+
+    if request.method == 'POST':
+        form = forms.GalleryEmployees
+
+        if form.validate_on_submit():
+            formdata = form.data
+            db.teammember.update(
+            {
+                "_id": ObjectId(teammember_id)
+            },
+            utils.handle_form_data(teammember, formdata),
+            upsert=True
+        )
+        flash('You successfully updated the team member entry')
+        return redirect_flask(url_for('listTeamMembers'))
+
+    else:
+        form = forms.GalleryEmployees(data=teammember)
+
+    return render_template('admin/gallery/teammembers/galleryTeamMemberEdit.html', form=form, teamMemberId=teammember_id)
+
+### opening hours ###
 @app.route("/admin/manage-opening-hours/")
 def listOpeningHours():
     form = forms.GalleryHours()
