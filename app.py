@@ -160,7 +160,7 @@ def updateExhibition(exhibition_id):
             {
                 "_id": ObjectId(exhibition_id)
             },
-            utils.handle_form_data(exhibition, formdata),
+            utils.handle_form_data(exhibition, formdata, ['press_release_file']),
             upsert=True
         )
         flash('You successfully updated the exhibition data')
