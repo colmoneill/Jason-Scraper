@@ -1,15 +1,26 @@
 {% extends "admin.html" %}
-{% block title %}{% endblock %}
+{% block title %}
+  artits pages
+{% endblock %}
 {% block body %}
+<div class="col-md-8">
     <h3>artists</h3>
-    <ul>
-      <button><a href="">create new artist for website</a></button>
-      <p>existing artists:</p>
-      <li><a href=""></a></li>
+
+    <ul class="list-group">
+      {% for artists in artist %}
+        <li class="list-group-item row">
+          <div class="col-xs-8">
+            <b>{{ artists.name }}</b>
+          </div>
+          <div class="col-xs-4 text-right">
+            <a class="btn btn-primary btn-sm" href="/admin/artist/update/">edit</a>
+            <a class="btn btn-danger btn-sm" href="/admin/artist/delete/">delete</a>
+          </div>
+        </li>
+    	{% endfor %}
     </ul>
-    <ul>
-      {% for artist in artists %}
-      <li>{{ artist.name }}</li>
-      {% endfor %}
-    </ul>
+    {% include 'helpers/_flashMessage.html' %}
+
+    <a class="btn btn-success" href="/admin/artist/create/">create new artist page</a>
+</div>
 {% endblock %}

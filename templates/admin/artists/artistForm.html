@@ -1,0 +1,24 @@
+{% block body %}
+{% from "helpers/_form.html" import render_field %}
+<form method="post" enctype="multipart/form-data">
+    {{ form.csrf_token }}
+    {{ render_field(form.name) }}
+    {{ render_field(form.keyImage) }}
+    {{ render_field(form.images) }}
+    <hr>
+    <div class="row">
+      <div class="col-xs-6">
+        <label>Exhibition main text</label> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers">markdown enabled</a>
+        {{ form.wysiwig_artist_biography(only_input=True, rows=20) }}
+      </div>
+      <div class="col-xs-6">
+        <label>&larr; Text preview</label>
+        {{ form.wysiwig_artist_biography(only_preview=True) }}
+      </div>
+    </div>
+    {{ render_field(form.press_release_file) }}
+    <hr>
+    <p><code>fields marked with a * are required</code></p>
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
+{% endblock %}

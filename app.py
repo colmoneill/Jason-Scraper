@@ -120,9 +120,7 @@ def viewAdmin():
 ### exhibitions general ###
 @app.route("/admin/exhibitions/")
 def viewExhibition():
-    form = forms.ExhibitionForm()
     exhibition = db.exhibitions.find()
-
     return render_template('admin/exhibition/exhibitions.html', exhibition=exhibition)
 
 @app.route("/admin/exhibition/create/", methods=['GET', 'POST'])
@@ -189,22 +187,35 @@ def deleteExhibition(exhibition_id):
 
     return render_template('admin/exhibition/exhibitionDelete.html')
 
-
+### artists ###
 @app.route("/admin/artist/")
 def listArtists():
     artist = db.artist.find()
     return render_template('admin/artists/artists.html', artist=artist)
 
-@app.route("/admin/artist-create/")
+@app.route("/admin/artist/create/", methods=['GET', 'POST'])
 def artistCreate():
-    form = forms.artistCreate()
+    form = forms.ArtistForm()
 
     if form.validate_on_submit():
-        artist = form.data
+        formdata = form.data
+        artist = utils.handle_form_data({}, formdata, ['press_release_file'])
         artist['slug'] = utils.slugify(artist['name'])
+
+        if request.files['press_release_file']:
+            artist['press_release'] = utils.handle_uploaded_file(
+                request.files['press_release_file'],
+                app.config['UPLOAD']['PRESS_RELEASE'],
+                '{0}.pdf'.format(artist['slug'])
+            )
+
         db.artist.insert(artist)
+        flash('You successfully created an artist page')
         return redirect_flask(url_for('listArtists'))
-    return render_template('admin/artists/artists.html', form=form)
+
+    return render_template('admin/artists/artistCreate.html', form=form)
+
+@app.route("/admin/artist/update")
 
 ### gallery general ###
 @app.route("/admin/manage-gallery-info/", methods=['GET', 'POST'])
