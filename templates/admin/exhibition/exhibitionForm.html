@@ -16,13 +16,24 @@
               {{ render_datepicker(form.end) }}
           </div>
       </div>
+
+      {# commenting this idea for now
+
       <hr>
-      {% for artworks in AL_artworks %}
-        <ul>
-          <li><img class="small-vignette" src="{{ artworks.img_url }}"><figcaption>{{ artworks.artist_sort_title_year }}</figcaption></li>
-        </ul>
-      {% endfor %}
+      <ul>
+        {% for artworks in AL_artworks %}
+          <li class="panel">
+              <a data-toggle="collapse" data-parent="#menu" href="#one">{{ artworks.artist_sort_title_year }}</a>
+              <ul id="what gives you your name" class="collapse">
+                <li><img class="small-vignette" src="{{ artworks.img_url }}"><figcaption></figcaption></li>
+              </ul>
+          </li>
+        {% endfor %}
+      </ul>
+
+      #}
       <hr>
+
       <div class="row">
         <div class="col-xs-6">
           <label>Exhibition main text</label> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers">markdown enabled</a>
