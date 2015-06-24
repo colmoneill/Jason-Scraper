@@ -13,8 +13,8 @@
             <b>{{ artists.name }}</b>
           </div>
           <div class="col-xs-4 text-right">
-            <a class="btn btn-primary btn-sm" href="/admin/artist/update/">edit</a>
-            <a class="btn btn-danger btn-sm" href="/admin/artist/delete/">delete</a>
+            <a class="btn btn-primary btn-sm" href="/admin/artist/update/{{ artists._id }}">edit</a>
+            <a class="btn btn-danger btn-sm" href="/admin/artist/delete/{{ artists._id }}">delete</a>
           </div>
         </li>
     	{% endfor %}
