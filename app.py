@@ -178,7 +178,7 @@ def updateExhibition(exhibition_id):
     else:
         form = forms.ExhibitionForm(data=exhibition)
 
-    return render_template('admin/exhibition/exhibitionEdit.html', form=form, singleExhibitionId=exhibition_id)
+    return render_template('admin/exhibition/exhibitionEdit.html', form=form)
 
 @app.route("/admin/exhibition/delete/<exhibition_id>", methods=['GET', 'POST'])
 def deleteExhibition(exhibition_id):
@@ -220,7 +220,7 @@ def artistCreate():
 
 @app.route("/admin/artist/update/<artist_id>", methods=['GET', 'POST'])
 def updateArtist(artist_id):
-    artists = db.artist.find_one({"_id": ObjectId(artist_id)})
+    artist = db.artist.find_one({"_id": ObjectId(artist_id)})
 
     if request.method == 'POST':
         form = forms.ArtistForm()
@@ -236,7 +236,7 @@ def updateArtist(artist_id):
             )
 
             if request.files['press_release_file']:
-                artists['press_release'] = utils.handle_uploaded_file(
+                artist['press_release'] = utils.handle_uploaded_file(
                     request.file['press_release_file'],
                     app.config['UPLOAD']['PRESS_RELEASE'],
                     '{0}.pdf'.format(artists['slug'])
@@ -244,10 +244,10 @@ def updateArtist(artist_id):
             flash('You updated the artist page successfully')
             return redirect_flask(url_for('listArtists'))
 
-        else:
-            form = form.ArtistForm(data=artists)
+    else:
+        form = forms.ArtistForm(data=artist)
 
-        return render_template('admin/artists/artistEdit.html', form=form, artists=artist_id)
+    return render_template('admin/artists/artistEdit.html', form=form)
 
 @app.route("/admin/artist/delete/<artist_id>", methods=['GET', 'POST'])
 def deleteArtist(artist_id):
