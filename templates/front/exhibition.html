@@ -1,11 +1,29 @@
 {% extends "base.html" %}
 {% block title %}{{ exhibition.name }}{% endblock %}
 {% block body %}
-Single exhibition
+<!--Single exhibition-->
+<div class="container">
+  <div class="all-col">
+    <h1>{{ exhibition.artist }}</h1>
+    <h2>{{ exhibition.name }}</h2>
+    <code> {{ exhibition.start }} > {{ exhibition.end }} </code>
+  </div>
+  <div class="subnav" id="sidebar">
     <ul>
-    	{% for exhibitions in exhibition %}
-        	<li><a href="#"><b>{{ exhibitions.artist }}</b> <br> {{ exhibitions.name }}
-          <br> {{ exhibitions.start }} > {{ exhibitions.end }}</a></li>
-    	{% endfor %}
+      <li><a href="#informations">Images</a></li>
+      <li><a href="#exhibition">Informations</a></li>
+      <li><a href="">Exhibitions</a></li>
+      <li><a href="">Media</a></li>
     </ul>
+  </div>
+  <div class="subcontent">
+    <section class="subcontent__all-col informations" id="informations">
+      <div class="separation-rule"></div>
+      <div class="text-block">
+        {{exhibition.wysiwig_exhibition_description}}
+      </div>
+      <div class="text-block">
+        {{ exhibition.wysiwig_artist_bio }}
+      </div>
+
 {% endblock %}

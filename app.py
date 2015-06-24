@@ -11,6 +11,7 @@ from flask import   Flask, flash, send_from_directory, \
                     render_template, url_for, request, \
                     abort
 from flask_pagedown import PageDown
+#from markdown import markdown
 
 import pymongo
 #import admin
@@ -132,6 +133,8 @@ def createExhibition():
         formdata = form.data
         exhibition = utils.handle_form_data({}, formdata, ['press_release_file'])
         exhibition['slug'] = utils.slugify(exhibition['name'])
+        exhibition_md = form.wysiwig_exhibition_description.data
+        artist_md = form.wysiwig_artist_bio.data
 
         if request.files['press_release_file']:
             exhibition['press_release'] = utils.handle_uploaded_file(
