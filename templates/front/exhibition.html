@@ -10,20 +10,25 @@
   </div>
   <div class="subnav" id="sidebar">
     <ul>
+
       <li><a href="#informations">Images</a></li>
       <li><a href="#exhibition">Informations</a></li>
       <li><a href="">Exhibitions</a></li>
-      <li><a href="">Media</a></li>
+      {% if exhibition.media %}<li><a href="">Media</a></li>{% endif %}
     </ul>
   </div>
   <div class="subcontent">
     <section class="subcontent__all-col informations" id="informations">
       <div class="separation-rule"></div>
       <div class="text-block">
+        {% filter markdown %}
         {{exhibition.wysiwig_exhibition_description}}
+        {% endfilter %}
       </div>
       <div class="text-block">
+        {% filter markdown %}
         {{ exhibition.wysiwig_artist_bio }}
+        {% endfilter %}
       </div>
 
 {% endblock %}

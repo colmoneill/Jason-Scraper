@@ -11,7 +11,8 @@ from flask import   Flask, flash, send_from_directory, \
                     render_template, url_for, request, \
                     abort
 from flask_pagedown import PageDown
-#from markdown import markdown
+from flask.ext.misaka import Misaka
+
 
 import pymongo
 #import admin
@@ -25,6 +26,7 @@ import forms
 
 app = Flask(__name__)
 pagedown = PageDown(app)
+Misaka(app)
 app.secret_key = "@My*C7KNeC@74#HC$F7FkpEEmECaZ@jH#ePwwz#Fo^#T3%(!bM^xSAG^&!#x*i#*"
 
 client = pymongo.MongoClient()
@@ -158,7 +160,7 @@ def updateExhibition(exhibition_id):
                 exhibition['press_release'] = utils.handle_uploaded_file(
                     request.files['press_release_file'],
                     app.config['UPLOAD']['PRESS_RELEASE'],
-                    '{0}.pdf'.format(exhibtion['slug'])
+                    '{0}.pdf'.format(exhibition['slug'])
             )
         flash('You successfully updated the exhibition data')
         return redirect_flask(url_for('viewExhibition'))
