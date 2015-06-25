@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}past exhibitions{% endblock %}
+{% block body %}
+<!--Single exhibition-->
+<div class="container">
+  <div class="all-col">
+    <div class="subnav" id="sidebar">
+			<ul>
+        {% for dates in date %}
+        <li><a class="here-virgile-does-some-jquery-magic" href="/past#{{ dates.start.year }}">{{ dates.start.year }}</a></li>
+        {% endfor %}
+			</ul>
+		</div>
+    <div class="subcontent">
+      {% for exhibitions in exhibition %}
+        <a href="/exhibition/{{ exhibitions.slug }}">
+          <h1>{{ exhibitions.artist }}</h1>
+          <h2>{{ exhibitions.name }}</h2>
+        </a>
+          <code>{{ exhibitions.start.strftime('%d.%m.%Y') }} > {{ exhibitions.end.strftime('%d.%m.%Y') }}</code>
+        <div class="separation-rule"></div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

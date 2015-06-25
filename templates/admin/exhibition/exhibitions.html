@@ -11,7 +11,8 @@
         <li class="list-group-item row">
           <div class="col-xs-8">
             <b>{{ exhibitions.artist }}</b> <br> {{ exhibitions.name }}
-            <br> {{ exhibitions.start }} > {{ exhibitions.end }}
+            <br> {{ exhibitions.start.strftime('%d.%m.%Y') }} > {{ exhibitions.end.strftime('%d.%m.%Y') }}
+            <br> {{ exhibitions.start.year }}
           </div>
           <div class="col-xs-4 text-right">
             <a class="btn btn-primary btn-sm" href="/admin/exhibition/update/{{ exhibitions._id }}">edit</a>

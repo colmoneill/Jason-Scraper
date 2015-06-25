@@ -56,6 +56,12 @@ def home():
     current_exhibition = db.exhibitions.find() #.limit(2)
     return render_template("front/current.html", current_exhibition=current_exhibition)
 
+@app.route("/past/")
+def pastExhibitions():
+    exhibition = db.exhibitions.find()
+    date = db.exhibitions.find()
+    return render_template("front/past.html", exhibition=exhibition, date=date)
+
 @app.route("/artists/")
 def artists():
     artists = db.artists.find().sort("artist_sort", 1)
