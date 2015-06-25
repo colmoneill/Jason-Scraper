@@ -6,7 +6,7 @@
   <div class="all-col">
     <h1>{{ exhibition.artist }}</h1>
     <h2>{{ exhibition.name }}</h2>
-    <code> {{ exhibition.start }} > {{ exhibition.end }} </code>
+    <code> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </code>
   </div>
   <div class="subnav" id="sidebar">
     <ul>
