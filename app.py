@@ -75,23 +75,6 @@ def exhibition(slug):
     exhibition = db.exhibition.find_one({ "slug": slug})
     return render_template("front/exhibition.html")
 
-# Deprecated?
-@app.route('/exhibition', methods=['GET', 'POST'])
-def adminexhibition():
-    artists = db.artists.find().sort("artist_sort", 1)
-    all_exhibitions = db.exhibition.find()
-    exhibition = None
-    new = False
-    if request.method == 'POST' and 'exhibition' in request.form:
-        exhibition = request.form['exhibition']
-        if db.exhibition.find_one({'exhibition': exhibition}) is None:
-            # this is a new exhibition, add it to the database
-            db.exhibition.insert({'exhibition': exhibition})
-            new = True
-
-
-    return render_template('front/exhibition.html', exhibition=exhibition, allexhibition=allexhibition, artists=artists, new=new)
-
 @app.route("/exhibition/<slug>/")
 def publicviewExhibition(slug):
     exhibition = db.exhibitions.find_one({'slug': slug})
@@ -107,6 +90,11 @@ def GalleryInfo():
     openinghours = db.openinghours.find()
 
     return render_template('front/gallery.html', teammembers=teammembers, openinghours=openinghours)
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('page_not_found.html'), 404
+
 ####################################################################################
 
 ### ADMIN FUNCTIONALITY ###
