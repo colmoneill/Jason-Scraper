@@ -148,7 +148,7 @@ def createExhibition():
         return redirect_flask(url_for('viewExhibition'))
 
     return render_template('admin/exhibition/exhibitionCreate.html', form=form, AL_artworks=AL_artworks)
-
+'''
 @app.route("/admin/exhibition/update/<exhibition_id>", methods=['GET', 'POST'])
 def updateExhibition(exhibition_id):
     exhibition = db.exhibitions.find_one({"_id": ObjectId(exhibition_id)})
@@ -172,6 +172,38 @@ def updateExhibition(exhibition_id):
                     app.config['UPLOAD']['PRESS_RELEASE'],
                     '{0}.pdf'.format(exhibtion['slug'])
             )
+        flash('You successfully updated the exhibition data')
+        return redirect_flask(url_for('viewExhibition'))
+
+    else:
+        form = forms.ExhibitionForm(data=exhibition)
+
+    return render_template('admin/exhibition/exhibitionEdit.html', form=form)
+'''
+@app.route('/admin/exhibition/update/<slug>/', methods=['GET', 'POST'])
+def updateExhibition(slug):
+    exhibition = db.exhibitions.find_one({'slug': slug})
+
+    if request.method == 'POST':
+        form = forms.ExhibitionForm()
+
+        if form.validate_on_submit():
+            formdata=form.data
+            db.exhibitions.update(
+            {
+                '_id': exhibition['_id']
+            },
+            utils.handle_form_data(exhibition, formdata, ['press_release_file']),
+            upsert=True
+            )
+
+            if request.files['press_release_file']:
+                exhibition['press_release'] = utils.handle_uploaded_file(
+                    request.files['press_release_file'],
+                    app.config['UPLOAD']['PRESS_RELEASE'],
+                    '{0}.pdf'.format(exhibtion['slug'])
+            )
+
         flash('You successfully updated the exhibition data')
         return redirect_flask(url_for('viewExhibition'))
 
