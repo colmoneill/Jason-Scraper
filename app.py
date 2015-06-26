@@ -145,18 +145,18 @@ def createExhibition():
 
     return render_template('admin/exhibition/exhibitionCreate.html', form=form, AL_artworks=AL_artworks)
 
-@app.route("/admin/exhibition/update/<exhibition_id>", methods=['GET', 'POST'])
-def updateExhibition(exhibition_id):
-    exhibition = db.exhibitions.find_one({"_id": ObjectId(exhibition_id)})
+@app.route('/admin/exhibition/update/<slug>/', methods=['GET', 'POST'])
+def updateExhibition(slug):
+    exhibition = db.exhibitions.find_one({'slug': slug})
 
     if request.method == 'POST':
         form = forms.ExhibitionForm()
 
         if form.validate_on_submit():
-            formdata = form.data
+            formdata=form.data
             db.exhibitions.update(
             {
-                "_id": ObjectId(exhibition_id)
+                '_id': exhibition['_id']
             },
             utils.handle_form_data(exhibition, formdata, ['press_release_file']),
             upsert=True
@@ -168,6 +168,7 @@ def updateExhibition(exhibition_id):
                     app.config['UPLOAD']['PRESS_RELEASE'],
                     '{0}.pdf'.format(exhibition['slug'])
             )
+
         flash('You successfully updated the exhibition data')
         return redirect_flask(url_for('viewExhibition'))
 
@@ -214,9 +215,9 @@ def artistCreate():
 
     return render_template('admin/artists/artistCreate.html', form=form)
 
-@app.route("/admin/artist/update/<artist_id>", methods=['GET', 'POST'])
-def updateArtist(artist_id):
-    artist = db.artist.find_one({"_id": ObjectId(artist_id)})
+@app.route("/admin/artist/update/<slug>", methods=['GET', 'POST'])
+def updateArtist(slug):
+    artist = db.artist.find_one({'slug': slug})
 
     if request.method == 'POST':
         form = forms.ArtistForm()
@@ -225,7 +226,7 @@ def updateArtist(artist_id):
             formdata = form.data
             db.artist.update(
             {
-                "_id": ObjectId(artist_id)
+                '_id': artist['_id']
             },
             utils.handle_form_data(artist, formdata, ['press_release_file']),
             upsert=True
@@ -282,9 +283,9 @@ def createTeamMember():
 
     return render_template('admin/gallery/teammembers/galleryTeamMemberCreate.html', form=form)
 
-@app.route("/admin/edit-gallery-teammembers/<teammember_id>", methods=['GET', 'POST'])
-def updateTeamMembers(teammember_id):
-    teammember = db.teammember.find_one({"_id": ObjectId(teammember_id)})
+@app.route("/admin/edit-gallery-teammembers/<slug>", methods=['GET', 'POST'])
+def updateTeamMembers(slug):
+    teammember = db.teammember.find_one({'slug': slug})
 
     if request.method == 'POST':
         form = forms.GalleryEmployees()
@@ -293,7 +294,7 @@ def updateTeamMembers(teammember_id):
             formdata = form.data
             db.teammember.update(
             {
-                "_id": ObjectId(teammember_id)
+                '_id': teammember['_id']
             },
             utils.handle_form_data(teammember, formdata),
             upsert=True
@@ -304,7 +305,7 @@ def updateTeamMembers(teammember_id):
     else:
         form = forms.GalleryEmployees(data=teammember)
 
-    return render_template('admin/gallery/teammembers/galleryTeamMemberEdit.html', form=form, teamMemberId=teammember_id)
+    return render_template('admin/gallery/teammembers/galleryTeamMemberEdit.html', form=form)
 
 @app.route("/admin/delete-gallery-teammembers/<teammember_id>", methods=['GET', 'POST'])
 def deleteTeamMembers(teammember_id):

@@ -1,5 +1,5 @@
 {% from "helpers/_form.html" import render_field %}
-<form method="post" action="/admin/edit-gallery-teammembers/{{ teamMemberId }}">
+<form method="post" enctype="multipart/form-data">
     {{ form.csrf_token }}
     {{ render_field(form.name) }}
     {{ render_field(form.role) }}
