@@ -223,6 +223,7 @@ def artistCreate():
 @app.route("/admin/artist/update/<artist_id>", methods=['GET', 'POST'])
 def updateArtist(artist_id):
     artist = db.artist.find_one({"_id": ObjectId(artist_id)})
+    images = db.image.find({"artist": artist})
 
     if request.method == 'POST':
         form = forms.ArtistForm()
@@ -249,7 +250,7 @@ def updateArtist(artist_id):
     else:
         form = forms.ArtistForm(data=artist)
 
-    return render_template('admin/artists/artistEdit.html', form=form)
+    return render_template('admin/artists/artistEdit.html', form=form, images=images)
 
 @app.route("/admin/artist/delete/<artist_id>", methods=['GET', 'POST'])
 def deleteArtist(artist_id):
