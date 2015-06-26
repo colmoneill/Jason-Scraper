@@ -1,0 +1,13 @@
+{% block title %}
+    Exhibition form
+{% endblock %}
+
+{% block body %}
+  {% from "helpers/_form.html" import render_field, render_datepicker %}
+  <form method="post" enctype="multipart/form-data" action="/admin/edit-image/{{ teamMemberId }}">
+      {{ form.csrf_token }}
+      {{ render_field(form.artist) }}
+      {{ render_field(form.image_file) }}
+      <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+{% endblock %}
