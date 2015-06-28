@@ -21,6 +21,7 @@ import utils
 from bson import ObjectId
 import forms
 
+
 # Local imports
 # from settings import *
 
@@ -36,6 +37,11 @@ app.config['UPLOAD'] = {
     'PRESS_RELEASE': {
         'allowed_extensions': ['pdf'],
         'upload_folder': 'static/uploads/press/'
+    },
+    
+    'ARTWORK_IMAGE': {
+        'allowed_extensions': ['png', 'jpeg', 'jpg', 'gi'],
+        'upload_folder': 'static/uploads/artworks/'
     }
 }
 
@@ -217,6 +223,7 @@ def artistCreate():
 @app.route("/admin/artist/update/<artist_id>", methods=['GET', 'POST'])
 def updateArtist(artist_id):
     artist = db.artist.find_one({"_id": ObjectId(artist_id)})
+    images = db.image.find({"artist": artist})
 
     if request.method == 'POST':
         form = forms.ArtistForm()
@@ -243,7 +250,7 @@ def updateArtist(artist_id):
     else:
         form = forms.ArtistForm(data=artist)
 
-    return render_template('admin/artists/artistEdit.html', form=form)
+    return render_template('admin/artists/artistEdit.html', form=form, images=images)
 
 @app.route("/admin/artist/delete/<artist_id>", methods=['GET', 'POST'])
 def deleteArtist(artist_id):
@@ -369,6 +376,74 @@ def deleteOpeningHours(opening_hour_id):
         return redirect_flask(url_for('listOpeningHours'))
 
     return render_template('admin/gallery/openinghours/galleryOpeningHoursDelete.html')
+
+### Images ###
+@app.route("/admin/manage-images/")
+def listImages():
+    form = forms.Image()
+    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+    images = db.image.find()
+
+    return render_template('admin/images/list.html', images=images, form=form)
+
+@app.route("/admin/edit-image/", methods=['GET', 'POST'])
+def createImage():
+    form = forms.Image()
+    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+    
+    print form.artist.choices
+    
+    if form.validate_on_submit():
+        formdata = form.data
+        image = {
+            'artist': db.artist.find_one({'_id': ObjectId(formdata['artist'])}),
+            'path': utils.handle_uploaded_file(
+                request.files['image_file'],
+                app.config['UPLOAD']['ARTWORK_IMAGE']
+            )
+        }
+        db.image.insert(image)
+        
+        return redirect_flask(url_for('listImages'))
+
+    return render_template('admin/images/create.html', form=form)
+
+#@app.route("/admin/edit-i/<opening_hour_id>", methods=['GET', 'POST'])
+#def updateOpeningHours(opening_hour_id):
+    #opening_hour = db.openinghours.find_one({"_id": ObjectId(opening_hour_id)})
+
+    #if request.method == 'POST':
+        #form = forms.GalleryHours()
+
+        #if form.validate_on_submit():
+            #formdata = form.data
+            #db.openinghours.update(
+                #{
+                    #"_id": ObjectId(opening_hour_id)
+                #},
+                #utils.handle_form_data(opening_hour, formdata),
+                #upsert=True
+            #)
+            #flash('You successfully updated the opening hour entry')
+            #return redirect_flask(url_for('listOpeningHours'))
+    #else:
+        #form = forms.GalleryHours(data=opening_hour)
+
+    #return render_template('admin/gallery/openinghours/galleryOpeningHoursEdit.html', form=form, galleryHoursId=opening_hour_id)
+
+@app.route("/admin/delete-image/<image_id>", methods=['GET', 'POST'])
+def deleteImage(image_id):
+    if request.method == 'POST':
+        image = db.image.find_one({"_id": ObjectId(image_id)})
+        os.remove(image['path'])
+        db.image.remove({"_id": ObjectId(image_id)})
+        flash('You successfully deleted the image')
+        return redirect_flask(url_for('listImages'))
+
+    return render_template('admin/images/delete.html')
+
+
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

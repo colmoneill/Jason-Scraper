@@ -1,0 +1,16 @@
+{% extends "admin.html" %}
+{% block title %}
+    Delete artist page
+{% endblock %}
+
+{% block body %}
+<div class="col-md-8">
+    <h3>Delete artist page</h3>
+    <p>
+        Are you sure you want to delete this image?
+    </p>
+    <form method="post">
+        <a href="/admin/artists/" class="btn">Cancel</a><input class="btn btn-danger" type="submit" value="Delete" />
+    </form>
+</div>
+{% endblock %}
