@@ -1,6 +1,6 @@
 from flask_wtf import Form
 from flask_pagedown.fields import PageDownField
-from wtforms import StringField, DateTimeField, TextAreaField, FileField
+from wtforms import StringField, DateTimeField, SelectField, TextAreaField, FileField
 from wtforms.validators import DataRequired
 
 class ExhibitionForm(Form):
@@ -8,6 +8,7 @@ class ExhibitionForm(Form):
     name = StringField('Title')
     start = DateTimeField('From', validators=[DataRequired()], format='%d-%m-%Y')
     end = DateTimeField('To', validators=[DataRequired()], format='%d-%m-%Y')
+    exhibition_key_img = FileField('exhibition key image')
     # key_image = FileField('Exhibition key image')
     # other images = FileField('Other images from AL')
     wysiwig_exhibition_description = PageDownField('exhibition description')

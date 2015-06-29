@@ -59,7 +59,7 @@ Don't judge me you Irish fuck.
 		{% for teammember in teammembers %}
 			<div class="staff_member">
 				<h3>{{ teammember.name }}</h3>
-					<p class="staff_member__title"> — {{ teammember.role }}</p>
+					<p class="staff_member__title">{% if teammember.role %} — {{ teammember.role }}{% endif %}</p>
 				<p class="staff_member__mail"><a href="mailto:{{ teammember.email }}">{{ teammember.email }}</a></p>
 			</div>
 		{% endfor %}

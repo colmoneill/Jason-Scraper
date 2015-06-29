@@ -6,10 +6,11 @@ import os
 from datetime import datetime
 
 # Dependencies: Flask + PIL or Pillowexhibition/create/
+from functools import wraps
 from flask import   Flask, flash, send_from_directory, \
                     redirect as redirect_flask, \
                     render_template, url_for, request, \
-                    abort
+                    abort, Response
 from flask_pagedown import PageDown
 from flask.ext.misaka import Misaka
 
@@ -38,12 +39,37 @@ app.config['UPLOAD'] = {
         'allowed_extensions': ['pdf'],
         'upload_folder': 'static/uploads/press/'
     },
-    
+
     'ARTWORK_IMAGE': {
         'allowed_extensions': ['png', 'jpeg', 'jpg', 'gi'],
         'upload_folder': 'static/uploads/artworks/'
     }
 }
+
+# login decorator
+
+def check_auth(username, password):
+    """This function is called to check if a username /
+    password combination is valid.
+    """
+    return username == 'admin' and password == 'secret'
+
+def authenticate():
+    """Sends a 401 response that enables basic auth"""
+    return Response(
+    'Could not verify your access level for that URL.\n'
+    'You have to login with proper credentials', 401,
+    {'WWW-Authenticate': 'Basic realm="Your login is required"'})
+
+def requires_auth(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        auth = request.authorization
+        if not auth or not check_auth(auth.username, auth.password):
+            return authenticate()
+        return f(*args, **kwargs)
+    return decorated
+
 
 ####################################################################################
 
@@ -52,6 +78,7 @@ app.config['UPLOAD'] = {
 ####################################################################################
 
 @app.route("/test/")
+@requires_auth
 def test():
     return render_template("front/tests.html")
 
@@ -390,9 +417,9 @@ def listImages():
 def createImage():
     form = forms.Image()
     form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
-    
+
     print form.artist.choices
-    
+
     if form.validate_on_submit():
         formdata = form.data
         image = {
@@ -403,7 +430,7 @@ def createImage():
             )
         }
         db.image.insert(image)
-        
+
         return redirect_flask(url_for('listImages'))
 
     return render_template('admin/images/create.html', form=form)

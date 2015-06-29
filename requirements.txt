@@ -1,6 +1,7 @@
 Flask==0.10.1
 Flask-Login==0.2.11
 Flask-Markdown==0.3
+Flask-Misaka==0.3.0
 Flask-PageDown==0.2.1
 Flask-WTF==0.11
 Jinja2==2.7.3
@@ -10,6 +11,7 @@ WTForms==2.0.2
 Werkzeug==0.10.1
 argparse==1.2.1
 itsdangerous==0.24
+misaka==1.0.2
 pymongo==2.8
 pytz==2014.10
 wsgiref==0.1.2
