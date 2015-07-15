@@ -159,7 +159,7 @@ def createExhibition():
     form = forms.ExhibitionForm()
     form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
     print form.artist.choices
-
+    
     AL_artworks = db.AL_artworks.find().limit(10)
 
     if form.validate_on_submit():
@@ -185,7 +185,6 @@ def createExhibition():
 @app.route("/admin/exhibition/update/<exhibition_id>", methods=['GET', 'POST'])
 def updateExhibition(exhibition_id):
     exhibition = db.exhibitions.find_one({"_id": ObjectId(exhibition_id)})
-    SelectField(u'Select artist *', validators=[DataRequired()])
 
     if request.method == 'POST':
         form = forms.ExhibitionForm()

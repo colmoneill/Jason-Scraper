@@ -1,10 +1,9 @@
 from flask_wtf import Form
 from flask_pagedown.fields import PageDownField
-from wtforms import StringField, DateTimeField, SelectField, TextAreaField, FileField, SelectField
+from wtforms import StringField, DateTimeField, SelectField, TextAreaField, FileField
 from wtforms.validators import DataRequired
 
 class ExhibitionForm(Form):
-<<<<<<< HEAD
     #artist = StringField(u'Artist Name *', validators=[DataRequired()])
     artist = SelectField(u'Select Artist *', validators=[DataRequired()])
     exhibition_name = StringField('Title')
