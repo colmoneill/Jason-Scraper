@@ -4,7 +4,6 @@ from wtforms import StringField, DateTimeField, SelectField, TextAreaField, File
 from wtforms.validators import DataRequired
 
 class ExhibitionForm(Form):
-<<<<<<< HEAD
     #artist = StringField(u'Artist Name *', validators=[DataRequired()])
     artist = SelectField(u'Select Artist *', validators=[DataRequired()])
     exhibition_name = StringField('Title')
