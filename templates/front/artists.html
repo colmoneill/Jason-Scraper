@@ -3,7 +3,7 @@
 {% block body %}
 <ul>
     {% for artist in artists %}
-        <li><a href="/artists/{{ artist.slug }}/">{{ artist.artist }}</a></li>
+        <li><a href="/artist/{{ artist.slug }}/">{{ artist.name }}</a></li>
     {% endfor %}
 </ul>
 {% endblock %}

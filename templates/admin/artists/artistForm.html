@@ -1,10 +1,9 @@
 {% block body %}
 {% from "helpers/_form.html" import render_field %}
-<form method="post" enctype="multipart/form-data">
+<form action="" method="post" enctype="multipart/form-data">
     {{ form.csrf_token }}
     {{ render_field(form.name) }}
-    {{ render_field(form.keyImage) }}
-    {{ render_field(form.images) }}
+    {{ form.fileName }}
     <hr>
     <div class="row">
       <div class="col-xs-6">
@@ -16,7 +15,7 @@
         {{ form.wysiwig_artist_biography(only_preview=True) }}
       </div>
     </div>
-    {{ render_field(form.press_release_file) }}
+    {{ form.press_release_file }}
     <hr>
     <p><code>fields marked with a * are required</code></p>
     <button type="submit" class="btn btn-default">Submit</button>
