@@ -158,7 +158,13 @@ def viewExhibition():
 def createExhibition():
     form = forms.ExhibitionForm()
     form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+<<<<<<< HEAD
     
+=======
+
+    print form.artist.choices
+
+>>>>>>> 682e0d11ef3a0481b8276a598fc1facd48bb8987
     AL_artworks = db.AL_artworks.find().limit(10)
 
     if form.validate_on_submit():
