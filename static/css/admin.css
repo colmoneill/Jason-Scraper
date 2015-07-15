@@ -16,6 +16,24 @@ img.small-vignette{
   height: auto;
 }
 
+.artwork-preview {
+    display: inline-block;
+    position: relative;
+    height: 100px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.artwork-preview img {
+    max-height: 100%;
+}
+
+.artwork-preview input[type="checkbox"] {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+
 textarea.flask-pagedown-input{
   display: block;
   width: 100%;

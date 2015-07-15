@@ -19,7 +19,10 @@ import pymongo
 
 import utils
 from bson import ObjectId
+from bson.json_util import dumps
 import forms
+
+import json
 
 # Local imports
 # from settings import *
@@ -154,6 +157,9 @@ def viewExhibition():
 @app.route("/admin/exhibition/create/", methods=['GET', 'POST'])
 def createExhibition():
     form = forms.ExhibitionForm()
+    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+    print form.artist.choices
+
     AL_artworks = db.AL_artworks.find().limit(10)
 
     if form.validate_on_submit():
@@ -179,9 +185,11 @@ def createExhibition():
 @app.route("/admin/exhibition/update/<exhibition_id>", methods=['GET', 'POST'])
 def updateExhibition(exhibition_id):
     exhibition = db.exhibitions.find_one({"_id": ObjectId(exhibition_id)})
+    SelectField(u'Select artist *', validators=[DataRequired()])
 
     if request.method == 'POST':
         form = forms.ExhibitionForm()
+        form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
 
         if form.validate_on_submit():
             formdata = form.data
@@ -204,6 +212,7 @@ def updateExhibition(exhibition_id):
 
     else:
         form = forms.ExhibitionForm(data=exhibition)
+        form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
 
     return render_template('admin/exhibition/exhibitionEdit.html', form=form)
 
@@ -419,8 +428,6 @@ def createImage():
     form = forms.Image()
     form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
 
-    print form.artist.choices
-
     if form.validate_on_submit():
         formdata = form.data
         image = {
@@ -471,6 +478,39 @@ def deleteImage(image_id):
     return render_template('admin/images/delete.html')
 
 
+"""
+    Returns JSON-array with images for given artist. Or 404
+"""
+@app.route("/admin/images/list/<artist_id>", methods=['GET'])
+def listImagesForArtist(artist_id):
+    artist = db.artist.find_one({"_id": ObjectId(artist_id)})
+    if artist:
+        images = db.image.find({'artist': artist})
+        return dumps(images)
+    else:
+        abort(404)
+
+"""
+    Direct upload function. Stores given image in the artist images
+    store location. Returns JSON DB-entry
+"""
+@app.route("/admin/uploadArtistImage/<artist_id>", methods=['POST'])
+def uploadArtistImage(artist_id):
+    formdata = form.data
+    artist = db.artist.find_one({'_id': ObjectId(formdata['artist'])})
+
+    if artist:
+        image = {
+            'artist': artist,
+            'path': utils.handle_uploaded_file(
+                request.files['image_file'],
+                app.config['UPLOAD']['ARTWORK_IMAGE']
+            )
+        }
+
+        db.image.insert(image)
+
+        return json.dumps(image)
 
 
 if __name__ == '__main__':
