@@ -14,7 +14,6 @@ from flask import   Flask, flash, send_from_directory, \
 from flask_pagedown import PageDown
 from flask.ext.misaka import Misaka
 
-
 import pymongo
 #import admin
 
@@ -99,12 +98,12 @@ def pastExhibitions():
 
 @app.route("/artists/")
 def artists():
-    artists = db.artists.find().sort("artist_sort", 1)
+    artists = db.artist.find()
     return render_template("front/artists.html", artists=artists)
 
-@app.route("/artists/<slug>/")
+@app.route("/artist/<slug>/")
 def artist(slug):
-    artist = db.artists.find_one({ "slug": slug})
+    artist = db.artist.find_one({ "slug": slug})
     artworks = db.artworks.find({"artist": artist["artist"]}).sort("id", -1).limit(10)
     return render_template("front/artist.html", artist=artist, artworks=artworks)
 
@@ -242,6 +241,9 @@ def artistCreate():
                 app.config['UPLOAD']['PRESS_RELEASE'],
                 '{0}.pdf'.format(artist['slug'])
             )
+
+        filename = secure_filename(form.fileName.file.filename)
+        form.fileName.file.save(file_path)
 
         db.artist.insert(artist)
         flash('You successfully created an artist page')

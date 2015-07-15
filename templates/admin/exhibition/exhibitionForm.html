@@ -7,7 +7,7 @@
   <form method="post" enctype="multipart/form-data">
       {{ form.csrf_token }}
       {{ render_field(form.artist) }}
-      {{ render_field(form.name) }}
+      {{ render_field(form.exhibition_name) }}
       <div class="row">
           <div class="col-xs-5 col-sm-4">
               {{ render_datepicker(form.start) }}
@@ -31,7 +31,7 @@
           </li>
         {% endfor %}
       </ul>
-#}
+      #}
 
 
       <hr>

@@ -21,14 +21,10 @@
     <section class="subcontent__all-col informations" id="informations">
       <div class="separation-rule"></div>
       <div class="text-block">
-        {% filter markdown %}
-        {{exhibition.wysiwig_exhibition_description}}
-        {% endfilter %}
+      {{ exhibition.wysiwig_exhibition_description|markdown }}
       </div>
       <div class="text-block">
-        {% filter markdown %}
-        {{ exhibition.wysiwig_artist_bio }}
-        {% endfilter %}
+      {{ exhibition.wysiwig_artist_bio|markdown }}
       </div>
 
 {% endblock %}
