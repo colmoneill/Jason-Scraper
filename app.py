@@ -157,12 +157,14 @@ def viewExhibition():
 @app.route("/admin/exhibition/create/", methods=['GET', 'POST'])
 def createExhibition():
     form = forms.ExhibitionForm()
+    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+    
     AL_artworks = db.AL_artworks.find().limit(10)
 
     if form.validate_on_submit():
         formdata = form.data
         exhibition = utils.handle_form_data({}, formdata, ['press_release_file'])
-        exhibition['slug'] = utils.slugify(exhibition['name'])
+        exhibition['slug'] = utils.slugify(exhibition['exhibition_name'])
         exhibition_md = form.wysiwig_exhibition_description.data
         artist_md = form.wysiwig_artist_bio.data
 
@@ -182,10 +184,12 @@ def createExhibition():
 @app.route("/admin/exhibition/update/<exhibition_id>", methods=['GET', 'POST'])
 def updateExhibition(exhibition_id):
     exhibition = db.exhibitions.find_one({"_id": ObjectId(exhibition_id)})
+    SelectField(u'Select artist *', validators=[DataRequired()])
 
     if request.method == 'POST':
         form = forms.ExhibitionForm()
-
+        form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+        
         if form.validate_on_submit():
             formdata = form.data
             db.exhibitions.update(
@@ -207,6 +211,7 @@ def updateExhibition(exhibition_id):
 
     else:
         form = forms.ExhibitionForm(data=exhibition)
+        form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
 
     return render_template('admin/exhibition/exhibitionEdit.html', form=form)
 
@@ -421,8 +426,6 @@ def listImages():
 def createImage():
     form = forms.Image()
     form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
-
-    print form.artist.choices
 
     if form.validate_on_submit():
         formdata = form.data
