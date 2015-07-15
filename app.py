@@ -154,16 +154,12 @@ def viewExhibition():
 @app.route("/admin/exhibition/create/", methods=['GET', 'POST'])
 def createExhibition():
     form = forms.ExhibitionForm()
-    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
-
-    print form.artist.choices
-
     AL_artworks = db.AL_artworks.find().limit(10)
 
     if form.validate_on_submit():
         formdata = form.data
         exhibition = utils.handle_form_data({}, formdata, ['press_release_file'])
-        exhibition['slug'] = utils.slugify(exhibition['name'])
+        exhibition['slug'] = utils.slugify(exhibition['exhibition_name'])
         exhibition_md = form.wysiwig_exhibition_description.data
         artist_md = form.wysiwig_artist_bio.data
 
