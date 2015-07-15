@@ -20,8 +20,10 @@ import pymongo
 
 import utils
 from bson import ObjectId
+from bson.json_util import dumps
 import forms
 
+import json
 
 # Local imports
 # from settings import *
@@ -468,9 +470,42 @@ def deleteImage(image_id):
         return redirect_flask(url_for('listImages'))
 
     return render_template('admin/images/delete.html')
+    
 
+"""
+    Returns JSON-array with images for given artist. Or 404
+"""
+@app.route("/admin/images/list/<artist_id>", methods=['GET'])
+def listImagesForArtist(artist_id):
+    artist = db.artist.find_one({"_id": ObjectId(artist_id)})
+    if artist:
+        images = db.image.find({'artist': artist})
+        return dumps(images)
+    else:
+        abort(404)
 
-
+"""
+    Direct upload function. Stores given image in the artist images
+    store location. Returns JSON DB-entry
+"""
+@app.route("/admin/uploadArtistImage/<artist_id>", methods=['POST'])
+def uploadArtistImage(artist_id):
+    formdata = form.data
+    artist = db.artist.find_one({'_id': ObjectId(formdata['artist'])})
+    
+    if artist:
+        image = {
+            'artist': artist,
+            'path': utils.handle_uploaded_file(
+                request.files['image_file'],
+                app.config['UPLOAD']['ARTWORK_IMAGE']
+            )
+        }
+            
+        db.image.insert(image)
+        
+        return json.dumps(image)
+   
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
