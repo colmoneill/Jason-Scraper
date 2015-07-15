@@ -11,12 +11,36 @@ from datetime import datetime
 
 import pymongo
 import pytz
+import os
+
+import time
 
 from utils import slugify
 # from utils import logger
 
 client = pymongo.MongoClient()
 db = client.artlogic
+
+artwork_image_folder = 'static/uploads/artworks'
+
+def fetchfile(url, dst):
+    fi = urllib2.urlopen(url)
+    fo = open(dst, 'wb')
+    while True:
+        chunk = fi.read(4096)
+        if not chunk:
+            fo.close()
+            break
+        fo.write(chunk)
+
+def getsafepath (path, count = 1):
+    root, ext = os.path.splitext(path)
+    safepath = root + '-' + str(count) + ext
+
+    if os.path.exists(safepath):
+        return getsafepath(path, (count+1))
+    else:
+        return safepath
 
 def fetch_artworks():
     # logger.debug("downloading artwork data from Artlogic")
@@ -56,13 +80,25 @@ def fetch_artworks():
         # upsert int the database:
         db.AL_artworks.update({"id": artwork['id']}, artwork, upsert=True)
 
-
         # artwork['artist_id'] is not functioning properly
-        db.AL_artists.update({"artist": artwork['artist']},
-                          {"artist_sort": artwork['artist_sort'],
-                           "artist":  artwork['artist'],
+        db.artist.update({"name": artwork['artist']},
+                          {"name":  artwork['artist'],
                            "slug": slugify(artwork['artist'])},
                           upsert=True)
+
+        # download image
+        extension = os.path.splitext(artwork['img_url'])[1]
+        dest = getsafepath(os.path.join(artwork_image_folder, slugify(artwork['artist']) + extension))
+        fetchfile(artwork['img_url'], dest)
+
+        db.image.insert({
+            'artist': db.artist.find_one({"slug": slugify(artwork['artist'])}),
+            'path': dest
+        })
+
+        print "{0}, {1}".format(artwork['title'], artwork['artist'])
+
+        time.sleep(.5)
 
     # db.meta.update({"subject": "artworks"}, {"updated": datetime.now(pytz.utc), "subject": "artworks"}, upsert=True)
     return AL_artworks

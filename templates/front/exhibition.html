@@ -5,7 +5,7 @@
 <div class="container">
   <div class="all-col">
     <h1>{{ exhibition.artist }}</h1>
-    <h2>{{ exhibition.name }}</h2>
+    <h2>{{ exhibition.exhibition_name }}</h2>
     <code> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </code>
   </div>
   <div class="subnav" id="sidebar">
@@ -20,11 +20,15 @@
   <div class="subcontent">
     <section class="subcontent__all-col informations" id="informations">
       <div class="separation-rule"></div>
-      <div class="text-block">
-      {{ exhibition.wysiwig_exhibition_description|markdown }}
-      </div>
-      <div class="text-block">
-      {{ exhibition.wysiwig_artist_bio|markdown }}
-      </div>
+      {% if exhibition.wysiwig_exhibition_description %}
+        <div class="text-block">
+          {{ exhibition.wysiwig_exhibition_description|markdown }}
+        </div>
+      {% endif %}
+      {% if exhibition.wysiwig_artist_bio %}
+        <div class="text-block">
+          {{ exhibition.wysiwig_artist_bio|markdown }}
+        </div>
+      {% endif %}
 
 {% endblock %}

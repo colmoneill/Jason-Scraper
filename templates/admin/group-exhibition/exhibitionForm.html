@@ -1,0 +1,128 @@
+{% block title %}
+    <h2>Group exhibition form</h2>
+{% endblock %}
+
+{% block body %}
+  {% from "helpers/_form.html" import render_field, render_datepicker %}
+  <form method="post" enctype="multipart/form-data">
+      {{ form.csrf_token }}
+      {{ render_field(form.exhibition_name) }}
+      <div class="row">
+          <div class="col-xs-5 col-sm-4">
+              {{ render_datepicker(form.start) }}
+          </div>
+          <div class="col-xs-5 col-xs-offset-1 col-sm-4 col-sm-offset-2">
+              {{ render_datepicker(form.end) }}
+          </div>
+      </div>
+      {{ render_field(form.artist) }}
+      <div id="artist-images-container"></div>
+      <hr>
+      {{ render_field(form.extra_artists) }}
+      <hr>
+      {#
+      <ul>
+
+        {% for artworks in AL_artworks %}
+          <li class="panel">
+              <a data-toggle="collapse" data-parent="#menu" href="#one">{{ artworks.artist_sort_title_year }}</a>
+              <ul id="what gives you your name" class="collapse">
+                <li><img class="small-vignette" src="{{ artworks.img_url }}"><figcaption></figcaption></li>
+              </ul>
+          </li>
+        {% endfor %}
+      </ul>
+      #}
+
+
+      <hr>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <label>Exhibition main text</label> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers">markdown enabled</a>
+          {{ form.wysiwig_exhibition_description(only_input=True, rows=20) }}
+        </div>
+        <div class="col-xs-6">
+          <label>&larr; Text preview</label>
+          {{ form.wysiwig_exhibition_description(only_preview=True) }}
+        </div>
+      </div>
+      <hr>
+      {{ render_field(form.press_release_file) }}
+      <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+
+<script type="text/template" id="template-artist-artwork">
+    <div class="artwork-preview">
+        <input type="checkbox" name="artist-artworks[]" />
+        <img />
+    </div>
+</script>
+
+<script type="text/javascript">
+    window.addEventListener('load', function () {
+        /**
+        * Bless the datepickers
+        */
+        (function ($) {
+            'use strict';
+
+            $('#datepicker-start').on('dp.change', function (e) {
+                $('#datepicker-end').data("DateTimePicker").minDate(e.date);
+            });
+        })($);
+
+        /**
+        * Image loading for artist selection
+        */
+        (function ($, jQuery) {
+            'use strict';
+
+            var getTemplate = function (name) {
+                return $($('#template-' + name).html());
+            };
+
+            var blessImageEl = function (el) {
+                $(el).click(function () {
+                    var checkbox = $(this).find('input');
+                    var checked = checkbox.prop('checked');
+                    checkbox.prop('checked', !checked);
+                });
+            };
+
+            var addImage = function (image) {
+                var el = getTemplate('artist-artwork');
+
+                el.find('img').attr('src', '/' + image['path']);
+                el.find('input').attr('value', image['_id']);
+
+                blessImageEl(el);
+
+                $('#artist-images-container').append(el);
+            };
+
+            var getImages = function (artist){
+                $('#artist-images-container').empty();
+
+                jQuery.get(
+                    '/admin/images/list/' + artist,
+                    {},
+                    function (images) {
+                        for (var i=0; i<images.length;i++) {
+                            addImage(images[i]);
+                        }
+                    },
+                    'json'
+                );
+            };
+
+            $('select#artist').change(function () {
+                getImages($(this).val());
+            });
+
+            getImages($('select#artist').val());
+
+        })($, jQuery);
+    }, false);
+</script>
+{% endblock %}

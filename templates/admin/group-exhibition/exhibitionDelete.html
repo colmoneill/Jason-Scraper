@@ -1,0 +1,16 @@
+{% extends "admin.html" %}
+{% block title %}
+    Delete exhibition
+{% endblock %}
+
+{% block body %}
+<div class="col-md-8">
+    <h3>Delete group exhibition</h3>
+    <p>
+        Are you sure you want to delete this exhibition entry?
+    </p>
+    <form method="post">
+        <a href="/admin/exhibitions/" class="btn">Cancel</a><input class="btn btn-danger" type="submit" value="Delete" />
+    </form>
+</div>
+{% endblock %}

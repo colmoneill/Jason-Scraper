@@ -10,13 +10,14 @@
       {% for exhibitions in exhibition %}
         <li class="list-group-item row">
           <div class="col-xs-8">
-            <b>{{ exhibitions.artist }}</b> <br> {{ exhibitions.name }}
+            <b>{{ exhibitions.artist }}</b> <br> {{ exhibitions.exhibition_name }}
             <br> {{ exhibitions.start.strftime('%d.%m.%Y') }} > {{ exhibitions.end.strftime('%d.%m.%Y') }}
-            <br> {{ exhibitions.start.year }}
+            <br>{% if exhibitions.is_group_expo %}group expo {% else %}single artist expo{% endif %}
           </div>
           <div class="col-xs-4 text-right">
             <a class="btn btn-primary btn-sm" href="/admin/exhibition/update/{{ exhibitions._id }}">edit</a>
             <a class="btn btn-danger btn-sm" href="/admin/exhibition/delete/{{ exhibitions._id }}">delete</a>
+            <input type="checkbox" name="online" />
           </div>
         </li>
     	{% endfor %}
@@ -24,7 +25,8 @@
     {% include 'helpers/_flashMessage.html' %}
 
     <br>
-    <a class="btn btn-success" href="/admin/exhibition/create/">create new exhibition</a>
+    <a class="btn btn-success" href="/admin/exhibition/create/">create new <b>single artist</b> exhibition</a><br><br>
+    <a class="btn btn-success" href="/admin/group-exhibition/create/">create new <b>group</b> exhibition</a>
 
 </div>
 {% endblock %}
