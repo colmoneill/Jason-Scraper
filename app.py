@@ -154,6 +154,10 @@ def viewExhibition():
 @app.route("/admin/exhibition/create/", methods=['GET', 'POST'])
 def createExhibition():
     form = forms.ExhibitionForm()
+    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+
+    print form.artist.choices
+
     AL_artworks = db.AL_artworks.find().limit(10)
 
     if form.validate_on_submit():
