@@ -7,16 +7,20 @@
 <div class="col-md-8">
   <h3>edit exhibitions</h3>
     <ul class="list-group">
-      {% for exhibitions in exhibition %}
+      {% for exhibition in exhibitions %}
         <li class="list-group-item row">
-          <div class="col-xs-8">
-            <b>{{ exhibitions.artist.name }}</b> <br> {{ exhibitions.exhibition_name }}
-            <br> {{ exhibitions.start.strftime('%d.%m.%Y') }} > {{ exhibitions.end.strftime('%d.%m.%Y') }}
-            <br> {{ exhibitions.start.year }}
+          <div class="col-md-8">
+            {% if exhibition.is_group_expo %}
+              <b>{{ exhibition.exhibition_name }}</b> (group exhibition) <br> participants: {{ ', '.join([name for artist in exhibition.artists]) }}
+            {% else %}<b>{{ exhibition.artist.name }}</b> <br> {{ exhibition.exhibition_name }}
+            {% endif%}
+            <br> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}
           </div>
-          <div class="col-xs-4 text-right">
-            <a class="btn btn-primary btn-sm" href="/admin/exhibition/update/{{ exhibitions._id }}">edit</a>
-            <a class="btn btn-danger btn-sm" href="/admin/exhibition/delete/{{ exhibitions._id }}">delete</a>
+          <br>
+          <div class="col-md-4 text-right">
+            {% if exhibition.is_group_expo %}<a class="btn btn-primary btn-sm" href="/admin/group-exhibition/update/{{ exhibition._id }}">edit</a>{% else %}<a class="btn btn-primary btn-sm" href="/admin/exhibition/update/{{ exhibition._id }}">edit</a>{% endif %}
+            <a class="btn btn-danger btn-sm" href="/admin/exhibition/delete/{{ exhibition._id }}">delete</a>
+            <input type="checkbox" name="checkbox-published" {{ 'checked="checked"' if (exhibition.is_published) }} value="{{ exhibition._id }}" />
           </div>
         </li>
     	{% endfor %}
@@ -24,7 +28,33 @@
     {% include 'helpers/_flashMessage.html' %}
 
     <br>
-    <a class="btn btn-success" href="/admin/exhibition/create/">create new exhibition</a>
+    <a class="btn btn-success" href="/admin/exhibition/create/">create new <b>single artist</b> exhibition</a><br><br>
+    <a class="btn btn-success" href="/admin/group-exhibition/create/">create new <b>group</b> exhibition</a>
 
 </div>
+<script type="text/javascript">
+  window.addEventListener('load', function () {
+    $("[name='checkbox-published']").bootstrapSwitch({
+        'onSwitchChange': function (e, checked) {
+          var $checkbox = $(this);
+          $checkbox.bootstrapSwitch('indeterminate', true);
+          exhibition_id = $checkbox.val();
+          jQuery.post(
+            '/admin/exhibition/publish/' + exhibition_id,
+            {
+              'is_published': checked
+            },
+            function (data) {
+              $checkbox.bootstrapSwitch('indeterminate', false);
+              $checkbox.bootstrapSwitch('state', data.is_published, true);
+            },
+            'json'
+          ).fail(function () {
+            $checkbox.bootstrapSwitch('indeterminate', false);
+            $checkbox.bootstrapSwitch('state', !checked, true);
+          });
+        }
+    });
+  }, false);
+</script>
 {% endblock %}

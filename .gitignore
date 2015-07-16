@@ -5,4 +5,6 @@ venv
 virtual-jason-scraper
 static/_src/node_modules/
 static/_src/node_modules/*
+static/uploads/
 *.log
+.ftpconfig

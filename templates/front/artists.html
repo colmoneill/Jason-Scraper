@@ -3,7 +3,9 @@
 {% block body %}
 <ul>
     {% for artist in artists %}
+    {% if artist.is_published %}
         <li><a href="/artist/{{ artist.slug }}/">{{ artist.name }}</a></li>
+    {% endif %}
     {% endfor %}
 </ul>
 {% endblock %}

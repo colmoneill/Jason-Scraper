@@ -104,8 +104,8 @@ def artists():
 @app.route("/artist/<slug>/")
 def artist(slug):
     artist = db.artist.find_one({ "slug": slug})
-    artworks = db.artworks.find({"artist": artist["artist"]}).sort("id", -1).limit(10)
-    return render_template("front/artist.html", artist=artist, artworks=artworks)
+    #artworks = db.artworks.find({"artist": artist["artist"]}).sort("id", -1).limit(10)
+    return render_template("front/artist.html", artist=artist)
 
 @app.route("/current/")
 def current():
@@ -148,46 +148,62 @@ def viewAdmin():
     flash('we still need to make a login method')
     return render_template('admin.html')
 
-### exhibitions general ###
+### single artist exhibition ###
 @app.route("/admin/exhibitions/")
 def viewExhibition():
-    exhibition = db.exhibitions.find()
-    return render_template('admin/exhibition/exhibitions.html', exhibition=exhibition)
+    exhibitions = db.exhibitions.find()
+    return render_template('admin/exhibition/exhibitions.html', exhibitions=exhibitions)
+
+@app.route("/admin/exhibition/publish/<exhibition_id>", methods=['POST'])
+def publishExhibition (exhibition_id):
+    from time import sleep
+    sleep(.5)
+    is_published = ('true' == request.form['is_published'])
+    db.exhibitions.update(
+        {'_id': ObjectId(exhibition_id)},
+        {'$set': {'is_published': is_published}}
+    )
+    return dumps(db.exhibitions.find_one({'_id': ObjectId(exhibition_id)}))
 
 @app.route("/admin/exhibition/create/", methods=['GET', 'POST'])
 def createExhibition():
     form = forms.ExhibitionForm()
     form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
-    
-    if form.validate_on_submit():
-        formdata = form.data
-        
-        exhibition = utils.handle_form_data({}, formdata, ['press_release_file', 'artist'])
-        exhibition['artist'] = db.artist.find_one({'_id': ObjectId(formdata['artist'])})
-        exhibition['slug'] = utils.slugify(exhibition['exhibition_name'])
-        exhibition_md = form.wysiwig_exhibition_description.data
-        exhibition['images'] = [db.image.find_one({'_id': ObjectId(image_id)}) for image_id in request.form.getlist('image')]
-        artist_md = form.wysiwig_artist_bio.data
 
-        if request.files['press_release_file']:
-            exhibition['press_release'] = utils.handle_uploaded_file(
-                request.files['press_release_file'],
-                app.config['UPLOAD']['PRESS_RELEASE'],
-                '{0}.pdf'.format(exhibition['slug'])
-            )
+    selectedImages = []
 
-        db.exhibitions.insert(exhibition)
-        flash('You successfully created an exhibition')
-        return redirect_flask(url_for('viewExhibition'))
+    if form.is_submitted():
+        if form.validate_on_submit():
+            formdata = form.data
+            
+            exhibition = utils.handle_form_data({}, formdata, ['press_release_file', 'artist'])
+            exhibition['artist'] = db.artist.find_one({'_id': ObjectId(formdata['artist'])})
+            exhibition['slug'] = utils.slugify(exhibition['exhibition_name'])
+            exhibition_md = form.wysiwig_exhibition_description.data
+            exhibition['images'] = [db.image.find_one({'_id': ObjectId(image_id)}) for image_id in request.form.getlist('image')]
+            artist_md = form.wysiwig_artist_bio.data
 
-    return render_template('admin/exhibition/exhibitionCreate.html', form=form, selectedImages=json.dumps([]))
+            if request.files['press_release_file']:
+                exhibition['press_release'] = utils.handle_uploaded_file(
+                    request.files['press_release_file'],
+                    app.config['UPLOAD']['PRESS_RELEASE'],
+                    '{0}.pdf'.format(exhibition['slug'])
+                )
+
+            db.exhibitions.insert(exhibition)
+            flash('You successfully created an exhibition')
+            return redirect_flask(url_for('viewExhibition'))
+
+        selectedImages = request.form.getlist('image')
+
+    return render_template('admin/exhibition/exhibitionCreate.html', form=form, selectedImages=json.dumps(selectedImages))
 
 @app.route("/admin/exhibition/update/<exhibition_id>", methods=['GET', 'POST'])
 def updateExhibition(exhibition_id):
+    form = forms.ExhibitionForm()
     exhibition = db.exhibitions.find_one({"_id": ObjectId(exhibition_id)})
     
-    if request.method == 'POST':
-        form = forms.ExhibitionForm()
+    if form.is_submitted():
         form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
         exhibition['images'] = [db.image.find_one({'_id': ObjectId(image_id)}) for image_id in request.form.getlist('image')]                                            
         
@@ -226,11 +242,88 @@ def deleteExhibition(exhibition_id):
 
     return render_template('admin/exhibition/exhibitionDelete.html')
 
+### group exhibition ###
+
+@app.route("/admin/group-exhibition/create/", methods=['GET', 'POST'])
+def createGroupExhibition():
+    form = forms.GroupExhibitionForm()
+    form.artists.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+    
+    if form.validate_on_submit():
+        formdata = form.data
+        exhibition = utils.handle_form_data({}, formdata, ['press_release_file', 'artists'])
+        exhibition['artists'] = [db.artist.find_one({'_id': ObjectId(artist_id)}) for artist_id in formdata['artists']]
+        exhibition['slug'] = utils.slugify(exhibition['exhibition_name'])
+        exhibition_md = form.wysiwig_exhibition_description.data
+        exhibition['is_group_expo'] = True
+
+        if request.files['press_release_file']:
+            exhibition['press_release'] = utils.handle_uploaded_file(
+                request.files['press_release_file'],
+                app.config['UPLOAD']['PRESS_RELEASE'],
+                '{0}.pdf'.format(exhibition['slug'])
+            )
+
+        db.exhibitions.insert(exhibition)
+        flash('You successfully created a group exhibition')
+        return redirect_flask(url_for('viewExhibition'))
+
+    return render_template('admin/group-exhibition/exhibitionCreate.html', form=form)
+
+@app.route("/admin/group-exhibition/update/<exhibition_id>", methods=['GET', 'POST'])
+def updateGroupExhibition(exhibition_id):
+    exhibition = db.exhibitions.find_one({"_id": ObjectId(exhibition_id)})
+
+    if request.method == 'POST':
+        form = forms.GroupExhibitionForm()
+        form.artists.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+
+        if form.validate_on_submit():
+            formdata = form.data
+            exhibition = utils.handle_form_data(exhibition, formdata, ['press_release_file', 'artists'])
+            exhibition['artists'] = [db.artist.find_one({'_id': ObjectId(artist_id)}) for artist_id in formdata['artists']]
+            db.exhibitions.update({ "_id": ObjectId(exhibition_id) }, exhibition)
+            
+            if request.files['press_release_file']:
+                exhibition['press_release'] = utils.handle_uploaded_file(
+                    request.files['press_release_file'],
+                    app.config['UPLOAD']['PRESS_RELEASE'],
+                    '{0}.pdf'.format(exhibition['slug'])
+            )
+        flash('You successfully updated the exhibition data')
+        return redirect_flask(url_for('viewExhibition'))
+
+    else:
+        exhibition['artists'] = [str(artist['_id']) for artist in exhibition['artists']]
+        form = forms.GroupExhibitionForm(data=exhibition)
+        form.artists.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+
+    return render_template('admin/group-exhibition/exhibitionEdit.html', form=form)
+
+@app.route("/admin/group-exhibition/delete/<exhibition_id>", methods=['GET', 'POST'])
+def deleteGroupExhibition(exhibition_id):
+    if request.method == 'POST':
+        print exhibition_id
+        db.exhibitions.remove({"_id": ObjectId(exhibition_id)})
+        flash('You deleted the exhibition')
+        return redirect_flask(url_for('viewExhibition'))
+
+    return render_template('admin/group-exhibition/exhibitionDelete.html')
+
 ### artists ###
 @app.route("/admin/artist/")
 def listArtists():
-    artist = db.artist.find()
-    return render_template('admin/artists/artists.html', artist=artist)
+    artists = db.artist.find()
+    return render_template('admin/artists/artists.html', artists=artists)
+
+@app.route("/admin/artist/publish/<artist_id>", methods=['POST'])
+def publishArtist (artist_id):
+    is_published = ('true' == request.form['is_published'])
+    db.artist.update(
+        {'_id': ObjectId(artist_id)},
+        {'$set': {'is_published': is_published}}
+    )
+    return dumps(db.artist.find_one({'_id': ObjectId(artist_id)}))
 
 @app.route("/admin/artist/create/", methods=['GET', 'POST'])
 def artistCreate():
@@ -267,14 +360,9 @@ def updateArtist(artist_id):
 
         if form.validate_on_submit():
             formdata = form.data
-            db.artist.update(
-            {
-                "_id": ObjectId(artist_id)
-            },
-            utils.handle_form_data(artist, formdata, ['press_release_file']),
-            upsert=True
-            )
-
+            artist =  utils.handle_form_data(artist, formdata, ['press_release_file']),
+            db.artist.update({"_id": ObjectId(artist_id)}, artist)
+            
             if request.files['press_release_file']:
                 artist['press_release'] = utils.handle_uploaded_file(
                     request.file['press_release_file'],
@@ -453,7 +541,7 @@ def deleteImage(image_id):
         return redirect_flask(url_for('listImages'))
 
     return render_template('admin/images/delete.html')
-    
+
 
 """
     Returns JSON-array with images for given artist. Or 404
@@ -483,11 +571,9 @@ def uploadArtistImage(artist_id):
                 app.config['UPLOAD']['ARTWORK_IMAGE']
             )
         }
-            
-        db.image.insert(image)
-        
+
+        db.image.insert(image)        
         return dumps(image)
-   
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

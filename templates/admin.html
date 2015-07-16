@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="/static/img/favicon.png"/>
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-switch.min.css">
     <link rel="stylesheet" href="/static/css/admin.css">
     {{ pagedown.include_pagedown() }}
     <title>edit GJR | {% block title %}{% endblock %}</title>
@@ -55,11 +56,19 @@
     <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="/static/js/vendor/moment.min.js"></script>
     <script src="/static/js/vendor/bootstrap-datetimepicker.min.js"></script>
+    <script src="/static/js/vendor/bootstrap-switch.min.js"></script>
     <script src="/static/js/vendor/bootstrap.min.js"></script>
 
     <script type="text/javascript">
         $(function () {
             $('.datepicker').datetimepicker({ format: 'DD-MM-YYYY' });
+            $.fn.bootstrapSwitch.defaults.size = 'small';
+            $.fn.bootstrapSwitch.defaults.onText = 'ONLINE';
+            $.fn.bootstrapSwitch.defaults.offText = 'OFFLINE';
+            $.fn.bootstrapSwitch.defaults.onColor = 'success';
+            $.fn.bootstrapSwitch.defaults.labelWidth = '10px';
+
+
         });
     </script>
 </body>
