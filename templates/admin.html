@@ -61,28 +61,14 @@
 
     <script type="text/javascript">
         $(function () {
-            $.fn.bootstrapSwitch.defaults.size = 'small';
             $('.datepicker').datetimepicker({ format: 'DD-MM-YYYY' });
-            $("[name='my-checkbox']").bootstrapSwitch({
-                'onText': 'ONLINE',
-                'offText': 'OFFLINE',
-                'onColor': 'success',
-                'labelWidth': '10px',
-                'onSwitchChange': function (e, checked) {
-                  var checkbox = this;
-                  exhibition_id = $(this).val();
-                  jQuery.post(
-                    '/admin/exhibition/publish/' + exhibition_id,
-                    {
-                      'is_published': checked
-                    },
-                    function (data) {
-                      $(checkbox).bootstrapSwitch('state', data.is_published, true);
-                    },
-                    'json'
-                  )
-                }
-            });
+            $.fn.bootstrapSwitch.defaults.size = 'small';
+            $.fn.bootstrapSwitch.defaults.onText = 'ONLINE';
+            $.fn.bootstrapSwitch.defaults.offText = 'OFFLINE';
+            $.fn.bootstrapSwitch.defaults.onColor = 'success';
+            $.fn.bootstrapSwitch.defaults.labelWidth = '10px';
+
+
         });
     </script>
 </body>

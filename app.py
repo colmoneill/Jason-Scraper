@@ -310,8 +310,17 @@ def deleteGroupExhibition(exhibition_id):
 ### artists ###
 @app.route("/admin/artist/")
 def listArtists():
-    artist = db.artist.find()
-    return render_template('admin/artists/artists.html', artist=artist)
+    artists = db.artist.find()
+    return render_template('admin/artists/artists.html', artists=artists)
+
+@app.route("/admin/artist/publish/<artist_id>", methods=['POST'])
+def publishArtist (artist_id):
+    is_published = ('true' == request.form['is_published'])
+    db.artist.update(
+        {'_id': ObjectId(artist_id)},
+        {'$set': {'is_published': is_published}}
+    )
+    return dumps(db.artist.find_one({'_id': ObjectId(artist_id)}))
 
 @app.route("/admin/artist/create/", methods=['GET', 'POST'])
 def artistCreate():

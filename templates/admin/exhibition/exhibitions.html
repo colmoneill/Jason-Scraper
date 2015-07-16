@@ -17,7 +17,7 @@
           <div class="col-xs-4 text-right">
             <a class="btn btn-primary btn-sm" href="/admin/exhibition/update/{{ exhibition._id }}">edit</a>
             <a class="btn btn-danger btn-sm" href="/admin/exhibition/delete/{{ exhibition._id }}">delete</a>
-            <input type="checkbox" name="my-checkbox" {{ 'checked="checked"' if (exhibition.is_published) }} value="{{ exhibition._id }}" />
+            <input type="checkbox" name="checkbox-published" {{ 'checked="checked"' if (exhibition.is_published) }} value="{{ exhibition._id }}" />
           </div>
         </li>
     	{% endfor %}
@@ -29,4 +29,24 @@
     <a class="btn btn-success" href="/admin/group-exhibition/create/">create new <b>group</b> exhibition</a>
 
 </div>
+<script type="text/javascript">
+  window.addEventListener('load', function () {
+    $("[name='checkbox-published']").bootstrapSwitch({
+        'onSwitchChange': function (e, checked) {
+          var checkbox = this;
+          exhibition_id = $(this).val();
+          jQuery.post(
+            '/admin/exhibition/publish/' + exhibition_id,
+            {
+              'is_published': checked
+            },
+            function (data) {
+              $(checkbox).bootstrapSwitch('state', data.is_published, true);
+            },
+            'json'
+          )
+        }
+    });
+  }, false);
+</script>
 {% endblock %}
