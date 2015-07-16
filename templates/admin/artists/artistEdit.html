@@ -6,9 +6,5 @@
 {% block body %}
 <div class="col-md-8">
     {% include 'admin/artists/artistForm.html' %}
-    <h2>Images</h2>
-    {% for image in images %}
-        <img src="/{{ image.path }}" />
-    {% endfor %}
 </div>
 {% endblock %}

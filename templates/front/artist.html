@@ -3,18 +3,11 @@
 	{{ artist.artist }}
 {% endblock %}
 {% block body %}
-	
+
 	<div class="container">
-		<h2>{{ artist.artist }}</h2>
-	
-		{% for artwork in artworks %}
-			<h3>{{ artwork.id }} {{ artwork.title }}, {{ artwork.artist }}</h3>
-	
+		<h2>{{ artist.name }}</h2>
 			<figure>
-			    <img src="{{ artwork.img_url }}"/>
 			</figure>
 	</div>
-
-	{% endfor %}
-
+	
 {% endblock %}

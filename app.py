@@ -104,8 +104,8 @@ def artists():
 @app.route("/artist/<slug>/")
 def artist(slug):
     artist = db.artist.find_one({ "slug": slug})
-    artworks = db.artworks.find({"artist": artist["artist"]}).sort("id", -1).limit(10)
-    return render_template("front/artist.html", artist=artist, artworks=artworks)
+    #artworks = db.artworks.find({"artist": artist["artist"]}).sort("id", -1).limit(10)
+    return render_template("front/artist.html", artist=artist)
 
 @app.route("/current/")
 def current():
@@ -156,6 +156,8 @@ def viewExhibition():
 
 @app.route("/admin/exhibition/publish/<exhibition_id>", methods=['POST'])
 def publishExhibition (exhibition_id):
+    from time import sleep
+    sleep(.5)
     is_published = ('true' == request.form['is_published'])
     db.exhibitions.update(
         {'_id': ObjectId(exhibition_id)},
@@ -239,8 +241,8 @@ def deleteExhibition(exhibition_id):
 @app.route("/admin/group-exhibition/create/", methods=['GET', 'POST'])
 def createGroupExhibition():
     form = forms.GroupExhibitionForm()
-    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
-    print form.artist.choices
+    form.artists.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+    print form.artists.choices
 
     AL_artworks = db.AL_artworks.find().limit(10)
 
@@ -269,8 +271,8 @@ def updateGroupExhibition(exhibition_id):
     exhibition = db.exhibitions.find_one({"_id": ObjectId(exhibition_id)})
 
     if request.method == 'POST':
-        form = forms.ExhibitionForm()
-        form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+        form = forms.GroupExhibitionForm()
+        form.artists.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
 
         if form.validate_on_submit():
             formdata = form.data
@@ -292,8 +294,8 @@ def updateGroupExhibition(exhibition_id):
         return redirect_flask(url_for('viewExhibition'))
 
     else:
-        form = forms.ExhibitionForm(data=exhibition)
-        form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+        form = forms.GroupExhibitionForm(data=exhibition)
+        form.artists.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
 
     return render_template('admin/group-exhibition/exhibitionEdit.html', form=form)
 

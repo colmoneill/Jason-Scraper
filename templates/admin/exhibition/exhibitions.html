@@ -10,13 +10,15 @@
       {% for exhibition in exhibitions %}
         <li class="list-group-item row">
           <div class="col-md-8">
-            <b>{{ exhibition.artist }}</b> <br> {{ exhibition.exhibition_name }}
+            {% if exhibition.is_group_expo %}
+              <b>{{ exhibition.exhibition_name }}</b> (group exhibition) <br> participants: {{ exhibition.artists }}
+            {% else %}<b>{{ exhibition.artist }}</b> <br> {{ exhibition.exhibition_name }}
+            {% endif%}
             <br> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}
-            <br>{% if exhibition.is_group_expo %}group expo {% else %}single artist expo{% endif %}
           </div>
           <br>
           <div class="col-md-4 text-right">
-            <a class="btn btn-primary btn-sm" href="/admin/exhibition/update/{{ exhibition._id }}">edit</a>
+            {% if exhibition.is_group_expo %}<a class="btn btn-primary btn-sm" href="/admin/group-exhibition/update/{{ exhibition._id }}">edit</a>{% else %}<a class="btn btn-primary btn-sm" href="/admin/exhibition/update/{{ exhibition._id }}">edit</a>{% endif %}
             <a class="btn btn-danger btn-sm" href="/admin/exhibition/delete/{{ exhibition._id }}">delete</a>
             <input type="checkbox" name="checkbox-published" {{ 'checked="checked"' if (exhibition.is_published) }} value="{{ exhibition._id }}" />
           </div>
@@ -34,18 +36,23 @@
   window.addEventListener('load', function () {
     $("[name='checkbox-published']").bootstrapSwitch({
         'onSwitchChange': function (e, checked) {
-          var checkbox = this;
-          exhibition_id = $(this).val();
+          var $checkbox = $(this);
+          $checkbox.bootstrapSwitch('indeterminate', true);
+          exhibition_id = $checkbox.val();
           jQuery.post(
             '/admin/exhibition/publish/' + exhibition_id,
             {
               'is_published': checked
             },
             function (data) {
-              $(checkbox).bootstrapSwitch('state', data.is_published, true);
+              $checkbox.bootstrapSwitch('indeterminate', false);
+              $checkbox.bootstrapSwitch('state', data.is_published, true);
             },
             'json'
-          )
+          ).fail(function () {
+            $checkbox.bootstrapSwitch('indeterminate', false);
+            $checkbox.bootstrapSwitch('state', !checked, true);
+          });
         }
     });
   }, false);
