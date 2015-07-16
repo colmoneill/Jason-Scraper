@@ -16,6 +16,10 @@ img.small-vignette{
   height: auto;
 }
 
+#artist-images {
+    position: relative;
+}
+
 .artwork-preview {
     display: inline-block;
     position: relative;
@@ -24,14 +28,44 @@ img.small-vignette{
     cursor: pointer;
 }
 
+
 .artwork-preview img {
     max-height: 100%;
+    opacity: .5;
+}
+
+.artwork-preview:hover {
+    -webkit-box-shadow: 0 0 8px rgba(82,168,236,.6);
+    -moz-box-shadow: 0 0 8px rgba(82,168,236,.6);
+    box-shadow: 0 0 8px rgba(82,168,236,.6);
+}
+
+.artwork-preview:hover img,
+.artwork-preview.selected img {
+    opacity: 1;
 }
 
 .artwork-preview input[type="checkbox"] {
     position: absolute;
     top: 5px;
     left: 5px;
+    z-index: 1;
+}
+
+#artist-image-file {
+    display: none;
+}
+
+.dropmask {
+    display: none;
+    border: 2px dotted #333;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    z-index: 1;
+    opacity: .5;
 }
 
 textarea.flask-pagedown-input{
