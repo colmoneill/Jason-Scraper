@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="/static/img/favicon.png"/>
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-switch.min.css">
     <link rel="stylesheet" href="/static/css/admin.css">
     {{ pagedown.include_pagedown() }}
     <title>edit GJR | {% block title %}{% endblock %}</title>
@@ -55,11 +56,33 @@
     <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="/static/js/vendor/moment.min.js"></script>
     <script src="/static/js/vendor/bootstrap-datetimepicker.min.js"></script>
+    <script src="/static/js/vendor/bootstrap-switch.min.js"></script>
     <script src="/static/js/vendor/bootstrap.min.js"></script>
 
     <script type="text/javascript">
         $(function () {
+            $.fn.bootstrapSwitch.defaults.size = 'small';
             $('.datepicker').datetimepicker({ format: 'DD-MM-YYYY' });
+            $("[name='my-checkbox']").bootstrapSwitch({
+                'onText': 'ONLINE',
+                'offText': 'OFFLINE',
+                'onColor': 'success',
+                'labelWidth': '10px',
+                'onSwitchChange': function (e, checked) {
+                  var checkbox = this;
+                  exhibition_id = $(this).val();
+                  jQuery.post(
+                    '/admin/exhibition/publish/' + exhibition_id,
+                    {
+                      'is_published': checked
+                    },
+                    function (data) {
+                      $(checkbox).bootstrapSwitch('state', data.is_published, true);
+                    },
+                    'json'
+                  )
+                }
+            });
         });
     </script>
 </body>

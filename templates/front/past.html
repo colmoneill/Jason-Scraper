@@ -13,12 +13,14 @@
 		</div>
     <div class="subcontent">
       {% for exhibitions in exhibition %}
+        {% if exhibitions.is_published %}
         <a href="/exhibition/{{ exhibitions.slug }}">
           <h1>{{ exhibitions.artist }}</h1>
           <h2>{{ exhibitions.exhibition_name }}</h2>
         </a>
           <code>{{ exhibitions.start.strftime('%d.%m.%Y') }} > {{ exhibitions.end.strftime('%d.%m.%Y') }}</code>
         <div class="separation-rule"></div>
+        {% endif %}
       {% endfor %}
     </div>
   </div>

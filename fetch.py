@@ -98,7 +98,7 @@ def fetch_artworks():
 
         print "{0}, {1}".format(artwork['title'], artwork['artist'])
 
-        time.sleep(.5)
+        time.sleep(1)
 
     # db.meta.update({"subject": "artworks"}, {"updated": datetime.now(pytz.utc), "subject": "artworks"}, upsert=True)
     return AL_artworks

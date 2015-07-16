@@ -7,17 +7,17 @@
 <div class="col-md-8">
   <h3>edit exhibitions</h3>
     <ul class="list-group">
-      {% for exhibitions in exhibition %}
+      {% for exhibition in exhibitions %}
         <li class="list-group-item row">
           <div class="col-xs-8">
-            <b>{{ exhibitions.artist }}</b> <br> {{ exhibitions.exhibition_name }}
-            <br> {{ exhibitions.start.strftime('%d.%m.%Y') }} > {{ exhibitions.end.strftime('%d.%m.%Y') }}
-            <br>{% if exhibitions.is_group_expo %}group expo {% else %}single artist expo{% endif %}
+            <b>{{ exhibition.artist }}</b> <br> {{ exhibition.exhibition_name }}
+            <br> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}
+            <br>{% if exhibition.is_group_expo %}group expo {% else %}single artist expo{% endif %}
           </div>
           <div class="col-xs-4 text-right">
-            <a class="btn btn-primary btn-sm" href="/admin/exhibition/update/{{ exhibitions._id }}">edit</a>
-            <a class="btn btn-danger btn-sm" href="/admin/exhibition/delete/{{ exhibitions._id }}">delete</a>
-            <input type="checkbox" name="online" />
+            <a class="btn btn-primary btn-sm" href="/admin/exhibition/update/{{ exhibition._id }}">edit</a>
+            <a class="btn btn-danger btn-sm" href="/admin/exhibition/delete/{{ exhibition._id }}">delete</a>
+            <input type="checkbox" name="my-checkbox" {{ 'checked="checked"' if (exhibition.is_published) }} value="{{ exhibition._id }}" />
           </div>
         </li>
     	{% endfor %}

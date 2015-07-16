@@ -148,18 +148,27 @@ def viewAdmin():
     flash('we still need to make a login method')
     return render_template('admin.html')
 
-### exhibitions general ###
+### single artist exhibition ###
 @app.route("/admin/exhibitions/")
 def viewExhibition():
-    exhibition = db.exhibitions.find()
-    return render_template('admin/exhibition/exhibitions.html', exhibition=exhibition)
+    exhibitions = db.exhibitions.find()
+    return render_template('admin/exhibition/exhibitions.html', exhibitions=exhibitions)
+
+@app.route("/admin/exhibition/publish/<exhibition_id>", methods=['POST'])
+def publishExhibition (exhibition_id):
+    is_published = ('true' == request.form['is_published'])
+    db.exhibitions.update(
+        {'_id': ObjectId(exhibition_id)},
+        {'$set': {'is_published': is_published}}
+    )
+    return dumps(db.exhibitions.find_one({'_id': ObjectId(exhibition_id)}))
 
 @app.route("/admin/exhibition/create/", methods=['GET', 'POST'])
 def createExhibition():
     form = forms.ExhibitionForm()
     form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
     print form.artist.choices
-    
+
     AL_artworks = db.AL_artworks.find().limit(10)
 
     if form.validate_on_submit():
@@ -224,6 +233,79 @@ def deleteExhibition(exhibition_id):
         return redirect_flask(url_for('viewExhibition'))
 
     return render_template('admin/exhibition/exhibitionDelete.html')
+
+### group exhibition ###
+
+@app.route("/admin/group-exhibition/create/", methods=['GET', 'POST'])
+def createGroupExhibition():
+    form = forms.GroupExhibitionForm()
+    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+    print form.artist.choices
+
+    AL_artworks = db.AL_artworks.find().limit(10)
+
+    if form.validate_on_submit():
+        formdata = form.data
+        exhibition = utils.handle_form_data({}, formdata, ['press_release_file'])
+        exhibition['slug'] = utils.slugify(exhibition['exhibition_name'])
+        exhibition_md = form.wysiwig_exhibition_description.data
+        exhibition['is_group_expo'] = True
+
+        if request.files['press_release_file']:
+            exhibition['press_release'] = utils.handle_uploaded_file(
+                request.files['press_release_file'],
+                app.config['UPLOAD']['PRESS_RELEASE'],
+                '{0}.pdf'.format(exhibition['slug'])
+            )
+
+        db.exhibitions.insert(exhibition)
+        flash('You successfully created a group exhibition')
+        return redirect_flask(url_for('viewExhibition'))
+
+    return render_template('admin/group-exhibition/exhibitionCreate.html', form=form, AL_artworks=AL_artworks)
+
+@app.route("/admin/group-exhibition/update/<exhibition_id>", methods=['GET', 'POST'])
+def updateGroupExhibition(exhibition_id):
+    exhibition = db.exhibitions.find_one({"_id": ObjectId(exhibition_id)})
+
+    if request.method == 'POST':
+        form = forms.ExhibitionForm()
+        form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+
+        if form.validate_on_submit():
+            formdata = form.data
+            db.exhibitions.update(
+            {
+                "_id": ObjectId(exhibition_id)
+            },
+            utils.handle_form_data(exhibition, formdata, ['press_release_file']),
+            upsert=True
+            )
+
+            if request.files['press_release_file']:
+                exhibition['press_release'] = utils.handle_uploaded_file(
+                    request.files['press_release_file'],
+                    app.config['UPLOAD']['PRESS_RELEASE'],
+                    '{0}.pdf'.format(exhibition['slug'])
+            )
+        flash('You successfully updated the exhibition data')
+        return redirect_flask(url_for('viewExhibition'))
+
+    else:
+        form = forms.ExhibitionForm(data=exhibition)
+        form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+
+    return render_template('admin/group-exhibition/exhibitionEdit.html', form=form)
+
+@app.route("/admin/group-exhibition/delete/<exhibition_id>", methods=['GET', 'POST'])
+def deleteGroupExhibition(exhibition_id):
+    if request.method == 'POST':
+        print exhibition_id
+        db.exhibitions.remove({"_id": ObjectId(exhibition_id)})
+        flash('You deleted the exhibition')
+        return redirect_flask(url_for('viewExhibition'))
+
+    return render_template('admin/group-exhibition/exhibitionDelete.html')
 
 ### artists ###
 @app.route("/admin/artist/")
