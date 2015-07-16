@@ -11,8 +11,9 @@
         <li class="list-group-item row">
           <div class="col-md-8">
             {% if exhibition.is_group_expo %}
-              <b>{{ exhibition.exhibition_name }}</b> (group exhibition) <br> participants: {{ ', '.join([name for artist in exhibition.artists]) }}
-            {% else %}<b>{{ exhibition.artist.name }}</b> <br> {{ exhibition.exhibition_name }}
+              <b>{{ exhibition.exhibition_name }}</b> (group exhibition) <br> participants: {{ exhibition['artists']|join(', ', attribute='name') }}
+            {% else %}
+                <b>{{ exhibition.artist.name }}</b> <br> {{ exhibition.exhibition_name }}
             {% endif%}
             <br> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}
           </div>
