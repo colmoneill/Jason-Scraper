@@ -9,10 +9,11 @@
     <ul class="list-group">
       {% for artist in artists %}
         <li class="list-group-item row">
-          <div class="col-xs-8">
+          <div class="col-md-8">
             <b>{{ artist.name }}</b>
           </div>
-          <div class="col-xs-4 text-right">
+          <br>
+          <div class="col-md-4  text-right">
             <a class="btn btn-primary btn-sm" href="/admin/artist/update/{{ artist._id }}">edit</a>
             <a class="btn btn-danger btn-sm" href="/admin/artist/delete/{{ artist._id }}">delete</a>
             <input type="checkbox" name="checkbox-published" {{ 'checked="checked"' if (artist.is_published) }} value="{{ artist._id }}" />

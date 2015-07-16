@@ -9,12 +9,13 @@
     <ul class="list-group">
       {% for exhibition in exhibitions %}
         <li class="list-group-item row">
-          <div class="col-xs-8">
+          <div class="col-md-8">
             <b>{{ exhibition.artist }}</b> <br> {{ exhibition.exhibition_name }}
             <br> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}
             <br>{% if exhibition.is_group_expo %}group expo {% else %}single artist expo{% endif %}
           </div>
-          <div class="col-xs-4 text-right">
+          <br>
+          <div class="col-md-4 text-right">
             <a class="btn btn-primary btn-sm" href="/admin/exhibition/update/{{ exhibition._id }}">edit</a>
             <a class="btn btn-danger btn-sm" href="/admin/exhibition/delete/{{ exhibition._id }}">delete</a>
             <input type="checkbox" name="checkbox-published" {{ 'checked="checked"' if (exhibition.is_published) }} value="{{ exhibition._id }}" />
