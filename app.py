@@ -158,14 +158,15 @@ def viewExhibition():
 def createExhibition():
     form = forms.ExhibitionForm()
     form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
-
-    AL_artworks = db.AL_artworks.find().limit(10)
-
+    
     if form.validate_on_submit():
         formdata = form.data
-        exhibition = utils.handle_form_data({}, formdata, ['press_release_file'])
+        
+        exhibition = utils.handle_form_data({}, formdata, ['press_release_file', 'artist'])
+        exhibition['artist'] = db.artist.find_one({'_id': ObjectId(formdata['artist'])})
         exhibition['slug'] = utils.slugify(exhibition['exhibition_name'])
         exhibition_md = form.wysiwig_exhibition_description.data
+        exhibition['images'] = [db.image.find_one({'_id': ObjectId(image_id)}) for image_id in request.form.getlist('image')]
         artist_md = form.wysiwig_artist_bio.data
 
         if request.files['press_release_file']:
@@ -179,25 +180,23 @@ def createExhibition():
         flash('You successfully created an exhibition')
         return redirect_flask(url_for('viewExhibition'))
 
-    return render_template('admin/exhibition/exhibitionCreate.html', form=form, AL_artworks=AL_artworks)
+    return render_template('admin/exhibition/exhibitionCreate.html', form=form, selectedImages=json.dumps([]))
 
 @app.route("/admin/exhibition/update/<exhibition_id>", methods=['GET', 'POST'])
 def updateExhibition(exhibition_id):
     exhibition = db.exhibitions.find_one({"_id": ObjectId(exhibition_id)})
-
+    
     if request.method == 'POST':
         form = forms.ExhibitionForm()
         form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+        exhibition['images'] = [db.image.find_one({'_id': ObjectId(image_id)}) for image_id in request.form.getlist('image')]                                            
         
         if form.validate_on_submit():
             formdata = form.data
-            db.exhibitions.update(
-            {
-                "_id": ObjectId(exhibition_id)
-            },
-            utils.handle_form_data(exhibition, formdata, ['press_release_file']),
-            upsert=True
-            )
+            exhibition = utils.handle_form_data(exhibition, formdata, ['press_release_file'])
+            exhibition['artist'] = db.artist.find_one({"_id": ObjectId(formdata['artist'])})
+            
+            db.exhibitions.update({"_id": ObjectId(exhibition_id)}, exhibition)
 
             if request.files['press_release_file']:
                 exhibition['press_release'] = utils.handle_uploaded_file(
@@ -205,14 +204,17 @@ def updateExhibition(exhibition_id):
                     app.config['UPLOAD']['PRESS_RELEASE'],
                     '{0}.pdf'.format(exhibition['slug'])
             )
-        flash('You successfully updated the exhibition data')
-        return redirect_flask(url_for('viewExhibition'))
+                
+            flash('You successfully updated the exhibition data')
+            return redirect_flask(url_for('viewExhibition'))
+        
+    selectedImages = [str(image['_id']) for image in exhibition['images']]
+    exhibition['artist'] = str(exhibition['artist']['_id'])
+    form = forms.ExhibitionForm(data=exhibition)
+    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
 
-    else:
-        form = forms.ExhibitionForm(data=exhibition)
-        form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
 
-    return render_template('admin/exhibition/exhibitionEdit.html', form=form)
+    return render_template('admin/exhibition/exhibitionEdit.html', form=form, selectedImages=json.dumps(selectedImages))
 
 @app.route("/admin/exhibition/delete/<exhibition_id>", methods=['GET', 'POST'])
 def deleteExhibition(exhibition_id):
@@ -441,29 +443,6 @@ def createImage():
 
     return render_template('admin/images/create.html', form=form)
 
-#@app.route("/admin/edit-i/<opening_hour_id>", methods=['GET', 'POST'])
-#def updateOpeningHours(opening_hour_id):
-    #opening_hour = db.openinghours.find_one({"_id": ObjectId(opening_hour_id)})
-
-    #if request.method == 'POST':
-        #form = forms.GalleryHours()
-
-        #if form.validate_on_submit():
-            #formdata = form.data
-            #db.openinghours.update(
-                #{
-                    #"_id": ObjectId(opening_hour_id)
-                #},
-                #utils.handle_form_data(opening_hour, formdata),
-                #upsert=True
-            #)
-            #flash('You successfully updated the opening hour entry')
-            #return redirect_flask(url_for('listOpeningHours'))
-    #else:
-        #form = forms.GalleryHours(data=opening_hour)
-
-    #return render_template('admin/gallery/openinghours/galleryOpeningHoursEdit.html', form=form, galleryHoursId=opening_hour_id)
-
 @app.route("/admin/delete-image/<image_id>", methods=['GET', 'POST'])
 def deleteImage(image_id):
     if request.method == 'POST':
@@ -494,21 +473,20 @@ def listImagesForArtist(artist_id):
 """
 @app.route("/admin/uploadArtistImage/<artist_id>", methods=['POST'])
 def uploadArtistImage(artist_id):
-    formdata = form.data
-    artist = db.artist.find_one({'_id': ObjectId(formdata['artist'])})
+    artist = db.artist.find_one({'_id': ObjectId(artist_id)})
     
     if artist:
         image = {
             'artist': artist,
             'path': utils.handle_uploaded_file(
-                request.files['image_file'],
+                request.files['image'],
                 app.config['UPLOAD']['ARTWORK_IMAGE']
             )
         }
             
         db.image.insert(image)
         
-        return json.dumps(image)
+        return dumps(image)
    
 
 if __name__ == '__main__':

@@ -10,7 +10,7 @@
       {% for exhibitions in exhibition %}
         <li class="list-group-item row">
           <div class="col-xs-8">
-            <b>{{ exhibitions.artist }}</b> <br> {{ exhibitions.name }}
+            <b>{{ exhibitions.artist.name }}</b> <br> {{ exhibitions.exhibition_name }}
             <br> {{ exhibitions.start.strftime('%d.%m.%Y') }} > {{ exhibitions.end.strftime('%d.%m.%Y') }}
             <br> {{ exhibitions.start.year }}
           </div>
