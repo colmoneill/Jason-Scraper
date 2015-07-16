@@ -5,6 +5,5 @@ from wtforms.validators import DataRequired
 
 class ArtistForm(Form):
     name = StringField(u'Artist name *', validators=[DataRequired()])
-    key_image = FileField(u'key image to represent the artist *', validators=[DataRequired()])
     wysiwig_artist_biography = PageDownField('artist biography')
     press_release_file = FileField('Press release files')

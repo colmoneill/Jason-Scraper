@@ -86,9 +86,8 @@ def test():
 @app.route("/")
 def home():
     artworks = db.artworks.find().sort("id", -1).limit(10)
-    exhibition = db.exhibition.find()
-    current_exhibition = db.exhibitions.find() #.limit(2)
-    return render_template("front/current.html", current_exhibition=current_exhibition)
+    exhibition = db.exhibitions.find().limit(2)
+    return render_template("front/current.html", exhibition=exhibition)
 
 @app.route("/past/")
 def pastExhibitions():

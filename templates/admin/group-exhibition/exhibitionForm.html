@@ -15,10 +15,14 @@
               {{ render_datepicker(form.end) }}
           </div>
       </div>
+      <hr>
+      <div class="clearfix" style="height: 200px">
       {{ render_field(form.artists) }}
+      </div>
+      {{ render_field(form.extra_artists) }}
+      <hr>
       <div id="artist-images-container"></div>
       <hr>
-      {{ render_field(form.extra_artists) }}
       <hr>
       {#
       <ul>

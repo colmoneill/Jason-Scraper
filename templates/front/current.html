@@ -2,11 +2,16 @@
 	{% block title %}Current{% endblock %}
 
 	{% block body %}
-
-	{% for current_exhibition in current_exhibition %}
-		<ul>
-			<li><a href="/exhibition/{{ current_exhibition.slug }}/">{{ current_exhibition.name }}</li>
-  	</ul>
+	{% for exhibitions in exhibition %}
+		{% if exhibitions.is_published %}
+			{% if exhibitions.is_group_expo %}
+				<a href="/exhibition/{{ exhibitions.slug }}/">{{ exhibitions.exhibition_name }} (group exhibition)
+			{% else %}
+				<a href="/exhibition/{{ exhibitions.slug }}/">{{ exhibitions.artist }}
+			{% endif %}
+		{% endif %}
+		<br>
+		<br>
 	{% endfor %}
 
 	{% endblock %}
