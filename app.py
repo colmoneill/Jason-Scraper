@@ -108,8 +108,8 @@ def artist(slug):
 
 @app.route("/current/")
 def current():
-    current_exhibition = db.exhibitions.find()#.limit(2)
-    return render_template("front/current.html", current_exhibition=current_exhibition)
+    exhibition = db.exhibitions.find().limit(2)
+    return render_template("front/current.html", exhibition=exhibition)
 
 @app.route("/current/<slug>/")
 def exhibition(slug):
@@ -174,7 +174,7 @@ def createExhibition():
     if form.is_submitted():
         if form.validate_on_submit():
             formdata = form.data
-            
+
             exhibition = utils.handle_form_data({}, formdata, ['press_release_file', 'artist'])
             exhibition['artist'] = db.artist.find_one({'_id': ObjectId(formdata['artist'])})
             exhibition['slug'] = utils.slugify(exhibition['exhibition_name'])
@@ -201,16 +201,16 @@ def createExhibition():
 def updateExhibition(exhibition_id):
     form = forms.ExhibitionForm()
     exhibition = db.exhibitions.find_one({"_id": ObjectId(exhibition_id)})
-    
+
     if form.is_submitted():
         form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
-        exhibition['images'] = [db.image.find_one({'_id': ObjectId(image_id)}) for image_id in request.form.getlist('image')]                                            
-        
+        exhibition['images'] = [db.image.find_one({'_id': ObjectId(image_id)}) for image_id in request.form.getlist('image')]
+
         if form.validate_on_submit():
             formdata = form.data
             exhibition = utils.handle_form_data(exhibition, formdata, ['press_release_file'])
             exhibition['artist'] = db.artist.find_one({"_id": ObjectId(formdata['artist'])})
-            
+
             db.exhibitions.update({"_id": ObjectId(exhibition_id)}, exhibition)
 
             if request.files['press_release_file']:
@@ -219,10 +219,10 @@ def updateExhibition(exhibition_id):
                     app.config['UPLOAD']['PRESS_RELEASE'],
                     '{0}.pdf'.format(exhibition['slug'])
             )
-                
+
             flash('You successfully updated the exhibition data')
             return redirect_flask(url_for('viewExhibition'))
-        
+
     selectedImages = [str(image['_id']) for image in exhibition['images']]
     exhibition['artist'] = str(exhibition['artist']['_id'])
     form = forms.ExhibitionForm(data=exhibition)
@@ -247,9 +247,10 @@ def deleteExhibition(exhibition_id):
 def createGroupExhibition():
     form = forms.GroupExhibitionForm()
     form.artists.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
-    
+
     if form.validate_on_submit():
         formdata = form.data
+        print formdata['artists']
         exhibition = utils.handle_form_data({}, formdata, ['press_release_file', 'artists'])
         exhibition['artists'] = [db.artist.find_one({'_id': ObjectId(artist_id)}) for artist_id in formdata['artists']]
         exhibition['slug'] = utils.slugify(exhibition['exhibition_name'])
@@ -282,7 +283,7 @@ def updateGroupExhibition(exhibition_id):
             exhibition = utils.handle_form_data(exhibition, formdata, ['press_release_file', 'artists'])
             exhibition['artists'] = [db.artist.find_one({'_id': ObjectId(artist_id)}) for artist_id in formdata['artists']]
             db.exhibitions.update({ "_id": ObjectId(exhibition_id) }, exhibition)
-            
+
             if request.files['press_release_file']:
                 exhibition['press_release'] = utils.handle_uploaded_file(
                     request.files['press_release_file'],
@@ -327,6 +328,7 @@ def publishArtist (artist_id):
 @app.route("/admin/artist/create/", methods=['GET', 'POST'])
 def artistCreate():
     form = forms.ArtistForm()
+    exhibitions = db.exhibitions.find()
 
     if form.validate_on_submit():
         formdata = form.data
@@ -340,19 +342,20 @@ def artistCreate():
                 '{0}.pdf'.format(artist['slug'])
             )
 
-        filename = secure_filename(form.fileName.file.filename)
-        form.fileName.file.save(file_path)
+        #filename = secure_filename(form.fileName.file.filename)
+        #form.fileName.file.save(file_path)
 
         db.artist.insert(artist)
         flash('You successfully created an artist page')
         return redirect_flask(url_for('listArtists'))
 
-    return render_template('admin/artists/artistCreate.html', form=form)
+    return render_template('admin/artists/artistCreate.html', form=form, exhibitions=exhibitions)
 
 @app.route("/admin/artist/update/<artist_id>", methods=['GET', 'POST'])
 def updateArtist(artist_id):
     artist = db.artist.find_one({"_id": ObjectId(artist_id)})
     images = db.image.find({"artist": artist})
+    exhibitions = db.exhibitions.find()
 
     if request.method == 'POST':
         form = forms.ArtistForm()
@@ -361,7 +364,7 @@ def updateArtist(artist_id):
             formdata = form.data
             artist =  utils.handle_form_data(artist, formdata, ['press_release_file']),
             db.artist.update({"_id": ObjectId(artist_id)}, artist)
-            
+
             if request.files['press_release_file']:
                 artist['press_release'] = utils.handle_uploaded_file(
                     request.file['press_release_file'],
@@ -374,7 +377,7 @@ def updateArtist(artist_id):
     else:
         form = forms.ArtistForm(data=artist)
 
-    return render_template('admin/artists/artistEdit.html', form=form, images=images)
+    return render_template('admin/artists/artistEdit.html', form=form, images=images, exhibitions=exhibitions)
 
 @app.route("/admin/artist/delete/<artist_id>", methods=['GET', 'POST'])
 def deleteArtist(artist_id):
@@ -561,7 +564,7 @@ def listImagesForArtist(artist_id):
 @app.route("/admin/uploadArtistImage/<artist_id>", methods=['POST'])
 def uploadArtistImage(artist_id):
     artist = db.artist.find_one({'_id': ObjectId(artist_id)})
-    
+
     if artist:
         image = {
             'artist': artist,
@@ -571,7 +574,7 @@ def uploadArtistImage(artist_id):
             )
         }
 
-        db.image.insert(image)        
+        db.image.insert(image)
         return dumps(image)
 
 if __name__ == '__main__':

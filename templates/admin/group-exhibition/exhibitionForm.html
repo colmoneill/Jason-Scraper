@@ -21,10 +21,10 @@
       </div>
       {{ render_field(form.extra_artists) }}
       <hr>
-      <div id="artist-images-container"></div>
-      <hr>
-      <hr>
+      <b>images here</b>
       {#
+      <div id="artist-images-container"></div>
+
       <ul>
 
         {% for artworks in AL_artworks %}
@@ -53,6 +53,11 @@
       </div>
       <hr>
       {{ render_field(form.press_release_file) }}
+
+      {{ render_field(form.iframe1) }}
+      {{ render_field(form.iframe2) }}
+      {{ render_field(form.iframe3) }}
+
       <button type="submit" class="btn btn-default">Submit</button>
   </form>
 

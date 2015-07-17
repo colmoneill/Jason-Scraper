@@ -4,31 +4,77 @@
 <!--Single exhibition-->
 <div class="container">
   <div class="all-col">
-    <h1>{{ exhibition.artist }}</h1>
-    <h2>{{ exhibition.exhibition_name }}</h2>
+    {% if exhibition.is_group_expo %}
+      <h1>{{ exhibition.exhibition_name }}</h1>
+    {% else %}
+      <h1>{{ exhibition.artist.name }}</h1>
+      <h2>{{ exhibition.exhibition_name }}</h2>
+    {% endif %}
     <code> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </code>
   </div>
   <div class="subnav" id="sidebar">
     <ul>
-
       <li><a href="#informations">Images</a></li>
-      <li><a href="#exhibition">Informations</a></li>
-      <li><a href="">Exhibitions</a></li>
-      {% if exhibition.media %}<li><a href="">Media</a></li>{% endif %}
+      <li><a href="#exhibition">presentation</a></li>
+      {% if exhibition.is_group_expo %}
+        <li><a href="#">artists</a>
+      {% else %}
+        <li><a href="/artist/{{ exhibition.artist.slug }}">artist's page</a>
+      {% endif %}
+      {% if exhibition.iframe1 %}
+        <li><a href="#media">Media</a></li>
+      {% endif %}
     </ul>
   </div>
   <div class="subcontent">
     <section class="subcontent__all-col informations" id="informations">
       <div class="separation-rule"></div>
+      {% if exhibition.images %}
+          {% for images in exhibition.images %}
+            <img class="vignette" style="width:20%; margin-left:3%;" src="/{{ images.path }} ">
+          {% endfor %}
+      {% endif %}
+      <div class="separation-rule"></div>
+      {% if exhibition.is_group_expo %}
+          <ul>
+        {% for artists in exhibition.artists %}
+          <li>{{ artists.name }}</li>
+        {% endfor %}
+        {{ exhibition.extra_artists }}
+          </ul>
+          <div class="separation-rule"></div>
+      {% else %}
+      <br>
+      {% endif %}
       {% if exhibition.wysiwig_exhibition_description %}
         <div class="text-block">
+          <h2>information</h2>
           {{ exhibition.wysiwig_exhibition_description|markdown }}
         </div>
       {% endif %}
       {% if exhibition.wysiwig_artist_bio %}
         <div class="text-block">
+          <h2>about the artist</h2>
           {{ exhibition.wysiwig_artist_bio|markdown }}
         </div>
       {% endif %}
+        <div class="text-block">
+          <h2>press & media</h2>
+          {% if exhibition.press_release %}
+          <div id="media">
+            <p><a class="" href="/{{ exhibition.press_release }}">Download the press release — PDF (size %)</a></p>
+          {% endif %}
+          <br><br><br>
+          {{ exhibition.iframe1 | safe }}
+          {% if exhibition.iframe2 %}
+            <hr>
+            {{ exhibition.iframe2 | safe }}
+          {% endif %}
+          {% if exhibition.iframe3 %}
+            <hr>
+            {{ exhibition.iframe3 | safe }}
+          {% endif %}
+        </div>
 
+        </div>
 {% endblock %}

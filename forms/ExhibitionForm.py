@@ -3,7 +3,7 @@ from flask_pagedown.fields import PageDownField
 
 from wtforms import StringField, DateTimeField,\
     SelectField, TextAreaField, FileField, \
-    BooleanField
+    BooleanField, TextAreaField
 
 from wtforms.validators import DataRequired
 
@@ -17,3 +17,6 @@ class ExhibitionForm(Form):
     wysiwig_artist_bio = PageDownField('artist bio')
     press_release_file = FileField('Press release files')
     is_published = BooleanField('Visible on public site')
+    iframe1 = TextAreaField('Paste in code for media iframe')
+    iframe2 = TextAreaField('Paste in code for media iframe')
+    iframe3 = TextAreaField('Paste in code for media iframe')
