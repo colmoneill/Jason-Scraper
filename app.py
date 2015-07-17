@@ -362,7 +362,7 @@ def updateArtist(artist_id):
 
         if form.validate_on_submit():
             formdata = form.data
-            artist =  utils.handle_form_data(artist, formdata, ['press_release_file']),
+            artist =  utils.handle_form_data(artist, formdata, ['press_release_file'])
             db.artist.update({"_id": ObjectId(artist_id)}, artist)
 
             if request.files['press_release_file']:
