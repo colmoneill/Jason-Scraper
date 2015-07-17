@@ -5,9 +5,9 @@
 	{% for exhibitions in exhibition %}
 		{% if exhibitions.is_published %}
 			{% if exhibitions.is_group_expo %}
-				<a href="/exhibition/{{ exhibitions.slug }}/"><h3>{{ exhibitions.exhibition_name }} (group exhibition)</h3></a><br>
+				<a href="/exhibition/{{ exhibitions.slug }}/"><h3>{{ exhibitions.exhibition_name }} (group exhibition)</h3></a>
 			{% else %}
-				<a href="/exhibition/{{ exhibitions.slug }}/"><H3>{{ exhibitions.artist.name }}</H3></a><br>
+				<a href="/exhibition/{{ exhibitions.slug }}/"><H3>{{ exhibitions.artist.name }}</H3></a>
 				<a href="/exhibition/{{ exhibitions.slug }}/">{{ exhibitions.exhibition_name }}</a><br>
 			{% endif %}
 			<code> {{ exhibitions.start.strftime('%d.%m.%Y') }} > {{ exhibitions.end.strftime('%d.%m.%Y') }} </code><br>

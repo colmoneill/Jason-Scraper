@@ -83,6 +83,11 @@ textarea.flask-pagedown-input{
   transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
 }
 
+.flask-pagedown-preview{
+  p.a {
+    text-decoration: underline;
+}
+
 /*!
  * Datetimepicker for Bootstrap 3
  * ! version : 4.7.14

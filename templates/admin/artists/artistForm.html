@@ -5,11 +5,17 @@
     {{ render_field(form.name) }}
     <hr>
     <div class="row">
-      <div class="col-xs-6">
+      <h4>Selectable images shown here</h4>
+      <p>work in progress</p>
+    </div>
+    <hr>
+    <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
         <label>Artist info text</label> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers">markdown enabled</a>
         {{ form.wysiwig_artist_info(only_input=True, rows=20) }}
       </div>
-      <div class="col-xs-6">
+      <div class="col-md-6">
         <label>&larr; Text preview</label>
         {{ form.wysiwig_artist_info(only_preview=True) }}
       </div>
@@ -25,6 +31,7 @@
         {{ form.wysiwig_artist_bio(only_preview=True) }}
       </div>
     </div>
+  </div>
     {{ form.press_release_file }}
     <hr>
     {{ render_field(form.iframe1) }}

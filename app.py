@@ -86,7 +86,7 @@ def test():
 @app.route("/")
 def home():
     artworks = db.artworks.find().sort("id", -1).limit(10)
-    exhibition = db.exhibitions.find().limit(2)
+    exhibition = db.exhibitions.find()#.limit(2)
     return render_template("front/current.html", exhibition=exhibition)
 
 @app.route("/past/")
@@ -108,7 +108,7 @@ def artist(slug):
 
 @app.route("/current/")
 def current():
-    exhibition = db.exhibitions.find().limit(2)
+    exhibition = db.exhibitions.find() #.limit(2)
     return render_template("front/current.html", exhibition=exhibition)
 
 @app.route("/current/<slug>/")
@@ -342,8 +342,8 @@ def artistCreate():
                 '{0}.pdf'.format(artist['slug'])
             )
 
-        #filename = secure_filename(form.fileName.file.filename)
-        #form.fileName.file.save(file_path)
+        filename = secure_filename(form.fileName.file.filename)
+        form.fileName.file.save(file_path)
 
         db.artist.insert(artist)
         flash('You successfully created an artist page')
@@ -362,7 +362,7 @@ def updateArtist(artist_id):
 
         if form.validate_on_submit():
             formdata = form.data
-            artist =  utils.handle_form_data(artist, formdata, ['press_release_file']),
+            artist =  utils.handle_form_data(artist, formdata, ['press_release_file'])
             db.artist.update({"_id": ObjectId(artist_id)}, artist)
 
             if request.files['press_release_file']:
