@@ -1,17 +1,31 @@
 {% extends "admin.html" %}
 {% block title %}
-    Gallery info form
+    edit images
 {% endblock %}
 
 {% block body %}
 <div class="col-md-8">
-  <h3>edit gallery staff members</h3>
+  <h3>add images</h3>
+  {% include 'admin/images/form.html' %}
+
+  <h3>edit images</h3>
     <ul class="list-group">
         {% for image in images %}
             <li class="list-group-item row">
               <div class="col-xs-8">
-                {{image.artist.name }}
-                <img src="/{{ image.path }}" width="100" />
+                <div class="media">
+                  <div class="media-left">
+                    <a href="#">
+                      <img class="media-object" style="width: 64px; height: 64px;" src="/{{ image.path }}" alt="...">
+                    </a>
+                  </div>
+                  <div class="media-body">
+                    <h4 class="media-heading">{{image.artist.name }}</h4>
+                    {{image.title_and_year}}<br>
+                    {{image.medium}}<br>
+                    {{image.dimensions}}<br>
+                  </div>
+                </div>
               </div>
               <div class="col-xs-4 text-right">
                   <a class="btn btn-danger btn-sm" href="/admin/delete-image/{{ image._id }}">delete</a>
@@ -21,7 +35,5 @@
     </ul>
   {% include 'helpers/_flashMessage.html' %}
 
-  <h3>add team member</h3>
-  {% include 'admin/images/form.html' %}
 </div>
 {% endblock %}

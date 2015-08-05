@@ -520,12 +520,16 @@ def createImage():
 
     if form.validate_on_submit():
         formdata = form.data
+        image = utils.handle_form_data({}, formdata)
         image = {
             'artist': db.artist.find_one({'_id': ObjectId(formdata['artist'])}),
             'path': utils.handle_uploaded_file(
                 request.files['image_file'],
-                app.config['UPLOAD']['ARTWORK_IMAGE']
+                app.config['UPLOAD']['ARTWORK_IMAGE'],
             )
+            # 'title_and_year' = form.title_and_year.data
+            # 'medium' = form.medium.data
+            # 'dimensions = form.dimensions.data
         }
         db.image.insert(image)
 

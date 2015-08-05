@@ -89,7 +89,7 @@ module.exports = function(grunt) {
         proxy: 'localhost',
         open: 'local',
         host: "localhost",
-        port: 3000
+        port: 5000
       },
     },
   },

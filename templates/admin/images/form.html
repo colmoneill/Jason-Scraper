@@ -1,5 +1,5 @@
 {% block title %}
-    Exhibition form
+    image form
 {% endblock %}
 
 {% block body %}
@@ -8,6 +8,9 @@
       {{ form.csrf_token }}
       {{ render_field(form.artist) }}
       {{ render_field(form.image_file) }}
+      {{ render_field(form.title_and_year) }}
+      {{ render_field(form.medium) }}
+      {{ render_field(form.dimensions) }}
       <button type="submit" class="btn btn-default">Submit</button>
   </form>
 {% endblock %}
