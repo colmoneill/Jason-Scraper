@@ -13,7 +13,6 @@
 body, html{
 	position: relative;
 	height: 100%;
-	//
 	color: $body-color;
 	background-color: $background-color;
 }
@@ -101,8 +100,8 @@ h1, h2{
 	text-transform: lowercase;
 }
 
-h1{	
-	@extend .font-bold;										
+h1{
+	@extend .font-bold;
 	@include adjust-font-size-to(18px);
 }
 

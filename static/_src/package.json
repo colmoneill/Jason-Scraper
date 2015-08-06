@@ -19,5 +19,8 @@
     "grunt-contrib-uglify": "^0.9.1",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-notify": "^0.4.1"
+  },
+  "dependencies": {
+    "node-notifier": "^4.2.3"
   }
 }

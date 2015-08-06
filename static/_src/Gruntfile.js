@@ -70,26 +70,25 @@ module.exports = function(grunt) {
     dev: {
       bsFiles: {
         src : [
-        '../css/**/*.css',
+        '../css/*.css',
         '../js/*.js',
-        'templates/*.php',
-        '../../*.php',
+        '../../templates/**'
         ],
       },
       options: {
         watchTask: true,
         ghostMode: {
-          clicks: false,
-          location: false,
-          forms: false,
-          scroll: false
+          clicks: true,
+          location: true,
+          forms: true,
+          scroll: true,
         },
         logLevel: 'debug',
         online: false,
-        proxy: 'localhost',
+        proxy: 'localhost:5000',
         open: 'local',
         host: "localhost",
-        port: 5000
+        port: 3000
       },
     },
   },

@@ -740,6 +740,17 @@ section.exhibition-year div:last-child {
       -webkit-transition-delay: 0s;
       transition: all 0.2s ease-in-out 0s; }
 
+.ir {
+  background-color: transparent;
+  border: 0;
+  overflow: hidden;
+  *text-indent: -9999px; }
+  .ir:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 150%; }
+
 .hidden {
   display: none !important;
   visibility: hidden; }
@@ -769,11 +780,11 @@ section.exhibition-year div:last-child {
   display: table; }
 .clearfix:after, .text-block:after, .download-block:after {
   clear: both; }
+.clearfix, .text-block, .download-block {
+  *zoom: 1; }
 
 @media print {
-  *,
-  *:before,
-  *:after {
+  * {
     background: transparent !important;
     color: #000 !important;
     box-shadow: none !important;
@@ -789,8 +800,9 @@ section.exhibition-year div:last-child {
   abbr[title]:after {
     content: " (" attr(title) ")"; }
 
-  a[href^="#"]:after,
-  a[href^="javascript:"]:after {
+  .ir a:after,
+  a[href^="javascript:"]:after,
+  a[href^="#"]:after {
     content: ""; }
 
   pre,
@@ -808,6 +820,8 @@ section.exhibition-year div:last-child {
   img {
     max-width: 100% !important; }
 
+  @page {
+    margin: 0.5cm; }
   p,
   h2,
   h3 {
