@@ -571,26 +571,26 @@ def createImage():
 def updateImage(image_id):
 
     image = db.image.find_one({"_id": ObjectId(image_id)})
-    form = forms.Image()
-    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
-
+    form = forms.ImageUpdate()
 
     if request.method == 'POST':
         image = db.image.find_one({"_id": ObjectId(image_id)})
 
-        if form.validate_on_submit():
+        if form.is_submitted():
             formdata = form.data
-            image = utils.handle_form_data(image, formdata)
-            db.image.update({ "_id": ObjectId(image_id) }, image)
+            image['title'] = form.title.data
+            image['year'] = form.year.data
+            image['medium'] = form.medium.data
+            image['dimensions'] = form.dimensions.data
+            db.image.update({"_id": ObjectId(image_id)}, image)
 
         flash(u'You just updated this images meta data', 'success')
         return redirect_flask(url_for('listImages'))
 
     else:
-        form = forms.Image(data=image)
-        form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+        form = forms.ImageUpdate(data=image)
 
-    return render_template('admin/images/imageEdit.html', form=form)
+    return render_template('admin/images/imageEdit.html', image=image, form=form)
 
 
 @app.route("/admin/delete-image/<image_id>", methods=['GET', 'POST'])

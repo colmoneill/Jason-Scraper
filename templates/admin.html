@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/static/css/bootstrap-switch.min.css">
     <link rel="stylesheet" href="/static/css/admin.css">
     {{ pagedown.include_pagedown() }}
-    <title>edit GJR | {% block title %}{% endblock %}</title>
+    <title>editing GJ.com |</title>
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -48,7 +48,7 @@
 
     <div class="container">
         <div id="banner" class="page-header">
-          <h2>admin</h2>
+          <h2>{% block title %}{% endblock %}<small> rodolphejanssen.com</small></h2>
         </div>
         <section>
             {% block body %}

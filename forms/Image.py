@@ -9,3 +9,9 @@ class Image(Form):
     year = StringField(u'year')
     medium = StringField(u'Artwork medium')
     dimensions = StringField(u'Artwork dimentions in CM')
+
+class ImageUpdate(Form):
+    title = StringField(u'title of the artwork', validators=[DataRequired()])
+    year = StringField(u'year')
+    medium = StringField(u'Artwork medium')
+    dimensions = StringField(u'Artwork dimentions in CM')
