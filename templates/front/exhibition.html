@@ -30,16 +30,14 @@
     <section class="subcontent__all-col informations" id="informations">
       <div class="separation-rule"></div>
       {% if exhibition.images %}
-          {% for images in exhibition.images %}
-            <img class="vignette" style="width:20%; margin-left:3%;" src="/{{ images.path }} ">
-            <!--
-            <code>
-              {{ images.artist.name }}
-              {{ images.title }}
-              {{ images. }}
-              {{ images. }}
-            </code>
-          -->
+          {% for image in exhibition.images %}
+          <div style="width: 14%; margin-right: 2%; display:inline-block;">
+            <img class="vignette" style="width:100%" src="/{{ image.path }} "><br>
+              {{ image.artist.name }}<br>
+              <b>{{ image.title }}</b>, {{ image.year }}<br>
+              {{ image.medium }}<br>
+              {{ image.dimensions }}<br>
+          </div>
           {% endfor %}
       {% endif %}
       <div class="separation-rule"></div>
