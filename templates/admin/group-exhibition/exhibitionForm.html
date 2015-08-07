@@ -52,12 +52,46 @@
         </div>
       </div>
       <hr>
-      {{ render_field(form.press_release_file) }}
+      <label>press release file</label>
+      {{ form.press_release_file }}
+      <hr>
 
-      {{ render_field(form.iframe1) }}
-      {{ render_field(form.iframe2) }}
-      {{ render_field(form.iframe3) }}
-
+      <div class="row">
+        <div class="col-sm-12">
+          <h4>media link 1</h4>
+        </div>
+          <div class="col-sm-6">
+            {{ render_field(form.link_name1) }}
+          </div>
+          <div class="col-sm-6">
+            {{ render_field(form.link_url1) }}
+          </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-12">
+          <h4>media link 2</h4>
+        </div>
+          <div class="col-sm-6">
+            {{ render_field(form.link_name2) }}
+          </div>
+          <div class="col-sm-6">
+            {{ render_field(form.link_url2) }}
+          </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-12">
+          <h4>media link 3</h4>
+        </div>
+          <div class="col-sm-6">
+            {{ render_field(form.link_name3) }}
+          </div>
+          <div class="col-sm-6">
+            {{ render_field(form.link_url3) }}
+          </div>
+      </div>
+      <hr>
       <button type="submit" class="btn btn-default">Submit</button>
   </form>
 
