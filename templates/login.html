@@ -1,0 +1,18 @@
+{% extends "admin.html" %}
+{% block title %}
+    log into the admin interface
+{% endblock %}
+
+{% block body %}
+    {% if error %}
+      {{ error }}
+    {% endif %}
+    {% include 'helpers/_flashMessage.html' %}  
+    <form action="" method="post">
+      <label>Username:</label>
+      <input type=text name=username value={{ request.form.username }}>
+      <label>Password:</label>
+      <input type=password name=password>
+      <input type="submit" value="Login">
+    </form>
+{% endblock %}

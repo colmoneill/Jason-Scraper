@@ -10,7 +10,7 @@ from functools import wraps
 from flask import   Flask, flash, send_from_directory, \
                     redirect as redirect_flask, \
                     render_template, url_for, request, \
-                    abort, Response
+                    abort, Response, session
 from flask_pagedown import PageDown
 from flask.ext.misaka import Misaka
 
@@ -48,28 +48,33 @@ app.config['UPLOAD'] = {
 }
 
 # login decorator
+def login_required(test):
+    @wraps(test)
+    def wrap (*args, **kwargs):
+        if 'logged_in' in session:
+            return test (*args, **kwargs)
+        else:
+            flash('You need to log in first.')
+            return redirect_flask(url_for('login'))
+    return wrap
 
-def check_auth(username, password):
-    """This function is called to check if a username /
-    password combination is valid.
-    """
-    return username == 'admin' and password == 'secret'
+@app.route("/logout")
+def logout():
+    session.pop('logged_in', None)
+    flash('You are logged out')
+    return redirect_flask(url_for('login'))
 
-def authenticate():
-    """Sends a 401 response that enables basic auth"""
-    return Response(
-    'Could not verify your access level for that URL.\n'
-    'You have to login with proper credentials', 401,
-    {'WWW-Authenticate': 'Basic realm="Your login is required"'})
-
-def requires_auth(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        auth = request.authorization
-        if not auth or not check_auth(auth.username, auth.password):
-            return authenticate()
-        return f(*args, **kwargs)
-    return decorated
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+            error = 'Invalid credentials; Please try again.'
+        else:
+            session['logged_in'] = True
+            return redirect_flask(url_for('viewAdmin'))
+            flash('You are logged in! Welcome')
+    return render_template('login.html', error=error)
 
 
 ####################################################################################
@@ -79,7 +84,6 @@ def requires_auth(f):
 ####################################################################################
 
 @app.route("/test/")
-@requires_auth
 def test():
     return render_template("front/tests.html")
 
@@ -143,17 +147,20 @@ def page_not_found(error):
 ####################################################################################
 
 @app.route("/admin/")
+@login_required
 def viewAdmin():
-    flash('we still need to make a login method')
+    flash('You are logged in!')
     return render_template('admin.html')
 
 ### single artist exhibition ###
 @app.route("/admin/exhibitions/")
+@login_required
 def viewExhibition():
     exhibitions = db.exhibitions.find()
     return render_template('admin/exhibition/exhibitions.html', exhibitions=exhibitions)
 
 @app.route("/admin/exhibition/publish/<exhibition_id>", methods=['POST'])
+@login_required
 def publishExhibition (exhibition_id):
     from time import sleep
     sleep(.5)
@@ -165,6 +172,7 @@ def publishExhibition (exhibition_id):
     return dumps(db.exhibitions.find_one({'_id': ObjectId(exhibition_id)}))
 
 @app.route("/admin/exhibition/create/", methods=['GET', 'POST'])
+@login_required
 def createExhibition():
     form = forms.ExhibitionForm()
     form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
@@ -198,6 +206,7 @@ def createExhibition():
     return render_template('admin/exhibition/exhibitionCreate.html', form=form, selectedImages=json.dumps(selectedImages))
 
 @app.route("/admin/exhibition/update/<exhibition_id>", methods=['GET', 'POST'])
+@login_required
 def updateExhibition(exhibition_id):
     form = forms.ExhibitionForm()
     exhibition = db.exhibitions.find_one({"_id": ObjectId(exhibition_id)})
@@ -232,6 +241,7 @@ def updateExhibition(exhibition_id):
     return render_template('admin/exhibition/exhibitionEdit.html', form=form, selectedImages=json.dumps(selectedImages))
 
 @app.route("/admin/exhibition/delete/<exhibition_id>", methods=['GET', 'POST'])
+@login_required
 def deleteExhibition(exhibition_id):
     if request.method == 'POST':
         print exhibition_id
@@ -244,6 +254,7 @@ def deleteExhibition(exhibition_id):
 ### group exhibition ###
 
 @app.route("/admin/group-exhibition/create/", methods=['GET', 'POST'])
+@login_required
 def createGroupExhibition():
     form = forms.GroupExhibitionForm()
     form.artists.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
@@ -301,6 +312,7 @@ def updateGroupExhibition(exhibition_id):
     return render_template('admin/group-exhibition/exhibitionEdit.html', form=form)
 
 @app.route("/admin/group-exhibition/delete/<exhibition_id>", methods=['GET', 'POST'])
+@login_required
 def deleteGroupExhibition(exhibition_id):
     if request.method == 'POST':
         print exhibition_id
@@ -312,11 +324,13 @@ def deleteGroupExhibition(exhibition_id):
 
 ### artists ###
 @app.route("/admin/artist/")
+@login_required
 def listArtists():
     artists = db.artist.find()
     return render_template('admin/artists/artists.html', artists=artists)
 
 @app.route("/admin/artist/publish/<artist_id>", methods=['POST'])
+@login_required
 def publishArtist (artist_id):
     is_published = ('true' == request.form['is_published'])
     db.artist.update(
@@ -326,6 +340,7 @@ def publishArtist (artist_id):
     return dumps(db.artist.find_one({'_id': ObjectId(artist_id)}))
 
 @app.route("/admin/artist/create/", methods=['GET', 'POST'])
+@login_required
 def artistCreate():
     form = forms.ArtistForm()
     exhibitions = db.exhibitions.find()
@@ -352,6 +367,7 @@ def artistCreate():
     return render_template('admin/artists/artistCreate.html', form=form, exhibitions=exhibitions)
 
 @app.route("/admin/artist/update/<artist_id>", methods=['GET', 'POST'])
+@login_required
 def updateArtist(artist_id):
     artist = db.artist.find_one({"_id": ObjectId(artist_id)})
     images = db.image.find({"artist": artist})
@@ -380,6 +396,7 @@ def updateArtist(artist_id):
     return render_template('admin/artists/artistEdit.html', form=form, images=images, exhibitions=exhibitions)
 
 @app.route("/admin/artist/delete/<artist_id>", methods=['GET', 'POST'])
+@login_required
 def deleteArtist(artist_id):
     if request.method == 'POST':
         print artist_id
@@ -391,11 +408,13 @@ def deleteArtist(artist_id):
 
 ### gallery general ###
 @app.route("/admin/manage-gallery-info/", methods=['GET', 'POST'])
+@login_required
 def adminGalleryInfo():
     return render_template('admin/gallery/gallery.html')
 
 ### team members ###
 @app.route("/admin/manage-gallery-teammembers/")
+@login_required
 def listTeamMembers():
     form = forms.GalleryEmployees()
     teammember = db.teammember.find()
@@ -403,6 +422,7 @@ def listTeamMembers():
     return render_template('admin/gallery/teammembers/galleryTeamMember.html', form=form, teammember=teammember)
 
 @app.route("/admin/edit-gallery-teammembers/", methods=['GET', 'POST'])
+@login_required
 def createTeamMember():
     form = forms.GalleryEmployees()
 
@@ -417,6 +437,7 @@ def createTeamMember():
     return render_template('admin/gallery/teammembers/galleryTeamMemberCreate.html', form=form)
 
 @app.route("/admin/edit-gallery-teammembers/<teammember_id>", methods=['GET', 'POST'])
+@login_required
 def updateTeamMembers(teammember_id):
     teammember = db.teammember.find_one({"_id": ObjectId(teammember_id)})
 
@@ -441,6 +462,7 @@ def updateTeamMembers(teammember_id):
     return render_template('admin/gallery/teammembers/galleryTeamMemberEdit.html', form=form, teamMemberId=teammember_id)
 
 @app.route("/admin/delete-gallery-teammembers/<teammember_id>", methods=['GET', 'POST'])
+@login_required
 def deleteTeamMembers(teammember_id):
     if request.method == 'POST':
         print teammember_id
@@ -452,6 +474,7 @@ def deleteTeamMembers(teammember_id):
 
 ### opening hours ###
 @app.route("/admin/manage-opening-hours/")
+@login_required
 def listOpeningHours():
     form = forms.GalleryHours()
     openinghours = db.openinghours.find()
@@ -459,6 +482,7 @@ def listOpeningHours():
     return render_template('admin/gallery/openinghours/galleryOpeningHours.html', openinghours=openinghours, form=form)
 
 @app.route("/admin/edit-opening-hours/", methods=['GET', 'POST'])
+@login_required
 def createOpeningHours():
     form = forms.GalleryHours()
 
@@ -472,6 +496,7 @@ def createOpeningHours():
     return render_template('admin/gallery/openinghours/galleryOpeningHoursCreate.html', form=form)
 
 @app.route("/admin/edit-opening-hours/<opening_hour_id>", methods=['GET', 'POST'])
+@login_required
 def updateOpeningHours(opening_hour_id):
     opening_hour = db.openinghours.find_one({"_id": ObjectId(opening_hour_id)})
 
@@ -495,6 +520,7 @@ def updateOpeningHours(opening_hour_id):
     return render_template('admin/gallery/openinghours/galleryOpeningHoursEdit.html', form=form, galleryHoursId=opening_hour_id)
 
 @app.route("/admin/delete-opening-hours/<opening_hour_id>", methods=['GET', 'POST'])
+@login_required
 def deleteOpeningHours(opening_hour_id):
     if request.method == 'POST':
         print opening_hour_id
@@ -506,6 +532,7 @@ def deleteOpeningHours(opening_hour_id):
 
 ### Images ###
 @app.route("/admin/manage-images/")
+@login_required
 def listImages():
     form = forms.Image()
     form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
@@ -514,6 +541,7 @@ def listImages():
     return render_template('admin/images/list.html', images=images, form=form)
 
 @app.route("/admin/edit-image/", methods=['GET', 'POST'])
+@login_required
 def createImage():
     form = forms.Image()
     form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
@@ -539,6 +567,7 @@ def createImage():
     return render_template('admin/images/create.html', form=form)
 
 @app.route("/admin/update-image/<image_id>", methods=['GET', 'POST'])
+@login_required
 def updateImage(image_id):
 
     image = db.image.find_one({"_id": ObjectId(image_id)})
@@ -565,6 +594,7 @@ def updateImage(image_id):
 
 
 @app.route("/admin/delete-image/<image_id>", methods=['GET', 'POST'])
+@login_required
 def deleteImage(image_id):
     if request.method == 'POST':
         image = db.image.find_one({"_id": ObjectId(image_id)})
@@ -580,6 +610,7 @@ def deleteImage(image_id):
     Returns JSON-array with images for given artist. Or 404
 """
 @app.route("/admin/images/list/<artist_id>", methods=['GET'])
+@login_required
 def listImagesForArtist(artist_id):
     artist = db.artist.find_one({"_id": ObjectId(artist_id)})
     if artist:
@@ -593,6 +624,7 @@ def listImagesForArtist(artist_id):
     store location. Returns JSON DB-entry
 """
 @app.route("/admin/uploadArtistImage/<artist_id>", methods=['POST'])
+@login_required
 def uploadArtistImage(artist_id):
     artist = db.artist.find_one({'_id': ObjectId(artist_id)})
 
