@@ -15,7 +15,6 @@ from flask_pagedown import PageDown
 from flask.ext.misaka import Misaka
 
 import pymongo
-#import admin
 
 import utils
 from bson import ObjectId
@@ -54,27 +53,28 @@ def login_required(test):
         if 'logged_in' in session:
             return test (*args, **kwargs)
         else:
-            flash('You need to log in first.')
+            flash(u'You need to log in first.', 'danger')
             return redirect_flask(url_for('login'))
     return wrap
 
 @app.route("/logout")
 def logout():
     session.pop('logged_in', None)
-    flash('You are logged out')
+    flash(u'You are logged out', 'warning')
     return redirect_flask(url_for('login'))
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     error = None
-    if request.method == 'POST':
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            error = 'Invalid credentials; Please try again.'
+    form = forms.Login()
+    if form.is_submitted():
+        if form.username.data != 'admin' or form.password.data != 'admin':
+            flash(u'Invalid credentials; Please try again.', 'danger')
         else:
             session['logged_in'] = True
             return redirect_flask(url_for('viewAdmin'))
-            flash('You are logged in! Welcome')
-    return render_template('login.html', error=error)
+            flash(u'You are logged in! Welcome', 'success')
+    return render_template('login.html', error=error, form=form)
 
 
 ####################################################################################
@@ -149,7 +149,7 @@ def page_not_found(error):
 @app.route("/admin/")
 @login_required
 def viewAdmin():
-    flash('You are logged in!')
+    flash(u'You are logged in!', 'success')
     return render_template('admin.html')
 
 ### single artist exhibition ###
@@ -198,7 +198,7 @@ def createExhibition():
                 )
 
             db.exhibitions.insert(exhibition)
-            flash('You successfully created an exhibition')
+            flash(u'You successfully created an exhibition', 'success')
             return redirect_flask(url_for('viewExhibition'))
 
         selectedImages = request.form.getlist('image')
@@ -229,7 +229,7 @@ def updateExhibition(exhibition_id):
                     '{0}.pdf'.format(exhibition['slug'])
             )
 
-            flash('You successfully updated the exhibition data')
+            flash(u'You successfully updated the exhibition data', 'success')
             return redirect_flask(url_for('viewExhibition'))
 
     selectedImages = [str(image['_id']) for image in exhibition['images']]
@@ -246,7 +246,7 @@ def deleteExhibition(exhibition_id):
     if request.method == 'POST':
         print exhibition_id
         db.exhibitions.remove({"_id": ObjectId(exhibition_id)})
-        flash('You deleted the exhibition')
+        flash(u'You deleted the exhibition', 'warning')
         return redirect_flask(url_for('viewExhibition'))
 
     return render_template('admin/exhibition/exhibitionDelete.html')
@@ -276,7 +276,7 @@ def createGroupExhibition():
             )
 
         db.exhibitions.insert(exhibition)
-        flash('You successfully created a group exhibition')
+        flash(u'You successfully created a group exhibition', 'success')
         return redirect_flask(url_for('viewExhibition'))
 
     return render_template('admin/group-exhibition/exhibitionCreate.html', form=form)
@@ -301,7 +301,7 @@ def updateGroupExhibition(exhibition_id):
                     app.config['UPLOAD']['PRESS_RELEASE'],
                     '{0}.pdf'.format(exhibition['slug'])
             )
-        flash('You successfully updated the exhibition data')
+        flash(u'You successfully updated the exhibition data', 'success')
         return redirect_flask(url_for('viewExhibition'))
 
     else:
@@ -317,7 +317,7 @@ def deleteGroupExhibition(exhibition_id):
     if request.method == 'POST':
         print exhibition_id
         db.exhibitions.remove({"_id": ObjectId(exhibition_id)})
-        flash('You deleted the exhibition')
+        flash(u'You deleted the exhibition', 'warning')
         return redirect_flask(url_for('viewExhibition'))
 
     return render_template('admin/group-exhibition/exhibitionDelete.html')
@@ -361,7 +361,7 @@ def artistCreate():
         form.fileName.file.save(file_path)
 
         db.artist.insert(artist)
-        flash('You successfully created an artist page')
+        flash(u'You successfully created an artist page', 'success')
         return redirect_flask(url_for('listArtists'))
 
     return render_template('admin/artists/artistCreate.html', form=form, exhibitions=exhibitions)
@@ -387,7 +387,7 @@ def updateArtist(artist_id):
                     app.config['UPLOAD']['PRESS_RELEASE'],
                     '{0}.pdf'.format(artists['slug'])
                 )
-            flash('You updated the artist page successfully')
+            flash(u'You updated the artist page successfully', 'success')
             return redirect_flask(url_for('listArtists'))
 
     else:
@@ -401,7 +401,7 @@ def deleteArtist(artist_id):
     if request.method == 'POST':
         print artist_id
         db.artist.remove({"_id": ObjectId(artist_id)})
-        flash('You deleted the artist page')
+        flash(u'You deleted the artist page', 'warning')
         return redirect_flask(url_for('listArtists'))
 
     return render_template('admin/artists/artistDelete.html')
@@ -431,7 +431,7 @@ def createTeamMember():
         teammember = utils.handle_form_data({}, formdata)
         teammember['slug'] = utils.slugify(teammember['name'])
         db.teammember.insert(teammember)
-        flash('You successfully created a new team member')
+        flash(u'You successfully created a new team member', 'success')
         return redirect_flask(url_for('listTeamMembers'))
 
     return render_template('admin/gallery/teammembers/galleryTeamMemberCreate.html', form=form)
@@ -453,7 +453,7 @@ def updateTeamMembers(teammember_id):
             utils.handle_form_data(teammember, formdata),
             upsert=True
         )
-        flash('You successfully updated the team member entry')
+        flash(u'You successfully updated the team member entry', 'success')
         return redirect_flask(url_for('listTeamMembers'))
 
     else:
@@ -467,7 +467,7 @@ def deleteTeamMembers(teammember_id):
     if request.method == 'POST':
         print teammember_id
         db.teammember.remove({"_id": ObjectId(teammember_id)})
-        flash('You deleted the team member')
+        flash(u'You deleted the team member', 'warning')
         return redirect_flask(url_for('listTeamMembers'))
 
     return render_template('admin/gallery/teammembers/galleryTeamMemberDelete.html')
@@ -490,7 +490,7 @@ def createOpeningHours():
         formdata = form.data
         openinghour = utils.handle_form_data({}, formdata)
         db.openinghours.insert(openinghour)
-        flash('You successfully created the opening hour entry')
+        flash(u'You successfully created the opening hour entry', 'success')
         return redirect_flask(url_for('listOpeningHours'))
 
     return render_template('admin/gallery/openinghours/galleryOpeningHoursCreate.html', form=form)
@@ -512,7 +512,7 @@ def updateOpeningHours(opening_hour_id):
                 utils.handle_form_data(opening_hour, formdata),
                 upsert=True
             )
-            flash('You successfully updated the opening hour entry')
+            flash(u'You successfully updated the opening hour entry', 'success')
             return redirect_flask(url_for('listOpeningHours'))
     else:
         form = forms.GalleryHours(data=opening_hour)
@@ -525,7 +525,7 @@ def deleteOpeningHours(opening_hour_id):
     if request.method == 'POST':
         print opening_hour_id
         db.openinghours.remove({"_id": ObjectId(opening_hour_id)})
-        flash('You successfully deleted the opening hour entry')
+        flash(u'You successfully deleted the opening hour entry', 'warning')
         return redirect_flask(url_for('listOpeningHours'))
 
     return render_template('admin/gallery/openinghours/galleryOpeningHoursDelete.html')
@@ -561,7 +561,7 @@ def createImage():
             'dimensions': form.dimensions.data,
         }
         db.image.insert(image)
-        flash('You successfully added an image')
+        flash(u'You successfully added an image', 'success')
         return redirect_flask(url_for('listImages'))
 
     return render_template('admin/images/create.html', form=form)
@@ -583,7 +583,7 @@ def updateImage(image_id):
             image = utils.handle_form_data(image, formdata)
             db.image.update({ "_id": ObjectId(image_id) }, image)
 
-        flash('You just updated this images meta data')
+        flash(u'You just updated this images meta data', 'success')
         return redirect_flask(url_for('listImages'))
 
     else:
@@ -600,7 +600,7 @@ def deleteImage(image_id):
         image = db.image.find_one({"_id": ObjectId(image_id)})
         os.remove(image['path'])
         db.image.remove({"_id": ObjectId(image_id)})
-        flash('You successfully deleted the image')
+        flash(u'You successfully deleted the image', 'warning')
         return redirect_flask(url_for('listImages'))
 
     return render_template('admin/images/delete.html')

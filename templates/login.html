@@ -1,18 +1,16 @@
 {% extends "admin.html" %}
+{% from "helpers/_form.html" import render_field %}
 {% block title %}
     log into the admin interface
 {% endblock %}
 
 {% block body %}
-    {% if error %}
-      {{ error }}
-    {% endif %}
-    {% include 'helpers/_flashMessage.html' %}  
-    <form action="" method="post">
-      <label>Username:</label>
-      <input type=text name=username value={{ request.form.username }}>
-      <label>Password:</label>
-      <input type=password name=password>
-      <input type="submit" value="Login">
+    {% include 'helpers/_flashMessage.html' %}
+    <h4>log into the admin interface</h4>
+    <form action="" method="post" enctype="multipart/form-data">
+      {{ form.csrf_token }}
+      {{ render_field(form.username) }}
+      {{ render_field(form.password) }}
+      <button type="submit" class="btn btn-success">Log in</button>
     </form>
 {% endblock %}
