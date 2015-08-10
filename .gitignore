@@ -8,3 +8,4 @@ static/_src/node_modules/*
 static/uploads/
 *.log
 .ftpconfig
+static/fonts/205-*
