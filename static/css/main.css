@@ -119,7 +119,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 951px) {
-  .col5__span1of4, .image-block, .text-block h5, .download-block h5 {
+  .col5__span1of4, .text-block h5, .image-block, .download-block h5 {
     width: 23.25581%;
     float: left;
     margin-right: 2.32558%; } }
@@ -183,7 +183,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4__span1of3, .image-block, .text-block h5, .download-block h5 {
+  .col4__span1of3, .text-block h5, .image-block, .download-block h5 {
     width: 30.76923%;
     float: left;
     margin-right: 3.84615%; } }
@@ -231,12 +231,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     float: left;
     margin-right: 4.0%; } }
 @media (min-width: 0) and (max-width: 500px) {
-  .col2__span2of2, .all-col, .subcontent, .subcontent__all-col, .subnav, .text-block h5, .text-block p, .download-block h5, .download-block__text, .artist-block, .gallery__left, .gallery__right, .gallery__left .text-block h5, .gallery__left .text-block p, .newsletter {
+  .col2__span2of2, .all-col, .subcontent, .subcontent__all-col, .text-block h5, .text-block p, .subnav, .download-block h5, .download-block__text, .artist-block, .gallery__left, .gallery__right, .gallery__left .text-block h5, .gallery__left .text-block p, .newsletter {
     width: 100%;
     float: left;
     margin-left: 0;
     margin-right: 0; } }
-.last, .subnav, .text-block p, .download-block__text {
+.last, .text-block p, .subnav, .download-block__text {
   float: right;
   margin-right: 0; }
 
@@ -354,6 +354,35 @@ a {
 
 a:focus {
   outline: none; }
+
+.text-block {
+  margin-bottom: 20px; }
+  @media only screen and (max-width: 750px) {
+    .text-block h5 {
+      width: 100%;
+      float: left;
+      margin-left: 0;
+      margin-right: 0; } }
+  .text-block p {
+    margin-bottom: 10px; }
+    @media only screen and (max-width: 750px) {
+      .text-block p {
+        width: 100%;
+        float: left;
+        margin-left: 0;
+        margin-right: 0; } }
+    .text-block p:last-of-type {
+      margin-bottom: 0; }
+    .text-block p a {
+      border-bottom: 1px solid #323232;
+      padding-bottom: 1px; }
+      .text-block p a:hover {
+        opacity: 0.4;
+        -moz-transition: all 0.2s ease-in-out 0s;
+        -o-transition: all 0.2s ease-in-out 0s;
+        -webkit-transition: all 0.2s ease-in-out;
+        -webkit-transition-delay: 0s;
+        transition: all 0.2s ease-in-out 0s; }
 
 header {
   display: inline-block;
@@ -540,35 +569,6 @@ nav {
 
 section.informations div:last-child {
   margin-bottom: 0; }
-
-.text-block {
-  margin-bottom: 20px; }
-  @media only screen and (max-width: 750px) {
-    .text-block h5 {
-      width: 100%;
-      float: left;
-      margin-left: 0;
-      margin-right: 0; } }
-  .text-block p {
-    margin-bottom: 10px; }
-    @media only screen and (max-width: 750px) {
-      .text-block p {
-        width: 100%;
-        float: left;
-        margin-left: 0;
-        margin-right: 0; } }
-    .text-block p:last-of-type {
-      margin-bottom: 0; }
-    .text-block p a {
-      border-bottom: 1px solid #323232;
-      padding-bottom: 1px; }
-      .text-block p a:hover {
-        opacity: 0.4;
-        -moz-transition: all 0.2s ease-in-out 0s;
-        -o-transition: all 0.2s ease-in-out 0s;
-        -webkit-transition: all 0.2s ease-in-out;
-        -webkit-transition-delay: 0s;
-        transition: all 0.2s ease-in-out 0s; }
 
 .download-block {
   margin-bottom: 20px; }
