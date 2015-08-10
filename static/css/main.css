@@ -46,12 +46,20 @@ a img {
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block; }
 
+@font-face {
+  font-family: "Maax-Regular";
+  src: url('../fonts/205-MaaxStandardReg/205-maaxstandardregular-webfont.eot');
+  src: url('../fonts/205-MaaxStandardReg/205-maaxstandardregular-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/205-MaaxStandardReg/205-maaxstandardregular-webfont.woff') format('woff'), url('../fonts/205-MaaxStandardReg/205-maaxstandardregular-webfont.ttf') format('truetype'), url('../fonts/205-MaaxStandardReg/205-maaxstandardregular-webfont.svg') format('svg'); }
+@font-face {
+  font-family: "Maax-Medium";
+  src: url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.eot');
+  src: url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.woff') format('woff'), url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.ttf') format('truetype'), url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.svg') format('svg');
+  font-weight: "bold"; }
 .font-body, body, .newsletter input {
-  font-family: Helvetica, Arial, sans-serif; }
+  font-family: "Maax-Regular", Helvetica, sans-serif; }
 
 .font-bold, h1, h3 {
-  font-family: Helvetica, Arial, sans-serif;
-  font-weight: bold; }
+  font-family: "Maax-Medium", Helvetica, sans-serif; }
 
 .font-mono, h4, h5, h6, .subnav, .staff_member__mail {
   font-family: monospace; }
@@ -740,17 +748,6 @@ section.exhibition-year div:last-child {
       -webkit-transition-delay: 0s;
       transition: all 0.2s ease-in-out 0s; }
 
-.ir {
-  background-color: transparent;
-  border: 0;
-  overflow: hidden;
-  *text-indent: -9999px; }
-  .ir:before {
-    content: "";
-    display: block;
-    width: 0;
-    height: 150%; }
-
 .hidden {
   display: none !important;
   visibility: hidden; }
@@ -780,11 +777,11 @@ section.exhibition-year div:last-child {
   display: table; }
 .clearfix:after, .text-block:after, .download-block:after {
   clear: both; }
-.clearfix, .text-block, .download-block {
-  *zoom: 1; }
 
 @media print {
-  * {
+  *,
+  *:before,
+  *:after {
     background: transparent !important;
     color: #000 !important;
     box-shadow: none !important;
@@ -800,9 +797,8 @@ section.exhibition-year div:last-child {
   abbr[title]:after {
     content: " (" attr(title) ")"; }
 
-  .ir a:after,
-  a[href^="javascript:"]:after,
-  a[href^="#"]:after {
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
     content: ""; }
 
   pre,
@@ -820,8 +816,6 @@ section.exhibition-year div:last-child {
   img {
     max-width: 100% !important; }
 
-  @page {
-    margin: 0.5cm; }
   p,
   h2,
   h3 {
