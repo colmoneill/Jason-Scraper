@@ -1,12 +1,15 @@
 {% block body %}
 {% from "helpers/_form.html" import render_field %}
-<form action="" method="post" enctype="multipart/form-data">
+  <div class="col-md-12">
+  <form action="" method="post" enctype="multipart/form-data">
     {{ form.csrf_token }}
     {{ render_field(form.name) }}
     <hr>
     <div class="row">
+      <div class="col-md-12">
       <h4>Selectable images shown here</h4>
       <p>work in progress</p>
+    </div>
     </div>
     <hr>
     <div class="container-fluid">
@@ -23,15 +26,26 @@
 <hr>
     <div class="row">
       <div class="col-xs-6">
-        <label>Artist bio & exhibition list</label> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers">markdown enabled</a>
-        {{ form.wysiwig_artist_bio(only_input=True, rows=20) }}
+        <label>Artist bio</label> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers">markdown enabled</a>
+        {{ form.wysiwig_artist_exhibitions_list(only_input=True, rows=20) }}
       </div>
       <div class="col-xs-6">
         <label>&larr; Text preview</label>
-        {{ form.wysiwig_artist_bio(only_preview=True) }}
+        {{ form.wysiwig_artist_exhibitions_list(only_preview=True) }}
       </div>
     </div>
   </div>
+    <br>
+    <div class="col-xs-6">
+      <label>Artist exhibition list</label> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers">markdown enabled</a>
+      {{ form.wysiwig_artist_bio(only_input=True, rows=20) }}
+    </div>
+    <div class="col-xs-6">
+      <label>&larr; Text preview</label>
+      {{ form.wysiwig_artist_bio(only_preview=True) }}
+    </div>
+<hr>
+    <label>Press release pdf</label>
     {{ form.press_release_file }}
     <hr>
     <div class="row">
@@ -92,5 +106,6 @@
     </div>
     <button type="submit" class="btn btn-default">Submit</button>
 </form>
+</div>
 
 {% endblock %}
