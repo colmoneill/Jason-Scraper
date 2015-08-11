@@ -52,10 +52,12 @@
         </div>
         <section>
             {% block body %}
+            <div class="col-md-8 col-md-offset-2">
             {% include 'helpers/_flashMessage.html' %}
             <p>Welcome to the administration tool for rodolphejanssen.com<br>
             From here you can create and edit exhibitions, add and modify artists, and manage the general gallery information page.</p>
-            <a class="btn btn-primary" href="">Sync available info from Art Logic</a>
+            <a class="btn btn-primary disabled" href="">Sync available info from Art Logic</a>
+            </div>
             {% endblock %}
         </section>
     </div>
