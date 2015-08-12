@@ -6,7 +6,8 @@
 
 @mixin points_to{
 	&:before{
-		content:"→ ";
+		content:"\2192\2002";
+		@extend .font-body;
 		@include mq(c){
 			content: none;
 		}
@@ -24,7 +25,7 @@
 	@extend .col2__span2of2;
 	@extend .last;
 	//
-	@include adjust-font-size-to(13px);
+	@include adjust-font-size-to(10px);
 	@extend .font-mono;
 	text-transform: uppercase;
 	text-align: right;

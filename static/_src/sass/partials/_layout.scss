@@ -25,6 +25,7 @@ body{
 	overflow-x: hidden;
 	//
 	@extend .font-body;
+	-webkit-font-smoothing: subpixel-antialiased;
 	font-weight: 400;
 	font-style: normal;
 	line-height: inherit;
@@ -85,6 +86,9 @@ body{
 	border-top: $rule-style;
 	margin-top: $margin_top;
 	padding-top: $margin_bottom;
+	&.light-border{
+		border-top-color: $gray-4;
+	}
 }
 
 
@@ -97,7 +101,7 @@ p{
 
 // HEADINGS
 h1, h2{
-	text-transform: lowercase;
+	text-transform: capitalize;
 }
 
 h1{
@@ -107,6 +111,7 @@ h1{
 
 h2{
 	@include adjust-font-size-to(16px);
+	margin-top: -4px;
 }
 
 h3{
@@ -121,7 +126,7 @@ h4, h5, h6{
 
 h4{
 	@include adjust-font-size-to($base-font-size);
-	text-transform: uppercase;
+	margin-top: -1px;
 }
 
 h5{
@@ -163,7 +168,8 @@ a:focus				{outline: none;}
 .text-block{
 	@extend .clearfix;
 	margin-bottom: $margin_bottom;
-	h5{
+	h2{
+		@extend h5;
 		@extend .col5__span1of4;
 		@extend .col4__span1of3;
 		@include full_on_mq_b;
