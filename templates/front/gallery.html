@@ -30,9 +30,11 @@ Don't judge me you Irish fuck.
 
 			<div class="text-block">
 				<h5>Opening Hours</h5>
-				{% for openinghour in openinghours %}
-					{{ openinghour.period}} &mdash; {{ openinghour.hours}}<br>
-				{% endfor %}
+				<p>
+					{% for openinghour in openinghours %}
+						{{ openinghour.period}}&emsp;&mdash;&emsp;{{ openinghour.hours}}<br>
+					{% endfor %}
+				</p>
 			</div>
 		</section>
 

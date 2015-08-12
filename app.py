@@ -10,14 +10,14 @@ from functools import wraps
 from flask import   Flask, flash, send_from_directory, \
                     redirect as redirect_flask, \
                     render_template, url_for, request, \
-                    abort, Response
+                    abort, Response, session
 from flask_pagedown import PageDown
 from flask.ext.misaka import Misaka
 
 import pymongo
-#import admin
 
 import utils
+from utils import login_required
 from bson import ObjectId
 from bson.json_util import dumps
 import forms
@@ -49,29 +49,26 @@ app.config['UPLOAD'] = {
     }
 }
 
-# login decorator
 
-def check_auth(username, password):
-    """This function is called to check if a username /
-    password combination is valid.
-    """
-    return username == 'admin' and password == 'secret'
 
-def authenticate():
-    """Sends a 401 response that enables basic auth"""
-    return Response(
-    'Could not verify your access level for that URL.\n'
-    'You have to login with proper credentials', 401,
-    {'WWW-Authenticate': 'Basic realm="Your login is required"'})
+@app.route("/logout")
+def logout():
+    session.pop('logged_in', None)
+    flash(u'You are logged out', 'warning')
+    return redirect_flask(url_for('login'))
 
-def requires_auth(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        auth = request.authorization
-        if not auth or not check_auth(auth.username, auth.password):
-            return authenticate()
-        return f(*args, **kwargs)
-    return decorated
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    error = None
+    form = forms.Login()
+    if form.is_submitted():
+        if form.username.data != 'admin' or form.password.data != 'admin':
+            flash(u'Invalid credentials; Please try again.', 'danger')
+        else:
+            session['logged_in'] = True
+            return redirect_flask(url_for('viewAdmin'))
+            flash(u'You are logged in! Welcome', 'success')
+    return render_template('login.html', error=error, form=form)
 
 
 ####################################################################################
@@ -79,11 +76,6 @@ def requires_auth(f):
 ### PUBLIC VIEWS ###
 
 ####################################################################################
-
-@app.route("/test/")
-@requires_auth  
-def test():
-    return render_template("front/tests.html")
 
 @app.route("/")
 def home():
@@ -145,14 +137,15 @@ def page_not_found(error):
 ####################################################################################
 
 @app.route("/admin/")
+@login_required
 def viewAdmin():
-    flash('we still need to make a login method ;)')
+    flash(u'You are logged in!', 'success')
     return render_template('admin.html')
-
 
 ### group exhibition ###
 
 @app.route("/admin/group-exhibition/create/", methods=['GET', 'POST'])
+@login_required
 def createGroupExhibition():
     form = forms.GroupExhibitionForm()
     form.artists.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
@@ -174,7 +167,7 @@ def createGroupExhibition():
             )
 
         db.exhibitions.insert(exhibition)
-        flash('You successfully created a group exhibition')
+        flash(u'You successfully created a group exhibition', 'success')
         return redirect_flask(url_for('viewExhibition'))
 
     return render_template('admin/group-exhibition/exhibitionCreate.html', form=form)
@@ -199,7 +192,7 @@ def updateGroupExhibition(exhibition_id):
                     app.config['UPLOAD']['PRESS_RELEASE'],
                     '{0}.pdf'.format(exhibition['slug'])
             )
-        flash('You successfully updated the exhibition data')
+        flash(u'You successfully updated the exhibition data', 'success')
         return redirect_flask(url_for('viewExhibition'))
 
     else:
@@ -210,22 +203,25 @@ def updateGroupExhibition(exhibition_id):
     return render_template('admin/group-exhibition/exhibitionEdit.html', form=form)
 
 @app.route("/admin/group-exhibition/delete/<exhibition_id>", methods=['GET', 'POST'])
+@login_required
 def deleteGroupExhibition(exhibition_id):
     if request.method == 'POST':
         print exhibition_id
         db.exhibitions.remove({"_id": ObjectId(exhibition_id)})
-        flash('You deleted the exhibition')
+        flash(u'You deleted the exhibition', 'warning')
         return redirect_flask(url_for('viewExhibition'))
 
     return render_template('admin/group-exhibition/exhibitionDelete.html')
 
 ### gallery general ###
 @app.route("/admin/manage-gallery-info/", methods=['GET', 'POST'])
+@login_required
 def adminGalleryInfo():
     return render_template('admin/gallery/gallery.html')
 
 ### team members ###
 @app.route("/admin/manage-gallery-teammembers/")
+@login_required
 def listTeamMembers():
     form = forms.GalleryEmployees()
     teammember = db.teammember.find()
@@ -233,6 +229,7 @@ def listTeamMembers():
     return render_template('admin/gallery/teammembers/galleryTeamMember.html', form=form, teammember=teammember)
 
 @app.route("/admin/edit-gallery-teammembers/", methods=['GET', 'POST'])
+@login_required
 def createTeamMember():
     form = forms.GalleryEmployees()
 
@@ -241,12 +238,13 @@ def createTeamMember():
         teammember = utils.handle_form_data({}, formdata)
         teammember['slug'] = utils.slugify(teammember['name'])
         db.teammember.insert(teammember)
-        flash('You successfully created a new team member')
+        flash(u'You successfully created a new team member', 'success')
         return redirect_flask(url_for('listTeamMembers'))
 
     return render_template('admin/gallery/teammembers/galleryTeamMemberCreate.html', form=form)
 
 @app.route("/admin/edit-gallery-teammembers/<teammember_id>", methods=['GET', 'POST'])
+@login_required
 def updateTeamMembers(teammember_id):
     teammember = db.teammember.find_one({"_id": ObjectId(teammember_id)})
 
@@ -262,7 +260,7 @@ def updateTeamMembers(teammember_id):
             utils.handle_form_data(teammember, formdata),
             upsert=True
         )
-        flash('You successfully updated the team member entry')
+        flash(u'You successfully updated the team member entry', 'success')
         return redirect_flask(url_for('listTeamMembers'))
 
     else:
@@ -271,17 +269,19 @@ def updateTeamMembers(teammember_id):
     return render_template('admin/gallery/teammembers/galleryTeamMemberEdit.html', form=form, teamMemberId=teammember_id)
 
 @app.route("/admin/delete-gallery-teammembers/<teammember_id>", methods=['GET', 'POST'])
+@login_required
 def deleteTeamMembers(teammember_id):
     if request.method == 'POST':
         print teammember_id
         db.teammember.remove({"_id": ObjectId(teammember_id)})
-        flash('You deleted the team member')
+        flash(u'You deleted the team member', 'warning')
         return redirect_flask(url_for('listTeamMembers'))
 
     return render_template('admin/gallery/teammembers/galleryTeamMemberDelete.html')
 
 ### opening hours ###
 @app.route("/admin/manage-opening-hours/")
+@login_required
 def listOpeningHours():
     form = forms.GalleryHours()
     openinghours = db.openinghours.find()
@@ -289,6 +289,7 @@ def listOpeningHours():
     return render_template('admin/gallery/openinghours/galleryOpeningHours.html', openinghours=openinghours, form=form)
 
 @app.route("/admin/edit-opening-hours/", methods=['GET', 'POST'])
+@login_required
 def createOpeningHours():
     form = forms.GalleryHours()
 
@@ -296,12 +297,13 @@ def createOpeningHours():
         formdata = form.data
         openinghour = utils.handle_form_data({}, formdata)
         db.openinghours.insert(openinghour)
-        flash('You successfully created the opening hour entry')
+        flash(u'You successfully created the opening hour entry', 'success')
         return redirect_flask(url_for('listOpeningHours'))
 
     return render_template('admin/gallery/openinghours/galleryOpeningHoursCreate.html', form=form)
 
 @app.route("/admin/edit-opening-hours/<opening_hour_id>", methods=['GET', 'POST'])
+@login_required
 def updateOpeningHours(opening_hour_id):
     opening_hour = db.openinghours.find_one({"_id": ObjectId(opening_hour_id)})
 
@@ -317,7 +319,7 @@ def updateOpeningHours(opening_hour_id):
                 utils.handle_form_data(opening_hour, formdata),
                 upsert=True
             )
-            flash('You successfully updated the opening hour entry')
+            flash(u'You successfully updated the opening hour entry', 'success')
             return redirect_flask(url_for('listOpeningHours'))
     else:
         form = forms.GalleryHours(data=opening_hour)
@@ -325,11 +327,12 @@ def updateOpeningHours(opening_hour_id):
     return render_template('admin/gallery/openinghours/galleryOpeningHoursEdit.html', form=form, galleryHoursId=opening_hour_id)
 
 @app.route("/admin/delete-opening-hours/<opening_hour_id>", methods=['GET', 'POST'])
+@login_required
 def deleteOpeningHours(opening_hour_id):
     if request.method == 'POST':
         print opening_hour_id
         db.openinghours.remove({"_id": ObjectId(opening_hour_id)})
-        flash('You successfully deleted the opening hour entry')
+        flash(u'You successfully deleted the opening hour entry', 'warning')
         return redirect_flask(url_for('listOpeningHours'))
 
     return render_template('admin/gallery/openinghours/galleryOpeningHoursDelete.html')

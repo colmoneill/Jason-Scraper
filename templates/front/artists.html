@@ -1,11 +1,15 @@
 {% extends "base.html" %}
-{% block title %}Artists{% endblock %}
+{% block title %}
+ | Artists
+ {% endblock %}
 {% block body %}
-<ul>
+<div class="container">
+  <div class="all-col">
     {% for artist in artists %}
     {% if artist.is_published %}
-        <li><a href="/artist/{{ artist.slug }}/">{{ artist.name }}</a></li>
+       <div class="artist-block"><a href="/artist/{{ artist.slug }}/">{{ artist.name }}</a></div>
     {% endif %}
     {% endfor %}
-</ul>
+  </div>
+</div>
 {% endblock %}

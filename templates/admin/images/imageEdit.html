@@ -1,0 +1,25 @@
+{% extends "admin.html" %}
+{% from "helpers/_form.html" import render_field, render_datepicker %}
+{% block title %}
+  Edit image data
+{% endblock %}
+
+{% block body %}
+<div class="col-md-8">
+    <h4>you are updating the metadata of this image by {{ image.artist.name }}</h4>
+  <form action="" method="post" enctype="multipart/form-data">
+  <div class="col-xs-5 col-sm-4">
+    <img style="width: 200px; height: auto;" src="/{{ image.path }}">
+  </div>
+  <div class="col-xs-5 col-sm-4">
+    {{ render_field(form.title) }}
+    {{ render_field(form.year) }}
+    {{ render_field(form.medium) }}
+    {{ render_field(form.dimensions) }}
+    <button type="submit" class="btn btn-default">Submit</button>
+  </div>
+</div>
+<div class="col-md-8">
+</div>
+</form>
+{% endblock %}

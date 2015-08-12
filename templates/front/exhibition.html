@@ -10,7 +10,7 @@
       <h1>{{ exhibition.artist.name }}</h1>
       <h2>{{ exhibition.exhibition_name }}</h2>
     {% endif %}
-    <code> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </code>
+    <h4> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </h4>
   </div>
   <div class="subnav" id="sidebar">
     <ul>
@@ -30,8 +30,14 @@
     <section class="subcontent__all-col informations" id="informations">
       <div class="separation-rule"></div>
       {% if exhibition.images %}
-          {% for images in exhibition.images %}
-            <img class="vignette" style="width:20%; margin-left:3%;" src="/{{ images.path }} ">
+          {% for image in exhibition.images %}
+          <div style="width: 14%; margin-right: 2%; display:inline-block;">
+            <img class="vignette" style="width:100%" src="/{{ image.path }} "><br>
+              {{ image.artist.name }}<br>
+              <b>{{ image.title }}</b>, {{ image.year }}<br>
+              {{ image.medium }}<br>
+              {{ image.dimensions }}<br>
+          </div>
           {% endfor %}
       {% endif %}
       <div class="separation-rule"></div>
@@ -59,21 +65,14 @@
         </div>
       {% endif %}
         <div class="text-block">
-          <h2>press & media</h2>
+          <h2>press</h2>
           {% if exhibition.press_release %}
           <div id="media">
             <p><a class="" href="/{{ exhibition.press_release }}">Download the press release — PDF (size %)</a></p>
           {% endif %}
-          <br><br><br>
-          {{ exhibition.iframe1 | safe }}
-          {% if exhibition.iframe2 %}
-            <hr>
-            {{ exhibition.iframe2 | safe }}
-          {% endif %}
-          {% if exhibition.iframe3 %}
-            <hr>
-            {{ exhibition.iframe3 | safe }}
-          {% endif %}
+          <p><a href="{{ exhibition.link_url1 }}">{{ exhibition.link_name1 }}</a></p>
+          <p><a href="{{ exhibition.link_url2 }}">{{ exhibition.link_name2 }}</a></p>
+          <p><a href="{{ exhibition.link_url3 }}">{{ exhibition.link_name3 }}</a></p>
         </div>
 
         </div>

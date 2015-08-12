@@ -16,27 +16,30 @@
           </div>
       </div>
       <hr>
-      <div class="clearfix" style="height: 200px">
-      {{ render_field(form.artists) }}
+      <div class="clearfix">
+      {{ form.artists }}
       </div>
+      <hr>
       {{ render_field(form.extra_artists) }}
       <hr>
-      <b>images here</b>
-      {#
-      <div id="artist-images-container"></div>
 
-      <ul>
 
-        {% for artworks in AL_artworks %}
-          <li class="panel">
-              <a data-toggle="collapse" data-parent="#menu" href="#one">{{ artworks.artist_sort_title_year }}</a>
-              <ul id="what gives you your name" class="collapse">
-                <li><img class="small-vignette" src="{{ artworks.img_url }}"><figcaption></figcaption></li>
-              </ul>
-          </li>
-        {% endfor %}
-      </ul>
-      #}
+      <div id="artist-images">
+        <label>Select exhibition images</label>
+        <div id="artist-images-container"></div>
+        <hr>
+        <br>
+        <div>
+            <p>
+                <input type="file" id="artist-image-file" multiple="true" accept="image/*" />
+                <button id="artist-image-upload" class="btn btn-default">Upload images</button>
+                or drag and drop on this container to add
+            </p>
+        </div>
+        <br>
+        <hr>
+        <div class="dropmask bg-info"></div>
+      </div>
 
 
       <hr>
@@ -52,86 +55,237 @@
         </div>
       </div>
       <hr>
-      {{ render_field(form.press_release_file) }}
+      <label>press release file</label>
+      {{ form.press_release_file }}
+      <hr>
 
-      {{ render_field(form.iframe1) }}
-      {{ render_field(form.iframe2) }}
-      {{ render_field(form.iframe3) }}
-
+      <div class="row">
+        <div class="col-sm-12">
+          <h4>media link 1</h4>
+        </div>
+          <div class="col-sm-6">
+            {{ render_field(form.link_name1) }}
+          </div>
+          <div class="col-sm-6">
+            {{ render_field(form.link_url1) }}
+          </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-12">
+          <h4>media link 2</h4>
+        </div>
+          <div class="col-sm-6">
+            {{ render_field(form.link_name2) }}
+          </div>
+          <div class="col-sm-6">
+            {{ render_field(form.link_url2) }}
+          </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-12">
+          <h4>media link 3</h4>
+        </div>
+          <div class="col-sm-6">
+            {{ render_field(form.link_name3) }}
+          </div>
+          <div class="col-sm-6">
+            {{ render_field(form.link_url3) }}
+          </div>
+      </div>
+      <hr>
       <button type="submit" class="btn btn-default">Submit</button>
   </form>
 
-<script type="text/template" id="template-artist-artwork">
-    <div class="artwork-preview">
-        <input type="checkbox" name="artist-artworks[]" />
-        <img />
-    </div>
-</script>
+  <script type="text/template" id="template-artist-artwork">
+      <div class="artwork-preview">
+          <input type="checkbox" name="image" />
+          <img />
+      </div>
+  </script>
+  <script type="text/template" id="template-artist-artwork-preview">
+      <div class="artwork-preview uploading">
+          <img />
+      </div>
+  </script>
+  <script type="text/javascript">
+      window.addEventListener('load', function () {
+          /**
+          * Bless the datepickers
+          */
+          (function ($) {
+              'use strict';
 
-<script type="text/javascript">
-    window.addEventListener('load', function () {
-        /**
-        * Bless the datepickers
-        */
-        (function ($) {
-            'use strict';
+              $('#datepicker-start').on('dp.change', function (e) {
+                  $('#datepicker-end').data("DateTimePicker").minDate(e.date);
+              });
+          })($);
 
-            $('#datepicker-start').on('dp.change', function (e) {
-                $('#datepicker-end').data("DateTimePicker").minDate(e.date);
-            });
-        })($);
 
-        /**
-        * Image loading for artist selection
-        */
-        (function ($, jQuery) {
-            'use strict';
+          (function ($, jQuery) {
+              'use strict';
 
-            var getTemplate = function (name) {
-                return $($('#template-' + name).html());
-            };
+              var acceptedTypes = ['image/png', 'image/jpeg', 'image/gif'];
 
-            var blessImageEl = function (el) {
-                $(el).click(function () {
-                    var checkbox = $(this).find('input');
-                    var checked = checkbox.prop('checked');
-                    checkbox.prop('checked', !checked);
-                });
-            };
+              {% autoescape false %}
+              var preselectedImages = JSON.parse('{{ selectedImages }}');
+              {% endautoescape %}
 
-            var addImage = function (image) {
-                var el = getTemplate('artist-artwork');
+              var previewFile = function (file) {
+                  var reader = new FileReader(),
+                  $preview = getTemplate('artist-artwork-preview');
 
-                el.find('img').attr('src', '/' + image['path']);
-                el.find('input').attr('value', image['_id']);
+                  reader.onload = function (event) {
+                      $preview.find('img').attr('src', event.target.result);
+                      $('#artist-images-container').append($preview);
+                  }
 
-                blessImageEl(el);
+                  reader.readAsDataURL(file);
 
-                $('#artist-images-container').append(el);
-            };
+                  return $preview;
+              };
 
-            var getImages = function (artist){
-                $('#artist-images-container').empty();
+              var getTemplate = function (name) {
+                  return $($('#template-' + name).html());
+              };
 
-                jQuery.get(
-                    '/admin/images/list/' + artist,
-                    {},
-                    function (images) {
-                        for (var i=0; i<images.length;i++) {
-                            addImage(images[i]);
-                        }
-                    },
-                    'json'
-                );
-            };
+              var addImage = function (image, checked) {
+                  var $el = getTemplate('artist-artwork');
 
-            $('select#artist').change(function () {
-                getImages($(this).val());
-            });
+                  if (arguments.length < 2) {
+                      checked = (preselectedImages.indexOf(image['_id']['$oid']) > -1)
+                  }
 
-            getImages($('select#artist').val());
+                  $el.find('img').attr('src', '/' + image['path']);
+                  $el.click(function () {
+                      $(this).find('input').click();
+                  });
+                  $el.find('input')
+                      .val(image['_id']['$oid'])
+                      .prop('checked', checked)
+                      .click(function (e) {
+                          e.stopPropagation();
+                      })
+                      .change(function (e) {
+                          if ($(this).prop('checked')) {
+                              $(this).parent().addClass('selected');
+                          } else {
+                              $(this).parent().removeClass('selected');
+                          }
+                      });
 
-        })($, jQuery);
-    }, false);
+                  $el.addClass((checked) ? 'selected' : '')
+
+                  $('#artist-images-container').append($el);
+
+                  return $el
+              };
+
+              function uploadFile(file, artist_id, callback, ctx) {
+                  var data = new FormData();
+                  data.append('image', file);
+
+                  $.ajax({
+                      xhr: function() {
+                          var xhr = new XMLHttpRequest();
+
+                          xhr.upload.addEventListener('progress', function(e){
+                              if (e.lengthComputable) {
+                                  var percentComplete = e.loaded / e.total;
+                                  //Do something with upload progress
+                                  console.log(percentComplete);
+                              }
+                          }, false);
+
+                          return xhr;
+                      },
+                      type: "POST",
+                      url: '/admin/uploadArtistImage/' + artist_id,
+                      enctype: 'multipart/form-data',
+                      data: data,
+                      cache: false,
+                      contentType: false,
+                      processData: false,
+                      success: function (image) {
+                          callback.call(ctx, image);
+                      },
+                      dataType: 'json'
+                  });
+              }
+
+              var loadImages = function (artist){
+                  $('#artist-images-container').empty();
+
+                  jQuery.get(
+                      '/admin/images/list/' + artist,
+                      null,
+                      function (images) {
+                          for (var i=0; i<images.length;i++) {
+                              addImage(images[i]);
+                          }
+                      },
+                      'json'
+                  );
+              };
+
+              var processFiles = function (files) {
+                  for (var i=0; i < files.length; i++) {
+                      processFile(files[i]);
+                  }
+              };
+
+              var processFile = function (file) {
+                  if (acceptedTypes.indexOf(file.type) > -1) {
+                      var $preview = previewFile(file);
+                      uploadFile(file, $('select#artist').val(), function (image) {
+                          $preview.remove();
+                          addImage(image, true);
+                      });
+                  }
+              };
+
+              $('select#artist').change(function () {
+                  loadImages($(this).val());
+              });
+
+              $('.dropmask')
+                  .on('dragover', function (e) {
+                      e.preventDefault();
+                      e.originalEvent.dataTransfer.dropEffect = 'copy';
+                  })
+                  .on('dragleave', function () {
+                      $(this).hide();
+                  })
+                  .on('dragend', function () {
+                      $(this).hide();
+                  })
+                  .on('drop', function (e) {
+                      e.preventDefault();
+                      e.originalEvent.dataTransfer.dropEffect = 'copy';
+                      // hide dropmask
+                      $(this).hide();
+                      processFiles(e.originalEvent.dataTransfer.files);
+                  });
+
+              $('#artist-images')
+                  .on('dragenter', function (e) {
+                      e.preventDefault();
+                      $('.dropmask').show();
+                  })
+
+              $('#artist-image-file').change(function () {
+                  processFiles(this.files);
+                  $(this).val('');
+              });
+              $('#artist-image-upload').click(function (e) {
+                  e.preventDefault();
+                  $('#artist-image-file').click();
+              });
+              loadImages($('select#artist').val());
+
+          })($, jQuery);
+      }, false);
+  </script>
 </script>
 {% endblock %}

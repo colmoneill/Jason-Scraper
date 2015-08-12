@@ -62,9 +62,26 @@ $image_ratio						: 67%;
 // :: Fonts
 // ------------------------------------------------------------
 
-.font-body 					{  font-family: Helvetica, Arial, sans-serif; }
-.font-bold					{  font-family: Helvetica, Arial, sans-serif; font-weight: bold;}
-.font-mono 					{  font-family: monospace; }
+@include font-face(
+	"Maax-Regular", 
+	font-files(
+		"205-MaaxStandardReg/205-maaxstandardregular-webfont.woff", 
+		"205-MaaxStandardReg/205-maaxstandardregular-webfont.ttf", 
+		"205-MaaxStandardReg/205-maaxstandardregular-webfont.svg"), 
+	"205-MaaxStandardReg/205-maaxstandardregular-webfont.eot");
+	
+@include font-face(
+	"Maax-Medium", 
+	font-files(
+		"205-MaaxStandardMedium/205-maaxstandardmedium-webfont.woff",
+		"205-MaaxStandardMedium/205-maaxstandardmedium-webfont.ttf", 
+		"205-MaaxStandardMedium/205-maaxstandardmedium-webfont.svg"), 
+	"205-MaaxStandardMedium/205-maaxstandardmedium-webfont.eot", 
+	"bold");
+
+.font-body 					{  font-family: "Maax-Regular", Helvetica, sans-serif; }
+.font-bold					{  font-family: "Maax-Medium", Helvetica, sans-serif;}
+.font-mono 					{  font-family: "Maax Mono", monospace; }
 
 
 // :: Breakpoints

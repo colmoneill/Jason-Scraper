@@ -13,7 +13,6 @@
 body, html{
 	position: relative;
 	height: 100%;
-	//
 	color: $body-color;
 	background-color: $background-color;
 }
@@ -26,6 +25,7 @@ body{
 	overflow-x: hidden;
 	//
 	@extend .font-body;
+	-webkit-font-smoothing: subpixel-antialiased;
 	font-weight: 400;
 	font-style: normal;
 	line-height: inherit;
@@ -86,6 +86,9 @@ body{
 	border-top: $rule-style;
 	margin-top: $margin_top;
 	padding-top: $margin_bottom;
+	&.light-border{
+		border-top-color: $gray-4;
+	}
 }
 
 
@@ -98,16 +101,17 @@ p{
 
 // HEADINGS
 h1, h2{
-	text-transform: lowercase;
+	text-transform: capitalize;
 }
 
-h1{	
-	@extend .font-bold;										
+h1{
+	@extend .font-bold;
 	@include adjust-font-size-to(18px);
 }
 
 h2{
 	@include adjust-font-size-to(16px);
+	margin-top: -4px;
 }
 
 h3{
@@ -122,7 +126,7 @@ h4, h5, h6{
 
 h4{
 	@include adjust-font-size-to($base-font-size);
-	text-transform: uppercase;
+	margin-top: -1px;
 }
 
 h5{
@@ -156,3 +160,37 @@ a{
 ::selection			{background: $highlight-color;}
 ::-moz-selection	{background: $highlight-color;}
 a:focus				{outline: none;}
+
+
+// :: Text Block
+// ------------------------------------------------------------
+
+.text-block{
+	@extend .clearfix;
+	margin-bottom: $margin_bottom;
+	h2{
+		@extend h5;
+		@extend .col5__span1of4;
+		@extend .col4__span1of3;
+		@include full_on_mq_b;
+		@extend .col2__span2of2;
+	}
+	p{
+		@extend .col5__span3of4;
+		@extend .col4__span2of3;
+		@include full_on_mq_b;
+		@extend .col2__span2of2;
+		@extend .last;
+		margin-bottom: $p_margin_bottom;
+		&:last-of-type{
+			margin-bottom: 0;
+		}
+		a{
+			border-bottom: 1px solid $body-color;
+			padding-bottom: 1px;
+			&:hover{
+				@include _hover;
+			}
+		}
+	}
+}

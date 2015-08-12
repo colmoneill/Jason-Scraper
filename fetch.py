@@ -93,7 +93,11 @@ def fetch_artworks():
 
         db.image.insert({
             'artist': db.artist.find_one({"slug": slugify(artwork['artist'])}),
-            'path': dest
+            'path': dest,
+            'title': artwork['title'],
+            'year': artwork['year'],
+            'medium': artwork['medium'],
+            'dimensions': artwork['dimensions']
         })
 
         print "{0}, {1}".format(artwork['title'], artwork['artist'])

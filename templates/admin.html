@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/static/css/bootstrap-switch.min.css">
     <link rel="stylesheet" href="/static/css/admin.css">
     {{ pagedown.include_pagedown() }}
-    <title>edit GJR | {% block title %}{% endblock %}</title>
+    <title>editing GJ.com |</title>
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -30,10 +30,17 @@
             <li><a href="/admin/exhibition/">edit exhibitions</a></li>
             <li><a href="/admin/artist/">edit artists</a></li>
             <li><a href="/admin/manage-gallery-info/">edit gallery info</a></li>
-            <!--<li><a href="/admin/edit-image/">Upload an image (beta)</a></li>-->
+            <li><a href="/admin/manage-images/">mangage images</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="/">view public website</a></li>
+          <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Session<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a class="" href="/" target="_blank">view public website</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a class="" href="/logout">logout</a></li>
+          </ul>
+        </li>
         </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -41,14 +48,14 @@
 
     <div class="container">
         <div id="banner" class="page-header">
-          <h2>admin</h2>
+          <h2>{% block title %}{% endblock %}<small><code> rodolphejanssen.com</code></small></h2>
         </div>
         <section>
             {% include 'helpers/_flashMessage.html' %}
             {% block body %}
             <p>Welcome to the administration tool for rodolphejanssen.com<br>
             From here you can create and edit exhibitions, add and modify artists, and manage the general gallery information page.</p>
-            <a class="btn btn-primary" href="">Sync available info from Art Logic</a>
+            <a class="btn btn-primary disabled" href="">Sync available info from Art Logic</a>
             {% endblock %}
         </section>
     </div>

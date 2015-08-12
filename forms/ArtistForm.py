@@ -8,8 +8,12 @@ class ArtistForm(Form):
     #key image
     #images general
     wysiwig_artist_info = PageDownField('artist info text')
-    wysiwig_artist_bio = PageDownField('artist bio & exhibition list')
+    wysiwig_artist_bio = PageDownField('artist bio')
+    wysiwig_artist_exhibitions_list = PageDownField('exhibition list')
     press_release_file = FileField('Press release files')
-    iframe1 = TextAreaField('Paste in code for media iframe')
-    iframe2 = TextAreaField('Paste in code for media iframe')
-    iframe3 = TextAreaField('Paste in code for media iframe')
+    link_name1 = StringField('name for link 1')
+    link_url1 = StringField('Paste in full url of link 1')
+    link_name2 = StringField('name for link 2')
+    link_url2 = StringField('Paste in full url of link 2')
+    link_name3 = StringField('name for link 3')
+    link_url3 = StringField('Paste in full url of link 3')

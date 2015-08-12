@@ -6,8 +6,7 @@
   <form method="post" enctype="multipart/form-data" action="/admin/edit-image/{{ teamMemberId }}">
       {{ form.csrf_token }}
       {{ render_field(form.artist) }}
-      {{ form.image_file }}
-      <br>
+      {{ render_field(form.image_file) }}
       <div class="row">
           <div class="col-xs-5 col-sm-4">
             {{ render_field(form.title) }}
