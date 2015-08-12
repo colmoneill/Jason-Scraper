@@ -11,4 +11,3 @@ static/uploads/
 *.log
 .ftpconfig
 static/fonts/205-*
-users.py
