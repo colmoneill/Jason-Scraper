@@ -3,7 +3,7 @@
 
 # Python Standard Library
 import os
-from datetime import datetime
+from datetime import datetime, date
 
 # Dependencies: Flask + PIL or Pillowexhibition/create/
 from functools import wraps
@@ -29,7 +29,7 @@ import json
 app = Flask(__name__)
 pagedown = PageDown(app)
 Misaka(app)
-app.secret_key = "@My*C7KNeC@74#HC$F7FkpEEmECaZ@jH#ePwwz#Fo^#T3%(!bM^xSAG^&!#x*i#*"
+app.secret_key = "g\xd4\xb0\x10\xa5.\x91\r\xf374\xbc3\x87#\x07\x0bEtM\x1a\x86R\x1c-}\xdc\x86N7\xf7\xcf"
 
 client = pymongo.MongoClient()
 db = client.artlogic
@@ -63,17 +63,26 @@ def logout():
     flash(u'You are logged out', 'warning')
     return redirect_flask(url_for('login'))
 
+def validate_credentials(username=False, password=False):
+    from users import users
+
+    if username in users and users[username] == password:
+        return True
+
+    return False
+
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     error = None
     form = forms.Login()
     if form.is_submitted():
-        if form.username.data != 'admin' or form.password.data != 'admin':
-            flash(u'Invalid credentials; Please try again.', 'danger')
-        else:
+        if validate_credentials(username=form.username.data, password=form.password.data):
             session['logged_in'] = True
-            return redirect_flask(url_for('viewAdmin'))
             flash(u'You are logged in! Welcome', 'success')
+
+            return redirect_flask(url_for('viewAdmin'))
+        else:
+            flash(u'Invalid credentials; Please try again.', 'danger')
     return render_template('login.html', error=error, form=form)
 
 
@@ -90,7 +99,10 @@ def test():
 @app.route("/")
 def home():
     artworks = db.artworks.find().sort("id", -1).limit(10)
-    exhibition = db.exhibitions.find()#.limit(2)
+    exhibition = db.exhibitions.find({
+        "is_published": True,
+        "end": { "$gte": datetime.combine(date.today(), datetime.min.time()) }
+    })
     return render_template("front/current.html", exhibition=exhibition)
 
 @app.route("/past/")
