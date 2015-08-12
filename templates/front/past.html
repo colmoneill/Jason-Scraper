@@ -2,31 +2,32 @@
 {% block title %}past exhibitions{% endblock %}
 {% block body %}
 <!--Single exhibition-->
-<div class="container">
+<div class="container no-margin-top">
   <div class="all-col">
     <div class="subnav" id="sidebar">
-			<ul>
+		<ul>
         {% for dates in date %}
-        <li><a class="" href="/past#{{ dates.start.year }}">{{ dates.start.year }}</a></li>
+        	<li><a class="" href="/past#{{ dates.start.year }}">{{ dates.start.year }}</a></li>
         {% endfor %}
-			</ul>
-		</div>
+		</ul>
+	</div>
     <div class="subcontent">
+    	<div class="separation-rule"></div>
       {% for exhibitions in exhibition %}
         {% if exhibitions.is_published %}
         {% if exhibitions.is_group_expo %}
-        <a href="/exhibition/{{ exhibitions.slug }}">
-        <h1>{{ exhibitions.exhibition_name }}</h1>
-        </a>
-        <code>{{ exhibitions.start.strftime('%d.%m.%Y') }} > {{ exhibitions.end.strftime('%d.%m.%Y') }}</code>
-      <div class="separation-rule"></div>
+	        <a href="/exhibition/{{ exhibitions.slug }}">
+	        	<h1>{{ exhibitions.exhibition_name }}</h1>
+				<h4>{{ exhibitions.start.strftime('%d.%m.%Y') }} > {{ exhibitions.end.strftime('%d.%m.%Y') }}</h4>
+	        </a>
+			<div class="separation-rule light-border"></div>
         {% else %}
           <a href="/exhibition/{{ exhibitions.slug }}">
             <h1>{{ exhibitions.artist.name }}</h1>
             <h2>{{ exhibitions.exhibition_name }}</h2>
+            <h4>{{ exhibitions.start.strftime('%d.%m.%Y') }} > {{ exhibitions.end.strftime('%d.%m.%Y') }}</h4>
           </a>
-            <code>{{ exhibitions.start.strftime('%d.%m.%Y') }} > {{ exhibitions.end.strftime('%d.%m.%Y') }}</code>
-          <div class="separation-rule"></div>
+          <div class="separation-rule light-border"></div>
         {% endif %}
         {% endif %}
       {% endfor %}

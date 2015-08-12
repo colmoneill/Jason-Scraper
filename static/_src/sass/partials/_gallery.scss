@@ -40,6 +40,10 @@
 			@extend .col2__span2of2;
 			@include last;
 		}
+		a{
+			color: $gray-3;
+			border-bottom: none;
+		}
 	}
 }
 

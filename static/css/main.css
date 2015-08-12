@@ -1,6 +1,5 @@
-@charset "UTF-8";
 html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+h1, h2, h3, h4, h5, .text-block h2, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
@@ -55,14 +54,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   src: url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.eot');
   src: url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.woff') format('woff'), url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.ttf') format('truetype'), url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.svg') format('svg');
   font-weight: "bold"; }
-.font-body, body, .newsletter input {
+.font-body, body, .subnav ul li a.points-to:before, .subnav ul li a:hover:before, .newsletter input {
   font-family: "Maax-Regular", Helvetica, sans-serif; }
 
 .font-bold, h1, h3 {
   font-family: "Maax-Medium", Helvetica, sans-serif; }
 
-.font-mono, h4, h5, h6, .subnav, .staff_member__mail {
-  font-family: monospace; }
+.font-mono, h4, h5, .text-block h2, h6, .subnav, .staff_member__mail {
+  font-family: "Maax Mono", monospace; }
 
 .container {
   max-width: 100%;
@@ -111,7 +110,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 951px) {
-  .col5__span1of3, .gallery__left .text-block h5 {
+  .col5__span1of3, .gallery__left .text-block h5, .gallery__left .text-block h2 {
     width: 31.25%;
     float: left;
     margin-right: 3.125%; } }
@@ -127,7 +126,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 951px) {
-  .col5__span1of4, .text-block h5, .image-block, .download-block h5 {
+  .col5__span1of4, .text-block h2, .image-block, .download-block h5 {
     width: 23.25581%;
     float: left;
     margin-right: 2.32558%; } }
@@ -185,13 +184,13 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     float: left;
     margin-right: 5.88235%; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4__span2of2, .gallery__left .text-block h5, .gallery__left .text-block p, .newsletter {
+  .col4__span2of2, .gallery__left .text-block h5, .gallery__left .text-block h2, .gallery__left .text-block p, .newsletter {
     width: 100%;
     float: left;
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4__span1of3, .text-block h5, .image-block, .download-block h5 {
+  .col4__span1of3, .text-block h2, .image-block, .download-block h5 {
     width: 30.76923%;
     float: left;
     margin-right: 3.84615%; } }
@@ -239,7 +238,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     float: left;
     margin-right: 4.0%; } }
 @media (min-width: 0) and (max-width: 500px) {
-  .col2__span2of2, .all-col, .subcontent, .subcontent__all-col, .text-block h5, .text-block p, .subnav, .download-block h5, .download-block__text, .artist-block, .gallery__left, .gallery__right, .gallery__left .text-block h5, .gallery__left .text-block p, .newsletter {
+  .col2__span2of2, .all-col, .subcontent, .subcontent__all-col, .text-block h2, .text-block p, .subnav, .download-block h5, .download-block__text, .artist-block, .gallery__left, .gallery__right, .gallery__left .text-block h5, .gallery__left .text-block h2, .gallery__left .text-block p, .newsletter {
     width: 100%;
     float: left;
     margin-left: 0;
@@ -269,6 +268,7 @@ body {
   min-width: 300px;
   overflow-y: scroll;
   overflow-x: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
   font-weight: 400;
   font-style: normal;
   line-height: inherit;
@@ -314,9 +314,11 @@ body {
   border-top: 1px solid #7a7a7a;
   margin-top: 22px;
   padding-top: 20px; }
+  .separation-rule.light-border, .light-border.subnav {
+    border-top-color: #c8c8c8; }
 
 h1, h2 {
-  text-transform: lowercase; }
+  text-transform: capitalize; }
 
 h1 {
   font-size: 1.38462em;
@@ -324,21 +326,22 @@ h1 {
 
 h2 {
   font-size: 1.23077em;
-  line-height: 1.78125em; }
+  line-height: 1.78125em;
+  margin-top: -4px; }
 
 h3 {
   font-size: 1em;
   line-height: 1.46154em; }
 
-h4, h5, h6 {
+h4, h5, .text-block h2, h6 {
   text-transform: uppercase; }
 
 h4 {
   font-size: 1em;
   line-height: 1.46154em;
-  text-transform: uppercase; }
+  margin-top: -1px; }
 
-h5 {
+h5, .text-block h2 {
   font-size: 0.84615em;
   line-height: 1.72727em;
   margin-bottom: 6px; }
@@ -366,7 +369,7 @@ a:focus {
 .text-block {
   margin-bottom: 20px; }
   @media only screen and (max-width: 750px) {
-    .text-block h5 {
+    .text-block h2 {
       width: 100%;
       float: left;
       margin-left: 0;
@@ -396,7 +399,7 @@ header {
   display: inline-block;
   width: 100%;
   margin-top: 40px;
-  margin-bottom: 90px; }
+  margin-bottom: 80px; }
   @media only screen and (max-width: 750px) {
     header {
       margin-bottom: 70px;
@@ -420,14 +423,15 @@ header {
 
 nav {
   float: right;
-  display: inline-block; }
+  display: inline-block;
+  margin-top: 12px; }
   nav li {
     float: left;
     display: inline;
     font-size: 1.15385em;
     line-height: 1.26667em;
     letter-spacing: 1px;
-    margin-right: 25px; }
+    margin-right: 30px; }
     @media only screen and (max-width: 950px) {
       nav li {
         font-size: 1.07692em;
@@ -440,7 +444,8 @@ nav {
       padding-bottom: 6px; }
   @media only screen and (max-width: 750px) {
     nav {
-      width: 100%; }
+      width: 100%;
+      margin-top: 0; }
       nav ul {
         width: 100%;
         display: inline-block;
@@ -501,8 +506,8 @@ nav {
     display: none; } }
 .subnav {
   border-top-style: dashed;
-  font-size: 1em;
-  line-height: 1.46154em;
+  font-size: 0.76923em;
+  line-height: 1.9em;
   text-transform: uppercase;
   text-align: right;
   padding-top: 10px; }
@@ -529,7 +534,7 @@ nav {
       .subnav ul li a {
         padding-bottom: 3px; } }
     .subnav ul li a.points-to:before {
-      content: "→ "; }
+      content: "\2192\2002"; }
       @media only screen and (max-width: 500px) {
         .subnav ul li a.points-to:before {
           content: none; } }
@@ -537,7 +542,7 @@ nav {
       .subnav ul li a.points-to {
         border-bottom: 1px solid #7a7a7a; } }
     .subnav ul li a:hover:before {
-      content: "→ "; }
+      content: "\2192\2002"; }
       @media only screen and (max-width: 500px) {
         .subnav ul li a:hover:before {
           content: none; } }
@@ -669,7 +674,7 @@ section.exhibition-year div:last-child {
       margin-right: 0; } }
 
 @media only screen and (max-width: 750px) {
-  .gallery__left .text-block h5 {
+  .gallery__left .text-block h5, .gallery__left .text-block h2 {
     width: 100%;
     float: left;
     margin-left: 0;
@@ -683,6 +688,9 @@ section.exhibition-year div:last-child {
       float: left;
       margin-left: 0;
       margin-right: 0; } }
+.gallery__left .text-block a {
+  color: #7a7a7a;
+  border-bottom: none; }
 
 .staff_member {
   margin-bottom: 20px; }
