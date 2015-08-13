@@ -8,6 +8,7 @@ class GroupExhibitionForm(Form):
     exhibition_name = StringField('Title')
     start = DateTimeField('From', format='%d-%m-%Y')
     end = DateTimeField('To', format='%d-%m-%Y')
+    location = RadioField(u'Gallery 32 or 35? *', choices = [('35', 'Livourne 35'), ('32', 'Livourne 32')] , option_widget=CheckboxInput(), validators=[DataRequired()])
     exhibition_key_img = FileField('exhibition key image')
     artists = RadioField(u'Select Artist *', option_widget=CheckboxInput() )
     extra_artists = StringField(u'Extra artists names (non gallery artists)')

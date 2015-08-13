@@ -91,6 +91,16 @@ textarea.flask-pagedown-input{
     text-decoration: underline;
 }
 
+ul.form-control{
+  height: auto;
+  border: none;
+  padding: none;
+}
+
+ul.form-control li{
+  list-style-type: none;
+}
+
 /*!
  * Datetimepicker for Bootstrap 3
  * ! version : 4.7.14
