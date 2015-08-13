@@ -7,6 +7,8 @@ import re
 
 import os
 from werkzeug import secure_filename
+from flask import redirect as redirect_flask, session, flash, url_for
+from functools import wraps
 
 def slugify(value):
     """ Note: This was modified from django.utils.text slugify """
@@ -52,3 +54,15 @@ def handle_uploaded_file (uploaded_file, config, filename = False):
 def allowed_file(filename, allowed_extensions):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in allowed_extensions
+
+
+# login decorator
+def login_required(test):
+    @wraps(test)
+    def wrap (*args, **kwargs):
+        if 'logged_in' in session:
+            return test (*args, **kwargs)
+        else:
+            flash(u'You need to log in first.', 'danger')
+            return redirect_flask(url_for('login'))
+    return wrap

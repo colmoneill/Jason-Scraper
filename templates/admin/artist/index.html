@@ -1,0 +1,46 @@
+{% extends "admin.html" %}
+{% block title %}
+  artits pages
+{% endblock %}
+{% block body %}
+<div class="col-md-8">
+    <h3>artists</h3>
+    <ul class="list-group">
+      {% for artist in artists %}
+        <li class="list-group-item row">
+          <div class="col-md-8">
+            <b>{{ artist.name }}</b>
+          </div>
+          <br>
+          <div class="col-md-4  text-right">
+            <a class="btn btn-primary btn-sm" href="/admin/artist/update/{{ artist._id }}">edit</a>
+            <a class="btn btn-danger btn-sm" href="/admin/artist/delete/{{ artist._id }}">delete</a>
+            <input type="checkbox" name="checkbox-published" {{ 'checked="checked"' if (artist.is_published) }} value="{{ artist._id }}" />
+          </div>
+        </li>
+    	{% endfor %}
+    </ul>
+
+    <a class="btn btn-success" href="/admin/artist/create/">create new artist page</a>
+</div>
+<script type="text/javascript">
+  window.addEventListener('load', function () {
+    $("[name='checkbox-published']").bootstrapSwitch({
+        'onSwitchChange': function (e, checked) {
+          var checkbox = this;
+          artist_id = $(this).val();
+          jQuery.post(
+            '/admin/artist/publish/' + artist_id,
+            {
+              'is_published': checked
+            },
+            function (data) {
+              $(checkbox).bootstrapSwitch('state', data.is_published, true);
+            },
+            'json'
+          )
+        }
+    });
+  }, false);
+</script>
+{% endblock %}
