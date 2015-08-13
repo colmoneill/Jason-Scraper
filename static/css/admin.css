@@ -68,6 +68,10 @@ img.small-vignette{
     display: none;
 }
 
+input[type="file"].hidden-filepicker {
+    display: none;
+}
+
 .dropmask {
     display: none;
     border: 2px dotted #333;
