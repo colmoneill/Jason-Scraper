@@ -24,7 +24,7 @@ import forms
 
 import json
 
-from app import admin as admin
+from app import admin
 
 # Local imports
 # from settings import *
@@ -36,20 +36,6 @@ app.secret_key = "g\xd4\xb0\x10\xa5.\x91\r\xf374\xbc3\x87#\x07\x0bEtM\x1a\x86R\x
 
 client = pymongo.MongoClient()
 db = client.artlogic
-
-app.config['UPLOAD'] = {
-    'PRESS_RELEASE': {
-        'allowed_extensions': ['pdf'],
-        'upload_folder': 'static/uploads/press/'
-    },
-
-    'ARTWORK_IMAGE': {
-        'allowed_extensions': ['png', 'jpeg', 'jpg', 'gif'],
-        'upload_folder': 'static/uploads/artworks/'
-    }
-}
-
-
 
 @app.route("/logout")
 def logout():
@@ -153,77 +139,6 @@ def page_not_found(error):
 def viewAdmin():
     flash(u'You are logged in!', 'success')
     return render_template('admin.html')
-
-### group exhibition ###
-
-@app.route("/admin/group-exhibition/create/", methods=['GET', 'POST'])
-@login_required
-def createGroupExhibition():
-    form = forms.GroupExhibitionForm()
-    form.artists.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
-
-    if form.validate_on_submit():
-        formdata = form.data
-        print formdata['artists']
-        exhibition = utils.handle_form_data({}, formdata, ['press_release_file', 'artists'])
-        exhibition['artists'] = [db.artist.find_one({'_id': ObjectId(artist_id)}) for artist_id in formdata['artists']]
-        exhibition['slug'] = utils.slugify(exhibition['exhibition_name'])
-        exhibition_md = form.wysiwig_exhibition_description.data
-        exhibition['is_group_expo'] = True
-
-        if request.files['press_release_file']:
-            exhibition['press_release'] = utils.handle_uploaded_file(
-                request.files['press_release_file'],
-                app.config['UPLOAD']['PRESS_RELEASE'],
-                '{0}.pdf'.format(exhibition['slug'])
-            )
-
-        db.exhibitions.insert(exhibition)
-        flash(u'You successfully created a group exhibition', 'success')
-        return redirect_flask(url_for('viewExhibition'))
-
-    return render_template('admin/group-exhibition/exhibitionCreate.html', form=form)
-
-@app.route("/admin/group-exhibition/update/<exhibition_id>", methods=['GET', 'POST'])
-def updateGroupExhibition(exhibition_id):
-    exhibition = db.exhibitions.find_one({"_id": ObjectId(exhibition_id)})
-
-    if request.method == 'POST':
-        form = forms.GroupExhibitionForm()
-        form.artists.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
-
-        if form.validate_on_submit():
-            formdata = form.data
-            exhibition = utils.handle_form_data(exhibition, formdata, ['press_release_file', 'artists'])
-            exhibition['artists'] = [db.artist.find_one({'_id': ObjectId(artist_id)}) for artist_id in formdata['artists']]
-            db.exhibitions.update({ "_id": ObjectId(exhibition_id) }, exhibition)
-
-            if request.files['press_release_file']:
-                exhibition['press_release'] = utils.handle_uploaded_file(
-                    request.files['press_release_file'],
-                    app.config['UPLOAD']['PRESS_RELEASE'],
-                    '{0}.pdf'.format(exhibition['slug'])
-            )
-        flash(u'You successfully updated the exhibition data', 'success')
-        return redirect_flask(url_for('viewExhibition'))
-
-    else:
-        exhibition['artists'] = [str(artist['_id']) for artist in exhibition['artists']]
-        form = forms.GroupExhibitionForm(data=exhibition)
-        form.artists.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
-
-    return render_template('admin/group-exhibition/exhibitionEdit.html', form=form)
-
-@app.route("/admin/group-exhibition/delete/<exhibition_id>", methods=['GET', 'POST'])
-@login_required
-def deleteGroupExhibition(exhibition_id):
-    if request.method == 'POST':
-        print exhibition_id
-        db.exhibitions.remove({"_id": ObjectId(exhibition_id)})
-        flash(u'You deleted the exhibition', 'warning')
-        return redirect_flask(url_for('viewExhibition'))
-
-    return render_template('admin/group-exhibition/exhibitionDelete.html')
 
 ### gallery general ###
 @app.route("/admin/manage-gallery-info/", methods=['GET', 'POST'])
@@ -351,6 +266,7 @@ def deleteOpeningHours(opening_hour_id):
 
 app.register_blueprint(admin.artist, url_prefix='/admin/artist')
 app.register_blueprint(admin.exhibition, url_prefix='/admin/exhibition')
+app.register_blueprint(admin.groupexhibition, url_prefix='/admin/group-exhibition')
 app.register_blueprint(admin.image, url_prefix='/admin/image')
 app.register_blueprint(admin.api, url_prefix='/admin/api')
 
