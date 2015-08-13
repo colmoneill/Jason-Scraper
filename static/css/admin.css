@@ -24,6 +24,14 @@ img.small-vignette{
     position: relative;
 }
 
+.upload-thumbnail {
+    display: inline-block;
+    position: relative;
+    height: 100px;
+    margin: 5px;
+    cursor: pointer;
+}
+
 .artwork-preview {
     display: inline-block;
     position: relative;

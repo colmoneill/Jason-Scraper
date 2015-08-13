@@ -1,12 +1,28 @@
 {% block body %}
 {% from "helpers/_form.html" import render_field %}
-<form action="" method="post" enctype="multipart/form-data">
+<form action="" method="post" enctype="multipart/form-data" id="artistForm">
     {{ form.csrf_token }}
     {{ render_field(form.name) }}
     <hr>
     <div class="row">
       <h4>Selectable images shown here</h4>
-      <p>work in progress</p>
+      <div id="artist-images">
+        <label>Select exhibition images</label>
+        <div class="thumbnail-container"></div>
+        <hr>
+        <br>
+        <div>
+          <p>
+            <input type="file" class="aggregator" multiple="true" accept="image/*" />
+            <input type="file" class="filepicker" multiple="true" accept="image/*" />
+            <button id="artist-image-upload" class="btn btn-default">Select images to upload</button>
+            or drag-and-drop them on this container.
+          </p>
+        </div>
+        <br>
+        <hr>
+        <div class="dropmask bg-info"></div>
+      </div>
     </div>
     <hr>
     <div class="container-fluid">
@@ -34,9 +50,6 @@
   </div>
     {{ form.press_release_file }}
     <hr>
-    {{ render_field(form.iframe1) }}
-    {{ render_field(form.iframe2) }}
-    {{ render_field(form.iframe3) }}
     <hr>
     <h3>Select exhibitions to be shown on artist page</h3>
 
@@ -60,5 +73,10 @@
     <p><code>fields marked with a * are required</code></p>
     <button type="submit" class="btn btn-default">Submit</button>
 </form>
-
+<script type="text/javascript" src="/static/js/upload.js"></script>
+<script type="text/javascript">
+    window.addEventListener("load", function () {
+        uploadField("image", $("#artist-images"), $('form#artistForm'));
+    }, false);
+</script>
 {% endblock %}

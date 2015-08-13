@@ -43,25 +43,34 @@ def create():
     form = forms.ArtistForm()
     exhibitions = db.exhibitions.find()
 
-    if form.validate_on_submit():
-        formdata = form.data
-        artist = utils.handle_form_data({}, formdata, ['press_release_file'])
-        artist['slug'] = utils.slugify(artist['name'])
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            formdata = form.data
+            artist = utils.handle_form_data({}, formdata, ['press_release_file'])
+            artist['slug'] = utils.slugify(artist['name'])
 
-        if request.files['press_release_file']:
-            artist['press_release'] = utils.handle_uploaded_file(
-                request.files['press_release_file'],
-                app.config['UPLOAD']['PRESS_RELEASE'],
-                '{0}.pdf'.format(artist['slug'])
-            )
+            if request.files['press_release_file']:
+                artist['press_release'] = utils.handle_uploaded_file(
+                    request.files['press_release_file'],
+                    app.config['UPLOAD']['PRESS_RELEASE'],
+                    '{0}.pdf'.format(artist['slug'])
+                )
 
-        filename = secure_filename(form.fileName.file.filename)
-        form.fileName.file.save(file_path)
+            filename = secure_filename(form.fileName.file.filename)
+            form.fileName.file.save(file_path)
 
-        db.artist.insert(artist)
-        flash('You successfully created an artist page')
-        return redirect_flask(url_for('.index'))
-
+            db.artist.insert(artist)
+            
+            if (request.is_xhr()):
+                return json.dumps(artist)
+            else:
+                flash('You successfully created an artist page')
+                return redirect_flask(url_for('.index'))
+            
+        elif (request.is_xhr()):
+            # Invalid and xhr, return the errors, rather than full HTML
+            return json.dumps(form.errors.items())
+            
     return render_template('admin/artist/create.html', form=form, exhibitions=exhibitions)
 
 
@@ -91,13 +100,21 @@ def update(artist_id):
                     app.config['UPLOAD']['PRESS_RELEASE'],
                     '{0}.pdf'.format(artists['slug'])
                 )
-                
-            flash('You\'ve updated the artist page successfully')
-            return redirect_flask(url_for('.index'))
-
+            
+            if request.is_xhr():
+                return json.dumps(artist)
+            else:
+                flash('You\'ve updated the artist page successfully')
+                return redirect_flask(url_for('.index'))
+        else:
+            # Invalid
+            if request.is_xhr():
+                return json.dumps(form.errors.items())
+            else:
+                return render_template('admin/artist/edit.html', form=form, images=images, exhibitions=exhibitions)
     else:
         form = forms.ArtistForm(data=artist)
-
+        
     return render_template('admin/artist/edit.html', form=form, images=images, exhibitions=exhibitions)
 
 @blueprint.route('/delete/<artist_id>', methods=['GET', 'POST'])
