@@ -85,7 +85,7 @@ def update(artist_id):
             ## Update this artist on images as well
             db.image.update({"artist._id": ObjectId(artist_id)}, {"$set": { "artist": artist }}, multi=True)
             ## Update this artist on exhibitions as well
-            db.image.update({"exhibition._id": ObjectId(artist_id)}, {"$set": { "artist": artist }}, multi=True)
+            db.exhibitions.update({"artist._id": ObjectId(artist_id)}, {"$set": { "artist": artist }}, multi=True)
 
             if request.files['press_release_file']:
                 artist['press_release'] = utils.handle_uploaded_file(

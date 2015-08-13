@@ -67,7 +67,7 @@ def createGroupExhibition():
         formdata = form.data
         print formdata['artists']
         exhibition = utils.handle_form_data({}, formdata, ['press_release_file', 'artists'])
-        exhibition['artists'] = [db.artist.find_one({'_id': ObjectId(artist_id)}) for artist_id in request.form.getlist('artists')]
+        exhibition['artist'] = [db.artist.find_one({'_id': ObjectId(artist_id)}) for artist_id in request.form.getlist('artists')]
         exhibition['slug'] = utils.slugify(exhibition['exhibition_name'])
         exhibition_md = form.wysiwig_exhibition_description.data
         exhibition['is_group_expo'] = True

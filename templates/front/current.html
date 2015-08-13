@@ -2,14 +2,29 @@
 	{% block title %}Current{% endblock %}
 
 	{% block body %}
-	{% for exhibitions in exhibition %}
-		{% if exhibitions.is_group_expo %}
-			<a href="/exhibition/{{ exhibitions.slug }}/"><h3>{{ exhibitions.exhibition_name }} (group exhibition)</h3></a>
+	{% for exhibition in exhibition_32 %}
+		<h3>32</h3>
+		<img src="exhibition.key_img">
+		{% if exhibition.is_group_expo %}
+			<a href="/exhibition/{{ exhibition.slug }}/"><h3>{{ exhibition.exhibition_name }} (group exhibition)</h3></a>
 		{% else %}
-			<a href="/exhibition/{{ exhibitions.slug }}/"><H3>{{ exhibitions.artist.name }}</H3></a>
-			<a href="/exhibition/{{ exhibitions.slug }}/">{{ exhibitions.exhibition_name }}</a><br>
+			<a href="/exhibition/{{ exhibition.slug }}/"><H3>{{ exhibition.artist.name }}</H3></a>
+			<a href="/exhibition/{{ exhibition.slug }}/">{{ exhibition.exhibition_name }}</a><br>
 		{% endif %}
-		<code> {{ exhibitions.start.strftime('%d.%m.%Y') }} > {{ exhibitions.end.strftime('%d.%m.%Y') }} </code><br>
+		<code> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </code><br>
+		<div class="separation-rule"></div>
+	{% endfor %}
+
+	{% for exhibition in exhibition_35 %}
+		<h3>35</h3>
+		<img src="exhibition.key_img">
+		{% if exhibition.is_group_expo %}
+			<a href="/exhibition/{{ exhibition.slug }}/"><h3>{{ exhibition.exhibition_name }} (group exhibition)</h3></a>
+		{% else %}
+			<a href="/exhibition/{{ exhibition.slug }}/"><H3>{{ exhibition.artist.name }}</H3></a>
+			<a href="/exhibition/{{ exhibition.slug }}/">{{ exhibition.exhibition_name }}</a><br>
+		{% endif %}
+		<code> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </code><br>
 		<div class="separation-rule"></div>
 	{% endfor %}
 
