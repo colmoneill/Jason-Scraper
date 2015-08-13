@@ -20,6 +20,8 @@ from bson import ObjectId
 from bson.json_util import dumps
 import forms
 
+import config
+
 import json
 
 from utils import login_required
@@ -28,7 +30,7 @@ client = pymongo.MongoClient()
 db = client.artlogic
 
 from flask import Blueprint, render_template, abort
-    
+
 blueprint = Blueprint('admin_artist', __name__)
 
 @blueprint.route('/', methods=['GET'])
@@ -51,7 +53,7 @@ def create():
         if request.files['press_release_file']:
             artist['press_release'] = utils.handle_uploaded_file(
                 request.files['press_release_file'],
-                app.config['UPLOAD']['PRESS_RELEASE'],
+                config.upload['PRESS_RELEASE'],
                 '{0}.pdf'.format(artist['slug'])
             )
 
@@ -59,7 +61,7 @@ def create():
         form.fileName.file.save(file_path)
 
         db.artist.insert(artist)
-        flash('You successfully created an artist page')
+        flash(u'You successfully created an artist page', 'success')
         return redirect_flask(url_for('.index'))
 
     return render_template('admin/artist/create.html', form=form, exhibitions=exhibitions)
@@ -79,7 +81,7 @@ def update(artist_id):
             formdata = form.data
             artist =  utils.handle_form_data(artist, formdata, ['press_release_file'])
             db.artist.update({"_id": ObjectId(artist_id)}, artist)
-            
+
             ## Update this artist on images as well
             db.image.update({"artist._id": ObjectId(artist_id)}, {"$set": { "artist": artist }}, multi=True)
             ## Update this artist on exhibitions as well
@@ -88,11 +90,11 @@ def update(artist_id):
             if request.files['press_release_file']:
                 artist['press_release'] = utils.handle_uploaded_file(
                     request.file['press_release_file'],
-                    app.config['UPLOAD']['PRESS_RELEASE'],
+                    config.upload['PRESS_RELEASE'],
                     '{0}.pdf'.format(artists['slug'])
                 )
-                
-            flash('You\'ve updated the artist page successfully')
+
+            flash(u'You\'ve updated the artist page successfully', 'success')
             return redirect_flask(url_for('.index'))
 
     else:
@@ -106,7 +108,7 @@ def deleteArtist(artist_id):
     if request.method == 'POST':
         print artist_id
         db.artist.remove({"_id": ObjectId(artist_id)})
-        flash('You deleted the artist page')
+        flash(u'You deleted the artist page', 'warning')
         return redirect_flask(url_for('.index'))
 
     return render_template('admin/artist/delete.html')

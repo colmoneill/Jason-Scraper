@@ -1,12 +1,15 @@
 {% block body %}
 {% from "helpers/_form.html" import render_field %}
-<form action="" method="post" enctype="multipart/form-data">
+  <div class="col-md-12">
+  <form action="" method="post" enctype="multipart/form-data">
     {{ form.csrf_token }}
     {{ render_field(form.name) }}
     <hr>
     <div class="row">
+      <div class="col-md-12">
       <h4>Selectable images shown here</h4>
       <p>work in progress</p>
+    </div>
     </div>
     <hr>
     <div class="container-fluid">
@@ -23,26 +26,74 @@
 <hr>
     <div class="row">
       <div class="col-xs-6">
-        <label>Artist bio & exhibition list</label> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers">markdown enabled</a>
-        {{ form.wysiwig_artist_bio(only_input=True, rows=20) }}
+        <label>Artist bio</label> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers">markdown enabled</a>
+        {{ form.wysiwig_artist_exhibitions_list(only_input=True, rows=20) }}
       </div>
+      <div class="col-xs-6">
+        <label>&larr; Text preview</label>
+        {{ form.wysiwig_artist_exhibitions_list(only_preview=True) }}
+      </div>
+    </div>
+    <br>
+    <div class="row">
+    <div class="col-xs-6">
+      <label>Artist exhibition list</label> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers">markdown enabled</a>
+      {{ form.wysiwig_artist_bio(only_input=True, rows=20) }}
+    </div>
       <div class="col-xs-6">
         <label>&larr; Text preview</label>
         {{ form.wysiwig_artist_bio(only_preview=True) }}
       </div>
     </div>
-  </div>
-    {{ form.press_release_file }}
+    <div class="row">
+      <div class="col-sm-12">
+        <h4>Press release pdf</h4>
+        {{ form.press_release_file }}
+      </div>
+    </div>
     <hr>
-    {{ render_field(form.iframe1) }}
-    {{ render_field(form.iframe2) }}
-    {{ render_field(form.iframe3) }}
+    <div class="row">
+      <div class="col-sm-12">
+        <h4>media link 1</h4>
+      </div>
+        <div class="col-sm-6">
+          {{ render_field(form.link_name1) }}
+        </div>
+        <div class="col-sm-6">
+          {{ render_field(form.link_url1) }}
+        </div>
+    </div>
     <hr>
-    <h3>Select exhibitions to be shown on artist page</h3>
+    <div class="row">
+      <div class="col-sm-12">
+        <h4>media link 2</h4>
+      </div>
+        <div class="col-sm-6">
+          {{ render_field(form.link_name2) }}
+        </div>
+        <div class="col-sm-6">
+          {{ render_field(form.link_url2) }}
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-12">
+        <h4>media link 3</h4>
+      </div>
+        <div class="col-sm-6">
+          {{ render_field(form.link_name3) }}
+        </div>
+        <div class="col-sm-6">
+          {{ render_field(form.link_url3) }}
+        </div>
+    </div>
+    <hr>
 
+    <div class="col-sm-12">
+    <h4>These exhibitions will be shown on the artist's page</h4>
+    </div>
     {% for exhibition in exhibitions %}
-    <li class="list-group-item row">
-      <div class="col-md-8">
+      <div class="col-sm-12">
         {% if exhibition.is_group_expo %}
           <b>{{ exhibition.exhibition_name }}</b> (group exhibition) <br> participants: {{ exhibition['artists']|join(', ', attribute='name') }}
         {% else %}
@@ -51,14 +102,14 @@
         <br> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}
       </div>
       <br>
-      <div class="col-md-4 text-right">
-        <input type="checkbox" name="checkbox-published" {# {{ 'checked="checked"' if (exhibition.is_published) }} #} value="{{ exhibition._id }}" />
-      </div>
-    </li>
     {% endfor %}
 
+    <hr>
+    <div class="col-sm-12">
     <p><code>fields marked with a * are required</code></p>
+    </div>
     <button type="submit" class="btn btn-default">Submit</button>
 </form>
+</div>
 
 {% endblock %}

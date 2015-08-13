@@ -3,15 +3,17 @@ from flask_pagedown.fields import PageDownField
 
 from wtforms import StringField, DateTimeField,\
     SelectField, TextAreaField, FileField, \
-    BooleanField, TextAreaField
+    BooleanField, TextAreaField, RadioField
 
 from wtforms.validators import DataRequired
+from wtforms.widgets import CheckboxInput
 
 class ExhibitionForm(Form):
     artist = SelectField(u'Select Artist *', validators=[DataRequired()])
     exhibition_name = StringField('Title')
     start = DateTimeField('From', validators=[DataRequired()], format='%d-%m-%Y')
     end = DateTimeField('To', validators=[DataRequired()], format='%d-%m-%Y')
+    location = RadioField(u'Gallery 32 or 35? *', choices = [('35', 'Livourne 35'), ('32', 'Livourne 32')] , option_widget=CheckboxInput(), validators=[DataRequired()])
     exhibition_key_img = FileField('exhibition key image')
     wysiwig_exhibition_description = PageDownField('exhibition description')
     wysiwig_artist_bio = PageDownField('artist bio')
