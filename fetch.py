@@ -97,7 +97,9 @@ def fetch_artworks():
             'title': artwork['title'],
             'year': artwork['year'],
             'medium': artwork['medium'],
-            'dimensions': artwork['dimensions']
+            'dimensions': artwork['dimensions'],
+            'stock_number': artwork['stock_number'],
+            'stock_number_sort': artwork['stock_number_sort'],
         })
 
         print "{0}, {1}".format(artwork['title'], artwork['artist'])
