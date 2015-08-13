@@ -17,18 +17,22 @@ import pymongo
 
 import utils
 from bson import ObjectId
-from bson.json_util import dumps
+from bson.json_util import dumps as bson_dumps
 import forms
+
+import config
 
 import json
 
 from utils import login_required
 
+from werkzeug import secure_filename
+
 client = pymongo.MongoClient()
 db = client.artlogic
 
 from flask import Blueprint, render_template, abort
-    
+
 blueprint = Blueprint('admin_artist', __name__)
 
 @blueprint.route('/', methods=['GET'])
@@ -52,24 +56,38 @@ def create():
             if request.files['press_release_file']:
                 artist['press_release'] = utils.handle_uploaded_file(
                     request.files['press_release_file'],
-                    app.config['UPLOAD']['PRESS_RELEASE'],
-                    '{0}.pdf'.format(artist['slug'])
+                    config.upload['UPLOAD']['PRESS_RELEASE'],
+                    utils.setfilename(request.files['press_release_file'].filename, artist['slug'])
                 )
 
-            filename = secure_filename(form.fileName.file.filename)
-            form.fileName.file.save(file_path)
+                # Seems unlogic dead code. ignored for now.
+                #filename = secure_filename(form.fileName.file.filename)
+                #form.fileName.file.save(file_path)
 
             db.artist.insert(artist)
             
-            if (request.is_xhr()):
-                return json.dumps(artist)
+            if request.files['image']:
+                for uploaded_image in request.files.getlist('image'):
+                    image = {
+                        'artist': artist,
+                        'path': utils.handle_uploaded_file(
+                            uploaded_image,
+                            config.upload['ARTWORK_IMAGE'],
+                            utils.setfilename(uploaded_image.filename, artist['slug'])
+                        )
+                    }
+                    
+                    db.image.insert(image)
+            
+            if (request.is_xhr):
+                return bson_dumps(artist)
             else:
                 flash('You successfully created an artist page')
                 return redirect_flask(url_for('.index'))
             
-        elif (request.is_xhr()):
+        elif (request.is_xhr):
             # Invalid and xhr, return the errors, rather than full HTML
-            return json.dumps(form.errors.items())
+            return json.dumps(form.errors)
             
     return render_template('admin/artist/create.html', form=form, exhibitions=exhibitions)
 
@@ -88,7 +106,7 @@ def update(artist_id):
             formdata = form.data
             artist =  utils.handle_form_data(artist, formdata, ['press_release_file'])
             db.artist.update({"_id": ObjectId(artist_id)}, artist)
-            
+
             ## Update this artist on images as well
             db.image.update({"artist._id": ObjectId(artist_id)}, {"$set": { "artist": artist }}, multi=True)
             ## Update this artist on exhibitions as well
@@ -96,22 +114,41 @@ def update(artist_id):
 
             if request.files['press_release_file']:
                 artist['press_release'] = utils.handle_uploaded_file(
-                    request.file['press_release_file'],
-                    app.config['UPLOAD']['PRESS_RELEASE'],
-                    '{0}.pdf'.format(artists['slug'])
+                    request.files['press_release_file'],
+                    config.upload['UPLOAD']['PRESS_RELEASE'],
+                    utils.setfilename(request.files['press_release_file'].filename, artist['slug'])
                 )
             
-            if request.is_xhr():
-                return json.dumps(artist)
+            if request.files['image']:
+                for uploaded_image in request.files.getlist('image'):
+                    image = {
+                        'artist': artist,
+                        'path': utils.handle_uploaded_file(
+                            uploaded_image,
+                            config.upload['ARTWORK_IMAGE'],
+                            utils.setfilename(uploaded_image.filename, artist['slug'])
+                        )
+                    }
+                    
+                    db.image.insert(image)
+            
+            if request.is_xhr:
+                return bson_dumps(artist)
             else:
                 flash('You\'ve updated the artist page successfully')
                 return redirect_flask(url_for('.index'))
         else:
             # Invalid
-            if request.is_xhr():
-                return json.dumps(form.errors.items())
+            if request.is_xhr:
+                errors = {}
+                
+                for fieldname, errors in form.errors.iteritems():
+                    errors[fieldname] = errors
+                    
+                return json.dumps(errors)
             else:
                 return render_template('admin/artist/edit.html', form=form, images=images, exhibitions=exhibitions)
+
     else:
         form = forms.ArtistForm(data=artist)
         
@@ -123,7 +160,7 @@ def deleteArtist(artist_id):
     if request.method == 'POST':
         print artist_id
         db.artist.remove({"_id": ObjectId(artist_id)})
-        flash('You deleted the artist page')
+        flash(u'You deleted the artist page', 'warning')
         return redirect_flask(url_for('.index'))
 
     return render_template('admin/artist/delete.html')
@@ -140,4 +177,4 @@ def publishArtist (artist_id):
         {'_id': ObjectId(artist_id)},
         {'$set': {'is_published': is_published}}
     )
-    return dumps(db.artist.find_one({'_id': ObjectId(artist_id)}))
+    return bson_dumps(db.artist.find_one({'_id': ObjectId(artist_id)}))

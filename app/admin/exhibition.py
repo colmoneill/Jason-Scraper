@@ -20,6 +20,8 @@ from bson import ObjectId
 from bson.json_util import dumps
 import forms
 
+import config
+
 import json
 
 client = pymongo.MongoClient()
@@ -28,7 +30,7 @@ db = client.artlogic
 from flask import Blueprint, render_template, abort
 
 from utils import login_required
-    
+
 blueprint = Blueprint('admin_exhibition', __name__)
 
 ### single artist exhibition ###
@@ -75,12 +77,12 @@ def create():
             if request.files['press_release_file']:
                 exhibition['press_release'] = utils.handle_uploaded_file(
                     request.files['press_release_file'],
-                    app.config['UPLOAD']['PRESS_RELEASE'],
+                    config.upload['PRESS_RELEASE'],
                     '{0}.pdf'.format(exhibition['slug'])
                 )
 
             db.exhibitions.insert(exhibition)
-            flash('You successfully created an exhibition')
+            flash(u'You successfully created an exhibition', 'success')
             return redirect_flask(url_for('.index'))
 
         selectedImages = request.form.getlist('image')
@@ -107,11 +109,11 @@ def update(exhibition_id):
             if request.files['press_release_file']:
                 exhibition['press_release'] = utils.handle_uploaded_file(
                     request.files['press_release_file'],
-                    app.config['UPLOAD']['PRESS_RELEASE'],
+                    config.upload['PRESS_RELEASE'],
                     '{0}.pdf'.format(exhibition['slug'])
             )
 
-            flash('You successfully updated the exhibition data')
+            flash(u'You successfully updated the exhibition data', 'success')
             return redirect_flask(url_for('.index'))
 
     selectedImages = [str(image['_id']) for image in exhibition['images']]
@@ -128,7 +130,7 @@ def delete(exhibition_id):
     if request.method == 'POST':
         print exhibition_id
         db.exhibitions.remove({"_id": ObjectId(exhibition_id)})
-        flash('You deleted the exhibition')
+        flash(u'You deleted the exhibition', 'warning')
         return redirect_flask(url_for('.index'))
 
     return render_template('admin/exhibition/delete.html')

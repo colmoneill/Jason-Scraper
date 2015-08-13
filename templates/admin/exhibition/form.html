@@ -1,286 +1,111 @@
-{% block title %}
-    Exhibition form
-{% endblock %}
-
 {% block body %}
-  {% from "helpers/_form.html" import render_field, render_datepicker %}
-  <form method="post" enctype="multipart/form-data">
-      {{ form.csrf_token }}
-      {{ render_field(form.exhibition_name) }}
-      <div class="row">
-          <div class="col-xs-5 col-sm-4">
-              {{ render_datepicker(form.start) }}
-          </div>
-          <div class="col-xs-5 col-xs-offset-1 col-sm-4 col-sm-offset-2">
-              {{ render_datepicker(form.end) }}
-          </div>
-      </div>
-      {{ render_field(form.artist) }}
-      <div id="artist-images">
-        <label>Select exhibition images</label>
-        <div id="artist-images-container"></div>
-        <hr>
-        <br>
-        <div>
-            <p>
-                <input type="file" id="artist-image-file" multiple="true" accept="image/*" />
-                <button id="artist-image-upload" class="btn btn-default">Upload images</button>
-                or drag and drop on this container to add
-            </p>
-        </div>
-        <br>
-        <hr>
-        <div class="dropmask bg-info"></div>
-      </div>
-      <div class="row">
-        <div class="col-xs-6">
-          <label>Exhibition main text</label> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers">markdown enabled</a>
-          {{ form.wysiwig_exhibition_description(only_input=True, rows=20) }}
-        </div>
-        <div class="col-xs-6">
-          <label>&larr; Text preview</label>
-          {{ form.wysiwig_exhibition_description(only_preview=True) }}
-        </div>
-      </div>
-      <hr>
-      <div class="row">
-        <div class="col-xs-6">
-          <label>Exhibition artist bio</label> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers">markdown enabled</a>
-          {{ form.wysiwig_artist_bio(only_input=True, rows=20) }}
-        </div>
-        <div class="col-xs-6">
-          <label>&larr; Text preview</label>
-          {{ form.wysiwig_artist_bio(only_preview=True) }}
-        </div>
-      </div>
-      <hr>
-      {{ form.press_release_file }}
-      <hr>
-      <div class="row">
-        <div class="col-sm-12">
-          <h4>media link 1</h4>
-        </div>
-          <div class="col-sm-6">
-            {{ render_field(form.link_name1) }}
-          </div>
-          <div class="col-sm-6">
-            {{ render_field(form.link_url1) }}
-          </div>
-      </div>
-      <hr>
-      <div class="row">
-        <div class="col-sm-12">
-          <h4>media link 2</h4>
-        </div>
-          <div class="col-sm-6">
-            {{ render_field(form.link_name2) }}
-          </div>
-          <div class="col-sm-6">
-            {{ render_field(form.link_url2) }}
-          </div>
-      </div>
-      <hr>
-      <div class="row">
-        <div class="col-sm-12">
-          <h4>media link 3</h4>
-        </div>
-          <div class="col-sm-6">
-            {{ render_field(form.link_name3) }}
-          </div>
-          <div class="col-sm-6">
-            {{ render_field(form.link_url3) }}
-          </div>
-      </div>
-      <button type="submit" class="btn btn-default">Submit</button>
-  </form>
-
-<script type="text/template" id="template-artist-artwork">
-    <div class="artwork-preview">
-        <input type="checkbox" name="image" />
-        <img />
+{% from "helpers/_form.html" import render_field %}
+  <div class="col-md-12">
+  <form action="" method="post" enctype="multipart/form-data">
+    {{ form.csrf_token }}
+    {{ render_field(form.name) }}
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+      <h4>Selectable images shown here</h4>
+      <p>work in progress</p>
     </div>
-</script>
-<script type="text/template" id="template-artist-artwork-preview">
-    <div class="artwork-preview uploading">
-        <img />
     </div>
-</script>
-<script type="text/javascript">
-    window.addEventListener('load', function () {
-        /**
-        * Bless the datepickers
-        */
-        (function ($) {
-            'use strict';
+    <hr>
+    <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <label>Artist info text</label> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers">markdown enabled</a>
+        {{ form.wysiwig_artist_info(only_input=True, rows=20) }}
+      </div>
+      <div class="col-md-6">
+        <label>&larr; Text preview</label>
+        {{ form.wysiwig_artist_info(only_preview=True) }}
+      </div>
+    </div>
+<hr>
+    <div class="row">
+      <div class="col-xs-6">
+        <label>Artist bio</label> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers">markdown enabled</a>
+        {{ form.wysiwig_artist_exhibitions_list(only_input=True, rows=20) }}
+      </div>
+      <div class="col-xs-6">
+        <label>&larr; Text preview</label>
+        {{ form.wysiwig_artist_exhibitions_list(only_preview=True) }}
+      </div>
+    </div>
+  </div>
+    <br>
+    <div class="col-xs-6">
+      <label>Artist exhibition list</label> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers">markdown enabled</a>
+      {{ form.wysiwig_artist_bio(only_input=True, rows=20) }}
+    </div>
+    <div class="col-xs-6">
+      <label>&larr; Text preview</label>
+      {{ form.wysiwig_artist_bio(only_preview=True) }}
+    </div>
+<hr>
+    <label>Press release pdf</label>
+    {{ form.press_release_file }}
+    <hr>
+    <div class="row">
+      <div class="col-sm-12">
+        <h4>media link 1</h4>
+      </div>
+        <div class="col-sm-6">
+          {{ render_field(form.link_name1) }}
+        </div>
+        <div class="col-sm-6">
+          {{ render_field(form.link_url1) }}
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-12">
+        <h4>media link 2</h4>
+      </div>
+        <div class="col-sm-6">
+          {{ render_field(form.link_name2) }}
+        </div>
+        <div class="col-sm-6">
+          {{ render_field(form.link_url2) }}
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-12">
+        <h4>media link 3</h4>
+      </div>
+        <div class="col-sm-6">
+          {{ render_field(form.link_name3) }}
+        </div>
+        <div class="col-sm-6">
+          {{ render_field(form.link_url3) }}
+        </div>
+    </div>
+    <hr>
 
-            $('#datepicker-start').on('dp.change', function (e) {
-                $('#datepicker-end').data("DateTimePicker").minDate(e.date);
-            });
-        })($);
+    <div class="col-sm-12">
+    <h4>These exhibitions will be shown on the artist's page</h4>
+    </div>
+    {% for exhibition in exhibitions %}
+      <div class="col-sm-12">
+        {% if exhibition.is_group_expo %}
+          <b>{{ exhibition.exhibition_name }}</b> (group exhibition) <br> participants: {{ exhibition['artists']|join(', ', attribute='name') }}
+        {% else %}
+            <b>{{ exhibition.artist.name }}</b> <br> {{ exhibition.exhibition_name }}
+        {% endif%}
+        <br> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}
+      </div>
+      <br>
+    {% endfor %}
 
+    <hr>
+    <div class="col-sm-12">
+    <p><code>fields marked with a * are required</code></p>
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
+</div>
 
-        (function ($, jQuery) {
-            'use strict';
-
-            var acceptedTypes = ['image/png', 'image/jpeg', 'image/gif'];
-
-            {% autoescape false %}
-            var preselectedImages = JSON.parse('{{ selectedImages }}');
-            {% endautoescape %}
-
-            var previewFile = function (file) {
-                var reader = new FileReader(),
-                $preview = getTemplate('artist-artwork-preview');
-
-                reader.onload = function (event) {
-                    $preview.find('img').attr('src', event.target.result);
-                    $('#artist-images-container').append($preview);
-                }
-
-                reader.readAsDataURL(file);
-
-                return $preview;
-            };
-
-            var getTemplate = function (name) {
-                return $($('#template-' + name).html());
-            };
-
-            var addImage = function (image, checked) {
-                var $el = getTemplate('artist-artwork');
-
-                if (arguments.length < 2) {
-                    checked = (preselectedImages.indexOf(image['_id']['$oid']) > -1)
-                }
-
-                $el.find('img').attr('src', '/' + image['path']);
-                $el.click(function () {
-                    $(this).find('input').click();
-                });
-                $el.find('input')
-                    .val(image['_id']['$oid'])
-                    .prop('checked', checked)
-                    .click(function (e) {
-                        e.stopPropagation();
-                    })
-                    .change(function (e) {
-                        if ($(this).prop('checked')) {
-                            $(this).parent().addClass('selected');
-                        } else {
-                            $(this).parent().removeClass('selected');
-                        }
-                    });
-
-                $el.addClass((checked) ? 'selected' : '')
-
-                $('#artist-images-container').append($el);
-
-                return $el
-            };
-
-            function uploadFile(file, artist_id, callback, ctx) {
-                var data = new FormData();
-                data.append('image', file);
-
-                $.ajax({
-                    xhr: function() {
-                        var xhr = new XMLHttpRequest();
-
-                        xhr.upload.addEventListener('progress', function(e){
-                            if (e.lengthComputable) {
-                                var percentComplete = e.loaded / e.total;
-                                //Do something with upload progress
-                                console.log(percentComplete);
-                            }
-                        }, false);
-
-                        return xhr;
-                    },
-                    type: "POST",
-                    url: '/admin/uploadArtistImage/' + artist_id,
-                    enctype: 'multipart/form-data',
-                    data: data,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function (image) {
-                        callback.call(ctx, image);
-                    },
-                    dataType: 'json'
-                });
-            }
-
-            var loadImages = function (artist){
-                $('#artist-images-container').empty();
-
-                jQuery.get(
-                    '/admin/images/list/' + artist,
-                    null,
-                    function (images) {
-                        for (var i=0; i<images.length;i++) {
-                            addImage(images[i]);
-                        }
-                    },
-                    'json'
-                );
-            };
-
-            var processFiles = function (files) {
-                for (var i=0; i < files.length; i++) {
-                    processFile(files[i]);
-                }
-            };
-
-            var processFile = function (file) {
-                if (acceptedTypes.indexOf(file.type) > -1) {
-                    var $preview = previewFile(file);
-                    uploadFile(file, $('select#artist').val(), function (image) {
-                        $preview.remove();
-                        addImage(image, true);
-                    });
-                }
-            };
-
-            $('select#artist').change(function () {
-                loadImages($(this).val());
-            });
-
-            $('.dropmask')
-                .on('dragover', function (e) {
-                    e.preventDefault();
-                    e.originalEvent.dataTransfer.dropEffect = 'copy';
-                })
-                .on('dragleave', function () {
-                    $(this).hide();
-                })
-                .on('dragend', function () {
-                    $(this).hide();
-                })
-                .on('drop', function (e) {
-                    e.preventDefault();
-                    e.originalEvent.dataTransfer.dropEffect = 'copy';
-                    // hide dropmask
-                    $(this).hide();
-                    processFiles(e.originalEvent.dataTransfer.files);
-                });
-
-            $('#artist-images')
-                .on('dragenter', function (e) {
-                    e.preventDefault();
-                    $('.dropmask').show();
-                })
-
-            $('#artist-image-file').change(function () {
-                processFiles(this.files);
-                $(this).val('');
-            });
-            $('#artist-image-upload').click(function (e) {
-                e.preventDefault();
-                $('#artist-image-file').click();
-            });
-            loadImages($('select#artist').val());
-
-        })($, jQuery);
-    }, false);
-</script>
 {% endblock %}
