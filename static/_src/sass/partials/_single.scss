@@ -68,7 +68,8 @@ section.informations{
 .download-block{
 	margin-bottom: $margin_bottom;
 	@extend .clearfix;
-	h5{
+	h2{
+		@extend h5;
 		@extend .col5__span1of4;
 		@extend .col4__span1of3;
 		@extend .col2__span2of2;
