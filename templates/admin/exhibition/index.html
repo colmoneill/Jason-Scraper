@@ -6,6 +6,7 @@
 {% block body %}
 <div class="col-md-8">
   <h3>edit exhibitions</h3>
+      {% include 'helpers/_flashMessage.html' %}
     <ul class="list-group">
       {% for exhibition in exhibitions %}
         <li class="list-group-item row">
@@ -26,7 +27,6 @@
         </li>
     	{% endfor %}
     </ul>
-    {% include 'helpers/_flashMessage.html' %}
 
     <br>
     <a class="btn btn-success" href="/admin/exhibition/create/">create new <b>single artist</b> exhibition</a><br><br>

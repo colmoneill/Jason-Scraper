@@ -16,11 +16,17 @@
           </div>
       </div>
       <hr>
-      <div class="clearfix">
-      {{ form.artists }}
-      </div>
+      <!--<label>Which gallery?</label>-->
+      {{ render_field(form.location) }}
       <hr>
-      {{ render_field(form.extra_artists) }}
+      <!--<label>Included artists?</label>-->
+      {{ render_field(form.artists) }}
+      <hr>
+      <div class="row">
+        <div class="col-md-12 clearfix">
+          {{ render_field(form.extra_artists) }}
+        </div>
+      </div>
       <hr>
 
 
