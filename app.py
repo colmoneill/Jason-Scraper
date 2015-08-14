@@ -27,13 +27,12 @@ import json
 from app import admin
 
 # Local imports
-# from settings import *
+from settings import SECRET_KEY
 
 app = Flask(__name__)
 pagedown = PageDown(app)
 Misaka(app)
-app.secret_key = "g\xd4\xb0\x10\xa5.\x91\r\xf374\xbc3\x87#\x07\x0bEtM\x1a\x86R\x1c-}\xdc\x86N7\xf7\xcf"
-
+app.secret_key = "SECRET_KEY"
 client = pymongo.MongoClient()
 db = client.artlogic
 
@@ -153,7 +152,6 @@ def page_not_found(error):
 @app.route("/admin/")
 @login_required
 def viewAdmin():
-    flash(u'You are logged in!', 'success')
     return render_template('admin.html')
 
 ### gallery general ###
