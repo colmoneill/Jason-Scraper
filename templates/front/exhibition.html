@@ -14,10 +14,10 @@
   </div>
   <div class="subnav" id="sidebar">
     <ul>
-      <li><a href="#informations">Images</a></li>
-      <li><a href="#exhibition">presentation</a></li>
+      <li><a href="#images">Images</a></li>
+      <li><a href="#presentation">presentation</a></li>
       {% if exhibition.is_group_expo %}
-        <li><a href="#">artists</a>
+        <li><a href="#artists">artists</a>
       {% else %}
         <li><a href="/artist/{{ exhibition.artist.slug }}">artist's page</a>
       {% endif %}
@@ -27,52 +27,65 @@
     </ul>
   </div>
   <div class="subcontent">
-    <section class="subcontent__all-col informations" id="informations">
+    <section class="subcontent__all-col" id="images">
+    
       <div class="separation-rule"></div>
-      {% if exhibition.images %}
-          {% for image in exhibition.images %}
-          <div style="width: 14%; margin-right: 2%; display:inline-block;">
-            <img class="vignette" style="width:100%" src="/{{ image.path }} "><br>
-              {{ image.artist.name }}<br>
-              <b>{{ image.title }}</b>, {{ image.year }}<br>
-              {{ image.medium }}<br>
-              {{ image.dimensions }}<br>
-          </div>
-          {% endfor %}
+      <div>
+	  {% if exhibition.images %}
+	  	{% for image in exhibition.images %}
+	  		<div class="image-block">
+		  		<a href="/{{ image.path }}">
+		  			<div class="image-block__inside" style="background-image: url('/{{ image.path }}')"></div>
+			  		{{ image.artist.name }}<br>
+			  		{{ image.title }}, {{ image.year }}<br>
+			  		{{ image.medium }}<br>
+			  		{{ image.dimensions }}<br>
+			  	</a>
+		  	</div>
+		{% endfor %}
+	{% endif %}
+      </div>
+    </section>
+    
+     {% if exhibition.is_group_expo %}
+     <section class="subcontent__all-col" id="artists">
+     	<div class="separation-rule"></div>
+        	<ul>
+				{% for artists in exhibition.artists %}
+				<li>{{ artists.name }}</li>
+				{% endfor %}
+				
+				{{ exhibition.extra_artists }}
+            </ul>
+	</section>
+    {% else %}
+	{% endif %}
+	
+    <section class="subcontent__all-col" id="presentation">
+    	<div class="separation-rule"></div>
+		{% if exhibition.wysiwig_exhibition_description %}
+        	<div class="text-block">
+				<h2>information</h2>
+				{{ exhibition.wysiwig_exhibition_description|markdown }}
+			</div>
       {% endif %}
-      <div class="separation-rule"></div>
-      {% if exhibition.is_group_expo %}
-          <ul>
-        {% for artists in exhibition.artists %}
-          <li>{{ artists.name }}</li>
-        {% endfor %}
-        {{ exhibition.extra_artists }}
-          </ul>
-          <div class="separation-rule"></div>
-      {% else %}
-      <br>
-      {% endif %}
-      {% if exhibition.wysiwig_exhibition_description %}
-        <div class="text-block">
-          <h2>information</h2>
-          {{ exhibition.wysiwig_exhibition_description|markdown }}
-        </div>
-      {% endif %}
-      {% if exhibition.wysiwig_artist_bio %}
-        <div class="text-block">
-          <h2>about the artist</h2>
-          {{ exhibition.wysiwig_artist_bio|markdown }}
-        </div>
-      {% endif %}
+      
+      	{% if exhibition.wysiwig_artist_bio %}
+      		<div class="text-block">
+		  		<h2>about the artist</h2>
+		  		{{ exhibition.wysiwig_artist_bio|markdown }}
+		  	</div>
+		{% endif %}
+		
         <div class="download-block">
           <h2>press</h2>
           	<div class="download-block__text" id="media">
 			{% if exhibition.press_release %}
             	<a class="" href="/{{ exhibition.press_release }}"><h3>Download the press release — PDF (size %)</h3></a>
 			{% endif %}
-          		<a href="{{ exhibition.link_url1 }}"><h3>{{ exhibition.link_name1 }}</h3></a>
-		  		<a href="{{ exhibition.link_url2 }}"><h3>{{ exhibition.link_name2 }}</h3></a>
-		  		<a href="{{ exhibition.link_url3 }}"><h3>{{ exhibition.link_name3 }}</h3></a>
+          		<a href="{{ exhibition.link_url1 }}" target="_blank"><h3>{{ exhibition.link_name1 }}</h3></a>
+		  		<a href="{{ exhibition.link_url2 }}" target="_blank"><h3>{{ exhibition.link_name2 }}</h3></a>
+		  		<a href="{{ exhibition.link_url3 }}" target="_blank"><h3>{{ exhibition.link_name3 }}</h3></a>
 		  </div>
         </div>
     </section>

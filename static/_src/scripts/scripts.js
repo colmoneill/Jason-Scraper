@@ -2,7 +2,6 @@ $(document).ready(function() {
 
 	/* FastClick.attach(document.body); */
 	$("#sidebar").stick_in_parent(); // Allows the SideBar (Subnav) to keep percentage value and position relative to parent when fixed (Sticky-Kit)
-		
 
 	$(document).ready(function () {
 		$(document).on("scroll", onScroll);
@@ -41,6 +40,11 @@ $(document).ready(function() {
 			}
 		});
 	}
+	
+	$( function()
+    	{
+        	$( '.image-block a' ).imageLightbox();
+		});
 
 
 });
