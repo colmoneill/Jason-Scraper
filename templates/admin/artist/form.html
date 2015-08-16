@@ -7,6 +7,8 @@
     <hr>
     {{ upload_field('image', 'Artworks', images) }}
     <hr>
+    {{ upload_field('coverimage', 'Cover Image', coverimage) }}
+    <hr>
     <div class="container-fluid">
     <div class="row">
       <div class="form-group">
@@ -110,13 +112,14 @@
     <p><code>fields marked with a * are required</code></p>
     </div>
     <button type="submit" class="btn btn-default" id="submit-button">Submit</button>
-    <button class="btn btn-default hidden" disabled="disabled" id="processing-button"><span class="glyphicon glyphicon-refresh spin" aria-hidden="true"></span>&nbsp;Processing...</button>
+    <button class="btn btn-default hide" disabled="disabled" id="processing-button"><span class="glyphicon glyphicon-refresh spin" aria-hidden="true"></span>&nbsp;Processing...</button>
 </form>
 <script type="text/javascript" src="/static/js/upload.js"></script>
 <script type="text/javascript">
     window.addEventListener("load", function () {
         var form = new Form($('form#artistForm'));
-        form.addUploadField("image", $("#image"));
+        form.addUploadField("image");
+        form.addUploadField("coverimage");
     }, false);
 </script>
 </div>

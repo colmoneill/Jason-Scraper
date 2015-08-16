@@ -149,14 +149,14 @@ extend(Form.prototype, {
         return this.$el.find(selector);
     },
     
-    addUploadField: function (name, $el) {
-        var field = new UploadField(name, $el);
+    addUploadField: function (name) {
+        var field = new UploadField(name, this.$('#' + name + '-upload-field'));
         this.uploadFields.push(field);
     },
 
     markProcessing: function () {
-        $('#submit-button').addClass('hide');
-        $('#processing-button').removeClass('hide');
+        this.$('#submit-button').addClass('hide');
+        this.$('#processing-button').removeClass('hide');
     },
 
     markDone: function () {
@@ -212,7 +212,7 @@ extend(Form.prototype, {
     onSubmit: function (e) {
         e.preventDefault();
         this.clearErrors();        
-        this.markProcessing(true);
+        this.markProcessing();
         
         var formData = new FormData(this.$el.get(0));
         
@@ -243,7 +243,7 @@ extend(Form.prototype, {
     onSuccess: function (data) {
         this.markDone();
         
-        var redirectExp = /(\/[a-z]+\/[a-z]+\/)/i,
+        var redirectExp = /(\/[a-z\-]+\/[a-z\-]+\/)/i,
             newPathMatch = redirectExp.exec(window.location.pathname);
 
         if (newPathMatch != null) {

@@ -58,7 +58,7 @@ def getsafepath (path, count = 1):
     else:
         return safepath
 
-def setfilename (oldname, name):
+def setfilenameroot (oldname, name):
     root, ext = os.path.splitext(oldname)
     return '{0}{1}'.format(name, ext)
 

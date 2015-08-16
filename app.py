@@ -14,8 +14,6 @@ from flask import   Flask, flash, send_from_directory, \
 from flask_pagedown import PageDown
 from flask.ext.misaka import Misaka
 
-import pymongo
-
 import utils
 from utils import login_required
 from bson import ObjectId
@@ -24,17 +22,14 @@ import forms
 
 import json
 
-from app import admin
-
-# Local imports
-from settings import SECRET_KEY
+from main import admin
+from main.settings import db, secret_key
 
 app = Flask(__name__)
 pagedown = PageDown(app)
 Misaka(app)
-app.secret_key = "SECRET_KEY"
-client = pymongo.MongoClient()
-db = client.artlogic
+app.secret_key = secret_key
+
 
 @app.route("/logout")
 def logout():

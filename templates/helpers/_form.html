@@ -26,21 +26,24 @@
 
 {% endmacro%}
 
-{% macro upload_field(fieldname, label, files) %}
+{% macro upload_field(fieldname, label, files = []) %}
     <div class="row">
-      <div class="col-md-12" id="{{ fieldname }}">
+      <div class="col-md-12 form-group" id="{{ fieldname }}-upload-field">
         <label>{{ label }}</label>
         <div class="thumbnail-container">
           {% for file in files %}
             <div class="upload-thumbnail">
                 <span class="glyphicon glyphicon-remove action delete"></span>
                 <span class="glyphicon glyphicon-repeat action restore"></span>
-                <input type="hidden" name="{{ fieldname }}" value="{{ file._id }}" />
+                {% if '_id' in file: %}
+                    <input type="hidden" name="{{ fieldname }}" value="{{ file._id }}" />
+                {% else: %}
+                    <input type="hidden" name="{{ fieldname }}" value="{{ file.path }}" />
+                {% endif %}
                 <img src="/{{ file.path }}" class="upload-thumbnail" />
             </div>
           {% endfor %}
         </div>
-        <hr>
         <br>
         <div>
           <p>
@@ -49,8 +52,6 @@
             or drag-and-drop them on this container.
           </p>
         </div>
-        <br>
-        <hr>
         <div class="dropmask bg-info"></div>
       </div>
     </div>
