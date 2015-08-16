@@ -27,13 +27,12 @@ import json
 from app import admin
 
 # Local imports
-# from settings import *
+from settings import SECRET_KEY
 
 app = Flask(__name__)
 pagedown = PageDown(app)
 Misaka(app)
-app.secret_key = "g\xd4\xb0\x10\xa5.\x91\r\xf374\xbc3\x87#\x07\x0bEtM\x1a\x86R\x1c-}\xdc\x86N7\xf7\xcf"
-
+app.secret_key = "SECRET_KEY"
 client = pymongo.MongoClient()
 db = client.artlogic
 
@@ -73,35 +72,51 @@ def login():
 ####################################################################################
 
 @app.route("/")
+@app.route("/current/")
 def home():
     artworks = db.artworks.find().sort("id", -1).limit(10)
-    exhibition = db.exhibitions.find({
+    exhibition_32 = db.exhibitions.find({
         "is_published": True,
+        "location": "32",
         "end": { "$gte": datetime.combine(date.today(), datetime.min.time()) }
-    })
-    return render_template("front/current.html", exhibition=exhibition)
+        #}).sort({ "end" : -1 })
+        }).limit(1)
+
+    exhibition_35 = db.exhibitions.find({
+        "is_published": True,
+        "location": "35",
+        "end": { "$gte": datetime.combine(date.today(), datetime.min.time()) }
+        #}).sort({ "end" : -1 })
+        }).limit(1)
+
+    return render_template("front/current.html", exhibition_32=exhibition_32, exhibition_35=exhibition_35)
 
 @app.route("/past/")
 def pastExhibitions():
-    exhibition = db.exhibitions.find()
-    date = db.exhibitions.find()
-    return render_template("front/past.html", exhibition=exhibition, date=date)
+    past_exhibition = db.exhibitions.find({
+        "is_published": True,
+        "end": { "$lt": datetime.combine(date.today(), datetime.min.time()) }
+    })
+
+    return render_template("front/past.html", past_exhibition=past_exhibition)
+
+@app.route("/upcoming/")
+def upcomingExhibitions():
+    future_exhibition = db.exhibitions.find({
+        "is_published": True,
+        "start": { "$gt": datetime.combine(date.today(), datetime.min.time()) }
+    })
+
+    return render_template("front/upcoming.html", future_exhibition=future_exhibition)
+
 
 @app.route("/artists/")
 def artists():
-    artists = db.artist.find()
+    artists = db.artist.find({
+    "is_published": True,
+    })
+
     return render_template("front/artists.html", artists=artists)
-
-@app.route("/artist/<slug>/")
-def artist(slug):
-    artist = db.artist.find_one({ "slug": slug})
-    #artworks = db.artworks.find({"artist": artist["artist"]}).sort("id", -1).limit(10)
-    return render_template("front/artist.html", artist=artist)
-
-@app.route("/current/")
-def current():
-    exhibition = db.exhibitions.find() #.limit(2)
-    return render_template("front/current.html", exhibition=exhibition)
 
 @app.route("/current/<slug>/")
 def exhibition(slug):
@@ -137,7 +152,6 @@ def page_not_found(error):
 @app.route("/admin/")
 @login_required
 def viewAdmin():
-    flash(u'You are logged in!', 'success')
     return render_template('admin.html')
 
 ### gallery general ###
