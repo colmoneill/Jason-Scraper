@@ -2,7 +2,6 @@ $(document).ready(function() {
 
 	/* FastClick.attach(document.body); */
 	$("#sidebar").stick_in_parent(); // Allows the SideBar (Subnav) to keep percentage value and position relative to parent when fixed (Sticky-Kit)
-		
 
 	$(document).ready(function () {
 		$(document).on("scroll", onScroll);
@@ -41,6 +40,149 @@ $(document).ready(function() {
 			}
 		});
 	}
+	
+	//
+	
+	$( function()
+	{
+		
+			// OVERLAY
+
+			overlayOn = function()
+			{
+				$( '<div id="imagelightbox-overlay"></div>' ).appendTo( 'body' );
+			},
+			overlayOff = function()
+			{
+				$( '#imagelightbox-overlay' ).remove();
+			},
+
+
+			// CLOSE BUTTON
+
+			closeButtonOn = function( instance )
+			{
+				$( '<button type="button" id="imagelightbox-close" title="Close"></button>' ).appendTo( 'body' ).on( 'click touchend', function(){ $( this ).remove(); instance.quitImageLightbox(); return false; });
+			},
+			closeButtonOff = function()
+			{
+				$( '#imagelightbox-close' ).remove();
+			},
+
+
+			// CAPTION
+
+			captionOn = function()
+			{
+				var description = $( 'a[href="' + $( '#imagelightbox' ).attr( 'src' ) + '"] div' ).attr( 'alt' );
+				$( '<div id="imagelightbox-caption">' + description + '</div>' ).appendTo( 'body' );
+			},
+			captionOff = function()
+			{
+				$( '#imagelightbox-caption' ).remove();
+			},
+
+
+			// NAVIGATION
+
+			navigationOn = function( instance, selector )
+			{
+				var images = $( selector );
+				if( images.length )
+				{
+					var nav = $( '<div id="imagelightbox-nav"></div>' );
+					for( var i = 0; i < images.length; i++ )
+						nav.append( '<button type="button"></button>' );
+
+					nav.appendTo( 'body' );
+					nav.on( 'click touchend', function(){ return false; });
+
+					var navItems = nav.find( 'button' );
+					navItems.on( 'click touchend', function()
+					{
+						var $this = $( this );
+						if( images.eq( $this.index() ).attr( 'href' ) != $( '#imagelightbox' ).attr( 'src' ) )
+							instance.switchImageLightbox( $this.index() );
+
+						navItems.removeClass( 'active' );
+						navItems.eq( $this.index() ).addClass( 'active' );
+
+						return false;
+					})
+					.on( 'touchend', function(){ return false; });
+				}
+			},
+			navigationUpdate = function( selector )
+			{
+				var items = $( '#imagelightbox-nav button' );
+				items.removeClass( 'active' );
+				items.eq( $( selector ).filter( '[href="' + $( '#imagelightbox' ).attr( 'src' ) + '"]' ).index( selector ) ).addClass( 'active' );
+			},
+			navigationOff = function()
+			{
+				$( '#imagelightbox-nav' ).remove();
+			},
+
+
+			// ARROWS
+
+			arrowsOn = function( instance, selector )
+			{
+				var $arrows = $( '<button type="button" class="imagelightbox-arrow imagelightbox-arrow-left"></button><button type="button" class="imagelightbox-arrow imagelightbox-arrow-right"></button>' );
+
+				$arrows.appendTo( 'body' );
+
+				$arrows.on( 'click touchend', function( e )
+				{
+					e.preventDefault();
+
+					var $this	= $( this ),
+						$target	= $( selector + '[href="' + $( '#imagelightbox' ).attr( 'src' ) + '"]' ),
+						index	= $target.index( selector );
+
+					if( $this.hasClass( 'imagelightbox-arrow-left' ) )
+					{
+						index = index - 1;
+						if( !$( selector ).eq( index ).length )
+							index = $( selector ).length;
+					}
+					else
+					{
+						index = index + 1;
+						if( !$( selector ).eq( index ).length )
+							index = 0;
+					}
+
+					instance.switchImageLightbox( index );
+					return false;
+				});
+			},
+			arrowsOff = function()
+			{
+				$( '.imagelightbox-arrow' ).remove();
+			};
+});
+	
+	$( function()
+    	{
+    	
+    	var selectorF = '.image-block a';
+		var instanceF = $( selectorF ).imageLightbox({
+	        	selector:       'id="imagelightbox"',   // string;
+				allowedTypes:   'png|jpg|jpeg|gif',     // string;
+			    animationSpeed: 250,                    // integer;
+			    preloadNext:    true,                   // bool;            silently preload the next image
+			    enableKeyboard: true,                   // bool;            enable keyboard shortcuts (arrows Left/Right and Esc)
+			    quitOnEnd:      false,                  // bool;            quit after viewing the last image
+			    quitOnImgClick: false,                  // bool;            quit when the viewed image is clicked
+			    quitOnDocClick: true,                   // bool;            quit when anything but the viewed image is clicked
+			    onStart:		function() { overlayOn(); closeButtonOn( instanceF ); arrowsOn( instanceF, selectorF ); },
+				onEnd:			function() { overlayOff(); captionOff(); closeButtonOff(); arrowsOff(); },
+				onLoadStart: 	function() { captionOff(); },
+				onLoadEnd:	 	function() { captionOn(); $( '.imagelightbox-arrow' ).css( 'display', 'block' ); }
+
+        	});
+		});
 
 
 });
