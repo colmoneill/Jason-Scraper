@@ -41,12 +41,26 @@ def handle_uploaded_file (uploaded_file, config, filename = False):
         if filename == False:
             filename = uploaded_file.filename
 
-        filepath = os.path.join(config['upload_folder'], secure_filename(filename))
+        filepath = getsafepath(os.path.join(config['upload_folder'], secure_filename(filename)))
         uploaded_file.save(filepath)
         
         return filepath
 
     return False
+
+
+def getsafepath (path, count = 1):
+    root, ext = os.path.splitext(path)
+    safepath = root + '-' + str(count) + ext
+
+    if os.path.exists(safepath):
+        return getsafepath(path, (count+1))
+    else:
+        return safepath
+
+def setfilename (oldname, name):
+    root, ext = os.path.splitext(oldname)
+    return '{0}{1}'.format(name, ext)
 
 """
     Tests whether the extension of the given file is allowed

@@ -25,3 +25,33 @@
 </div>
 
 {% endmacro%}
+
+{% macro upload_field(fieldname, label, files) %}
+    <div class="row">
+      <div class="col-md-12" id="{{ fieldname }}">
+        <label>{{ label }}</label>
+        <div class="thumbnail-container">
+          {% for file in files %}
+            <div class="upload-thumbnail">
+                <span class="glyphicon glyphicon-remove action delete"></span>
+                <span class="glyphicon glyphicon-repeat action restore"></span>
+                <input type="hidden" name="{{ fieldname }}" value="{{ file._id }}" />
+                <img src="/{{ file.path }}" class="upload-thumbnail" />
+            </div>
+          {% endfor %}
+        </div>
+        <hr>
+        <br>
+        <div>
+          <p>
+            <input type="file" class="filepicker hidden-filepicker" multiple="true" accept="image/*" />
+            <button id="{{ fieldname }}-upload" class="btn btn-default">Select images to upload</button>
+            or drag-and-drop them on this container.
+          </p>
+        </div>
+        <br>
+        <hr>
+        <div class="dropmask bg-info"></div>
+      </div>
+    </div>
+{% endmacro %}
