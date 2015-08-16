@@ -18,6 +18,9 @@
 		padding-bottom: 66%;
 		background-position: center center;
 		background-size: cover;
+		&:hover{
+			@include _hover;
+		}
 	}
 	//
 	@include mq-large{

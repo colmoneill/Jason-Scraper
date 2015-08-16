@@ -3,11 +3,67 @@
 // --------------------------------------------------
 // Styles for the Lightbox
 
-#imagelightbox
-{
+#imagelightbox{
     position: fixed;
     z-index: 9999;
  
     -ms-touch-action: none;
     touch-action: none;
+}
+
+#imagelightbox-overlay{
+	background-color: rgba( 255, 255, 255, .98 );
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+#imagelightbox-close {
+    width: 2.5em;
+    height: 2.5em;
+    text-align: left;
+    background-color: #666;
+    border-radius: 50%;
+    position: fixed;
+    z-index: 10002;
+    top: 2.5em;
+    right: 2.5em;
+    -webkit-transition: color .3s ease;
+    transition: color .3s ease;
+}
+
+.imagelightbox-arrow {
+    width: 3.75em;
+    height: 7.5em;
+    background-color: #444;
+    background-color: rgba( 0, 0, 0, .5 );
+    vertical-align: middle;
+    display: none;
+    position: fixed;
+    z-index: 10001;
+    top: 50%;
+    margin-top: -3.75em;
+}
+
+.imagelightbox-arrow-right {
+    right: 2.5em;
+}
+
+.imagelightbox-arrow-left {
+    left: 2.5em;
+}
+
+#imagelightbox-caption {
+    text-align: center;
+    color: #fff;
+    background-color: #666;
+    position: fixed;
+    z-index: 10001;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0.625em;
 }
