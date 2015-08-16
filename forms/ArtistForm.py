@@ -8,7 +8,7 @@ class ArtistForm(Form):
     #key image
     #images general
     wysiwig_artist_info = PageDownField('artist info text')
-    wysiwig_artist_bio = PageDownField('artist bio', validators=[DataRequired()])
+    wysiwig_artist_bio = PageDownField('artist bio')
     wysiwig_artist_exhibitions_list = PageDownField('exhibition list')
     press_release_file = FileField('Press release files')
     link_name1 = StringField('name for link 1')
