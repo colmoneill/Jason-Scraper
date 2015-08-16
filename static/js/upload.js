@@ -224,7 +224,7 @@ extend(Form.prototype, {
             }
         }
         
-        var form = this;
+        var self = this;
         
         $.ajax({
             type: "POST",
@@ -234,24 +234,27 @@ extend(Form.prototype, {
             cache: false,
             contentType: false,
             processData: false,
-            success: function (response) {
-                form.markDone();
-                var  data = response.responseJSON,
-                        redirectExp = /(\/[a-z]+\/[a-z]+\/)/i,
-                        newPathMatch = redirectExp.exec(window.location.pathname);
-            
-                if (newPathMatch != null) {
-                    window.location.assign(newPathMatch[0]);
-                } else {
-                    console.warn('Could not find redirect on location', window.location.pathname);
-                }
-            },
-            error: function (response) {
-                form.markDone();
-                var errors = response.responseJSON;
-                form.showErrors(errors);
-            },
+            success: function (response) { self.onSuccess() },
+            error: function (response) { self.onError(response.responseJSON); },
             dataType: 'json'
         });
+    },
+    
+    onSuccess: function (data) {
+        this.markDone();
+        
+        var redirectExp = /(\/[a-z]+\/[a-z]+\/)/i,
+            newPathMatch = redirectExp.exec(window.location.pathname);
+
+        if (newPathMatch != null) {
+            window.location.assign(newPathMatch[0]);
+        } else {
+            console.warn('Could not find redirect on location', window.location.pathname);
+        }
+    },
+       
+    onError: function (errors) {
+        this.markDone();
+        this.showErrors(errors);
     }
 });

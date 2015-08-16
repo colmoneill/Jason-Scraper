@@ -7,7 +7,7 @@ import re
 
 import os
 from werkzeug import secure_filename
-from flask import redirect as redirect_flask, session, flash, url_for
+from flask import redirect as redirect_flask, session, flash, url_for, request
 from functools import wraps
 
 def slugify(value):
@@ -71,12 +71,14 @@ def allowed_file(filename, allowed_extensions):
 
 
 # login decorator
-def login_required(test):
-    @wraps(test)
+def login_required(action):
+    @wraps(action)
     def wrap (*args, **kwargs):
         if 'logged_in' in session:
-            return test (*args, **kwargs)
+            return action (*args, **kwargs)
         else:
             flash(u'You need to log in first.', 'danger')
+            session['next'] = request.path
             return redirect_flask(url_for('login'))
+
     return wrap

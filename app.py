@@ -59,7 +59,7 @@ def login():
             session['logged_in'] = True
             flash(u'You are logged in! Welcome', 'success')
 
-            return redirect_flask(url_for('viewAdmin'))
+            return redirect_flask(session['next'] if 'next' in session else url_for('viewAdmin'))
         else:
             flash(u'Invalid credentials; Please try again.', 'danger')
     return render_template('login.html', error=error, form=form)
