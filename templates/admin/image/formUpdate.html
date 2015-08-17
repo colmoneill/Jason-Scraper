@@ -3,26 +3,26 @@
 
 {% block body %}
   {% from "helpers/_form.html" import render_field, render_datepicker %}
-  <form method="post" enctype="multipart/form-data" action="/admin/edit-image/{{ teamMemberId }}">
+  <form method="post" enctype="multipart/form-data" action="/admin/image/update/{{ image['_id'] }}">
       {{ form.csrf_token }}
       {{ render_field(form.artist) }}
-      {{ render_field(form.image_file) }}
+      <br>
       <div class="row">
-        <div class="col-xs-5 col-sm-4">
-          {{ render_field(form.title) }}
-        </div>
-        <div class="col-xs-5 col-sm-4">
-          {{ render_field(form.year) }}
-        </div>
+          <div class="col-xs-5 col-sm-4">
+            {{ render_field(form.title) }}
+          </div>
+          <div class="col-xs-5 col-sm-4">
+            {{ render_field(form.year) }}
+          </div>
       </div>
       <div class="row">
-        <div class="col-xs-5 col-sm-4">
-          {{ render_field(form.medium) }}
+          <div class="col-xs-5 col-sm-4">
+            {{ render_field(form.medium) }}
+          </div>
+          <div class="col-xs-5 col-sm-4">
+            {{ render_field(form.dimensions) }}
+          </div>
         </div>
-        <div class="col-xs-5 col-sm-4">
-          {{ render_field(form.dimensions) }}
-        </div>
-      </div>
       <button type="submit" class="btn btn-default">Submit</button>
   </form>
 {% endblock %}
