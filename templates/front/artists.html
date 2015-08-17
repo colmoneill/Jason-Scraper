@@ -6,9 +6,14 @@
 <div class="container">
   <div class="all-col">
     {% for artist in artists %}
-    {% if artist.is_published %}
-       <div class="artist-block"><a href="/artist/{{ artist.slug }}/">{{ artist.name }}</a></div>
-    {% endif %}
+       <div class="artist-block">
+         <a href="/artist/{{ artist.slug }}/">
+        {% for image in artist.coverimage %}
+          <img src="{{ image }}">
+        {% endfor %}
+           {{ artist.name }}
+         </a>
+       </div>
     {% endfor %}
   </div>
 </div>

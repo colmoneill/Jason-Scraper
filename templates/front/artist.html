@@ -21,10 +21,10 @@
 	    <section class="subcontent__all-col informations" id="informations">
 		<div id="images" class="separation-rule"></div>
 		{% if artist.images %}
-				{% for images in artist	.images %}
+				{% for images in artist.images %}
 					<img class="vignette" style="width:20%; margin-left:3%;" src="/{{ images.path }} ">
 				{% endfor %}
-				{% for images in artist	.images %}
+				{% for images in artist.images %}
 					<img class="vignette" style="width:20%; margin-left:3%;" src="/{{ images.path }} ">
 				{% endfor %}
 		{% endif %}
@@ -44,20 +44,9 @@
 		<div class="text-block">
 			{% if artist.press_release %}
 			<div id="media">
-				<p><a class="" href="/{{ artist.press_release }}">Download the press release — PDF (size %)</a></p>
-			{% endif %}
-			{% if artist.iframe1 %}
-			<br><br>
-			<div class="separation-rule"></div>
-			<h2>video</h2><p><a href="{{ artist.iframe1 }}">Link to a related video item elsewhere on the web</a></p>
-			<h2>article</h2><p><a href="{{ artist.iframe1 }}">Link to a related article item elsewhere on the web</a></p>
-			<div class="separation-rule"></div>
-			<p><b>OR</b></p>
-			{{ artist.iframe1 |safe }}
+				<p><a class="" href="/{{ artist.press_release }}">Download the press release — PDF (size MB)</a></p>
 			{% endif %}
 			<div class="separation-rule"></div>
-			link to artist expo 1<br>
-			link to artist expo 2
 		</div>
 		</section>
 		</div>
