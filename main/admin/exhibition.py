@@ -54,6 +54,7 @@ def publish(exhibition_id):
     )
     return bson_dumps(db.exhibitions.find_one({'_id': ObjectId(exhibition_id)}))
 
+
 @blueprint.route("/create/", methods=['GET', 'POST'])
 @login_required
 def create():
@@ -64,6 +65,7 @@ def create():
 
     if form.is_submitted():
         if form.validate():
+            
             formdata = form.data
 
             exhibition = utils.handle_form_data({}, formdata, ['press_release_file', 'artist'])
@@ -71,6 +73,7 @@ def create():
             exhibition['slug'] = utils.slugify(exhibition['exhibition_name'])
             exhibition_md = form.wysiwig_exhibition_description.data
             exhibition['artworks'] = [db.image.find_one({'_id': ObjectId(image_id)}) for image_id in request.form.getlist('artwork')]
+
             artist_md = form.wysiwig_artist_bio.data
 
             if request.files['press_release_file']:
@@ -116,6 +119,7 @@ def create():
 
     return render_template('admin/exhibition/create.html', form=form, selectedArtworks=json.dumps(selectedArtworks))
 
+
 @blueprint.route("/update/<exhibition_id>", methods=['GET', 'POST'])
 @login_required
 def update(exhibition_id):
@@ -127,6 +131,7 @@ def update(exhibition_id):
         exhibition['artworks'] = [db.image.find_one({'_id': ObjectId(image_id)}) for image_id in request.form.getlist('artworks')]
 
         if form.validate():
+            
             formdata = form.data
             exhibition = utils.handle_form_data(exhibition, formdata, ['press_release_file'])
             exhibition['artist'] = db.artist.find_one({"_id": ObjectId(formdata['artist'])})
@@ -138,7 +143,6 @@ def update(exhibition_id):
                     config.upload['PRESS_RELEASE'],
                     '{0}.pdf'.format(exhibition['slug'])
             )
-
 
             if 'coverimage' in request.files:
                 uploaded_image = request.files.getlist('coverimage')[0]
@@ -183,6 +187,7 @@ def update(exhibition_id):
             return json.dumps(form.errors), 400
         
     selectedArtworks = [str(image['_id']) for image in exhibition['artworks']]
+
     exhibition['artist'] = str(exhibition['artist']['_id'])
     form = forms.ExhibitionForm(data=exhibition)
     form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
@@ -192,6 +197,7 @@ def update(exhibition_id):
                                 selectedArtworks=json.dumps(selectedArtworks),
                                 coverimage=[exhibition['coverimage']] if 'coverimage' in exhibition else [],
                                 images=exhibition['images'] if 'images' in exhibition else [])
+
 
 @blueprint.route("/delete/<exhibition_id>", methods=['GET', 'POST'])
 @login_required

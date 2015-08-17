@@ -8,12 +8,14 @@ from wtforms import StringField, DateTimeField,\
 from wtforms.validators import DataRequired
 from wtforms.widgets import CheckboxInput
 
+
+
 class ExhibitionForm(Form):
     artist = SelectField(u'Select Artist *', validators=[DataRequired()])
     exhibition_name = StringField('Title', validators=[DataRequired()])
     start = DateTimeField('From', validators=[DataRequired()], format='%d-%m-%Y')
     end = DateTimeField('To', validators=[DataRequired()], format='%d-%m-%Y')
-    location = RadioField(u'Gallery 32 or 35? *', choices = [('35', 'Livourne 35'), ('32', 'Livourne 32')] , option_widget=CheckboxInput(), validators=[DataRequired()])
+    location = RadioField(u'Gallery 32 or 35? *', choices = [('35', 'Livourne 35'), ('32', 'Livourne 32')], validators=[DataRequired()])
     exhibition_key_img = FileField('exhibition key image')
     wysiwig_exhibition_description = PageDownField('exhibition description')
     wysiwig_artist_bio = PageDownField('artist bio')

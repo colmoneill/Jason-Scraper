@@ -25,7 +25,6 @@ import config
 import json
 
 from ..settings import db
-
 from flask import Blueprint, render_template, abort
 
 from utils import login_required
@@ -60,7 +59,6 @@ def createGroupExhibition():
     form = forms.GroupExhibitionForm()
     artist = db.artist.find()
     form.artists.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
-
 
     if form.is_submitted():
         if form.validate():
@@ -187,6 +185,7 @@ def updateGroupExhibition(exhibition_id):
                                 form=form,
                                 coverimage = [exhibition['coverimage']] if 'coverimage' in exhibition else [],
                                 images = exhibition['images'] if 'images' in exhibition else [])
+
 
 @blueprint.route("/delete/<exhibition_id>", methods=['GET', 'POST'])
 @login_required

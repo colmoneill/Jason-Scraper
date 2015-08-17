@@ -60,7 +60,6 @@ def create():
                         utils.setfilenameroot(uploaded_image.filename, artist['slug'])
                     )
                 }
-            
             db.artist.insert(artist)
             
             if 'image' in request.files:
@@ -71,6 +70,7 @@ def create():
                             uploaded_image,
                             config.upload['ARTWORK_IMAGE'],
                             utils.setfilenameroot(uploaded_image.filename, artist['slug'])
+
                         )
                     }
                     
@@ -132,7 +132,6 @@ def update(artist_id):
             ## Update this artist on exhibitions as well
             db.exhibitions.update({"artist._id": ObjectId(artist_id)}, {"$set": { "artist": artist }}, multi=True)
 
-             
             # Remove images which were disabled in the form
             for image in db.image.find({"artist._id": ObjectId(artist_id)}):
                 if str (image['_id']) not in request.form.getlist('image'):
@@ -146,6 +145,7 @@ def update(artist_id):
                             uploaded_image,
                             config.upload['ARTWORK_IMAGE'],
                             utils.setfilenameroot(uploaded_image.filename, artist['slug'])
+
                         )
                     }
                     
@@ -168,14 +168,16 @@ def update(artist_id):
                                             exhibitions=exhibitions, 
                                             coverimage=[artist['coverimage']] if 'coverimage' in artist else [])
 
+
     else:
         form = forms.ArtistForm(data=artist)
-    
+        
     return render_template('admin/artist/edit.html',
                                 form=form,
                                 images=db.image.find({"artist._id": ObjectId(artist_id)}),
                                 exhibitions=exhibitions,
                                 coverimage=[artist['coverimage']] if 'coverimage' in artist else [])
+
 
 @blueprint.route('/delete/<artist_id>', methods=['GET', 'POST'])
 @login_required

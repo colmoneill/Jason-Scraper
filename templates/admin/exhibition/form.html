@@ -16,10 +16,7 @@
           </div>
       </div>
       <hr>
-      <div class="form-group">
-        <label class="control-label">Which gallery?</label>
-        {{ form.location }}
-      </div>
+      {{ render_field(form.location) }}
       <hr>
       {{ render_field(form.artist) }}
       <div id="artist-images">
@@ -139,38 +136,38 @@
 
 //         (function ($, jQuery) {
 //             'use strict';
-// 
+//
 //             var acceptedTypes = ['image/png', 'image/jpeg', 'image/gif'];
-// 
+//
 //             {% autoescape false %}
 //             var preselectedImages = JSON.parse('{{ selectedImages }}');
 //             {% endautoescape %}
-// 
+//
 //             var previewFile = function (file) {
 //                 var reader = new FileReader(),
 //                 $preview = getTemplate('artist-artwork-preview');
-// 
+//
 //                 reader.onload = function (event) {
 //                     $preview.find('img').attr('src', event.target.result);
 //                     $('#artist-images-container').append($preview);
 //                 }
-// 
+//
 //                 reader.readAsDataURL(file);
-// 
+//
 //                 return $preview;
 //             };
-// 
+//
 //             var getTemplate = function (name) {
 //                 return $($('#template-' + name).html());
 //             };
-// 
+//
 //             var addImage = function (image, checked) {
 //                 var $el = getTemplate('artist-artwork');
-// 
+//
 //                 if (arguments.length < 2) {
 //                     checked = (preselectedImages.indexOf(image['_id']['$oid']) > -1)
 //                 }
-// 
+//
 //                 $el.find('img').attr('src', '/' + image['path']);
 //                 $el.click(function () {
 //                     $(this).find('input').click();
@@ -188,22 +185,22 @@
 //                             $(this).parent().removeClass('selected');
 //                         }
 //                     });
-// 
+//
 //                 $el.addClass((checked) ? 'selected' : '')
-// 
+//
 //                 $('#artist-images-container').append($el);
-// 
+//
 //                 return $el
 //             };
-// 
+//
 //             function uploadFile(file, artist_id, callback, ctx) {
 //                 var data = new FormData();
 //                 data.append('image', file);
-// 
+//
 //                 $.ajax({
 //                     xhr: function() {
 //                         var xhr = new XMLHttpRequest();
-// 
+//
 //                         xhr.upload.addEventListener('progress', function(e){
 //                             if (e.lengthComputable) {
 //                                 var percentComplete = e.loaded / e.total;
@@ -211,7 +208,7 @@
 //                                 console.log(percentComplete);
 //                             }
 //                         }, false);
-// 
+//
 //                         return xhr;
 //                     },
 //                     type: "POST",
@@ -227,10 +224,10 @@
 //                     dataType: 'json'
 //                 });
 //             }
-// 
+//
 //             var loadImages = function (artist){
 //                 $('#artist-images-container').empty();
-// 
+//
 //                 jQuery.get(
 //                     '/admin/api/artist/' + artist + '/image',
 //                     null,
@@ -242,13 +239,13 @@
 //                     'json'
 //                 );
 //             };
-// 
+//
 //             var processFiles = function (files) {
 //                 for (var i=0; i < files.length; i++) {
 //                     processFile(files[i]);
 //                 }
 //             };
-// 
+//
 //             var processFile = function (file) {
 //                 if (acceptedTypes.indexOf(file.type) > -1) {
 //                     var $preview = previewFile(file);
@@ -258,11 +255,11 @@
 //                     });
 //                 }
 //             };
-// 
+//
 //             $('select#artist').change(function () {
 //                 loadImages($(this).val());
 //             });
-// 
+//
 //             $('.dropmask')
 //                 .on('dragover', function (e) {
 //                     e.preventDefault();
@@ -281,13 +278,13 @@
 //                     $(this).hide();
 //                     processFiles(e.originalEvent.dataTransfer.files);
 //                 });
-// 
+//
 //             $('#artist-images')
 //                 .on('dragenter', function (e) {
 //                     e.preventDefault();
 //                     $('.dropmask').show();
 //                 })
-// 
+//
 //             $('#artist-image-file').change(function () {
 //                 processFiles(this.files);
 //                 $(this).val('');
@@ -297,7 +294,7 @@
 //                 $('#artist-image-file').click();
 //             });
 //             loadImages($('select#artist').val());
-// 
+//
 //         })($, jQuery);
     }, false);
 </script>

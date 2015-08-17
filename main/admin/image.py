@@ -26,6 +26,7 @@ def create():
     if form.validate_on_submit():
         formdata = form.data
 
+
         image = {
             'artist': db.artist.find_one({'_id': ObjectId(formdata['artist'])}),
             'path': utils.handle_uploaded_file(
@@ -71,6 +72,7 @@ def update(image_id):
 
     return render_template('admin/image/edit.html', image=image, form=form)
 
+
 @blueprint.route("/delete/<image_id>", methods=['GET', 'POST'])
 def delete(image_id):
     if request.method == 'POST':
@@ -81,5 +83,3 @@ def delete(image_id):
         return redirect_flask(url_for('listImages'))
 
     return render_template('admin/image/delete.html')
-
-
