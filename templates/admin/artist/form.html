@@ -93,22 +93,6 @@
     <hr>
 
     <div class="col-sm-12">
-    <h4>These exhibitions will be shown on the artist's page</h4>
-    </div>
-    {% for exhibition in exhibitions %}
-      <div class="col-sm-12">
-        {% if exhibition.is_group_expo %}
-          <b>{{ exhibition.exhibition_name }}</b> (group exhibition) <br> participants: {{ exhibition['artists']|join(', ', attribute='name') }}
-        {% else %}
-            <b>{{ exhibition.artist.name }}</b> <br> {{ exhibition.exhibition_name }}
-        {% endif%}
-        <br> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}
-      </div>
-      <br>
-    {% endfor %}
-
-    <hr>
-    <div class="col-sm-12">
     <p><code>fields marked with a * are required</code></p>
     </div>
     <button type="submit" class="btn btn-default" id="submit-button">Submit</button>

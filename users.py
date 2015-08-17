@@ -2,5 +2,6 @@
 # -*- coding: utf-8 -*-
 
 users = {
-  'admin': 'admin'
+  'admin': 'admin',
+  'colm': 'colm'
 }
