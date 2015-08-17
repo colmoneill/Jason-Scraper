@@ -63,7 +63,7 @@ def login():
             return redirect_flask(url_for('viewAdmin'))
         else:
             flash(u'Invalid credentials; Please try again.', 'danger')
-    return render_template('login.html', error=error, form=form)
+    return render_template('general-login.html', error=error, form=form)
 
 
 ####################################################################################
