@@ -14,6 +14,8 @@ from flask import   Flask, flash, send_from_directory, \
 from flask_pagedown import PageDown
 from flask.ext.misaka import Misaka
 
+import pymongo
+
 import utils
 from utils import login_required
 from bson import ObjectId
@@ -23,13 +25,17 @@ import forms
 import json
 
 from main import admin
-from main.settings import db, secret_key
+
+# Local imports
+from settings import *
 
 app = Flask(__name__)
+
 pagedown = PageDown(app)
 Misaka(app)
-app.secret_key = secret_key
-
+app.secret_key = "SECRET_KEY"
+client = pymongo.MongoClient()
+db = client.artlogic
 
 @app.route("/logout")
 def logout():
@@ -54,7 +60,7 @@ def login():
             session['logged_in'] = True
             flash(u'You are logged in! Welcome', 'success')
 
-            return redirect_flask(session['next'] if 'next' in session else url_for('viewAdmin'))
+            return redirect_flask(url_for('viewAdmin'))
         else:
             flash(u'Invalid credentials; Please try again.', 'danger')
     return render_template('login.html', error=error, form=form)
@@ -68,6 +74,7 @@ def login():
 
 @app.route("/")
 @app.route("/current/")
+@login_required
 def home():
     artworks = db.artworks.find().sort("id", -1).limit(10)
     exhibition_32 = db.exhibitions.find({
@@ -87,6 +94,7 @@ def home():
     return render_template("front/current.html", exhibition_32=exhibition_32, exhibition_35=exhibition_35)
 
 @app.route("/past/")
+@login_required
 def pastExhibitions():
     past_exhibition = db.exhibitions.find({
         "is_published": True,
@@ -96,6 +104,7 @@ def pastExhibitions():
     return render_template("front/past.html", past_exhibition=past_exhibition)
 
 @app.route("/upcoming/")
+@login_required
 def upcomingExhibitions():
     future_exhibition = db.exhibitions.find({
         "is_published": True,
@@ -106,6 +115,7 @@ def upcomingExhibitions():
 
 
 @app.route("/artists/")
+@login_required
 def artists():
     artists = db.artist.find({
     "is_published": True,
@@ -113,12 +123,20 @@ def artists():
 
     return render_template("front/artists.html", artists=artists)
 
+@app.route("/artist/<slug>/")
+def artist(slug):
+    artist = db.artist.find_one({ "slug": slug})
+    #artworks = db.artworks.find({"artist": artist["artist"]}).sort("id", -1).limit(10)
+    return render_template("front/artist.html", artist=artist)
+
 @app.route("/current/<slug>/")
+@login_required
 def exhibition(slug):
     exhibition = db.exhibition.find_one({ "slug": slug})
     return render_template("front/exhibition.html")
 
 @app.route("/exhibition/<slug>/")
+@login_required
 def publicviewExhibition(slug):
     exhibition = db.exhibitions.find_one({'slug': slug})
 
@@ -128,6 +146,7 @@ def publicviewExhibition(slug):
         abort(404)
 
 @app.route("/gallery/")
+@login_required
 def GalleryInfo():
     teammembers = db.teammember.find()
     openinghours = db.openinghours.find()
