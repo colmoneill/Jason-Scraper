@@ -40,11 +40,17 @@
 			<p><a class="button" href="#">click to expand and read more</a></p>
 			{% endif %}
 		</div>
-		<div class="text-block">
-			{% if artist.press_release %}
-			<div id="media">
-				<p><a class="" href="/{{ artist.press_release }}">Download the press release — PDF (size MB)</a></p>
-			{% endif %}
+		<div class="download-block">
+		{% if artist.press_release %}
+			<h2>press</h2>
+				<div class="download-block__text" id="media">
+					<a class="" href="/{{ artist.press_release }}"><h3>Download the press release — PDF (size %)</h3></a>
+		{% endif %}
+			<a href="{{ artist.link_url1 }}" target="_blank"><h3>{{ artist.link_name1 }}</h3></a>
+			<a href="{{ artist.link_url2 }}" target="_blank"><h3>{{ artist.link_name2 }}</h3></a>
+			<a href="{{ artist.link_url3 }}" target="_blank"><h3>{{ artist.link_name3 }}</h3></a>
+				</div>
+		</div>
 			<div class="separation-rule"></div>
 		</div>
 		</section>
