@@ -61,7 +61,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   font-family: "Maax-Medium", Helvetica, sans-serif; }
 
 .font-mono, h4, h5, .text-block h2, .download-block h2, h6, .subnav, .staff_member__mail {
-  font-family: "Maax Mono", monospace; }
+  font-family: "RJ Maax Mono", monospace; }
 
 .container {
   max-width: 100%;
@@ -289,7 +289,9 @@ body {
   width: 95%;
   max-width: 1300px;
   margin: 0 auto;
-  padding-bottom: 50px; }
+  padding-bottom: 100px;
+  overflow: hidden;
+  *zoom: 1; }
   @media only screen and (max-width: 950px) {
     .wrapper {
       width: 94%; } }
@@ -553,19 +555,22 @@ nav {
 /* @import "partials/test"; */
 .image-block {
   margin-top: 10px; }
+  .image-block a {
+    display: inline-block;
+    width: 100%; }
+  .image-block a:hover {
+    opacity: 0.4;
+    -moz-transition: all 0.2s ease-in-out 0s;
+    -o-transition: all 0.2s ease-in-out 0s;
+    -webkit-transition: all 0.2s ease-in-out;
+    -webkit-transition-delay: 0s;
+    transition: all 0.2s ease-in-out 0s; }
   .image-block__inside {
     height: 0;
     width: 100%;
     padding-bottom: 66%;
     background-position: center center;
     background-size: cover; }
-    .image-block__inside:hover {
-      opacity: 0.4;
-      -moz-transition: all 0.2s ease-in-out 0s;
-      -o-transition: all 0.2s ease-in-out 0s;
-      -webkit-transition: all 0.2s ease-in-out;
-      -webkit-transition-delay: 0s;
-      transition: all 0.2s ease-in-out 0s; }
   @media only screen and (min-width: 951px) {
     .image-block:nth-of-type(-n+4) {
       margin-top: 0; }
@@ -830,6 +835,26 @@ section.exhibition-year div:last-child {
   right: 0;
   bottom: 0;
   padding: 0.625em; }
+
+.homepage-exhibition {
+  width: 49%;
+  margin-right: 2%;
+  float: left; }
+  .homepage-exhibition:nth-of-type(2) {
+    margin-right: 0; }
+  .homepage-exhibition:hover {
+    opacity: 0.4;
+    -moz-transition: all 0.2s ease-in-out 0s;
+    -o-transition: all 0.2s ease-in-out 0s;
+    -webkit-transition: all 0.2s ease-in-out;
+    -webkit-transition-delay: 0s;
+    transition: all 0.2s ease-in-out 0s; }
+  .homepage-exhibition__inside {
+    height: 0;
+    width: 100%;
+    padding-bottom: 66%;
+    background-position: center center;
+    background-size: cover; }
 
 .hidden {
   display: none !important;
