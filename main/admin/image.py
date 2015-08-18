@@ -1,10 +1,13 @@
 import forms
 from flask import Blueprint, render_template, abort,\
      url_for, redirect as redirect_flask, request, flash
- 
+
 from ..settings import db
 from utils import login_required
 from bson import ObjectId
+
+import utils
+
 
 blueprint = Blueprint('admin_image', __name__)
 
@@ -50,7 +53,7 @@ def update(image_id):
     image = db.image.find_one({"_id": ObjectId(image_id)})
     form = forms.ImageUpdate()
     form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
-    
+
     if request.method == 'POST':
         if form.validate():
             formdata = form.data
@@ -59,7 +62,7 @@ def update(image_id):
             image['medium'] = form.medium.data
             image['dimensions'] = form.dimensions.data
             image['artist'] = db.artist.find_one({'_id': ObjectId(form.artist.data)})
-            
+
             db.image.update({"_id": ObjectId(image_id)}, image)
 
             flash(u'You just updated this images meta data', 'success')
