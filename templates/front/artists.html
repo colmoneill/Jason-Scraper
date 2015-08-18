@@ -9,9 +9,9 @@
        <div class="artist-block">
          <a href="/artist/{{ artist.slug }}/">
            {% if artist.coverimage %}
-           <div class="image-block__inside" style="background-image: url('/{{ artist.coverimage.path }}')" alt=""></div>
+           <div class="artist-block__image" style="background-image: url('/{{ artist.coverimage.path }}')" alt=""></div>
            {% else %}
-           <div class="image-block__inside" alt=""></div>
+           <div class="artist-block__image" alt=""></div>
            {% endif %}
            {{ artist.name }}
          </a>

@@ -1,5 +1,5 @@
 html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, .text-block h2, .download-block h2, h6, p, blockquote, pre,
+h1, h2, h3, h4, h5, .text-block h1, .download-block h2, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
@@ -60,7 +60,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .font-bold, h1, h3 {
   font-family: "Maax-Medium", Helvetica, sans-serif; }
 
-.font-mono, h4, h5, .text-block h2, .download-block h2, h6, .subnav, .staff_member__mail {
+.font-mono, h4, h5, .text-block h1, .download-block h2, h6, .subnav, .staff_member__mail {
   font-family: "RJ Maax Mono", monospace; }
 
 .container {
@@ -110,7 +110,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 951px) {
-  .col5__span1of3, .gallery__left .text-block h5, .gallery__left .text-block h2 {
+  .col5__span1of3, .gallery__left .text-block h5, .gallery__left .text-block h1, .gallery__left .text-block .download-block h2, .download-block .gallery__left .text-block h2 {
     width: 31.25%;
     float: left;
     margin-right: 3.125%; } }
@@ -126,7 +126,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 951px) {
-  .col5__span1of4, .text-block h2, .image-block, .download-block h2 {
+  .col5__span1of4, .text-block h1, .image-block, .download-block h2 {
     width: 23.25581%;
     float: left;
     margin-right: 2.32558%; } }
@@ -136,7 +136,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     float: left;
     margin-right: 2.32558%; } }
 @media (min-width: 951px) {
-  .col5__span3of4, .text-block p, .download-block__text {
+  .col5__span3of4, .text-block h2, .text-block p, .download-block__text {
     width: 74.4186%;
     float: left;
     margin-right: 2.32558%; } }
@@ -184,18 +184,18 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     float: left;
     margin-right: 5.88235%; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4__span2of2, .gallery__left .text-block h5, .gallery__left .text-block h2, .gallery__left .text-block p, .newsletter {
+  .col4__span2of2, .gallery__left .text-block h5, .gallery__left .text-block h1, .gallery__left .text-block .download-block h2, .download-block .gallery__left .text-block h2, .gallery__left .text-block p, .newsletter {
     width: 100%;
     float: left;
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4__span1of3, .text-block h2, .image-block, .download-block h2 {
+  .col4__span1of3, .text-block h1, .image-block, .download-block h2 {
     width: 30.76923%;
     float: left;
     margin-right: 3.84615%; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4__span2of3, .text-block p, .download-block__text {
+  .col4__span2of3, .text-block h2, .text-block p, .download-block__text {
     width: 65.38462%;
     float: left;
     margin-right: 3.84615%; } }
@@ -238,12 +238,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     float: left;
     margin-right: 4.0%; } }
 @media (min-width: 0) and (max-width: 500px) {
-  .col2__span2of2, .all-col, .subcontent, .subcontent__all-col, .text-block h2, .text-block p, .subnav, .download-block h2, .download-block__text, .artist-block, .gallery__left, .gallery__right, .gallery__left .text-block h5, .gallery__left .text-block h2, .gallery__left .text-block p, .newsletter {
+  .col2__span2of2, .all-col, .subcontent, .subcontent__all-col, .text-block h1, .text-block h2, .text-block p, .subnav, .download-block h2, .download-block__text, .artist-block, .gallery__left, .gallery__right, .gallery__left .text-block h5, .gallery__left .text-block h1, .gallery__left .text-block .download-block h2, .download-block .gallery__left .text-block h2, .gallery__left .text-block p, .newsletter {
     width: 100%;
     float: left;
     margin-left: 0;
     margin-right: 0; } }
-.last, .text-block p, .subnav, .download-block__text {
+.last, .text-block h2, .text-block p, .subnav, .download-block__text {
   float: right;
   margin-right: 0; }
 
@@ -335,7 +335,7 @@ h3 {
   font-size: 1em;
   line-height: 1.46154em; }
 
-h4, h5, .text-block h2, .download-block h2, h6 {
+h4, h5, .text-block h1, .download-block h2, h6 {
   text-transform: uppercase; }
 
 h4 {
@@ -343,7 +343,7 @@ h4 {
   line-height: 1.46154em;
   margin-top: -1px; }
 
-h5, .text-block h2, .download-block h2 {
+h5, .text-block h1, .download-block h2 {
   font-size: 0.84615em;
   line-height: 1.72727em;
   margin-bottom: 6px; }
@@ -370,6 +370,12 @@ a:focus {
 
 .text-block {
   margin-bottom: 20px; }
+  @media only screen and (max-width: 750px) {
+    .text-block h1 {
+      width: 100%;
+      float: left;
+      margin-left: 0;
+      margin-right: 0; } }
   @media only screen and (max-width: 750px) {
     .text-block h2 {
       width: 100%;
@@ -623,7 +629,7 @@ section.informations div:last-child {
       transition: all 0.2s ease-in-out 0s;
       border-bottom-color: #323232; }
 
-.exhibition-block a:hover > h1, .exhibition-block a:hover > h2, .exhibition-block a:hover > h4 {
+.exhibition-block a:hover > h1, .exhibition-block a:hover > h2, .exhibition-block a:hover > h4, .exhibition-block a:hover > .exhibition-block__image {
   opacity: 0.4;
   -moz-transition: all 0.2s ease-in-out 0s;
   -o-transition: all 0.2s ease-in-out 0s;
@@ -663,7 +669,10 @@ section.exhibition-year div:last-child {
   @media only screen and (min-width: 0) and (max-width: 500px) {
     .artist-block:first-of-type {
       margin-top: 0; } }
-  a .artist-block:hover {
+  .artist-block a {
+    display: inline-block;
+    width: 100%; }
+  .artist-block a:hover {
     opacity: 0.4;
     -moz-transition: all 0.2s ease-in-out 0s;
     -o-transition: all 0.2s ease-in-out 0s;
@@ -700,7 +709,7 @@ section.exhibition-year div:last-child {
       margin-right: 0; } }
 
 @media only screen and (max-width: 750px) {
-  .gallery__left .text-block h5, .gallery__left .text-block h2 {
+  .gallery__left .text-block h5, .gallery__left .text-block h1, .gallery__left .text-block .download-block h2, .download-block .gallery__left .text-block h2 {
     width: 100%;
     float: left;
     margin-left: 0;
