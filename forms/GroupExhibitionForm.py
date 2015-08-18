@@ -20,7 +20,7 @@ class GroupExhibitionForm(Form):
     start = DateTimeField('From', format='%d-%m-%Y')
     end = DateTimeField('To', format='%d-%m-%Y')
     location = RadioField(u'Gallery 32 or 35? *', choices = [('35', 'Livourne 35'), ('32', 'Livourne 32')], validators=[DataRequired()])
-    exhibition_key_img = FileField('exhibition key image')
+    #exhibition_key_img = FileField('exhibition key image')
     artists = MultiCheckboxField(u'Select Artist *')
     extra_artists = StringField(u'Extra artists names (non gallery artists)')
     wysiwig_exhibition_description = PageDownField('exhibition description')

@@ -8,7 +8,11 @@
     {% for artist in artists %}
        <div class="artist-block">
          <a href="/artist/{{ artist.slug }}/">
+           {% if artist.coverimage %}
            <div class="image-block__inside" style="background-image: url('/{{ artist.coverimage.path }}')" alt=""></div>
+           {% else %}
+           <div class="image-block__inside" alt=""></div>
+           {% endif %}
            {{ artist.name }}
          </a>
        </div>
