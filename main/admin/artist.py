@@ -44,10 +44,11 @@ def create():
             artist = utils.handle_form_data({}, formdata, ['press_release_file'])
             artist['slug'] = utils.slugify(artist['name'])
 
-            if request.files['press_release_file']:
+            if 'press_release_file' in request.files \
+                and request.files['press_release_file']:
                 artist['press_release'] = utils.handle_uploaded_file(
                     request.files['press_release_file'],
-                    config.upload['UPLOAD']['PRESS_RELEASE'],
+                    config.upload['PRESS_RELEASE'],
                     utils.setfilenameroot(request.files['press_release_file'].filename, artist['slug'])
                 )
 
