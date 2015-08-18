@@ -1,3 +1,4 @@
+import os
 import forms
 from flask import Blueprint, render_template, abort,\
      url_for, redirect as redirect_flask, request, flash
@@ -82,7 +83,7 @@ def delete(image_id):
         image = db.image.find_one({"_id": ObjectId(image_id)})
         os.remove(image['path'])
         db.image.remove({"_id": ObjectId(image_id)})
-        flash('You successfully deleted the image')
-        return redirect_flask(url_for('listImages'))
+        flash('You successfully deleted the image', 'success')
+        return redirect_flask(url_for('.index'))
 
     return render_template('admin/image/delete.html')
