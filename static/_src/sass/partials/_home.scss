@@ -15,8 +15,7 @@
 	&__inside{
 		height: 0;
 		width: 100%;
-		padding-bottom: 66%;
-		background-position: center center;
-		background-size: cover;
+		padding-bottom: $image_ratio;
+		@include background-cover;
 	}
 }

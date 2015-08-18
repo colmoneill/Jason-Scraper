@@ -568,8 +568,11 @@ nav {
   .image-block__inside {
     height: 0;
     width: 100%;
-    padding-bottom: 66%;
-    background-position: center center;
+    padding-bottom: 67%;
+    background: no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover; }
   @media only screen and (min-width: 951px) {
     .image-block:nth-of-type(-n+4) {
@@ -852,8 +855,11 @@ section.exhibition-year div:last-child {
   .homepage-exhibition__inside {
     height: 0;
     width: 100%;
-    padding-bottom: 66%;
-    background-position: center center;
+    padding-bottom: 67%;
+    background: no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover; }
 
 .hidden {

@@ -18,26 +18,15 @@
 			</ul>
 		</div>
 		<div class="subcontent">
-	    <section class="subcontent__all-col" id="images">
-		<div class="separation-rule"></div>
-			<div>
-		{% if artist.artworks %}
-				{% for images in artist.artworks %}
-					<img class="vignette" style="width:20%; margin-left:3%;" src="/{{ images.path }} ">
-				{% endfor %}
-				{% for images in artist.images %}
-					<img class="vignette" style="width:20%; margin-left:3%;" src="/{{ images.path }} ">
-				{% endfor %}
-		{% endif %}
-			</div>
-	    </section>
-	    <section class="subcontent__all-col information" id="info">
-			<div class="separation-rule"></div>
-			<div class="text-block">
-			{% if artist.wysiwig_artist_info %}
-			{{ artist.wysiwig_artist_info|markdown }}
-			{% endif %}
-			</div>
+	    <section class="subcontent__all-col informations" id="informations">
+				<div id="images" class="separation-rule"></div>
+					{{artworks}}
+				<div class="separation-rule"></div>
+				<div id="info" class="text-block">
+					{% if artist.wysiwig_artist_info %}
+						{{ artist.wysiwig_artist_info|markdown }}
+					{% endif %}
+				</div>
 	    </section>
 	    <section class="subcontent__all-col information" id="bio">
 			<div class="separation-rule"></div>
@@ -46,12 +35,24 @@
 			{{ artist.wysiwig_artist_bio|markdown }}
 			<p><a class="button" href="#">click to expand and read more</a></p>
 			{% endif %}
-			</div>
-			<div class="download-block">
-			{% if artist.press_release %}
-			<div id="media">
-				<p><a class="" href="/{{ artist.press_release }}">Download the press release — PDF (size MB)</a></p>
+		</div>
+		<div id="exhibition" class="text-block">
+			{% if artist.wysiwig_artist_exhibitions_list %}
+			{{ artist.wysiwig_artist_exhibitions_list|markdown }}
+			<p><a class="button" href="#">click to expand and read more</a></p>
 			{% endif %}
+		</div>
+		<div class="download-block">
+		{% if artist.press_release %}
+			<h2>press</h2>
+				<div class="download-block__text" id="media">
+					<a class="" href="/{{ artist.press_release }}"><h3>Download the press release — PDF (size %)</h3></a>
+		{% endif %}
+			<a href="{{ artist.link_url1 }}" target="_blank"><h3>{{ artist.link_name1 }}</h3></a>
+			<a href="{{ artist.link_url2 }}" target="_blank"><h3>{{ artist.link_name2 }}</h3></a>
+			<a href="{{ artist.link_url3 }}" target="_blank"><h3>{{ artist.link_name3 }}</h3></a>
+				</div>
+		</div>
 			<div class="separation-rule"></div>
 		</div>
 		</div>
