@@ -7,16 +7,12 @@
     {% for exhibitions in future_exhibition %}
       <div class="exhibition-block subcontent__all-col">
         {% if exhibitions.is_group_expo %}
-          <a href="/exhibition/{{ exhibitions.slug }}">
             <h1>{{ exhibitions.exhibition_name }}</h1>
             <h4>{{ exhibitions.start.strftime('%d.%m.%Y') }} > {{ exhibitions.end.strftime('%d.%m.%Y') }}</h4>
-          </a>
         {% else %}
-          <a href="/exhibition/{{ exhibitions.slug }}">
             <h1>{{ exhibitions.artist.name }}</h1>
             <h2>{{ exhibitions.exhibition_name }}</h2>
             <h4>{{ exhibitions.start.strftime('%d.%m.%Y') }} > {{ exhibitions.end.strftime('%d.%m.%Y') }}</h4>
-          </a>
         {% endif %}
       <div class="separation-rule light-border"></div>
       </div>
