@@ -60,6 +60,8 @@ def createGroupExhibition():
     artist = db.artist.find()
     form.artists.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
 
+    selectedArtworks = []
+
     if form.is_submitted():
         if form.validate():
             
@@ -70,6 +72,25 @@ def createGroupExhibition():
             exhibition['slug'] = utils.slugify(exhibition['exhibition_name'])
             exhibition_md = form.wysiwig_exhibition_description.data
             exhibition['is_group_expo'] = True
+
+            exhibition['artworks'] = []
+            
+            if 'artworks' in request.files:
+                for uploaded_image in request.files.getlist('artworks'):
+                    image_id = db.image.insert({
+                        'artist': exhibition['artists'][0],
+                        'path': utils.handle_uploaded_file(
+                                uploaded_image,
+                                config.upload['ARTWORK_IMAGE'],
+                                utils.setfilenameroot(uploaded_image.filename, artist['slug'])
+                            )
+                    })
+                        
+                    exhibition['artworks'].append(db.image.find_one({'_id': image_id}))
+
+            if 'artworks' in request.form:
+                for artwork_id in request.form.getlist('artworks'):
+                    exhibition['artworks'].append(db.image.find_one({'_id': ObjectId(artwork_id)}))
 
             if request.files['press_release_file']:
                 exhibition['press_release'] = utils.handle_uploaded_file(
@@ -109,7 +130,9 @@ def createGroupExhibition():
         elif request.is_xhr:
             return json.dumps(form.errors), 400
 
-    return render_template('admin/group-exhibition/exhibitionCreate.html', form=form)
+        selectedArtworks = request.form.getlist('artworks')
+
+    return render_template('admin/group-exhibition/exhibitionCreate.html', form=form, selectedArtworks=selectedArtworks)
 
 @blueprint.route("/update/<exhibition_id>", methods=['GET', 'POST'])
 @login_required
@@ -125,6 +148,25 @@ def updateGroupExhibition(exhibition_id):
             artists = db.artist.find()
             exhibition = utils.handle_form_data(exhibition, formdata, ['press_release_file', 'artists'])
             exhibition['artists'] = [db.artist.find_one({'_id': ObjectId(artist_id)}) for artist_id in request.form.getlist('artists')]
+
+            exhibition['artworks'] = []
+            
+            if 'artworks' in request.files:
+                for uploaded_image in request.files.getlist('artworks'):
+                    image_id = db.image.insert({
+                        'artist': exhibition['artists'][0],
+                        'path': utils.handle_uploaded_file(
+                                uploaded_image,
+                                config.upload['ARTWORK_IMAGE'],
+                                utils.setfilenameroot(uploaded_image.filename, artist['slug'])
+                            )
+                    })
+                        
+                    exhibition['artworks'].append(db.image.find_one({'_id': image_id}))
+
+            if 'artworks' in request.form:
+                for artwork_id in request.form.getlist('artworks'):
+                    exhibition['artworks'].append(db.image.find_one({'_id': ObjectId(artwork_id)}))
 
 
             if request.files['press_release_file']:
@@ -148,13 +190,10 @@ def updateGroupExhibition(exhibition_id):
                 if 'coverimage' in exhibition:
                     del exhibition['coverimage']
             
-            images = []
+            exhibition['images'] = []
             
-            for image in exhibition['images']:
-                if image['path'] in request.form.getlist('image'):
-                    images.append(image)
-            
-            exhibition['images'] = images
+            for path in request.form.getlist('image'):
+                exhibition['images'].append({'path': path})
             
             if 'image' in request.files:
                 for uploaded_image in request.files.getlist('image'):
@@ -181,10 +220,13 @@ def updateGroupExhibition(exhibition_id):
         form = forms.GroupExhibitionForm(data=exhibition)
         form.artists.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
 
+    selectedArtworks = [str(image['_id']) for image in exhibition['artworks']] if 'artworks' in exhibition else []
+
     return render_template('admin/group-exhibition/exhibitionEdit.html',
                                 form=form,
+                                selectedArtworks=json.dumps(selectedArtworks),
                                 coverimage = [exhibition['coverimage']] if 'coverimage' in exhibition else [],
-                                images = exhibition['images'] if 'images' in exhibition else [])
+                                images=exhibition['images'] if 'images' in exhibition else [])
 
 
 @blueprint.route("/delete/<exhibition_id>", methods=['GET', 'POST'])
