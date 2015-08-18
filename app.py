@@ -3,7 +3,7 @@
 
 # Python Standard Library
 import os
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 
 # Dependencies: Flask + PIL or Pillowexhibition/create/
 from functools import wraps
@@ -103,7 +103,7 @@ def pastExhibitions():
 def upcomingExhibitions():
     future_exhibition = db.exhibitions.find({
         "is_published": True,
-        "start": { "$gt": datetime.combine(date.today(), datetime.min.time()) }
+        "start": { "$gt": datetime.combine(date.today(), datetime.min.time()) + timedelta(days=3) }
     })
 
     return render_template("front/upcoming.html", future_exhibition=future_exhibition)
@@ -122,7 +122,8 @@ def artist(slug):
      artist = db.artist.find_one({"slug": slug})
      #artworks = db.image.find({"artist_id": artist._id})
      artworks = db.image.find({"artist._id": artist['_id']})
-     return render_template("front/artist.html", artist=artist, artworks=artworks )
+     involved_in = db.exhibition.find({"artist._id": artist['_id']})
+     return render_template("front/artist.html", artist=artist, artworks=artworks, involved_in=involved_in )
 
 @app.route("/current/<slug>/")
 @login_required

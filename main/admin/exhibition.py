@@ -37,7 +37,7 @@ blueprint = Blueprint('admin_exhibition', __name__)
 @login_required
 def index():
     print 'exhibition index function'
-    exhibitions = db.exhibitions.find()
+    exhibitions = db.exhibitions.find().sort("end", -1)
     return render_template('admin/exhibition/index.html', exhibitions=exhibitions)
 
 """
@@ -65,7 +65,7 @@ def create():
 
     if form.is_submitted():
         if form.validate():
-            
+
             formdata = form.data
             artist = db.artist.find_one({'_id': ObjectId(formdata['artist'])})
             exhibition = utils.handle_form_data({}, formdata, ['press_release_file', 'artist'])
@@ -82,9 +82,9 @@ def create():
                     config.upload['PRESS_RELEASE'],
                     utils.setfilenameroot(request.files['press_release_file'], exhibition['slug'])
                 )
-            
+
             exhibition['artworks'] = []
-            
+
             # New artworks
             if 'artworks' in request.files:
                 for uploaded_image in request.files.getlist('artworks'):
@@ -96,13 +96,13 @@ def create():
                                 utils.setfilenameroot(uploaded_image.filename, artist['slug'])
                             )
                     })
-                    
+
                     exhibition['artworks'].append(db.image.find_one({'_id': image_id}))
-            
+
             if 'artworks' in request.form:
                 for artwork_id in request.form.getlist('artworks'):
                     exhibition['artworks'].append(db.image.find_one({'_id': ObjectId(artwork_id)}))
-            
+
             if 'coverimage' in request.files:
                 uploaded_image = request.files.getlist('coverimage')[0]
                 exhibition['coverimage'] = {
@@ -112,7 +112,7 @@ def create():
                         utils.setfilenameroot(uploaded_image.filename, exhibition['slug'])
                     )
                 }
-            
+
             if 'image' in request.files:
                 exhibition['images'] = []
                 for uploaded_image in request.files.getlist('image'):
@@ -126,15 +126,15 @@ def create():
 
             db.exhibitions.insert(exhibition)
             flash(u'You successfully created an exhibition', 'success')
-            
+
             if request.is_xhr:
                 return bson_dumps(exhibition), 201
             else:
                 return redirect_flask(url_for('.index'))
-        
+
         elif request.is_xhr:
             return json.dumps(form.errors), 400
-        
+
         selectedArtworks = request.form.getlist('artworks')
 
     return render_template('admin/exhibition/create.html', form=form, selectedArtworks=json.dumps(selectedArtworks))
@@ -148,7 +148,7 @@ def update(exhibition_id):
 
     if form.is_submitted():
         form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
-        
+
         if form.validate():
             formdata = form.data
             artist = db.artist.find_one({"_id": ObjectId(formdata['artist'])})
@@ -156,7 +156,7 @@ def update(exhibition_id):
             exhibition['artist'] = artist
 
             exhibition['artworks'] = []
-            
+
             if 'artworks' in request.files:
                 for uploaded_image in request.files.getlist('artworks'):
                     image_id = db.image.insert({
@@ -167,10 +167,10 @@ def update(exhibition_id):
                                 utils.setfilenameroot(uploaded_image.filename, artist['slug'])
                             )
                     })
-                        
+
                     exhibition['artworks'].append(db.image.find_one({'_id': image_id}))
 
-            
+
             if 'artworks' in request.form:
                 for artwork_id in request.form.getlist('artworks'):
                     print artwork_id
@@ -192,17 +192,17 @@ def update(exhibition_id):
                         utils.setfilenameroot(uploaded_image.filename, exhibition['slug'])
                     )
                 }
-                    
+
             elif 'coverimage' not in request.form:
                 if 'coverimage' in exhibition:
                     del exhibition['coverimage']
-            
+
             exhibition['images'] = []
-            
+
             for path in request.form.getlist('image'):
                 exhibition['images'].append({'path': path})
-            
-            
+
+
             if 'image' in request.files:
                 for uploaded_image in request.files.getlist('image'):
                     exhibition['images'].append({
@@ -215,14 +215,14 @@ def update(exhibition_id):
 
             db.exhibitions.update({"_id": ObjectId(exhibition_id)}, exhibition)
             flash(u'You successfully updated the exhibition data', 'success')
-            
+
             if request.is_xhr:
                 return bson_dumps(exhibition), 201
             else:
                 return redirect_flask(url_for('.index'))
         elif request.is_xhr:
             return json.dumps(form.errors), 400
-        
+
     selectedArtworks = [str(image['_id']) for image in exhibition['artworks']] if 'artworks' in exhibition else []
 
     exhibition['artist'] = str(exhibition['artist']['_id'])
