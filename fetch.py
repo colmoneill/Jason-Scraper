@@ -83,7 +83,9 @@ def fetch_artworks():
         # artwork['artist_id'] is not functioning properly
         db.artist.update({"name": artwork['artist']},
                           {"name":  artwork['artist'],
-                           "slug": slugify(artwork['artist'])},
+                           "slug": slugify(artwork['artist']),
+                           "artist_sort": artwork['artist_sort'],
+                           },
                           upsert=True)
 
         # download image
@@ -100,11 +102,12 @@ def fetch_artworks():
             'dimensions': artwork['dimensions'],
             'stock_number': artwork['stock_number'],
             'stock_number_sort': artwork['stock_number_sort'],
-        })
+            },
+            upsert=True)
 
         print "{0}, {1}".format(artwork['title'], artwork['artist'])
 
-        time.sleep(1)
+        #time.sleep(1)
 
     # db.meta.update({"subject": "artworks"}, {"updated": datetime.now(pytz.utc), "subject": "artworks"}, upsert=True)
     return AL_artworks

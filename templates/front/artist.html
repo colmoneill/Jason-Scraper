@@ -20,8 +20,8 @@
 		<div class="subcontent">
 	    <section class="subcontent__all-col informations" id="informations">
 		<div id="images" class="separation-rule"></div>
-		{% if artist.images %}
-				{% for images in artist.images %}
+		{% if artist.artworks %}
+				{% for images in artist.artworks %}
 					<img class="vignette" style="width:20%; margin-left:3%;" src="/{{ images.path }} ">
 				{% endfor %}
 				{% for images in artist.images %}

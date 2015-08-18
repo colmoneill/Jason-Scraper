@@ -8,9 +8,7 @@
     {% for artist in artists %}
        <div class="artist-block">
          <a href="/artist/{{ artist.slug }}/">
-        {% for image in artist.coverimage %}
-          <img src="{{ image }}">
-        {% endfor %}
+           <div class="image-block__inside" style="background-image: url('/{{ artist.coverimage.path }}')" alt=""></div>
            {{ artist.name }}
          </a>
        </div>

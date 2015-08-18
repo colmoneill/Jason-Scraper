@@ -77,8 +77,7 @@ def home():
         "is_published": True,
         "location": "32",
         "end": { "$gte": datetime.combine(date.today(), datetime.min.time()) }
-        #}).sort({ "end" : -1 })
-        }).limit(1)
+        }).sort("end", -1).limit(1)
 
     exhibition_35 = db.exhibitions.find({
         "is_published": True,
@@ -115,8 +114,7 @@ def upcomingExhibitions():
 def artists():
     artists = db.artist.find({
     "is_published": True,
-    })
-
+    }).sort("artist_sort", 1)
     return render_template("front/artists.html", artists=artists)
 
 @app.route("/artist/<slug>/")
