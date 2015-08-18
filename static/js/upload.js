@@ -1,11 +1,20 @@
-function extend (obj, dict) { for (key in dict) { obj[key] = dict[key]; } }
+function extend (obj, dict) { 
+    for (var i=1;i<arguments.length;i++) {
+        for (key in arguments[i]) {
+            obj[key] = arguments[i][key]; 
+        }
+    }
+}
 
 var Thumbnail = function (input) {
     if (input instanceof File) {
-        this.$el = $('<div class="upload-thumbnail"><span class="glyphicon glyphicon-remove action delete"></span><span class="glyphicon glyphicon-repeat action restore"></span><img src=""></div>');
+        this.$el = $(this.template());
     
         this.file = input;
         this.loadFromFile(input);
+    } else if (typeof input == 'string') {
+        this.$el = $(this.template());
+        this.loadFromPath(input);
     } else {
         this.$el = input;
     }
@@ -18,6 +27,15 @@ var Thumbnail = function (input) {
 extend(Thumbnail.prototype, {
     $: function (selector) { return this.$el.find(selector); },
     
+    template: function () {
+        html = '<div class="upload-thumbnail selectable">'
+        + '<span class="glyphicon glyphicon-remove action delete"></span>'
+        + '<span class="glyphicon glyphicon-restore action restore"></span>'
+        + '<img src="">'
+        + '</div>';
+        return html;
+    },
+       
     loadFromFile: function (file) {
         var reader = new FileReader(),
             self = this;
@@ -25,6 +43,10 @@ extend(Thumbnail.prototype, {
             self.$('img').attr('src', event.target.result);
         }
         reader.readAsDataURL(file);
+    },
+    
+    loadFromPath: function (path) {
+        this.$('img').attr('src', path);
     },
     
     'delete': function () {
@@ -41,27 +63,56 @@ extend(Thumbnail.prototype, {
     }
 });
 
+var SelectableThumbnail = function (input) {
+    Thumbnail.call(this, input);
+    
+    var self = this;
+};
+
+extend(SelectableThumbnail.prototype, Thumbnail.prototype, {
+    template: function () {
+        html = '<div class="upload-thumbnail selectable">'
+        + '<span class="glyphicon glyphicon-remove action delete"></span>'
+        + '<span class="glyphicon glyphicon-ok action restore"></span>'
+        + '<img src="">'
+        + '</div>';
+        return html;
+    }
+});
+
 var UploadField = function (name, $el) {
     this.name            = name;
+    this.$el             = $el;
     this.acceptedTypes   = ['image/png', 'image/jpeg', 'image/gif'];
     this.files           = [];
     
-    this.$el             = $el;
-    this.$field          = this.$('input.filepicker');
-    this.$button         = this.$('button');
-    this.$dropmask       = this.$('.dropmask');
-    this.$thumbnails     = this.$('.thumbnail-container');
-    this.$deleteThumb    = this.$('.action.delete');
-    this.$restoreThumb   = this.$('.action.restore');
+    this.attachElements();
+    this.setListeners();
+}
+
+extend(UploadField.prototype, {
+    $: function (selector) { return this.$el.find(selector); },
     
-    var self = this;
-    
-    this.$el.on('dragenter', function (e) {
-        e.preventDefault();
-        self.$dropmask.show();
-    });
-    
-    this.$dropmask.on('dragover', function (e) {
+    thumbnailPrototype: Thumbnail,
+       
+    attachElements: function () {
+        this.$field          = this.$('input.filepicker');
+        this.$button         = this.$('button');
+        this.$dropmask       = this.$('.dropmask');
+        this.$thumbnails     = this.$('.thumbnail-container');
+        this.$deleteThumb    = this.$('.action.delete');
+        this.$restoreThumb   = this.$('.action.restore');
+    },
+       
+    setListeners: function () {
+        var self = this;
+        
+        this.$el.on('dragenter', function (e) {
+            e.preventDefault();
+            self.$dropmask.show();
+        });
+        
+        this.$dropmask.on('dragover', function (e) {
             e.preventDefault();
             e.originalEvent.dataTransfer.dropEffect = 'copy';
         })
@@ -77,26 +128,23 @@ var UploadField = function (name, $el) {
             // hide dropmask
             $(this).hide();
             self.handleFiles(e.originalEvent.dataTransfer.files);
-    });
-    
-    this.$field.change(function () {
-        self.handleFiles(this.files);
-        $(this).val('');
-    });
-    
-    this.$button.click(function (e) {
-        e.preventDefault();
-        self.$field.click();
-    });
-    
-    this.$('.upload-thumbnail').each(function () {
-        new Thumbnail($(this));
-    });
-}
-
-extend(UploadField.prototype, {
-    $: function (selector) { return this.$el.find(selector); },
-    
+        });
+        
+        this.$field.change(function () {
+            self.handleFiles(this.files);
+            $(this).val('');
+        });
+        
+        this.$button.click(function (e) {
+            e.preventDefault();
+            self.$field.click();
+        });
+        
+        this.$('.upload-thumbnail').each(function () {
+            new Thumbnail($(this));
+        });
+    },
+       
     handleFiles: function (files) {
         for (var i=0; i < files.length; i++) {
             this.handleFile(files[i]);
@@ -111,7 +159,7 @@ extend(UploadField.prototype, {
     },
     
     addThumbnail: function (file) {
-       var thumbnail = new Thumbnail(file),
+        var thumbnail = new this.thumbnailPrototype(file),
            self = this;
        
        thumbnail.onDelete = function() { self.deleteUploadThumbnail(thumbnail); };
@@ -135,6 +183,14 @@ extend(UploadField.prototype, {
     }
 });
 
+var BoundUploadField = function (name, $el) {
+    console.log('?');
+    UploadField.call(this, name, $el);
+};
+
+extend(BoundUploadField.prototype, UploadField.prototype, {
+    thumbnailPrototype: SelectableThumbnail
+});
 
 var Form = function ($el) {
     this.$el = $el;
@@ -152,6 +208,13 @@ extend(Form.prototype, {
     addUploadField: function (name) {
         var field = new UploadField(name, this.$('#' + name + '-upload-field'));
         this.uploadFields.push(field);
+        return field;
+    },
+    
+    addBoundUploadField: function (name) {
+        var field = new BoundUploadField(name, this.$('#' + name + '-upload-field'));
+        this.uploadFields.push(field);
+        return field;
     },
 
     markProcessing: function () {
@@ -243,7 +306,7 @@ extend(Form.prototype, {
     onSuccess: function (data) {
         this.markDone();
         
-        var redirectExp = /(\/[a-z\-]+\/[a-z\-]+\/)/i,
+        var redirectExp = /(\/[a-z\-]+\/[a-z]+\/)/i,
             newPathMatch = redirectExp.exec(window.location.pathname);
 
         if (newPathMatch != null) {
