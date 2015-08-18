@@ -9,7 +9,6 @@ function extend (obj, dict) {
 var Thumbnail = function (input) {
     if (input instanceof File) {
         this.$el = $(this.template());
-    
         this.file = input;
         this.loadFromFile(input);
     } else if (typeof input == 'string') {
@@ -158,26 +157,26 @@ extend(UploadField.prototype, {
         }
     },
     
-    addThumbnail: function (file) {
-        var thumbnail = new this.thumbnailPrototype(file),
-           self = this;
+    addThumbnail: function (data) {
+        var thumbnail = new this.thumbnailPrototype(data),
+            self = this;
        
-       thumbnail.onDelete = function() { self.deleteUploadThumbnail(thumbnail); };
-       thumbnail.onRestore = function() { self.restoreUploadThumbnail(thumbnail); };
-       
-       this.$thumbnails.append(thumbnail.$el);
-       
-       return thumbnail;
+        thumbnail.onDelete = function() { self.deleteUploadThumbnail(thumbnail); };
+        thumbnail.onRestore = function() { self.restoreUploadThumbnail(thumbnail); };
+
+        this.$thumbnails.append(thumbnail.$el);
+
+        return thumbnail;
     },
     
     deleteUploadThumbnail: function (thumbnail) {
-        if (this.files.indexOf(thumbnail.file) > -1) {
+        if (thumbnail.file && this.files.indexOf(thumbnail.file) > -1) {
             delete this.files[this.files.indexOf(thumbnail.file)];
         }
     },
     
     restoreUploadThumbnail: function (thumbnail) {
-        if (this.files.indexOf(thumbnail.file) < 0) {
+        if (thumbnail.file && this.files.indexOf(thumbnail.file) < 0) {
             this.files.push(thumbnail.file);
         }
     }
@@ -306,7 +305,7 @@ extend(Form.prototype, {
     onSuccess: function (data) {
         this.markDone();
         
-        var redirectExp = /(\/[a-z\-]+\/[a-z]+\/)/i,
+        var redirectExp = /(\/[a-z\-]+\/[a-z\-]+\/)/i,
             newPathMatch = redirectExp.exec(window.location.pathname);
 
         if (newPathMatch != null) {

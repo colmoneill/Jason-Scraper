@@ -57,23 +57,11 @@
     </div>
 {% endmacro %}
 
-{% macro bound_upload_field(fieldname, label, files = []) %}
+{% macro bound_upload_field(fieldname, label) %}
     <div class="row">
       <div class="col-md-12 form-group" id="{{ fieldname }}-upload-field">
         <label>{{ label }}</label>
         <div class="thumbnail-container">
-          {% for file in files %}
-            <div class="upload-thumbnail selectable selected">
-                <span class="glyphicon glyphicon-remove action delete"></span>
-                <span class="glyphicon glyphicon-ok action restore"></span>
-                {% if '_id' in file: %}
-                    <input type="hidden" name="{{ fieldname }}" value="{{ file._id }}" />
-                {% else: %}
-                    <input type="hidden" name="{{ fieldname }}" value="{{ file.path }}" />
-                {% endif %}
-                <img src="/{{ file.path }}" class="upload-thumbnail" />
-            </div>
-          {% endfor %}
         </div>
         <br>
         <div>

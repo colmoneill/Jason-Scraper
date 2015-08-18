@@ -67,9 +67,9 @@ def create():
         if form.validate():
             
             formdata = form.data
-
+            artist = db.artist.find_one({'_id': ObjectId(formdata['artist'])})
             exhibition = utils.handle_form_data({}, formdata, ['press_release_file', 'artist'])
-            exhibition['artist'] = db.artist.find_one({'_id': ObjectId(formdata['artist'])})
+            exhibition['artist'] = artist
             exhibition['slug'] = utils.slugify(exhibition['exhibition_name'])
             exhibition_md = form.wysiwig_exhibition_description.data
             exhibition['artworks'] = [db.image.find_one({'_id': ObjectId(image_id)}) for image_id in request.form.getlist('artwork')]
@@ -82,7 +82,27 @@ def create():
                     config.upload['PRESS_RELEASE'],
                     utils.setfilenameroot(request.files['press_release_file'], exhibition['slug'])
                 )
-                
+            
+            exhibition['artworks'] = []
+            
+            # New artworks
+            if 'artworks' in request.files:
+                for uploaded_image in request.files.getlist('artworks'):
+                    image_id = db.image.insert({
+                        'artist': artist,
+                        'path': utils.handle_uploaded_file(
+                                uploaded_image,
+                                config.upload['ARTWORK_IMAGE'],
+                                utils.setfilenameroot(uploaded_image.filename, artist['slug'])
+                            )
+                    })
+                    
+                    exhibition['artworks'].append(db.image.find_one({'_id': image_id}))
+            
+            if 'artworks' in request.form:
+                for artwork_id in request.form.getlist('artworks'):
+                    exhibition['artworks'].append(db.image.find_one({'_id': ObjectId(artwork_id)}))
+            
             if 'coverimage' in request.files:
                 uploaded_image = request.files.getlist('coverimage')[0]
                 exhibition['coverimage'] = {
@@ -128,14 +148,33 @@ def update(exhibition_id):
 
     if form.is_submitted():
         form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
-        exhibition['artworks'] = [db.image.find_one({'_id': ObjectId(image_id)}) for image_id in request.form.getlist('artworks')]
-
+        
         if form.validate():
-            
             formdata = form.data
+            artist = db.artist.find_one({"_id": ObjectId(formdata['artist'])})
             exhibition = utils.handle_form_data(exhibition, formdata, ['press_release_file'])
-            exhibition['artist'] = db.artist.find_one({"_id": ObjectId(formdata['artist'])})
+            exhibition['artist'] = artist
 
+            exhibition['artworks'] = []
+            
+            if 'artworks' in request.files:
+                for uploaded_image in request.files.getlist('artworks'):
+                    image_id = db.image.insert({
+                        'artist': artist,
+                        'path': utils.handle_uploaded_file(
+                                uploaded_image,
+                                config.upload['ARTWORK_IMAGE'],
+                                utils.setfilenameroot(uploaded_image.filename, artist['slug'])
+                            )
+                    })
+                        
+                    exhibition['artworks'].append(db.image.find_one({'_id': image_id}))
+
+            
+            if 'artworks' in request.form:
+                for artwork_id in request.form.getlist('artworks'):
+                    print artwork_id
+                    exhibition['artworks'].append(db.image.find_one({'_id': ObjectId(artwork_id)}))
 
             if request.files['press_release_file']:
                 exhibition['press_release'] = utils.handle_uploaded_file(
@@ -158,13 +197,11 @@ def update(exhibition_id):
                 if 'coverimage' in exhibition:
                     del exhibition['coverimage']
             
-            images = []
+            exhibition['images'] = []
             
-            for image in exhibition['images']:
-                if image['path'] in request.form.getlist('image'):
-                    images.append(image)
+            for path in request.form.getlist('image'):
+                exhibition['images'].append({'path': path})
             
-            exhibition['images'] = images
             
             if 'image' in request.files:
                 for uploaded_image in request.files.getlist('image'):
@@ -186,7 +223,7 @@ def update(exhibition_id):
         elif request.is_xhr:
             return json.dumps(form.errors), 400
         
-    selectedArtworks = [str(image['_id']) for image in exhibition['artworks']]
+    selectedArtworks = [str(image['_id']) for image in exhibition['artworks']] if 'artworks' in exhibition else []
 
     exhibition['artist'] = str(exhibition['artist']['_id'])
     form = forms.ExhibitionForm(data=exhibition)
