@@ -19,16 +19,18 @@
 		</div>
 		<div class="subcontent">
 	    <section class="subcontent__all-col informations" id="informations">
-		<div id="images" class="separation-rule"></div>
-				 {{artworks}}
-		<div class="separation-rule"></div>
-		<div id="info" class="text-block">
-			{% if artist.wysiwig_artist_info %}
-			{{ artist.wysiwig_artist_info|markdown }}
-			{% endif %}
-		</div>
-		<div class="separation-rule"></div>
-		<div id="bio" class="text-block">
+				<div id="images" class="separation-rule"></div>
+					{{artworks}}
+				<div class="separation-rule"></div>
+				<div id="info" class="text-block">
+					{% if artist.wysiwig_artist_info %}
+						{{ artist.wysiwig_artist_info|markdown }}
+					{% endif %}
+				</div>
+	    </section>
+	    <section class="subcontent__all-col information" id="bio">
+			<div class="separation-rule"></div>
+			<div id="bio" class="text-block">
 			{% if artist.wysiwig_artist_bio %}
 			{{ artist.wysiwig_artist_bio|markdown }}
 			<p><a class="button" href="#">click to expand and read more</a></p>
@@ -54,8 +56,9 @@
 		</div>
 			<div class="separation-rule"></div>
 		</div>
-		</section>
 		</div>
-	</div>
+	    </section>
+	    </div>
+	    </div>
 
 {% endblock %}

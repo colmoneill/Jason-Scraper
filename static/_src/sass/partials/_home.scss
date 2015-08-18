@@ -1,0 +1,21 @@
+// --------------------------------------------------
+// HOME
+// --------------------------------------------------
+
+.homepage-exhibition{
+	width: 49%;
+	margin-right: 2%;
+	float: left;
+	&:nth-of-type(2){
+		margin-right: 0;
+	}
+	&:hover{
+		@include _hover;
+	}
+	&__inside{
+		height: 0;
+		width: 100%;
+		padding-bottom: $image_ratio;
+		@include background-cover;
+	}
+}

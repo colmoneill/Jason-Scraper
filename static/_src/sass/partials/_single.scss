@@ -12,15 +12,18 @@
 	@extend .col4__span1of3;
 	@extend .col2__span1of2;
 	margin-top: $p_margin_bottom;
+	a{
+		display: inline-block;
+		width: 100%;
+	}
+	a:hover{
+		@include _hover;
+	}
 	&__inside{
 		height: 0;
 		width: 100%;
-		padding-bottom: 66%;
-		background-position: center center;
-		background-size: cover;
-		&:hover{
-			@include _hover;
-		}
+		padding-bottom: $image_ratio;
+		@include background-cover;
 	}
 	//
 	@include mq-large{

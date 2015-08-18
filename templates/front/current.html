@@ -3,33 +3,34 @@
 
 	{% block body %}
 	{% for exhibition in exhibition_32 %}
-		<div class="half-left" style="width:45%; margin-right: 3%; float: left;">
+		<div class="homepage-exhibition">
 		<h3>32</h3>
 			<a href="/exhibition/{{ exhibition.slug }}/">
-				<img src="/{{ exhibition.coverimage.path }}" width="100%;">
+				<div class="homepage-exhibition__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
+
 				{% if exhibition.is_group_expo %}
-					<h3>{{ exhibition.exhibition_name }} (group exhibition)</h3>
+					<h1>{{ exhibition.exhibition_name }} (group exhibition)</h1>
 				{% else %}
-					<H3>{{ exhibition.artist.name }}</H3>
-					{{ exhibition.exhibition_name }}<br>
+					<h1>{{ exhibition.artist.name }}</h1>
+					<h2>{{ exhibition.exhibition_name }}</h2>
 				{% endif %}
-				<code> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </code><br>
+				<h4> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </h4>
 			</a>
 		</div>
 	{% endfor %}
 
 	{% for exhibition in exhibition_35 %}
-		<div class="half-right" style="width:45%; float: left;">
+		<div class="homepage-exhibition">
 			<h3>35</h3>
 			<a href="/exhibition/{{ exhibition.slug }}/">
-				<img src="/{{ exhibition.coverimage.path }}" width="100%;">
+				<div class="homepage-exhibition__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
 				{% if exhibition.is_group_expo %}
-					<h3>{{ exhibition.exhibition_name }} (group exhibition)</h3>
+					<h1>{{ exhibition.exhibition_name }} (group exhibition)</h1>
 				{% else %}
-					<H3>{{ exhibition.artist.name }}</H3>
-					{{ exhibition.exhibition_name }}<br>
+					<h1>{{ exhibition.artist.name }}</h1>
+					<h2>{{ exhibition.exhibition_name }}</h2>
 				{% endif %}
-				<code> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </code><br>
+				<h4> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </h4>
 			</a>
 		</div>
 	{% endfor %}
