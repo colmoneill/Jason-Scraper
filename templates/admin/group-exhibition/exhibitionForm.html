@@ -1,5 +1,5 @@
 {% block title %}
-    <h2>Group exhibition form</h2>
+    <h2>group exhibition form</h2>
 {% endblock %}
 
 {% block body %}
@@ -99,16 +99,16 @@
             {% autoescape false %}
             var preselectedArtworks = JSON.parse('{{ selectedArtworks }}');
             {% endautoescape %}
-            
+
             $('[name="artists"]').each(function () {
                 $(this).change(function () {
                     var id = $(this).val();
-                    
+
                     if ($(this).prop('checked')) {
                         if (!(id in thumbnails)) {
                             thumbnails[id] = [];
                         }
-                        
+
                         jQuery.get(
                             '/admin/api/artist/' + id + '/image',
                             null,
@@ -132,7 +132,7 @@
                         }
                     }
                 });
-                
+
                 $(this).trigger('change');
             });
         }, false);

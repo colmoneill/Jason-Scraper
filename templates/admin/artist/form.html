@@ -13,7 +13,7 @@
     <div class="row">
       <div class="form-group">
         <div class="col-xs-6">
-          <label class="control-label">Artist info text</label> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers">markdown enabled</a>
+          <label class="control-label">about the artist info text</label> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers">markdown enabled</a>
           {{ form.wysiwig_artist_info(only_input=True, rows=20) }}
         </div>
         <div class="col-xs-6">
@@ -23,6 +23,18 @@
       </div>
     </div>
     <hr>
+    <div class="row">
+      <div class="form-group">
+        <div class="col-xs-6">
+          <label class="control-label">Artist bio</label> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers">markdown enabled</a>
+          {{ form.wysiwig_artist_bio(only_input=True, rows=20) }}
+        </div>
+        <div class="col-xs-6">
+          <label>&larr; Text preview</label>
+          {{ form.wysiwig_artist_bio(only_preview=True) }}
+        </div>
+      </div>
+    </div>
     <div class="row">
       <div class="form-group">
         <div class="col-xs-6">
@@ -36,18 +48,6 @@
       </div>
     </div>
     <br>
-    <div class="row">
-      <div class="form-group">
-        <div class="col-xs-6">
-          <label class="control-label">Artist bio</label> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers">markdown enabled</a>
-          {{ form.wysiwig_artist_bio(only_input=True, rows=20) }}
-        </div>
-        <div class="col-xs-6">
-          <label>&larr; Text preview</label>
-          {{ form.wysiwig_artist_bio(only_preview=True) }}
-        </div>
-      </div>
-    </div>
     <div class="row">
       <div class="col-sm-12">
         <h4>Press release pdf</h4>

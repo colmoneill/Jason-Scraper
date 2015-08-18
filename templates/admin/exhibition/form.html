@@ -1,5 +1,5 @@
 {% block title %}
-    <h3>Exhibition form</h3>
+    <h3>single artist exhibition form</h3>
 {% endblock %}
 
 {% block body %}
@@ -36,6 +36,9 @@
         </div>
       </div>
       <hr>
+      <label>about the artist</label>
+      The artist bio is being inputted from the artist page.
+      <!--
       <div class="row">
         <div class="col-xs-6">
           <label>Exhibition artist bio</label> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers">markdown enabled</a>
@@ -46,6 +49,7 @@
           {{ form.wysiwig_artist_bio(only_preview=True) }}
         </div>
       </div>
+    -->
       <hr>
       {{ form.press_release_file }}
       <hr>
@@ -98,16 +102,16 @@
         {% autoescape false %}
         var preselectedArtworks = JSON.parse('{{ selectedArtworks }}');
         {% endautoescape %}
-        
+
         $('select#artist').change(function () {
             var id = $(this).val();
-            
+
             for (var i=0;i<thumbnails.length;i++){
                 thumbnails[i].$el.detach();
             }
-            
+
             thumbnails = [];
-            
+
             jQuery.get(
                 '/admin/api/artist/' + id + '/image',
                 null,
@@ -124,9 +128,9 @@
                 'json'
             );
         });
-        
+
         $('select#artist').trigger('change');
-        
+
     }, false);
 </script>
 <script type="text/javascript">

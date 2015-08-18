@@ -3,29 +3,35 @@
 
 	{% block body %}
 	{% for exhibition in exhibition_32 %}
+		<div class="half-left" style="width:45%; margin-right: 3%; float: left;">
 		<h3>32</h3>
-		<img src="exhibition.key_img">
-		{% if exhibition.is_group_expo %}
-			<a href="/exhibition/{{ exhibition.slug }}/"><h3>{{ exhibition.exhibition_name }} (group exhibition)</h3></a>
-		{% else %}
-			<a href="/exhibition/{{ exhibition.slug }}/"><H3>{{ exhibition.artist.name }}</H3></a>
-			<a href="/exhibition/{{ exhibition.slug }}/">{{ exhibition.exhibition_name }}</a><br>
-		{% endif %}
-		<code> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </code><br>
-		<div class="separation-rule"></div>
+			<a href="/exhibition/{{ exhibition.slug }}/">
+				<img src="/{{ exhibition.coverimage.path }}" width="100%;">
+				{% if exhibition.is_group_expo %}
+					<h3>{{ exhibition.exhibition_name }} (group exhibition)</h3>
+				{% else %}
+					<H3>{{ exhibition.artist.name }}</H3>
+					{{ exhibition.exhibition_name }}<br>
+				{% endif %}
+				<code> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </code><br>
+			</a>
+		</div>
 	{% endfor %}
 
 	{% for exhibition in exhibition_35 %}
-		<h3>35</h3>
-		<img src="exhibition.key_img">
-		{% if exhibition.is_group_expo %}
-			<a href="/exhibition/{{ exhibition.slug }}/"><h3>{{ exhibition.exhibition_name }} (group exhibition)</h3></a>
-		{% else %}
-			<a href="/exhibition/{{ exhibition.slug }}/"><H3>{{ exhibition.artist.name }}</H3></a>
-			<a href="/exhibition/{{ exhibition.slug }}/">{{ exhibition.exhibition_name }}</a><br>
-		{% endif %}
-		<code> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </code><br>
-		<div class="separation-rule"></div>
+		<div class="half-right" style="width:45%; float: left;">
+			<h3>35</h3>
+			<a href="/exhibition/{{ exhibition.slug }}/">
+				<img src="/{{ exhibition.coverimage.path }}" width="100%;">
+				{% if exhibition.is_group_expo %}
+					<h3>{{ exhibition.exhibition_name }} (group exhibition)</h3>
+				{% else %}
+					<H3>{{ exhibition.artist.name }}</H3>
+					{{ exhibition.exhibition_name }}<br>
+				{% endif %}
+				<code> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </code><br>
+			</a>
+		</div>
 	{% endfor %}
 
 	{% endblock %}
