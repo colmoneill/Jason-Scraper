@@ -5,7 +5,7 @@
 .exhibition-block{
 	//margin-bottom: $margin_bottom;
 	a:hover{
-		& > h1, & > h2, & > h4{
+		& > h1, & > h2, & > h4, & > .exhibition-block__image{
 			@include _hover;
 		}
 	}

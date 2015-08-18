@@ -32,7 +32,11 @@
 			margin-top: 0;
 		}
 	}
-	a &:hover{
+	a{
+		display: inline-block;
+		width: 100%;
+	}
+	a:hover{
 		@include _hover;
 	}
 	&__image{
