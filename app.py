@@ -119,9 +119,10 @@ def artists():
 
 @app.route("/artist/<slug>/")
 def artist(slug):
-    artist = db.artist.find_one({ "slug": slug})
-    #artworks = db.artworks.find({"artist": artist["artist"]}).sort("id", -1).limit(10)
-    return render_template("front/artist.html", artist=artist)
+     artist = db.artist.find_one({"slug": slug})
+     #artworks = db.image.find({"artist_id": artist._id})
+     artworks = db.image.find({"artist._id": artist['_id']})
+     return render_template("front/artist.html", artist=artist, artworks=artworks )
 
 @app.route("/current/<slug>/")
 @login_required
