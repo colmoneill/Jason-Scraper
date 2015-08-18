@@ -59,11 +59,11 @@
 		{% if artist.press_release %}
 			<h2>press</h2>
 				<div class="download-block__text" id="media">
-					<a class="" href="/{{ artist.press_release }}"><h3>Download the press release — PDF (size %)</h3></a>
+					<p><a class="" href="/{{ artist.press_release }}"><h3>Download the press release — PDF (size %)</h3></a></p>
 		{% endif %}
-					<a href="{{ artist.link_url1 }}" target="_blank"><h3>{{ artist.link_name1 }}</h3></a>
-					<a href="{{ artist.link_url2 }}" target="_blank"><h3>{{ artist.link_name2 }}</h3></a>
-					<a href="{{ artist.link_url3 }}" target="_blank"><h3>{{ artist.link_name3 }}</h3></a>
+					<h2><a href="{{ artist.link_url1 }}" target="_blank">{{ artist.link_name1 }}</a></h2>
+					<h2><a href="{{ artist.link_url2 }}" target="_blank">{{ artist.link_name2 }}</a></h2>
+					<h2><a href="{{ artist.link_url3 }}" target="_blank">{{ artist.link_name3 }}</a></h2>
 				</div>
 		</div></section></div></div>
 
