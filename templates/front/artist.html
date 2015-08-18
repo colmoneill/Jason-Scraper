@@ -18,14 +18,27 @@
 			</ul>
 		</div>
 		<div class="subcontent">
-	    <section class="subcontent__all-col informations" id="informations">
-				<div id="images" class="separation-rule"></div>
-					{{artworks}}
-				<div class="separation-rule"></div>
-				<div id="info" class="text-block">
-					{% if artist.wysiwig_artist_info %}
-						{{ artist.wysiwig_artist_info|markdown }}
-					{% endif %}
+	    <section class="subcontent__all-col informations" id="images">
+			<div id="images" class="separation-rule"></div>
+				<div>
+					{% for image in artworks %}
+						<div class="image-block">
+							<a href="/{{ image.path }}">
+								<div class="image-block__inside" style="background-image: url('/{{ image.path }}')" title="{{ image.title }}" alt="{{ image.title }}"></div>
+								{{ image.artist.name }}
+							<br>
+							{{ image.title }}{% if image.year %}, {{ image.year }}{% endif %}<br>
+							{{ image.medium }}<br>
+							{{ image.dimensions }}<br>
+							</a>
+						</div>
+					{% endfor %}
+					<div class="separation-rule"></div>
+					<div id="info" class="text-block">
+						{% if artist.wysiwig_artist_info %}
+							{{ artist.wysiwig_artist_info|markdown }}
+						{% endif %}
+					</div>
 				</div>
 	    </section>
 	    <section class="subcontent__all-col information" id="bio">
