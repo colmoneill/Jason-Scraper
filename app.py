@@ -25,17 +25,13 @@ import forms
 import json
 
 from main import admin
-
-# Local imports
-from settings import *
+from main.settings import db, secret_key
 
 app = Flask(__name__)
 
 pagedown = PageDown(app)
 Misaka(app)
-app.secret_key = "SECRET_KEY"
-client = pymongo.MongoClient()
-db = client.artlogic
+app.secret_key = secret_key
 
 @app.route("/logout")
 def logout():
