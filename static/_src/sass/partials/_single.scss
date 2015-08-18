@@ -81,14 +81,14 @@ section.informations{
 .download-block{
 	margin-bottom: $margin_bottom;
 	@extend .clearfix;
-	h2{
+	h1{
 		@extend h5;
 		@extend .col5__span1of4;
 		@extend .col4__span1of3;
 		@extend .col2__span2of2;
 	}
 	h3{
-		display: inline;
+		display: inline-block;
 	}
 	&__text{
 		@extend .col5__span3of4;
@@ -103,6 +103,7 @@ section.informations{
 	a{
 		border-bottom: 1px solid transparent;
 		padding-bottom: 3px;
+		display: inline-block;
 		&:hover{
 			@include _hover;
 			border-bottom-color: $body-color;

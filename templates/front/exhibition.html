@@ -80,11 +80,11 @@
     {% else %}
 	{% endif %}
 
-    <section class="subcontent__all-col" id="presentation">
+    <section class="subcontent__all-col informations" id="presentation">
     	<div class="separation-rule"></div>
 		{% if exhibition.wysiwig_exhibition_description %}
         	<div class="text-block">
-				<h2>information</h2>
+				<h1>information</h1>
 				{{ exhibition.wysiwig_exhibition_description|markdown }}
 			</div>
       {% endif %}
@@ -92,7 +92,7 @@
         {% else %}
       	{% if exhibition.artist.wysiwig_artist_bio %}
       		<div class="text-block">
-		  		<h2>about the artist</h2>
+		  		<h1>about the artist</h1>
 		  		{{ exhibition.artist.wysiwig_artist_bio|markdown }}
 		  	</div>
 		    {% endif %}
@@ -100,13 +100,13 @@
 
         <div class="download-block">
         {% if exhibition.press_release %}
-          <h2>press</h2>
+          <h1>press</h1>
           	<div class="download-block__text" id="media">
-            	<p><a class="" href="/{{ exhibition.press_release }}"><h3>Download the press release — PDF (size %)</h3></a></p>
+            	<a class="" href="/{{ exhibition.press_release }}"><h3>Download the press release — PDF (size %)</h3></a><br>
 			  {% endif %}
-          <h2><a href="{{ exhibition.link_url1 }}" target="_blank">{{ exhibition.link_name1 }}</a></h2>
-		  		<h2><a href="{{ exhibition.link_url2 }}" target="_blank">{{ exhibition.link_name2 }}</a></h2>
-		  		<h2><a href="{{ exhibition.link_url3 }}" target="_blank">{{ exhibition.link_name3 }}</a></h2>
+			  	<a href="{{ exhibition.link_url1 }}" target="_blank"><h3>{{ exhibition.link_name1 }}</h3></a><br>
+		  		<a href="{{ exhibition.link_url2 }}" target="_blank"><h3>{{ exhibition.link_name2 }}</h3></a><br>
+		  		<a href="{{ exhibition.link_url3 }}" target="_blank"><h3>{{ exhibition.link_name3 }}</h3></a>
 		        </div>
         </div>
     </section>
