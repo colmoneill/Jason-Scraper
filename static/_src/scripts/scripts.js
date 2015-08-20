@@ -84,7 +84,7 @@ $(document).ready(function() {
 				
 				var artwork_data = [artwork_group_name, artwork_gorup_artist, artwork_artist, artwork_year, artwork_medium, artwork_dimensions];
 				 
-				$( '<div id="imagelightbox-caption"></div>' ).appendTo( 'body' );
+				$( '<div id="imagelightbox-caption"></div>' ).appendTo( '#slider-text-box' );
 				
 				for (i = 0; i < artwork_data.length; i++) { 
 					if(artwork_data[i] !='' && typeof artwork_data[i] != 'undefined'){

@@ -60,7 +60,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .font-bold, h1, h3, .text-block h2 {
   font-family: "Maax-Medium", Helvetica, sans-serif; }
 
-.font-mono, h4, h5, .text-block h1, .download-block h1, h6, .subnav, .staff_member__mail {
+.font-mono, h4, h5, .text-block h1, .download-block h1, h6, .subnav, .staff_member__mail, #slider-text-box p {
   font-family: "RJ Maax Mono", monospace; }
 
 .container {
@@ -853,13 +853,27 @@ section.exhibition-year div:last-child {
 #imagelightbox-caption {
   text-align: center;
   color: #fff;
-  background-color: #666;
   position: fixed;
   z-index: 10001;
   left: 0;
   right: 0;
   bottom: 0;
   padding: 0.625em; }
+
+#slider-text-box {
+  min-height: 50px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 10000;
+  border-top: 1px solid #7a7a7a; }
+  #slider-text-box p {
+    display: inline;
+    color: black; }
+    #slider-text-box p:before {
+      content: " / "; }
+    #slider-text-box p:first-of-type:before {
+      content: none; }
 
 .homepage-exhibition {
   width: 49%;

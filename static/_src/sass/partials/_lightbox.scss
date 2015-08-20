@@ -59,11 +59,31 @@
 #imagelightbox-caption {
     text-align: center;
     color: #fff;
-    background-color: #666;
+    //background-color: #666;
     position: fixed;
     z-index: 10001;
     left: 0;
     right: 0;
     bottom: 0;
     padding: 0.625em;
+}
+
+#slider-text-box{
+	min-height: 50px;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	z-index: 10000;
+	border-top: $rule-style;
+	p{
+		display: inline;
+		color: black;
+		@extend .font-mono;
+		&:before{
+			content: " / ";
+		}
+		&:first-of-type:before{
+			content: none;
+		}
+	}
 }
