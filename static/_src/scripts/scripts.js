@@ -51,10 +51,13 @@ $(document).ready(function() {
 			overlayOn = function()
 			{
 				$( '<div id="imagelightbox-overlay"></div>' ).appendTo( 'body' );
+				$( '<div id="slider-text-box"></div>' ).appendTo( 'body' );
+
 			},
 			overlayOff = function()
 			{
 				$( '#imagelightbox-overlay' ).remove();
+				$( '#slider-text-box' ).remove();
 			},
 
 
@@ -62,7 +65,7 @@ $(document).ready(function() {
 
 			closeButtonOn = function( instance )
 			{
-				$( '<button type="button" id="imagelightbox-close" title="Close"></button>' ).appendTo( 'body' ).on( 'click touchend', function(){ $( this ).remove(); instance.quitImageLightbox(); return false; });
+				$( '<div id="imagelightbox-close">close x</div>' ).appendTo( 'body' ).on( 'click touchend', function(){ $( this ).remove(); instance.quitImageLightbox(); return false; });
 			},
 			closeButtonOff = function()
 			{
@@ -144,7 +147,7 @@ $(document).ready(function() {
 
 			arrowsOn = function( instance, selector )
 			{
-				var $arrows = $( '<button type="button" class="imagelightbox-arrow imagelightbox-arrow-left"></button><button type="button" class="imagelightbox-arrow imagelightbox-arrow-right"></button>' );
+				var $arrows = $( '<div class="imagelightbox-arrow imagelightbox-arrow-left">&#139; previous</div><div class="imagelightbox-arrow imagelightbox-arrow-right">next &#155;</div>' );
 
 				$arrows.appendTo( 'body' );
 

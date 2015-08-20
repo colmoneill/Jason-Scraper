@@ -89,7 +89,6 @@
 				var screenWidth	 = $( window ).width() * 0.8,
 					screenHeight = $( window ).height() * 0.9,
 					tmpImage 	 = new Image();
-
 				tmpImage.src	= image.attr( 'src' );
 				tmpImage.onload = function()
 				{
@@ -106,7 +105,7 @@
 					image.css(
 					{
 						'width':  imageWidth + 'px',
-						'height': imageHeight + 'px',
+						'height': (imageHeight - ($('#slider-text-box').height())) + 'px',
 						'top':    ( $( window ).height() - imageHeight ) / 2 + 'px',
 						'left':   ( $( window ).width() - imageWidth ) / 2 + 'px'
 					});
@@ -143,7 +142,6 @@
 					.load( function()
 					{
 						image.appendTo( 'body' );
-						$( '<div id="slider-text-box"></div>' ).appendTo( 'body' );
 						setImage();
 
 						var params = { 'opacity': 1 };

@@ -22,59 +22,65 @@
 }
 
 #imagelightbox-close {
-    width: 2.5em;
-    height: 2.5em;
-    text-align: left;
-    background-color: #666;
-    border-radius: 50%;
+   
+    font-size: 13px;
+    @extend .font-mono;
+    text-align: right;
     position: fixed;
     z-index: 10002;
-    top: 2.5em;
-    right: 2.5em;
-    -webkit-transition: color .3s ease;
-    transition: color .3s ease;
+    top: 15px;
+    right: 15px;
+    &:hover{
+	    cursor: pointer;
+	    opacity: 0.8;
+    }
 }
 
 .imagelightbox-arrow {
-    width: 3.75em;
-    height: 7.5em;
-    background-color: #444;
-    background-color: rgba( 0, 0, 0, .5 );
-    vertical-align: middle;
+    width: 10%;
+    height: 30px;
+    //background-color: #444;
     display: none;
     position: fixed;
     z-index: 10001;
-    top: 50%;
-    margin-top: -3.75em;
+    bottom: 0;
+    font-size: 13px;
+    @extend .font-mono;
+    &:hover{
+	    cursor: pointer;
+	    opacity: 0.8;
+    }
 }
 
 .imagelightbox-arrow-right {
-    right: 2.5em;
+    right: 0;
+    padding-right: 15px;
+    text-align: right;
 }
 
 .imagelightbox-arrow-left {
-    left: 2.5em;
+    left: 0;
+    padding-left: 15px;
 }
 
-#imagelightbox-caption {
-    text-align: center;
-    color: #fff;
-    //background-color: #666;
-    position: fixed;
-    z-index: 10001;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 0.625em;
-}
 
 #slider-text-box{
-	min-height: 50px;
+	min-height: 40px;
+	display: block;
 	position: fixed;
 	bottom: 0;
 	width: 100%;
 	z-index: 10000;
 	border-top: $rule-style;
+	#imagelightbox-caption {
+	    text-align: center;
+	    z-index: 10001;
+	    margin-left: 10%;
+	    margin-right: 10%;
+	    bottom: 0;
+	    width: 80%;
+	    padding: 8px;
+	}
 	p{
 		display: inline;
 		color: black;
