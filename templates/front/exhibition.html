@@ -34,17 +34,17 @@
     	  	{% for artwork in exhibition.artworks %}
     	  		<div class="image-block">
     		  		<a href="/{{ artwork.path }}">
-    		  			<div class="image-block__inside" style="background-image: url('/{{ artwork.path }}')" title="{{ artwork.title }}" alt="{{ artwork.title }}"></div>
-                {% if exhibition.is_group_expo %}
-                  in <b>{{ exhibition.exhibition_name }}</b> (group exhibition)<br>
-                  {{ artwork.artist.name }}
-                {% else %}
-                  {{ exhibition.artist.name }}
-                {% endif %}
-                <br>
-    			  		{{ artwork.title }}{% if artwork.year %}, {{ artwork.year }}{% endif %}<br>
-    			  		{{ artwork.medium }}<br>
-    			  		{{ artwork.dimensions }}<br>
+    		  			<div class="image-block__inside" style="background-image: url('/{{ artwork.path }}')" 
+    		  				{% if exhibition.is_group_expo %}
+				  			data-groupexhibitionname="in {{ exhibition.exhibition_name }} (group exhibition)"
+				  			data-groupexhibtionartist="{{ artwork.artist.name }}"
+				  			{% else %}
+				  			data-exhibitionartistname="{{ exhibition.artist.name }}"
+				  			{% endif %}
+				  			data-artworkyear="{{ artwork.title }}{% if artwork.year %}, {{ artwork.year }}{% endif %}"
+				  			data-artworkmedium="{{ artwork.medium }}"
+				  			data-artworkdimensions="{{ artwork.dimensions }}">
+				  		</div>
     			  	</a>
     		  	</div>
     		  {% endfor %}

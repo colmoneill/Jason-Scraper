@@ -74,8 +74,24 @@ $(document).ready(function() {
 
 			captionOn = function()
 			{
-				var description = $( 'a[href="' + $( '#imagelightbox' ).attr( 'src' ) + '"] div' ).attr( 'alt' );
-				$( '<div id="imagelightbox-caption">' + description + '</div>' ).appendTo( 'body' );
+				var source_image_location = 'a[href="' + $( '#imagelightbox' ).attr( 'src' ) + '"] div';
+				var artwork_group_name = $( source_image_location ).attr( 'data-groupexhibitionname' ); 
+				var artwork_gorup_artist= $( source_image_location ).attr( 'data-groupexhibtionartist' );
+				var artwork_artist = $( source_image_location ).attr( 'data-exhibitionartistname' );
+				var artwork_year = $( source_image_location ).attr( 'data-artworkyear' );
+				var artwork_medium = $( source_image_location ).attr( 'data-artworkmedium' ); 
+				var artwork_dimensions = $( source_image_location ).attr( 'data-artworkdimensions' ); 
+				
+				var artwork_data = [artwork_group_name, artwork_gorup_artist, artwork_artist, artwork_year, artwork_medium, artwork_dimensions];
+				 
+				$( '<div id="imagelightbox-caption"></div>' ).appendTo( 'body' );
+				
+				for (i = 0; i < artwork_data.length; i++) { 
+					if(artwork_data[i] !='' && typeof artwork_data[i] != 'undefined'){
+						$( '<p>'+ artwork_data[i] +'</p>').appendTo( '#imagelightbox-caption');
+					}
+				}
+				
 			},
 			captionOff = function()
 			{

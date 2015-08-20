@@ -24,12 +24,12 @@
 					{% for image in artworks %}
 						<div class="image-block">
 							<a href="/{{ image.path }}">
-								<div class="image-block__inside" style="background-image: url('/{{ image.path }}')" title="{{ image.title }}" alt="{{ image.title }}"></div>
-								{{ image.artist.name }}
-							<br>
-							{{ image.title }}{% if image.year %}, {{ image.year }}{% endif %}<br>
-							{{ image.medium }}<br>
-							{{ image.dimensions }}<br>
+								<div class="image-block__inside" style="background-image: url('/{{ image.path }}')" 
+									data-exhibitionartistname="{{ image.artist.name }}"
+									data-artworkyear="{{ image.title }}{% if image.year %}, {{ image.year }}{% endif %}"
+									data-artworkmedium="{{ image.medium }}"
+									data-artworkdimensions="{{ image.dimensions }}">
+								</div>
 							</a>
 						</div>
 					{% endfor %}
