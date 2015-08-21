@@ -32,7 +32,7 @@
     right: 15px;
     &:hover{
 	    cursor: pointer;
-	    opacity: 0.8;
+	    @include _hover;
     }
 }
 
@@ -48,7 +48,7 @@
     @extend .font-mono;
     &:hover{
 	    cursor: pointer;
-	    opacity: 0.8;
+	    @include _hover;
     }
 }
 

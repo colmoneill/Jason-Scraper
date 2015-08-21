@@ -57,7 +57,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .font-body, body, .subnav ul li a.points-to:before, .subnav ul li a:hover:before, .newsletter input {
   font-family: "Maax-Regular", Helvetica, sans-serif; }
 
-.font-bold, h1, h3, .text-block h2 {
+.font-bold, h1, h3, .text-block h2, #collapse-button {
   font-family: "Maax-Medium", Helvetica, sans-serif; }
 
 .font-mono, h4, h5, .text-block h1, .download-block h1, h6, .subnav, .staff_member__mail, #imagelightbox-close, .imagelightbox-arrow, #slider-text-box p {
@@ -136,7 +136,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     float: left;
     margin-right: 2.32558%; } }
 @media (min-width: 951px) {
-  .col5__span3of4, .text-block h2, .text-block p, .download-block__text {
+  .col5__span3of4, .text-block h2, .text-block p, #collapse-button, .download-block__text {
     width: 74.4186%;
     float: left;
     margin-right: 2.32558%; } }
@@ -195,7 +195,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     float: left;
     margin-right: 3.84615%; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4__span2of3, .text-block h2, .text-block p, .download-block__text {
+  .col4__span2of3, .text-block h2, .text-block p, #collapse-button, .download-block__text {
     width: 65.38462%;
     float: left;
     margin-right: 3.84615%; } }
@@ -211,7 +211,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     float: left;
     margin-right: 2.85714%; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4__span2of4, .gallery__left, .gallery__right {
+  .col4__span2of4, .gallery__left, .gallery__right, .homepage-exhibition {
     width: 48.57143%;
     float: left;
     margin-right: 2.85714%; } }
@@ -238,12 +238,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     float: left;
     margin-right: 4.0%; } }
 @media (min-width: 0) and (max-width: 500px) {
-  .col2__span2of2, .all-col, .subcontent, .subcontent__all-col, .text-block h1, .text-block h2, .text-block p, .subnav, .download-block h1, .download-block__text, .artist-block, .gallery__left, .gallery__right, .gallery__left .text-block h5, .gallery__left .text-block h1, .gallery__left .text-block p, .newsletter {
+  .col2__span2of2, .all-col, .subcontent, .subcontent__all-col, .text-block h1, .text-block h2, .text-block p, #collapse-button, .subnav, .download-block h1, .download-block__text, .artist-block, .gallery__left, .gallery__right, .gallery__left .text-block h5, .gallery__left .text-block h1, .gallery__left .text-block p, .newsletter, .homepage-exhibition {
     width: 100%;
     float: left;
     margin-left: 0;
     margin-right: 0; } }
-.last, .text-block h2, .text-block p, .subnav, .download-block__text {
+.last, .text-block h2, .text-block p, #collapse-button, .subnav, .download-block__text {
   float: right;
   margin-right: 0; }
 
@@ -289,7 +289,7 @@ body {
   width: 95%;
   max-width: 1300px;
   margin: 0 auto;
-  padding-bottom: 100px;
+  padding-bottom: 50px;
   overflow: hidden;
   *zoom: 1; }
   @media only screen and (max-width: 950px) {
@@ -389,11 +389,16 @@ a:focus {
         margin-right: 0; } }
     .text-block h2:first-of-type {
       margin-top: 0; }
-  .text-block.artist-exhibition-list p {
-    margin-bottom: 0; }
-    .text-block.artist-exhibition-list p:before {
-      content: "\2014";
-      margin-right: 15px; }
+  .text-block.artist-exhibition-list {
+    max-height: 60px;
+    overflow: hidden; }
+    .text-block.artist-exhibition-list.list-open {
+      max-height: none; }
+    .text-block.artist-exhibition-list p {
+      margin-bottom: 0; }
+      .text-block.artist-exhibition-list p:before {
+        content: "\2014";
+        margin-right: 15px; }
   .text-block p {
     margin-bottom: 10px; }
     @media only screen and (max-width: 750px) {
@@ -414,6 +419,16 @@ a:focus {
         -webkit-transition: all 0.2s ease-in-out;
         -webkit-transition-delay: 0s;
         transition: all 0.2s ease-in-out 0s; }
+
+#collapse-button {
+  font-size: 0.84615em;
+  line-height: 1.72727em; }
+  @media only screen and (max-width: 750px) {
+    #collapse-button {
+      width: 100%;
+      float: left;
+      margin-left: 0;
+      margin-right: 0; } }
 
 header {
   display: inline-block;
@@ -828,7 +843,12 @@ section.exhibition-year div:last-child {
   right: 15px; }
   #imagelightbox-close:hover {
     cursor: pointer;
-    opacity: 0.8; }
+    opacity: 0.4;
+    -moz-transition: all 0.2s ease-in-out 0s;
+    -o-transition: all 0.2s ease-in-out 0s;
+    -webkit-transition: all 0.2s ease-in-out;
+    -webkit-transition-delay: 0s;
+    transition: all 0.2s ease-in-out 0s; }
 
 .imagelightbox-arrow {
   width: 10%;
@@ -840,7 +860,12 @@ section.exhibition-year div:last-child {
   font-size: 13px; }
   .imagelightbox-arrow:hover {
     cursor: pointer;
-    opacity: 0.8; }
+    opacity: 0.4;
+    -moz-transition: all 0.2s ease-in-out 0s;
+    -o-transition: all 0.2s ease-in-out 0s;
+    -webkit-transition: all 0.2s ease-in-out;
+    -webkit-transition-delay: 0s;
+    transition: all 0.2s ease-in-out 0s; }
 
 .imagelightbox-arrow-right {
   right: 0;
@@ -875,28 +900,35 @@ section.exhibition-year div:last-child {
     #slider-text-box p:first-of-type:before {
       content: none; }
 
-.homepage-exhibition {
-  width: 49%;
-  margin-right: 2%;
-  float: left; }
-  .homepage-exhibition:nth-of-type(2) {
-    margin-right: 0; }
-  .homepage-exhibition:hover {
+@media only screen and (min-width: 951px) {
+  .homepage-exhibition {
+    width: 49.23077%;
+    margin-right: 1.53846%;
+    float: left; } }
+@media only screen and (max-width: 500px) {
+  .homepage-exhibition {
+    margin-bottom: 20px; } }
+.homepage-exhibition:nth-of-type(2) {
+  float: right;
+  margin-right: 0; }
+.homepage-exhibition__inside {
+  height: 0;
+  width: 100%;
+  padding-bottom: 67%;
+  background: no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; }
+.homepage-exhibition__text {
+  margin-top: 12px; }
+  .homepage-exhibition__text:hover {
     opacity: 0.4;
     -moz-transition: all 0.2s ease-in-out 0s;
     -o-transition: all 0.2s ease-in-out 0s;
     -webkit-transition: all 0.2s ease-in-out;
     -webkit-transition-delay: 0s;
     transition: all 0.2s ease-in-out 0s; }
-  .homepage-exhibition__inside {
-    height: 0;
-    width: 100%;
-    padding-bottom: 67%;
-    background: no-repeat center center;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover; }
 
 .hidden {
   display: none !important;

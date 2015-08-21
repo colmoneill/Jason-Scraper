@@ -3,19 +3,29 @@
 // --------------------------------------------------
 
 .homepage-exhibition{
-	width: 49%;
-	margin-right: 2%;
-	float: left;
-	&:nth-of-type(2){
-		margin-right: 0;
+	@include mq-large{
+		width: (50% - (gutter(6) / 2));
+		margin-right: gutter(6);
+		float: left;
 	}
-	&:hover{
-		@include _hover;
+	@extend .col4__span2of4;
+	@extend .col2__span2of2;
+	@include mq(c){
+		margin-bottom: $margin-bottom;
+	}
+	&:nth-of-type(2){
+		@include last;
 	}
 	&__inside{
 		height: 0;
 		width: 100%;
 		padding-bottom: $image_ratio;
 		@include background-cover;
+	}
+	&__text{
+		margin-top: 12px;
+		&:hover{
+			@include _hover;
+		}
 	}
 }

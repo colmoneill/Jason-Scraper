@@ -25,6 +25,11 @@ $(document).ready(function() {
 		});
 	});
 	
+	$('#collapse-bttn').click(function() {
+		$('#exhib-list').toggleClass('list-open');
+		console.log("Hello");
+	});
+	
  
 	function onScroll(event){
 		var scrollPosition = $(document).scrollTop();

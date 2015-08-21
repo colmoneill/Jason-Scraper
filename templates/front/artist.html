@@ -50,12 +50,12 @@
 			{{ artist.wysiwig_artist_bio|markdown }}
 			{% endif %}
 		</div>
-		<div class="text-block artist-exhibition-list">
 			{% if artist.wysiwig_artist_exhibitions_list %}
+		<div class="text-block artist-exhibition-list" id="exhib-list">
 			{{ artist.wysiwig_artist_exhibitions_list|markdown }}
-			<h2><a class="button" href="#">click to expand and read more</a></h2>
-			{% endif %}
 		</div>
+		<h2 id="collapse-button"><a id="collapse-bttn" href="javascript:void(0)">click to expand and read more</a></h2>
+			{% endif %}
 	    </section>
 		 <section class="subcontent__all-col informations" id="media">
 		 <div class="separation-rule"></div>

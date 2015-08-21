@@ -4,33 +4,36 @@
 	{% block body %}
 	{% for exhibition in exhibition_32 %}
 		<div class="homepage-exhibition">
-		<h3>32</h3>
 			<a href="/exhibition/{{ exhibition.slug }}/">
 				<div class="homepage-exhibition__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
-
-				{% if exhibition.is_group_expo %}
-					<h1>{{ exhibition.exhibition_name }} (group exhibition)</h1>
-				{% else %}
-					<h1>{{ exhibition.artist.name }}</h1>
-					<h2>{{ exhibition.exhibition_name }}</h2>
-				{% endif %}
-				<h4> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </h4>
+				<div class="homepage-exhibition__text">
+					{% if exhibition.is_group_expo %}
+						<h1>{{ exhibition.exhibition_name }} (group exhibition)</h1>
+					{% else %}
+						<h1>{{ exhibition.artist.name }}</h1>
+						<h2>{{ exhibition.exhibition_name }}</h2>
+					{% endif %}
+					<h4> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </h4>
+					<h5>Rue de Livourne 32 Livornostraat</h5>
+				</div>
 			</a>
 		</div>
 	{% endfor %}
 
 	{% for exhibition in exhibition_35 %}
 		<div class="homepage-exhibition">
-			<h3>35</h3>
 			<a href="/exhibition/{{ exhibition.slug }}/">
 				<div class="homepage-exhibition__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
-				{% if exhibition.is_group_expo %}
-					<h1>{{ exhibition.exhibition_name }} (group exhibition)</h1>
-				{% else %}
-					<h1>{{ exhibition.artist.name }}</h1>
-					<h2>{{ exhibition.exhibition_name }}</h2>
-				{% endif %}
-				<h4> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </h4>
+				<div class="homepage-exhibition__text">
+					{% if exhibition.is_group_expo %}
+						<h1>{{ exhibition.exhibition_name }} (group exhibition)</h1>
+					{% else %}
+						<h1>{{ exhibition.artist.name }}</h1>
+						<h2>{{ exhibition.exhibition_name }}</h2>
+					{% endif %}
+					<h4> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </h4>
+					<h5>Rue de Livourne 35 Livornostraat</h5>
+				</div>
 			</a>
 		</div>
 	{% endfor %}
