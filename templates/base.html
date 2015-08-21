@@ -16,11 +16,11 @@
 	<header>
 		<nav class="nav-collapse">
 			<ul>
-				<li><a href="/current/">current</a></li>
-				<li><a href="/past/">past</a></li>
-				<li><a href="/upcoming/">upcoming</a></li>
-				<li><a href="/artists/">artists</a></li>
-				<li><a href="/gallery/">gallery</a></li>
+				<li class="{% block nav_current %}{% endblock %}"><a href="/current/">current</a></li>
+				<li class="{% block nav_past %}{% endblock %}"><a href="/past/">past</a></li>
+				<li class="{% block nav_upcoming %}{% endblock %}"><a href="/upcoming/">upcoming</a></li>
+				<li class="{% block nav_artists %}{% endblock %}"><a href="/artists/">artists</a></li>
+				<li class="{% block nav_gallery %}{% endblock %}"><a href="/gallery/">gallery</a></li>
 			</ul>
 		</nav>
 
