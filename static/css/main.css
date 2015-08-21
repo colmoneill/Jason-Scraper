@@ -474,9 +474,11 @@ nav {
         margin-right: 20px; } }
     nav li:last-of-type {
       margin-right: 0px; }
-    nav li a:hover {
+    nav li a:hover, nav li.active a {
       border-bottom: 1px solid #323232;
       padding-bottom: 6px; }
+    nav li.active a:hover {
+      border-bottom: 1px dotted #323232; }
   @media only screen and (max-width: 750px) {
     nav {
       width: 100%;
@@ -492,13 +494,15 @@ nav {
           clear: both;
           padding-bottom: 10px;
           padding-right: 10px; }
-          nav ul li a:hover {
+          nav ul li a:hover, nav ul li.active a {
             opacity: 0.4;
             -moz-transition: all 0.2s ease-in-out 0s;
             -o-transition: all 0.2s ease-in-out 0s;
             -webkit-transition: all 0.2s ease-in-out;
             -webkit-transition-delay: 0s;
             transition: all 0.2s ease-in-out 0s;
+            border-bottom: none; }
+          nav ul li.active a:hover {
             border-bottom: none; } }
 
 .nav-toggle {
