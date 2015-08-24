@@ -50,7 +50,6 @@ $(document).ready(function() {
 	
 	$( function()
 	{
-		
 			// OVERLAY
 
 			overlayOn = function()
@@ -89,8 +88,10 @@ $(document).ready(function() {
 				var artwork_year = $( source_image_location ).attr( 'data-artworkyear' );
 				var artwork_medium = $( source_image_location ).attr( 'data-artworkmedium' ); 
 				var artwork_dimensions = $( source_image_location ).attr( 'data-artworkdimensions' ); 
+				var installation_group = $( source_image_location ).attr( 'data-installation-group' ); 
+				var installation_solo = $( source_image_location ).attr( 'data-installation-solo' ); 
 				
-				var artwork_data = [artwork_group_name, artwork_gorup_artist, artwork_artist, artwork_year, artwork_medium, artwork_dimensions];
+				var artwork_data = [artwork_group_name, artwork_gorup_artist, artwork_artist, artwork_year, artwork_medium, artwork_dimensions, installation_group, installation_solo];
 				 
 				$( '<div id="imagelightbox-caption"></div>' ).appendTo( '#slider-text-box' );
 				
@@ -152,9 +153,17 @@ $(document).ready(function() {
 
 			arrowsOn = function( instance, selector )
 			{
-				var $arrows = $( '<div class="imagelightbox-arrow imagelightbox-arrow-left">&#139; previous</div><div class="imagelightbox-arrow imagelightbox-arrow-right">next &#155;</div>' );
+				var $arrows = $( '<div class="imagelightbox-arrow imagelightbox-arrow-left"><p>&#139; previous</p></div><div class="imagelightbox-arrow imagelightbox-arrow-right"><p>next &#155;</p></div>' );
 
 				$arrows.appendTo( 'body' );
+				
+				getArrowsHeight = function() {
+					$arrows.css({'height':($("#slider-text-box").height()+'px')});
+				};
+				
+				$(window).resize(function() {
+					getArrowsHeight();
+				});
 
 				$arrows.on( 'click touchend', function( e )
 				{
@@ -203,7 +212,7 @@ $(document).ready(function() {
 			    onStart:		function() { overlayOn(); closeButtonOn( instanceF ); arrowsOn( instanceF, selectorF ); },
 				onEnd:			function() { overlayOff(); captionOff(); closeButtonOff(); arrowsOff(); },
 				onLoadStart: 	function() { captionOff(); },
-				onLoadEnd:	 	function() { captionOn(); $( '.imagelightbox-arrow' ).css( 'display', 'block' ); }
+				onLoadEnd:	 	function() { captionOn(); $( '.imagelightbox-arrow' ).css( 'display', 'block' ); getArrowsHeight() }
 
         	});
 		});

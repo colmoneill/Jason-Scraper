@@ -6,21 +6,21 @@
 {% block body %}
 
 	<div class="container">
-		<div class="all-col">
+		<div class="all-col title-block">
 			<h1>{{ artist.name }}</h1>
 		</div>
 		<div class="subnav" id="sidebar">
 			<ul>
 				<li><a class="go-to-anchor" href="#images">images</a></li>
-				<li><a class="go-to-anchor" href="#info">information</a></li>
-				<li><a class="go-to-anchor" href="#bio">biography</a></li>
+				<li><a class="go-to-anchor subnav__information" href="#info"></a></li>
+				<li><a class="go-to-anchor subnav__biography" href="#bio"></a></li>
 				<li><a class="go-to-anchor" href="#exhibition">exhibitions</a></li>
 				<li><a class="go-to-anchor" href="#media">media</a></li>
 			</ul>
 		</div>
 		<div class="subcontent">
-	    <section class="subcontent__all-col" id="images">
-			<div class="separation-rule"></div>
+	    <section class="subcontent__all-col margin-top-on-mobile" id="images">
+			<div class="separation-rule not-mobile"></div>
 				<div>
 					{% for image in artworks %}
 						<div class="image-block">

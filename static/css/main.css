@@ -1,5 +1,5 @@
 html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, .text-block h1, .download-block h1, h6, p, blockquote, pre,
+h1, h2, .homepage-exhibition__text--dash, h3, h4, h5, .text-block h1, .download-block h1, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
@@ -57,7 +57,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .font-body, body, .subnav ul li a.points-to:before, .subnav ul li a:hover:before, .newsletter input {
   font-family: "Maax-Regular", Helvetica, sans-serif; }
 
-.font-bold, h1, h3, .text-block h2 {
+.font-bold, h1, h3, .text-block h2, .text-block .homepage-exhibition__text--dash {
   font-family: "Maax-Medium", Helvetica, sans-serif; }
 
 .font-mono, h4, h5, .text-block h1, .download-block h1, h6, .subnav, .staff_member__mail, #imagelightbox-close, .imagelightbox-arrow, #slider-text-box p {
@@ -136,7 +136,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     float: left;
     margin-right: 2.32558%; } }
 @media (min-width: 951px) {
-  .col5__span3of4, .text-block h2, .text-block p, #collapse-button, .download-block__text {
+  .col5__span3of4, .text-block h2, .text-block .homepage-exhibition__text--dash, .text-block p, #collapse-button, .download-block__text {
     width: 74.4186%;
     float: left;
     margin-right: 2.32558%; } }
@@ -195,7 +195,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     float: left;
     margin-right: 3.84615%; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4__span2of3, .text-block h2, .text-block p, #collapse-button, .download-block__text {
+  .col4__span2of3, .text-block h2, .text-block .homepage-exhibition__text--dash, .text-block p, #collapse-button, .download-block__text {
     width: 65.38462%;
     float: left;
     margin-right: 3.84615%; } }
@@ -238,12 +238,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     float: left;
     margin-right: 4.0%; } }
 @media (min-width: 0) and (max-width: 500px) {
-  .col2__span2of2, .all-col, .subcontent, .subcontent__all-col, .text-block h1, .text-block h2, .text-block p, #collapse-button, .download-block h1, .download-block__text, .subnav, .artist-block, .gallery__left, .gallery__right, .gallery__left .text-block h5, .gallery__left .text-block h1, .gallery__left .text-block p, .newsletter, .homepage-exhibition {
+  .col2__span2of2, .all-col, .subcontent, .subcontent__all-col, .text-block h1, .text-block h2, .text-block .homepage-exhibition__text--dash, .text-block p, #collapse-button, .download-block h1, .download-block__text, .subnav, .artist-block, .gallery__left, .gallery__right, .gallery__left .text-block h5, .gallery__left .text-block h1, .gallery__left .text-block p, .newsletter, .homepage-exhibition {
     width: 100%;
     float: left;
     margin-left: 0;
     margin-right: 0; } }
-.last, .text-block h2, .text-block p, #collapse-button, .download-block__text, .subnav {
+.last, .text-block h2, .text-block .homepage-exhibition__text--dash, .text-block p, #collapse-button, .download-block__text, .subnav {
   float: right;
   margin-right: 0; }
 
@@ -319,14 +319,11 @@ body {
   .separation-rule.light-border, .light-border.subnav {
     border-top-color: #c8c8c8; }
 
-h1, h2 {
-  text-transform: capitalize; }
-
 h1 {
   font-size: 1.38462em;
   line-height: 1.58333em; }
 
-h2 {
+h2, .homepage-exhibition__text--dash {
   font-size: 1.23077em;
   line-height: 1.78125em;
   margin-top: -4px; }
@@ -376,21 +373,21 @@ a:focus {
       float: left;
       margin-left: 0;
       margin-right: 0; } }
-  .text-block h2 {
+  .text-block h2, .text-block .homepage-exhibition__text--dash {
     font-size: 0.84615em;
     line-height: 1.72727em;
     margin-bottom: 10px;
     margin-top: 11px; }
     @media only screen and (max-width: 750px) {
-      .text-block h2 {
+      .text-block h2, .text-block .homepage-exhibition__text--dash {
         width: 100%;
         float: left;
         margin-left: 0;
         margin-right: 0; } }
-    .text-block h2:first-of-type {
+    .text-block h2:first-of-type, .text-block .homepage-exhibition__text--dash:first-of-type {
       margin-top: 0; }
   .text-block.artist-exhibition-list {
-    max-height: 60px;
+    max-height: 80px;
     overflow: hidden; }
     .text-block.artist-exhibition-list.list-open {
       max-height: none; }
@@ -472,7 +469,7 @@ header {
       margin-top: 20px; } }
   @media only screen and (max-width: 500px) {
     header {
-      margin-bottom: 50px; } }
+      margin-bottom: 40px; } }
 
 #logo {
   width: 280px;
@@ -581,6 +578,16 @@ nav {
   text-transform: uppercase;
   text-align: right;
   padding-top: 10px; }
+  .subnav__information:after {
+    content: "information"; }
+    @media only screen and (max-width: 500px) {
+      .subnav__information:after {
+        content: "info"; } }
+  .subnav__biography:after {
+    content: "biography"; }
+    @media only screen and (max-width: 500px) {
+      .subnav__biography:after {
+        content: "bio"; } }
   @media only screen and (max-width: 500px) {
     .subnav {
       text-align: left;
@@ -588,7 +595,9 @@ nav {
       border-bottom: 1px solid #7a7a7a;
       border-bottom-style: dashed;
       padding-bottom: 10px;
-      margin-top: 0; } }
+      margin-top: 0;
+      z-index: 99;
+      margin-bottom: -13px; } }
   @media only screen and (max-width: 500px) {
     .subnav.is_stuck {
       border-top: none; } }
@@ -661,6 +670,14 @@ nav {
       float: right;
       margin-right: 0; } }
 
+@media only screen and (max-width: 500px) {
+  .title-block {
+    margin-bottom: 20px; } }
+
+@media only screen and (max-width: 500px) {
+  .margin-top-on-mobile {
+    padding-top: 40px; } }
+
 .image-flex {
   display: flex;
   flex-wrap: wrap;
@@ -672,7 +689,7 @@ nav {
 section.informations div:last-child {
   margin-bottom: 0; }
 
-.exhibition-block a:hover > h1, .exhibition-block a:hover > h2, .exhibition-block a:hover > h4, .exhibition-block a:hover > .exhibition-block__image {
+.exhibition-block a:hover > h1, .exhibition-block a:hover > h2, .exhibition-block a:hover > .homepage-exhibition__text--dash, .exhibition-block a:hover > h4, .exhibition-block a:hover > .exhibition-block__image {
   opacity: 0.4;
   -moz-transition: all 0.2s ease-in-out 0s;
   -o-transition: all 0.2s ease-in-out 0s;
@@ -710,8 +727,13 @@ section.exhibition-year div:last-child {
     .artist-block:nth-of-type(-n+4) {
       margin-top: 0; } }
   @media only screen and (min-width: 0) and (max-width: 500px) {
-    .artist-block:first-of-type {
-      margin-top: 0; } }
+    .artist-block {
+      font-size: 1.38462em;
+      line-height: 1.58333em;
+      font-family: "Maax-Medium", Helvetica, sans-serif;
+      margin-top: 5px; }
+      .artist-block:first-of-type {
+        margin-top: 0; } }
   .artist-block a {
     display: inline-block;
     width: 100%; }
@@ -866,13 +888,19 @@ section.exhibition-year div:last-child {
     transition: all 0.2s ease-in-out 0s; }
 
 .imagelightbox-arrow {
-  width: 10%;
-  height: 30px;
+  width: 15%;
   display: none;
   position: fixed;
   z-index: 10001;
   bottom: 0;
   font-size: 13px; }
+  .imagelightbox-arrow p {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    padding-bottom: 5px; }
   .imagelightbox-arrow:hover {
     cursor: pointer;
     opacity: 0.4;
@@ -881,6 +909,12 @@ section.exhibition-year div:last-child {
     -webkit-transition: all 0.2s ease-in-out;
     -webkit-transition-delay: 0s;
     transition: all 0.2s ease-in-out 0s; }
+  @media only screen and (max-width: 750px) {
+    .imagelightbox-arrow {
+      width: 25%; } }
+  @media only screen and (max-width: 500px) {
+    .imagelightbox-arrow {
+      display: none !important; } }
 
 .imagelightbox-arrow-right {
   right: 0;
@@ -899,14 +933,26 @@ section.exhibition-year div:last-child {
   width: 100%;
   z-index: 10000;
   border-top: 1px solid #7a7a7a; }
+  @media only screen and (max-width: 750px) {
+    #slider-text-box {
+      min-height: 74px; } }
   #slider-text-box #imagelightbox-caption {
     text-align: center;
     z-index: 10001;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 15%;
+    margin-right: 15%;
     bottom: 0;
-    width: 80%;
+    width: 70%;
     padding: 8px; }
+    @media only screen and (max-width: 750px) {
+      #slider-text-box #imagelightbox-caption {
+        width: 50%;
+        margin-left: 25%;
+        margin-right: 25%; } }
+    @media only screen and (max-width: 500px) {
+      #slider-text-box #imagelightbox-caption {
+        width: 80%;
+        margin: 0 10%; } }
   #slider-text-box p {
     display: inline;
     color: black; }
@@ -922,7 +968,7 @@ section.exhibition-year div:last-child {
     float: left; } }
 @media only screen and (max-width: 500px) {
   .homepage-exhibition {
-    margin-bottom: 20px; } }
+    margin-bottom: 40px; } }
 .homepage-exhibition:nth-of-type(2) {
   float: right;
   margin-right: 0; }
@@ -936,7 +982,19 @@ section.exhibition-year div:last-child {
   -o-background-size: cover;
   background-size: cover; }
 .homepage-exhibition__text {
-  margin-top: 12px; }
+  margin-top: 20px;
+  display: inline-block; }
+  .homepage-exhibition__text h5, .homepage-exhibition__text .text-block h1, .text-block .homepage-exhibition__text h1, .homepage-exhibition__text .download-block h1, .download-block .homepage-exhibition__text h1 {
+    margin-bottom: 0; }
+  .homepage-exhibition__text--dash {
+    margin-top: -2px;
+    margin-bottom: -3px; }
+  .homepage-exhibition__text--line {
+    width: 10px;
+    height: 0;
+    margin-top: 9px;
+    margin-bottom: 9px;
+    border-top: 1px solid #7a7a7a; }
   .homepage-exhibition__text:hover {
     opacity: 0.4;
     -moz-transition: all 0.2s ease-in-out 0s;
@@ -1015,10 +1073,11 @@ section.exhibition-year div:last-child {
 
   p,
   h2,
+  .homepage-exhibition__text--dash,
   h3 {
     orphans: 3;
     widows: 3; }
 
-  h2,
+  h2, .homepage-exhibition__text--dash,
   h3 {
     page-break-after: avoid; } }

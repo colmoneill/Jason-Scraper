@@ -11,7 +11,7 @@
 	@extend .col4__span2of4;
 	@extend .col2__span2of2;
 	@include mq(c){
-		margin-bottom: $margin-bottom;
+		margin-bottom: 40px;
 	}
 	&:nth-of-type(2){
 		@include last;
@@ -23,7 +23,23 @@
 		@include background-cover;
 	}
 	&__text{
-		margin-top: 12px;
+		margin-top: 20px;
+		display: inline-block;
+		h5{
+			margin-bottom: 0;
+		}
+		&--dash{
+			@extend h2;
+			margin-top: -2px;
+			margin-bottom: -3px;
+		}
+		&--line{
+			width: 10px;
+			height: 0;
+			margin-top: 9px;
+			margin-bottom: 9px;
+			border-top: $rule-style
+		}
 		&:hover{
 			@include _hover;
 		}

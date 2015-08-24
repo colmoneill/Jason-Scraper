@@ -28,6 +28,9 @@
 		}
 	}
 	@include mq-small{
+		@include adjust-font-size-to(18px);
+		font-family: "Maax-Medium", Helvetica, sans-serif;
+		margin-top: 5px;
 		&:first-of-type{
 			margin-top: 0;
 		}

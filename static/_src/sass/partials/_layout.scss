@@ -102,7 +102,6 @@ p{
 
 // HEADINGS
 h1, h2{
-	text-transform: capitalize;
 }
 
 h1{
@@ -191,7 +190,7 @@ a:focus				{outline: none;}
 		}
 	}
 	&.artist-exhibition-list{
-		max-height: 60px;
+		max-height: 80px;
 		overflow: hidden;
 		&.list-open{
 			max-height: none;

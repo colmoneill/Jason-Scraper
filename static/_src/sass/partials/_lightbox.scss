@@ -37,8 +37,7 @@
 }
 
 .imagelightbox-arrow {
-    width: 10%;
-    height: 30px;
+    width: 15%;
     //background-color: #444;
     display: none;
     position: fixed;
@@ -46,9 +45,19 @@
     bottom: 0;
     font-size: 13px;
     @extend .font-mono;
+    p{
+	    @include vertical-align;
+	    padding-bottom: 5px;
+    }
     &:hover{
 	    cursor: pointer;
 	    @include _hover;
+    }
+    @include mq(b){
+	    width: 25%;
+    }
+    @include mq(c){
+	    display: none !important;
     }
 }
 
@@ -72,14 +81,26 @@
 	width: 100%;
 	z-index: 10000;
 	border-top: $rule-style;
+	@include mq(b){
+		min-height: 74px;
+	}
 	#imagelightbox-caption {
 	    text-align: center;
 	    z-index: 10001;
-	    margin-left: 10%;
-	    margin-right: 10%;
+	    margin-left: 15%;
+	    margin-right: 15%;
 	    bottom: 0;
-	    width: 80%;
+	    width: 70%;
 	    padding: 8px;
+	    @include mq(b){
+		    width: 50%;
+		    margin-left: 25%;
+			margin-right: 25%;
+	    }
+	    @include mq(c){
+		    width: 80%;
+		    margin: 0 10%;
+	    }
 	}
 	p{
 		display: inline;

@@ -52,6 +52,18 @@
 	}
 }
 
+.title-block{
+	@include mq(c){
+		margin-bottom: $margin-bottom;
+	}
+}
+
+.margin-top-on-mobile{
+	@include mq(c){
+		padding-top: 40px;
+	}
+}
+
 
 //Test 
 .image-flex{

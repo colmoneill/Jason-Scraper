@@ -30,6 +30,18 @@
 	text-transform: uppercase;
 	text-align: right;
 	padding-top: 10px;
+	&__information:after{
+		content: "information";
+		@include mq(c){
+			content: "info";
+		}
+	}
+	&__biography:after{
+		content: "biography";
+		@include mq(c){
+			content: "bio";
+		}
+	}
 	//
 	@include mq(c){
 		text-align: left;
@@ -38,6 +50,8 @@
 		border-bottom-style: dashed;
 		padding-bottom: 10px;
 		margin-top: 0;
+		z-index: 99;
+		margin-bottom: -13px;
 	}
 	//
 	&.is_stuck{
