@@ -226,10 +226,58 @@ a:focus				{outline: none;}
 
 #collapse-button{
 	@extend .col5__span3of4;
+	@extend .col4__span2of3;
+	@include full_on_mq_b;
+	@extend .col2__span2of2;
+	@extend .last;
+	a{
+		border-bottom: 1px solid transparent;
+		display: inline-block;
+		&:before{
+			content: "Click to expand and read more";
+		}
+		&.list-open:before{
+			content: "Click to collapse";
+		}
+		&:hover{
+			@include _hover;
+			border-bottom-color: $body-color;
+		}
+	}
+}
+
+
+// :: Download Block
+// ------------------------------------------------------------
+
+.download-block{
+	margin-bottom: $margin_bottom;
+	@extend .clearfix;
+	h1{
+		@extend h5;
+		@extend .col5__span1of4;
+		@extend .col4__span1of3;
+		@extend .col2__span2of2;
+	}
+	h3{
+		display: inline-block;
+	}
+	&__text{
+		@extend .col5__span3of4;
 		@extend .col4__span2of3;
-		@include full_on_mq_b;
 		@extend .col2__span2of2;
 		@extend .last;
-		@include adjust-font-size-to(11px);
-		@extend .font-bold;
+	}	
+	&__details{
+		display: inline;
+		margin-left: 8px;
+	}
+	a{
+		border-bottom: 1px solid transparent;
+		display: inline-block;
+		&:hover{
+			@include _hover;
+			border-bottom-color: $body-color;
+		}
+	}
 }

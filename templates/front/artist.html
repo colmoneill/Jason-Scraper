@@ -11,11 +11,11 @@
 		</div>
 		<div class="subnav" id="sidebar">
 			<ul>
-				<li><a href="#images">images</a></li>
-				<li><a href="#info">information</a></li>
-				<li><a href="#bio">biography</a></li>
-				<li><a href="#">exhibitions</a></li>
-				<li><a href="#media">media</a></li>
+				<li><a class="go-to-anchor" href="#images">images</a></li>
+				<li><a class="go-to-anchor" href="#info">information</a></li>
+				<li><a class="go-to-anchor" href="#bio">biography</a></li>
+				<li><a class="go-to-anchor" href="#exhibition">exhibitions</a></li>
+				<li><a class="go-to-anchor" href="#media">media</a></li>
 			</ul>
 		</div>
 		<div class="subcontent">
@@ -55,8 +55,10 @@
 		<div class="text-block artist-exhibition-list" id="exhib-list">
 			{{ artist.wysiwig_artist_exhibitions_list|markdown }}
 		</div>
-		<h2 id="collapse-button"><a id="collapse-bttn" href="javascript:void(0)">click to expand and read more</a></h2>
+		<h3 id="collapse-button"><a id="collapse-bttn" href="javascript:void(0)"></a></h3>
 			{% endif %}
+	    </section>
+	    <section class="subcontent__all-col" id="exhibition">
 	    </section>
 		 <section class="subcontent__all-col informations" id="media">
 		 <div class="separation-rule"></div>

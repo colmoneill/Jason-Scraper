@@ -15,15 +15,15 @@
   </div>
   <div class="subnav" id="sidebar">
     <ul>
-      <li><a href="#images">Images</a></li>
-      <li><a href="#presentation">presentation</a></li>
+      <li><a class="go-to-anchor" href="#images">Images</a></li>
+      <li><a class="go-to-anchor" href="#presentation">presentation</a></li>
       {% if exhibition.is_group_expo %}
-        <li><a href="#artists">artists</a>
+        <li><a class="go-to-anchor" href="#artists">artists</a>
       {% else %}
         <li><a href="/artist/{{ exhibition.artist.slug }}">artist's page</a>
       {% endif %}
       {% if exhibition.iframe1 %}
-        <li><a href="#media">Media</a></li>
+        <li><a class="go-to-anchor" href="#media">Media</a></li>
       {% endif %}
     </ul>
   </div>

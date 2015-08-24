@@ -27,13 +27,13 @@ $(document).ready(function() {
 	
 	$('#collapse-bttn').click(function() {
 		$('#exhib-list').toggleClass('list-open');
-		console.log("Hello");
+		$(this).toggleClass('list-open');
 	});
 	
  
 	function onScroll(event){
 		var scrollPosition = $(document).scrollTop();
-		$('.subnav a').each(function () {
+		$('.subnav a.go-to-anchor').each(function () {
 			var currentLink = $(this);
 			var refElement = $(currentLink.attr("href"));
 			if (refElement.position().top <= scrollPosition && refElement.position().top + refElement.height()  > scrollPosition) {

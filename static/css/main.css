@@ -57,7 +57,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .font-body, body, .subnav ul li a.points-to:before, .subnav ul li a:hover:before, .newsletter input {
   font-family: "Maax-Regular", Helvetica, sans-serif; }
 
-.font-bold, h1, h3, .text-block h2, #collapse-button {
+.font-bold, h1, h3, .text-block h2 {
   font-family: "Maax-Medium", Helvetica, sans-serif; }
 
 .font-mono, h4, h5, .text-block h1, .download-block h1, h6, .subnav, .staff_member__mail, #imagelightbox-close, .imagelightbox-arrow, #slider-text-box p {
@@ -126,7 +126,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 951px) {
-  .col5__span1of4, .text-block h1, .image-block, .download-block h1 {
+  .col5__span1of4, .text-block h1, .download-block h1, .image-block {
     width: 23.25581%;
     float: left;
     margin-right: 2.32558%; } }
@@ -190,7 +190,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4__span1of3, .text-block h1, .image-block, .download-block h1 {
+  .col4__span1of3, .text-block h1, .download-block h1, .image-block {
     width: 30.76923%;
     float: left;
     margin-right: 3.84615%; } }
@@ -238,12 +238,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     float: left;
     margin-right: 4.0%; } }
 @media (min-width: 0) and (max-width: 500px) {
-  .col2__span2of2, .all-col, .subcontent, .subcontent__all-col, .text-block h1, .text-block h2, .text-block p, #collapse-button, .subnav, .download-block h1, .download-block__text, .artist-block, .gallery__left, .gallery__right, .gallery__left .text-block h5, .gallery__left .text-block h1, .gallery__left .text-block p, .newsletter, .homepage-exhibition {
+  .col2__span2of2, .all-col, .subcontent, .subcontent__all-col, .text-block h1, .text-block h2, .text-block p, #collapse-button, .download-block h1, .download-block__text, .subnav, .artist-block, .gallery__left, .gallery__right, .gallery__left .text-block h5, .gallery__left .text-block h1, .gallery__left .text-block p, .newsletter, .homepage-exhibition {
     width: 100%;
     float: left;
     margin-left: 0;
     margin-right: 0; } }
-.last, .text-block h2, .text-block p, #collapse-button, .subnav, .download-block__text {
+.last, .text-block h2, .text-block p, #collapse-button, .download-block__text, .subnav {
   float: right;
   margin-right: 0; }
 
@@ -420,15 +420,46 @@ a:focus {
         -webkit-transition-delay: 0s;
         transition: all 0.2s ease-in-out 0s; }
 
-#collapse-button {
-  font-size: 0.84615em;
-  line-height: 1.72727em; }
-  @media only screen and (max-width: 750px) {
-    #collapse-button {
-      width: 100%;
-      float: left;
-      margin-left: 0;
-      margin-right: 0; } }
+@media only screen and (max-width: 750px) {
+  #collapse-button {
+    width: 100%;
+    float: left;
+    margin-left: 0;
+    margin-right: 0; } }
+#collapse-button a {
+  border-bottom: 1px solid transparent;
+  display: inline-block; }
+  #collapse-button a:before {
+    content: "Click to expand and read more"; }
+  #collapse-button a.list-open:before {
+    content: "Click to collapse"; }
+  #collapse-button a:hover {
+    opacity: 0.4;
+    -moz-transition: all 0.2s ease-in-out 0s;
+    -o-transition: all 0.2s ease-in-out 0s;
+    -webkit-transition: all 0.2s ease-in-out;
+    -webkit-transition-delay: 0s;
+    transition: all 0.2s ease-in-out 0s;
+    border-bottom-color: #323232; }
+
+.download-block {
+  margin-bottom: 20px; }
+  .download-block h3 {
+    display: inline-block; }
+  .download-block__details {
+    display: inline;
+    margin-left: 8px; }
+  .download-block a {
+    border-bottom: 1px solid transparent;
+    display: inline-block; }
+    .download-block a:hover {
+      opacity: 0.4;
+      -moz-transition: all 0.2s ease-in-out 0s;
+      -o-transition: all 0.2s ease-in-out 0s;
+      -webkit-transition: all 0.2s ease-in-out;
+      -webkit-transition-delay: 0s;
+      transition: all 0.2s ease-in-out 0s;
+      border-bottom-color: #323232; }
 
 header {
   display: inline-block;
@@ -640,26 +671,6 @@ nav {
 
 section.informations div:last-child {
   margin-bottom: 0; }
-
-.download-block {
-  margin-bottom: 20px; }
-  .download-block h3 {
-    display: inline-block; }
-  .download-block__details {
-    display: inline;
-    margin-left: 8px; }
-  .download-block a {
-    border-bottom: 1px solid transparent;
-    padding-bottom: 3px;
-    display: inline-block; }
-    .download-block a:hover {
-      opacity: 0.4;
-      -moz-transition: all 0.2s ease-in-out 0s;
-      -o-transition: all 0.2s ease-in-out 0s;
-      -webkit-transition: all 0.2s ease-in-out;
-      -webkit-transition-delay: 0s;
-      transition: all 0.2s ease-in-out 0s;
-      border-bottom-color: #323232; }
 
 .exhibition-block a:hover > h1, .exhibition-block a:hover > h2, .exhibition-block a:hover > h4, .exhibition-block a:hover > .exhibition-block__image {
   opacity: 0.4;
