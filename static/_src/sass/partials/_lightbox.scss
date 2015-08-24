@@ -53,7 +53,7 @@
 	    cursor: pointer;
 	    @include _hover;
     }
-    @include mq(b){
+    @include mq(a){
 	    width: 25%;
     }
     @include mq(c){
@@ -81,8 +81,11 @@
 	width: 100%;
 	z-index: 10000;
 	border-top: $rule-style;
-	@include mq(b){
+	@include mq(a){
 		min-height: 74px;
+	}
+	@include mq(c){
+		min-height: 93px;
 	}
 	#imagelightbox-caption {
 	    text-align: center;
@@ -92,7 +95,7 @@
 	    bottom: 0;
 	    width: 70%;
 	    padding: 8px;
-	    @include mq(b){
+	    @include mq(a){
 		    width: 50%;
 		    margin-left: 25%;
 			margin-right: 25%;
@@ -100,16 +103,19 @@
 	    @include mq(c){
 		    width: 80%;
 		    margin: 0 10%;
+		    text-align: left;
 	    }
 	}
 	p{
-		display: inline;
+		display: inline-block;
 		color: black;
 		@extend .font-mono;
-		&:before{
-			content: " / ";
+		white-space: nowrap;
+		&:after{
+			content: "\00a0/\00a0";
+			//content: ",\00a0";
 		}
-		&:first-of-type:before{
+		&:last-of-type:after{
 			content: none;
 		}
 	}

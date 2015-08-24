@@ -72,13 +72,12 @@
      {% if exhibition.is_group_expo %}
      <section class="subcontent__all-col" id="artists">
      	<div class="separation-rule"></div>
-        	<ul>
+     	<div class="group-exhibition-artists">
 				{% for artists in exhibition.artists %}
-				<li>{{ artists.name }}</li>
+				<p><a>{{ artists.name }}</a></p>
 				{% endfor %}
-
-				{{ exhibition.extra_artists }}
-            </ul>
+				<p>{{ exhibition.extra_artists }}</p>
+     	</div>
 	</section>
     {% else %}
 	{% endif %}

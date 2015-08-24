@@ -64,16 +64,29 @@
 	}
 }
 
-
-//Test 
-.image-flex{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  img{
-	  height: 150px;
-	  max-width: 400px;
-  }
+.group-exhibition-artists{
+	@include column-count(4);
+	@include column-gap(gutter(4));
+	@include mq(a){
+		@include column-count(3);
+	}
+	@include mq(b){
+		@include column-count(1);
+	}
+	a{
+		&:after{
+			content: " \2022";
+			margin-left: 5px;
+		}
+		&:hover{
+			@include _hover;
+		}
+	}
+	p{
+		@extend .font-bold;
+		@include adjust-font-size-to(15px);
+		line-height: 1.8;
+	}
 }
 
 

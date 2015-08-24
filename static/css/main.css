@@ -57,7 +57,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .font-body, body, .subnav ul li a.points-to:before, .subnav ul li a:hover:before, .newsletter input {
   font-family: "Maax-Regular", Helvetica, sans-serif; }
 
-.font-bold, h1, h3, .text-block h2, .text-block .homepage-exhibition__text--dash {
+.font-bold, h1, h3, .text-block h2, .text-block .homepage-exhibition__text--dash, .group-exhibition-artists p {
   font-family: "Maax-Medium", Helvetica, sans-serif; }
 
 .font-mono, h4, h5, .text-block h1, .download-block h1, h6, .subnav, .staff_member__mail, #imagelightbox-close, .imagelightbox-arrow, #slider-text-box p {
@@ -697,13 +697,37 @@ nav {
   .margin-top-on-mobile {
     padding-top: 40px; } }
 
-.image-flex {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between; }
-  .image-flex img {
-    height: 150px;
-    max-width: 400px; }
+.group-exhibition-artists {
+  -moz-column-count: 4;
+  -webkit-column-count: 4;
+  column-count: 4;
+  -moz-column-gap: 2.32558%;
+  -webkit-column-gap: 2.32558%;
+  column-gap: 2.32558%; }
+  @media only screen and (max-width: 950px) {
+    .group-exhibition-artists {
+      -moz-column-count: 3;
+      -webkit-column-count: 3;
+      column-count: 3; } }
+  @media only screen and (max-width: 750px) {
+    .group-exhibition-artists {
+      -moz-column-count: 1;
+      -webkit-column-count: 1;
+      column-count: 1; } }
+  .group-exhibition-artists a:after {
+    content: " \2022";
+    margin-left: 5px; }
+  .group-exhibition-artists a:hover {
+    opacity: 0.4;
+    -moz-transition: all 0.2s ease-in-out 0s;
+    -o-transition: all 0.2s ease-in-out 0s;
+    -webkit-transition: all 0.2s ease-in-out;
+    -webkit-transition-delay: 0s;
+    transition: all 0.2s ease-in-out 0s; }
+  .group-exhibition-artists p {
+    font-size: 1.15385em;
+    line-height: 1.26667em;
+    line-height: 1.8; }
 
 section.informations div:last-child {
   margin-bottom: 0; }
@@ -928,7 +952,7 @@ section.exhibition-year div:last-child {
     -webkit-transition: all 0.2s ease-in-out;
     -webkit-transition-delay: 0s;
     transition: all 0.2s ease-in-out 0s; }
-  @media only screen and (max-width: 750px) {
+  @media only screen and (max-width: 950px) {
     .imagelightbox-arrow {
       width: 25%; } }
   @media only screen and (max-width: 500px) {
@@ -952,9 +976,12 @@ section.exhibition-year div:last-child {
   width: 100%;
   z-index: 10000;
   border-top: 1px solid #7a7a7a; }
-  @media only screen and (max-width: 750px) {
+  @media only screen and (max-width: 950px) {
     #slider-text-box {
       min-height: 74px; } }
+  @media only screen and (max-width: 500px) {
+    #slider-text-box {
+      min-height: 93px; } }
   #slider-text-box #imagelightbox-caption {
     text-align: center;
     z-index: 10001;
@@ -963,7 +990,7 @@ section.exhibition-year div:last-child {
     bottom: 0;
     width: 70%;
     padding: 8px; }
-    @media only screen and (max-width: 750px) {
+    @media only screen and (max-width: 950px) {
       #slider-text-box #imagelightbox-caption {
         width: 50%;
         margin-left: 25%;
@@ -971,13 +998,15 @@ section.exhibition-year div:last-child {
     @media only screen and (max-width: 500px) {
       #slider-text-box #imagelightbox-caption {
         width: 80%;
-        margin: 0 10%; } }
+        margin: 0 10%;
+        text-align: left; } }
   #slider-text-box p {
-    display: inline;
-    color: black; }
-    #slider-text-box p:before {
-      content: " / "; }
-    #slider-text-box p:first-of-type:before {
+    display: inline-block;
+    color: black;
+    white-space: nowrap; }
+    #slider-text-box p:after {
+      content: "\00a0/\00a0"; }
+    #slider-text-box p:last-of-type:after {
       content: none; }
 
 @media only screen and (min-width: 951px) {
