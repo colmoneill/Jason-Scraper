@@ -190,16 +190,32 @@ a:focus				{outline: none;}
 		}
 	}
 	&.artist-exhibition-list{
-		max-height: 80px;
+		max-height: 120px;
 		overflow: hidden;
+		position: relative;
+		margin-bottom: 10px;
+		.bottom-gradient{
+			 position: absolute;
+			 bottom: 0;
+			 left: 0;
+			 width: 100%;
+			 @include background-image(linear-gradient(rgba(255,255,255,0), white));
+			 height: 25px;
+		}
 		&.list-open{
 			max-height: none;
+			.bottom-gradient{
+				 background-image: linear-gradient(to bottom, transparent, transparent);
+			}
 		}
 		p{
 			margin-bottom: 0;
+			padding-left: 25px;
 			&:before{
-				content: "\2014";
-				margin-right: 15px;
+				content: "\2014 ";
+				width: 25px;
+				margin-right: 14px;
+				margin-left: -25px;
 			}
 		}
 	}

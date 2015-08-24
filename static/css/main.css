@@ -387,15 +387,34 @@ a:focus {
     .text-block h2:first-of-type, .text-block .homepage-exhibition__text--dash:first-of-type {
       margin-top: 0; }
   .text-block.artist-exhibition-list {
-    max-height: 80px;
-    overflow: hidden; }
+    max-height: 120px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 10px; }
+    .text-block.artist-exhibition-list .bottom-gradient {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+      background-size: 100%;
+      background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(255, 255, 255, 0)), color-stop(100%, #ffffff));
+      background-image: -moz-linear-gradient(rgba(255, 255, 255, 0), #ffffff);
+      background-image: -webkit-linear-gradient(rgba(255, 255, 255, 0), #ffffff);
+      background-image: linear-gradient(rgba(255, 255, 255, 0), #ffffff);
+      height: 25px; }
     .text-block.artist-exhibition-list.list-open {
       max-height: none; }
+      .text-block.artist-exhibition-list.list-open .bottom-gradient {
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)); }
     .text-block.artist-exhibition-list p {
-      margin-bottom: 0; }
+      margin-bottom: 0;
+      padding-left: 25px; }
       .text-block.artist-exhibition-list p:before {
-        content: "\2014";
-        margin-right: 15px; }
+        content: "\2014 ";
+        width: 25px;
+        margin-right: 14px;
+        margin-left: -25px; }
   .text-block p {
     margin-bottom: 10px; }
     @media only screen and (max-width: 750px) {

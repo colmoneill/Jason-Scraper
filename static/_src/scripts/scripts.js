@@ -28,8 +28,7 @@ $(document).ready(function() {
 	$('#collapse-bttn').click(function() {
 		$('#exhib-list').toggleClass('list-open');
 		$(this).toggleClass('list-open');
-	});
-	
+	});	
  
 	function onScroll(event){
 		var scrollPosition = $(document).scrollTop();
