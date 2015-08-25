@@ -7,9 +7,9 @@
   <div class="all-col">
     <div class="subnav" id="sidebar">
 		<ul>
-        {% for dates in date %}
-        	<li><a class="" href="/past#{{ dates.start.year }}">{{ dates.start.year }}</a></li>
-        {% endfor %}
+      {% for exhibition in past_exhibition %}
+      <!--<li><a class="" href="/past">{{ exhibition.start.strftime('%Y') }}</a></li>-->
+      {% endfor %}
 		</ul>
 	</div>
     <div class="subcontent">

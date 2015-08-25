@@ -69,6 +69,10 @@ def login():
 ####################################################################################
 
 @app.route("/")
+def tempHome():
+    return render_template("front/temporaryhome.html")
+
+#@app.route("/")
 @app.route("/current/")
 @login_required
 def home():
@@ -95,8 +99,9 @@ def pastExhibitions():
         "is_published": True,
         "end": { "$lt": datetime.combine(date.today(), datetime.min.time()) }
     })
+    years_past = db.exhibitions.start.year.find()
 
-    return render_template("front/past.html", past_exhibition=past_exhibition)
+    return render_template("front/past.html", past_exhibition=past_exhibition, years_past=years_past)
 
 @app.route("/upcoming/")
 @login_required
