@@ -5,7 +5,7 @@
 	{% block body %}
 	
 	{% for exhibition in exhibition_35 %}
-		<div class="homepage-exhibition">
+		<div class="homepage-exhibition" id="exhibition__35">
 			<a href="/exhibition/{{ exhibition.slug }}/">
 				<div class="homepage-exhibition__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
 				<div class="homepage-exhibition__text">
@@ -24,7 +24,7 @@
 	{% endfor %}
 	
 	{% for exhibition in exhibition_32 %}
-		<div class="homepage-exhibition">
+		<div class="homepage-exhibition" id="exhibition__32">
 			<a href="/exhibition/{{ exhibition.slug }}/">
 				<div class="homepage-exhibition__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
 				<div class="homepage-exhibition__text">

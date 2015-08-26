@@ -25,6 +25,23 @@ $(document).ready(function() {
 		});
 	});
 	
+	$('#exhibition__35').hover(
+	  function(e) {
+	    $("#logo__35").css('display', 'block');
+	  },
+	  function(e) {
+	    $("#logo__35").css('display', 'none');
+	  }
+	);
+	$('#exhibition__32').hover(
+	  function(e) {
+	    $("#logo__32").css('display', 'block');
+	  },
+	  function(e) {
+	    $("#logo__32").css('display', 'none');
+	  }
+	);
+		
 	$('#collapse-bttn').click(function() {
 		$('#exhib-list').toggleClass('list-open');
 		$(this).toggleClass('list-open');

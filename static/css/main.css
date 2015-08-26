@@ -491,7 +491,7 @@ header {
       margin-bottom: 40px; } }
 
 #logo {
-  width: 280px;
+  width: 310px;
   height: auto;
   float: left; }
   #logo a:active {
@@ -501,7 +501,10 @@ header {
       margin-top: 20px; } }
   @media only screen and (max-width: 500px) {
     #logo {
-      width: 220px; } }
+      width: 250px; } }
+
+#logo__32, #logo__35 {
+  display: none; }
 
 nav {
   float: right;
