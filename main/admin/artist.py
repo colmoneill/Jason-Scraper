@@ -9,7 +9,7 @@ from flask_pagedown import PageDown
 
 import pymongo
 
-import utils
+from .. import utils
 from bson import ObjectId
 from bson.json_util import dumps as bson_dumps
 import forms
@@ -18,7 +18,7 @@ import config
 
 import json
 
-from utils import login_required
+from ..utils import login_required
 
 from ..settings import db
 
@@ -124,7 +124,8 @@ def update(artist_id):
                     )
                 }
             elif 'coverimage' not in request.form:
-                del artist['coverimage']
+                if 'coverimage' in artist:
+                    del artist['coverimage']
             
             db.artist.update({"_id": ObjectId(artist_id)}, artist)
 

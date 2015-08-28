@@ -15,7 +15,7 @@ from flask_pagedown import PageDown
 
 import pymongo
 
-import utils
+from .. import utils
 from bson import ObjectId
 from bson.json_util import dumps as bson_dumps
 import forms
@@ -28,7 +28,7 @@ from ..settings import db
 
 from flask import Blueprint, render_template, abort
 
-from utils import login_required
+from ..utils import login_required
 
 blueprint = Blueprint('admin_exhibition', __name__)
 

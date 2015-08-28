@@ -16,15 +16,15 @@ from flask.ext.misaka import Misaka
 
 import pymongo
 
-import utils
-from utils import login_required
+from main import utils
+from main.utils import login_required
 from bson import ObjectId
 from bson.json_util import dumps
 import forms
 
 import json
 
-from main import admin
+from main import admin, settings
 from main.settings import db, secret_key
 
 app = Flask(__name__)
@@ -33,6 +33,12 @@ pagedown = PageDown(app)
 Misaka(app)
 app.secret_key = secret_key
 
+if not app.debug:
+    import logging, os.path
+    file_handler = logging.FileHandler(os.path.join(settings.appdir, 'logs/flask.log'))
+    file_handler.setLevel(logging.WARNING)
+    app.logger.addHandler(file_handler)
+
 @app.route("/logout")
 def logout():
     session.pop('logged_in', None)
@@ -40,7 +46,7 @@ def logout():
     return redirect_flask(url_for('login'))
 
 def validate_credentials(username=False, password=False):
-    from users import users
+    from main.users import users
 
     if username in users and users[username] == password:
         return True

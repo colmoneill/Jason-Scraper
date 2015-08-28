@@ -1,14 +1,16 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import unicodedata
-import re
-
-# Copied from http://www.leftovercode.info/common_python.php
-
 import os
+import re
+import settings
+import unicodedata
+
 from werkzeug import secure_filename
 from flask import redirect as redirect_flask, session, flash, url_for, request
 from functools import wraps
+
+print settings.appdir
 
 def slugify(value):
     """ Note: This was modified from django.utils.text slugify """
@@ -37,23 +39,26 @@ def handle_form_data (data, formdata, ignore = []):
     file
 """
 def handle_uploaded_file (uploaded_file, config, filename = False):
+    import os
+    
+    print os.getcwd()
+    
     if allowed_file(uploaded_file.filename, config['allowed_extensions']):
         if filename == False:
             filename = uploaded_file.filename
 
         filepath = getsafepath(os.path.join(config['upload_folder'], secure_filename(filename)))
-        uploaded_file.save(filepath)
+        uploaded_file.save(os.path.join(settings.appdir, filepath))
         
         return filepath
 
     return False
 
-
 def getsafepath (path, count = 1):
     root, ext = os.path.splitext(path)
     safepath = root + '-' + str(count) + ext
 
-    if os.path.exists(safepath):
+    if os.path.exists(os.path.join(settings.appdir, safepath)):
         return getsafepath(path, (count+1))
     else:
         return safepath

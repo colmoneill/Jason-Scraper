@@ -4,11 +4,10 @@ from flask import Blueprint, render_template, abort,\
      url_for, redirect as redirect_flask, request, flash
 
 from ..settings import db
-from utils import login_required
+from ..utils import login_required
 from bson import ObjectId
 
-import utils
-
+from .. import settings, utils
 
 blueprint = Blueprint('admin_image', __name__)
 
@@ -81,7 +80,7 @@ def update(image_id):
 def delete(image_id):
     if request.method == 'POST':
         image = db.image.find_one({"_id": ObjectId(image_id)})
-        os.remove(image['path'])
+        os.remove(os.path.join(settings.appdir, image['path']))
         db.image.remove({"_id": ObjectId(image_id)})
         flash('You successfully deleted the image', 'success')
         return redirect_flask(url_for('.index'))
