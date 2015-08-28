@@ -15,7 +15,7 @@ from flask_pagedown import PageDown
 
 import pymongo
 
-from .. import utils
+from .. import utils, settings
 from bson import ObjectId
 from bson.json_util import dumps as bson_dumps
 import forms
@@ -82,6 +82,8 @@ def create():
                     config.upload['PRESS_RELEASE'],
                     utils.setfilenameroot(request.files['press_release_file'], exhibition['slug'])
                 )
+                
+                exhibition['press_release_size'] = utils.getfilesize(exhibition['press_release'])
 
             exhibition['artworks'] = []
 
@@ -178,10 +180,12 @@ def update(exhibition_id):
 
             if request.files['press_release_file']:
                 exhibition['press_release'] = utils.handle_uploaded_file(
-                    request.files['press_release_file'],
-                    config.upload['PRESS_RELEASE'],
-                    '{0}.pdf'.format(exhibition['slug'])
-            )
+                        request.files['press_release_file'],
+                        config.upload['PRESS_RELEASE'],
+                        '{0}.pdf'.format(exhibition['slug'])
+                    )
+                
+                exhibition['press_release_size'] = utils.getfilesize(exhibition['press_release'])
 
             if 'coverimage' in request.files:
                 uploaded_image = request.files.getlist('coverimage')[0]

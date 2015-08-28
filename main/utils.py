@@ -10,8 +10,6 @@ from werkzeug import secure_filename
 from flask import redirect as redirect_flask, session, flash, url_for, request
 from functools import wraps
 
-print settings.appdir
-
 def slugify(value):
     """ Note: This was modified from django.utils.text slugify """
     #value = unicode(value.decode('UTF-8'))
@@ -40,9 +38,7 @@ def handle_form_data (data, formdata, ignore = []):
 """
 def handle_uploaded_file (uploaded_file, config, filename = False):
     import os
-    
-    print os.getcwd()
-    
+        
     if allowed_file(uploaded_file.filename, config['allowed_extensions']):
         if filename == False:
             filename = uploaded_file.filename
@@ -63,6 +59,22 @@ def getsafepath (path, count = 1):
     else:
         return safepath
 
+def getfilesize (path):
+    path = os.path.join(settings.appdir, path)
+    
+    if os.path.exists(path):
+        labels = ['b', 'kb', 'mb', 'gb']
+        label = labels.pop(0)
+        size = os.path.getsize(path)
+        
+        while (size > 1024.0):
+            size = size / 1024.0
+            label = labels.pop(0)
+
+        return "{0:.2f}{1}".format(size, label)
+    else:
+        return False
+    
 def setfilenameroot (oldname, name):
     root, ext = os.path.splitext(oldname)
     return '{0}{1}'.format(name, ext)
