@@ -12,8 +12,8 @@ class Image(Form):
     dimensions = StringField(u'Artwork dimentions in CM')
 
 class ImageUpdate(Form):
-    artist = SelectField(u'Select artist *', validators=[DataRequired()])
-    title = StringField(u'title of the artwork', validators=[DataRequired()])
+    artist = SelectField(u'Select artist *')
+    title = StringField(u'title of the artwork')
     stock_number = StringField(u'Stock number')
     year = StringField(u'year')
     medium = StringField(u'Artwork medium')
