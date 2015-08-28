@@ -47,10 +47,20 @@ def create():
             if 'press_release_file' in request.files \
                 and request.files['press_release_file']:
                 artist['press_release'] = utils.handle_uploaded_file(
-                    request.files['press_release_file'],
-                    config.upload['PRESS_RELEASE'],
-                    utils.setfilenameroot(request.files['press_release_file'].filename, artist['slug'])
-                )
+                        request.files['press_release_file'],
+                        config.upload['PRESS_RELEASE'],
+                        utils.setfilenameroot(request.files['press_release_file'].filename, artist['slug'])
+                    )
+                artist['press_release_size'] = utils.getfilesize(artist['press_release'])
+
+            if 'biography_file' in request.files \
+                and request.files['biography_file']:
+                artist['biography_file'] = utils.handle_uploaded_file(
+                        request.files['biography_file'],
+                        config.upload['BIOGRAPHY'],
+                        utils.setfilenameroot(request.files['biography_file'].filename, artist['slug'])
+                    )
+                artist['biography_size'] = utils.getfilesize(artist['biography_file'])
 
             if 'coverimage' in request.files:
                 uploaded_image = request.files.getlist('coverimage')[0]
@@ -109,11 +119,21 @@ def update(artist_id):
             if 'press_release_file' in request.files \
                 and request.files['press_release_file']:
                 artist['press_release'] = utils.handle_uploaded_file(
-                    request.files['press_release_file'],
-                    config.upload['PRESS_RELEASE'],
-                    utils.setfilenameroot(request.files['press_release_file'].filename, artist['slug'])
-                )
-             
+                        request.files['press_release_file'],
+                        config.upload['PRESS_RELEASE'],
+                        utils.setfilenameroot(request.files['press_release_file'].filename, artist['slug'])
+                    )
+                artist['press_release_size'] = utils.getfilesize(artist['press_release'])
+            
+            if 'biography_file' in request.files \
+                and request.files['biography_file']:
+                artist['biography_file'] = utils.handle_uploaded_file(
+                        request.files['biography_file'],
+                        config.upload['BIOGRAPHY'],
+                        utils.setfilenameroot(request.files['biography_file'].filename, artist['slug'])
+                    )
+                artist['biography_size'] = utils.getfilesize(artist['biography_file'])
+            
             if 'coverimage' in request.files:
                 uploaded_image = request.files.getlist('coverimage')[0]
                 artist['coverimage'] = {

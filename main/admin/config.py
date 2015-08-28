@@ -3,6 +3,11 @@ upload = {
         'allowed_extensions': ['pdf'],
         'upload_folder': 'static/uploads/press/'
     },
+    
+    'BIOGRAPHY': {
+        'allowed_extensions': ['pdf'],
+        'upload_folder': 'static/uploads/biography/'
+    },
 
     'ARTWORK_IMAGE': {
         'allowed_extensions': ['png', 'jpeg', 'jpg', 'gif', 'JPG', 'JPEG', 'GIF'],
