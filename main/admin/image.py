@@ -58,6 +58,7 @@ def update(image_id):
     if request.method == 'POST':
         if form.validate():
             formdata = form.data
+            image['stock_number'] = form.stock_number.data
             image['title'] = form.title.data
             image['year'] = form.year.data
             image['medium'] = form.medium.data
