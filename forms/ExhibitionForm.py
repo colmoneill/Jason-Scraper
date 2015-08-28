@@ -12,7 +12,7 @@ from wtforms.widgets import CheckboxInput
 
 class ExhibitionForm(Form):
     artist = SelectField(u'Select Artist *', validators=[DataRequired()])
-    exhibition_name = StringField('Title')
+    exhibition_name = StringField('Title', validators=[DataRequired()])
     start = DateTimeField('From', validators=[DataRequired()], format='%d-%m-%Y')
     end = DateTimeField('To', validators=[DataRequired()], format='%d-%m-%Y')
     location = RadioField(u'Gallery 32 or 35? *', choices = [('35', 'Livourne 35'), ('32', 'Livourne 32')], validators=[DataRequired()])
