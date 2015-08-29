@@ -3,7 +3,7 @@
 {% endblock %}
 
 {% block body %}
-  {% from "helpers/_form.html" import render_field, render_datepicker, upload_field, bound_upload_field %}
+  {% from "helpers/_form.html" import render_field, render_datepicker, upload_field, bound_upload_field, render_uploadfield %}
   <form method="post" enctype="multipart/form-data" id="exhibitionForm">
       {{ form.csrf_token }}
       {{ render_field(form.exhibition_name) }}
@@ -51,7 +51,7 @@
       </div>
     -->
       <hr>
-      {{ form.press_release_file }}
+      {{ render_uploadfield(form.press_release) }}
       <hr>
       <div class="row">
         <div class="col-sm-12">

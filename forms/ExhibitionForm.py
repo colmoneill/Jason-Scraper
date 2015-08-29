@@ -19,7 +19,7 @@ class ExhibitionForm(Form):
     #exhibition_key_img = FileField('exhibition key image')
     wysiwig_exhibition_description = PageDownField('exhibition description')
     wysiwig_artist_bio = PageDownField('artist bio')
-    press_release_file = FileField('Press release files')
+    press_release = FileField('Press release file')
     #is_published = BooleanField('Visible on public site')
     link_name1 = StringField('name for link 1')
     link_url1 = StringField('Paste in full url of link 1')

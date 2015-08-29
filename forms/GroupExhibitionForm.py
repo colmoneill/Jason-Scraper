@@ -24,7 +24,7 @@ class GroupExhibitionForm(Form):
     artists = MultiCheckboxField(u'Select Artist *')
     extra_artists = StringField(u'Extra artists names (non gallery artists)')
     wysiwig_exhibition_description = PageDownField('exhibition description')
-    press_release_file = FileField('Press release files')
+    press_release = FileField('Press release file')
     link_name1 = StringField('name for link 1')
     link_url1 = StringField('Paste in full url of link 1')
     link_name2 = StringField('name for link 2')

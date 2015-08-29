@@ -68,7 +68,7 @@ def create():
 
             formdata = form.data
             artist = db.artist.find_one({'_id': ObjectId(formdata['artist'])})
-            exhibition = utils.handle_form_data({}, formdata, ['press_release_file', 'artist'])
+            exhibition = utils.handle_form_data({}, formdata, ['press_release', 'artist'])
             exhibition['artist'] = artist
             exhibition['slug'] = utils.slugify(exhibition['exhibition_name'])
             exhibition_md = form.wysiwig_exhibition_description.data
@@ -76,11 +76,11 @@ def create():
 
             artist_md = form.wysiwig_artist_bio.data
 
-            if request.files['press_release_file']:
+            if request.files['press_release']:
                 exhibition['press_release'] = utils.handle_uploaded_file(
-                    request.files['press_release_file'],
+                    request.files['press_release'],
                     config.upload['PRESS_RELEASE'],
-                    utils.setfilenameroot(request.files['press_release_file'], exhibition['slug'])
+                    utils.setfilenameroot(request.files['press_release'].filename, exhibition['slug'])
                 )
                 
                 exhibition['press_release_size'] = utils.getfilesize(exhibition['press_release'])
@@ -154,7 +154,7 @@ def update(exhibition_id):
         if form.validate():
             formdata = form.data
             artist = db.artist.find_one({"_id": ObjectId(formdata['artist'])})
-            exhibition = utils.handle_form_data(exhibition, formdata, ['press_release_file'])
+            exhibition = utils.handle_form_data(exhibition, formdata, ['press_release'])
             exhibition['artist'] = artist
 
             exhibition['artworks'] = []
@@ -178,15 +178,18 @@ def update(exhibition_id):
                     print artwork_id
                     exhibition['artworks'].append(db.image.find_one({'_id': ObjectId(artwork_id)}))
 
-            if request.files['press_release_file']:
+            if request.files['press_release']:
                 exhibition['press_release'] = utils.handle_uploaded_file(
-                        request.files['press_release_file'],
+                        request.files['press_release'],
                         config.upload['PRESS_RELEASE'],
-                        '{0}.pdf'.format(exhibition['slug'])
+                        utils.setfilenameroot(request.files['press_release'].filename, exhibition['slug'])
                     )
                 
                 exhibition['press_release_size'] = utils.getfilesize(exhibition['press_release'])
-
+            elif 'press_release' not in request.form \
+                and 'press_release' in exhibition:
+                    del exhibition['press_release']
+                    
             if 'coverimage' in request.files:
                 uploaded_image = request.files.getlist('coverimage')[0]
                 exhibition['coverimage'] = {
