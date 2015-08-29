@@ -10,7 +10,7 @@ class ArtistForm(Form):
     wysiwig_artist_info = PageDownField('artist info text')
     wysiwig_artist_bio = PageDownField('artist bio')
     wysiwig_artist_exhibitions_list = PageDownField('exhibition list')
-    press_release_file = FileField('Press release file')
+    press_release = FileField('Press release file')
     biography_file = FileField('Biography file')
     link_name1 = StringField('name for link 1')
     link_url1 = StringField('Paste in full url of link 1')

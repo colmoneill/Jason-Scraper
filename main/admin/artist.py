@@ -116,15 +116,18 @@ def update(artist_id):
             formdata = form.data
             artist =  utils.handle_form_data(artist, formdata, ['press_release_file'])
             
-            if 'press_release_file' in request.files \
-                and request.files['press_release_file']:
+            if 'press_release' in request.files \
+                and request.files['press_release']:
                 artist['press_release'] = utils.handle_uploaded_file(
-                        request.files['press_release_file'],
+                        request.files['press_release'],
                         config.upload['PRESS_RELEASE'],
-                        utils.setfilenameroot(request.files['press_release_file'].filename, artist['slug'])
+                        utils.setfilenameroot(request.files['press_release'].filename, artist['slug'])
                     )
                 artist['press_release_size'] = utils.getfilesize(artist['press_release'])
-            
+            elif 'press_release' not in request.form \
+                and 'press_release' in artist:
+                    del artist['press_release']
+                    
             if 'biography_file' in request.files \
                 and request.files['biography_file']:
                 artist['biography_file'] = utils.handle_uploaded_file(
@@ -133,6 +136,9 @@ def update(artist_id):
                         utils.setfilenameroot(request.files['biography_file'].filename, artist['slug'])
                     )
                 artist['biography_size'] = utils.getfilesize(artist['biography_file'])
+            elif 'biography_file' not in request.form \
+                and 'biography_file' in artist:
+                    del artist['biography_file']
             
             if 'coverimage' in request.files:
                 uploaded_image = request.files.getlist('coverimage')[0]

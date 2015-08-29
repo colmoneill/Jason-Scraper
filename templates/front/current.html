@@ -6,8 +6,12 @@
 	
 	{% for exhibition in exhibition_35 %}
 		<div class="homepage-exhibition" id="exhibition__35">
-			<a href="/exhibition/{{ exhibition.slug }}/">
+            {% if exhibition.is_group_expo == False %}
+			<a href="/exhibition/{{exhibition.start.strftime('%d.%m.%Y') }}/{{
+exhibition.artist.slug }}/">
+                {% if 'coverimage' in exhibition %}
 				<div class="homepage-exhibition__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
+				{% endif %}
 				<div class="homepage-exhibition__text">
 					<h5>Rue de Livourne 35 Livornostraat</h5>
 					<div class="homepage-exhibition__text--line"></div>
@@ -20,13 +24,18 @@
 					<h4> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </h4>
 				</div>
 			</a>
+			{% endif %}
 		</div>
 	{% endfor %}
 	
 	{% for exhibition in exhibition_32 %}
 		<div class="homepage-exhibition" id="exhibition__32">
-			<a href="/exhibition/{{ exhibition.slug }}/">
+            {% if exhibition.is_group_expo == False %}
+			<a href="/exhibition/{{exhibition.start.strftime('%d.%m.%Y') }}/{{
+exhibition.artist.slug }}/">
+                {% if 'coverimage' in exhibition %}
 				<div class="homepage-exhibition__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
+				{% endif %}
 				<div class="homepage-exhibition__text">
 					<h5>Rue de Livourne 32 Livornostraat</h5>
 					<div class="homepage-exhibition__text--line"></div>
@@ -39,6 +48,7 @@
 					<h4> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </h4>
 				</div>
 			</a>
+            {% endif %}
 		</div>
 	{% endfor %}
 

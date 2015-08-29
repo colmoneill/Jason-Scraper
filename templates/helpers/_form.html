@@ -1,5 +1,4 @@
 {% macro render_field(field) %}
-
 <div class="form-group {{ 'has-error' if field.errors }}">
     {% if field.errors %}
         {% for error in field.errors %}
@@ -25,6 +24,25 @@
 </div>
 
 {% endmacro%}
+
+{% macro render_uploadfield(field) %}
+<div class="form-group {{ 'has-error' if field.errors }}">
+    {% if field.errors %}
+        {% for error in field.errors %}
+            <p class="text-danger">{{ error }}</p>
+        {% endfor %}
+    {% endif %}
+    {{ field.label(class_="control-label") }}
+    {% if field.data %}
+        <p>
+            <input type="hidden" name="{{ field.name }}" value="/{{ field.data }}" />
+            <button type="button" class="btn btn-link" onclick="window.open($(this).prevAll('input').val(), '_blank');">See current file</button>
+            <button type="button" class="btn btn-danger btn-sm" onclick="$(this).prevAll('input').prop('disabled', true);$(this).prevAll('.btn-link').prop('disabled', true);$(this).hide();$(this).next().show();">Delete file</button>
+            <button type="button" class="btn btn-default btn-sm" style="display:none;" onclick="$(this).prevAll('input').removeProp('disabled');$(this).prevAll('.btn-link').removeProp('disabled');$(this).hide();$(this).prev().show();">Restore file</button></p>
+    {% endif %}
+    <input type="file" name="{{ field.name }}" />
+</div>
+{% endmacro %}
 
 {% macro upload_field(fieldname, label, files = []) %}
     <div class="row">

@@ -1,5 +1,5 @@
 {% block body %}
-{% from "helpers/_form.html" import render_field, upload_field %}
+{% from "helpers/_form.html" import render_field, upload_field, render_uploadfield %}
 <div class="col-md-12">
   <form action="" method="post" enctype="multipart/form-data" id="artistForm">
     {{ form.csrf_token }}
@@ -51,14 +51,14 @@
     <div class="row">
       <div class="col-sm-12">
         <h4>Press release pdf</h4>
-        {{ form.press_release_file }}
+        {{ render_uploadfield(form.press_release) }}
       </div>
     </div>
     <hr>
     <div class="row">
       <div class="col-sm-12">
         <h4>Biography file</h4>
-        {{ form.biography_file }}
+        {{ render_uploadfield(form.biography_file) }}
       </div>
     </div>
     <hr>
