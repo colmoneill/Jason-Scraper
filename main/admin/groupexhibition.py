@@ -67,12 +67,12 @@ def createGroupExhibition():
             
             formdata = form.data
             
-            exhibition = utils.handle_form_data({}, formdata, ['press_release_file', 'artists'])
+            exhibition = utils.handle_form_data({}, formdata, ['press_release', 'artists', 'extra_artists'])
             exhibition['artists'] = [db.artist.find_one({'_id': ObjectId(artist_id)}) for artist_id in request.form.getlist('artists')]
             exhibition['slug'] = utils.slugify(exhibition['exhibition_name'])
             exhibition_md = form.wysiwig_exhibition_description.data
             exhibition['is_group_expo'] = True
-
+            exhibition['extra_artists'] = request.form.getlist('extra_artists')
             exhibition['artworks'] = []
             
             if 'artworks' in request.files:
@@ -147,9 +147,9 @@ def updateGroupExhibition(exhibition_id):
         if form.validate():
             formdata = form.data
             artists = db.artist.find()
-            exhibition = utils.handle_form_data(exhibition, formdata, ['press_release_file', 'artists'])
+            exhibition = utils.handle_form_data(exhibition, formdata, ['press_release', 'artists', 'extra_artists'])
             exhibition['artists'] = [db.artist.find_one({'_id': ObjectId(artist_id)}) for artist_id in request.form.getlist('artists')]
-
+            exhibition['extra_artists'] = request.form.getlist('extra_artists')
             exhibition['artworks'] = []
             
             if 'artworks' in request.files:
@@ -231,7 +231,8 @@ def updateGroupExhibition(exhibition_id):
                                 form=form,
                                 selectedArtworks=json.dumps(selectedArtworks),
                                 coverimage = [exhibition['coverimage']] if 'coverimage' in exhibition else [],
-                                images=exhibition['images'] if 'images' in exhibition else [])
+                                images=exhibition['images'] if 'images' in exhibition else [],
+                                extra_artists=exhibition['extra_artists'] if 'extra_artists' in exhibition else [])
 
 
 @blueprint.route("/delete/<exhibition_id>", methods=['GET', 'POST'])
