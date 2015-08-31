@@ -47,7 +47,7 @@ def fetch_artworks():
 
     AL_artworks = []
     AL_artists = []
-    url = "http://feeds.artlogic.net/artworks/artlogiconline/json/"
+    url = "http://feeds.artlogic.net/websites/2.0/rodolphejanssen/artworks/json"
 
     while True:
         f = urllib2.urlopen(url)
@@ -89,23 +89,26 @@ def fetch_artworks():
                           upsert=True)
 
         # download image
-        extension = os.path.splitext(artwork['img_url'])[1]
-        dest = getsafepath(os.path.join(artwork_image_folder, slugify(artwork['artist']) + extension))
-        fetchfile(artwork['img_url'], dest)
+        if artwork['img_url'] == None or artwork['img_url'] == '' or artwork['img_url'] == 'null':
+            print "img_url is empty or null"
+        else:
+            extension = os.path.splitext(artwork['img_url'])[1]
+            dest = getsafepath(os.path.join(artwork_image_folder, slugify(artwork['artist']) + extension))
+            fetchfile(artwork['img_url'], dest)
 
-        db.image.insert({
-            'artist': db.artist.find_one({"slug": slugify(artwork['artist'])}),
-            'path': dest,
-            'title': artwork['title'],
-            'year': artwork['year'],
-            'medium': artwork['medium'],
-            'dimensions': artwork['dimensions'],
-            'stock_number': artwork['stock_number'],
-            'stock_number_sort': artwork['stock_number_sort'],
-            },
-            upsert=True)
+            db.image.insert({
+                'artist': db.artist.find_one({"slug": slugify(artwork['artist'])}),
+                'path': dest,
+                'title': artwork['title'],
+                'year': artwork['year'],
+                'medium': artwork['medium'],
+                'dimensions': artwork['dimensions'],
+                'stock_number': artwork['stock_number'],
+                'stock_number_sort': artwork['stock_number_sort'],
+                },
+                upsert=True)
 
-        print "{0}, {1}".format(artwork['title'], artwork['artist'])
+            print "{0}, {1}".format(artwork['title'], artwork['artist'])
 
         #time.sleep(1)
 
