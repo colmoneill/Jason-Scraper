@@ -105,7 +105,9 @@ def pastExhibitions():
         "is_published": True,
         "end": { "$lt": datetime.combine(date.today(), datetime.min.time()) }
     })
-    years_past = db.exhibitions.start.year.find()
+    years_past = db.exhibitions.find({
+        "is_published": True,
+    })
 
     return render_template("front/past.html", past_exhibition=past_exhibition, years_past=years_past)
 
@@ -159,6 +161,8 @@ def publicviewExhibition(start, artist):
 @login_required
 def publicviewGroupExhibition(slug):
     exhibition = db.exhibitions.find_one({'slug': slug})
+    all_artists = db.exhibition.find({
+    })
 
     if exhibition <> None:
         return render_template('front/exhibition.html', exhibition=exhibition)

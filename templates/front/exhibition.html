@@ -74,9 +74,11 @@
      	<div class="separation-rule"></div>
      	<div class="group-exhibition-artists">
 				{% for artists in exhibition.artists %}
-				<p><a>{{ artists.name }}</a></p>
+				<p><a href="/artist/{{ artists.slug }}" >{{ artists.name }}</a></p>
 				{% endfor %}
-				<p>{{ exhibition.extra_artists }}</p>
+        {% for extra_artists in exhibition.extra_artists  %}
+				<p>{{ extra_artists }}</p>
+        {% endfor %}
      	</div>
 	</section>
     {% else %}

@@ -90,7 +90,7 @@ def fetch_artworks():
 
         # download image
         if artwork['img_url'] == None or artwork['img_url'] == '' or artwork['img_url'] == 'null':
-            print "img_url is empty or null"
+            print "img_url is null, skipping"
         else:
             extension = os.path.splitext(artwork['img_url'])[1]
             dest = getsafepath(os.path.join(artwork_image_folder, slugify(artwork['artist']) + extension))

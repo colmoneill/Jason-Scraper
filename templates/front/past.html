@@ -7,6 +7,9 @@
   <div class="all-col">
     <div class="subnav" id="sidebar">
 		<ul>
+      {% for years in years_past %}
+        <li>{{ years.start.year }}<li>
+      {% endfor %}
 		</ul>
 	</div>
     <div class="subcontent">
@@ -14,7 +17,7 @@
       {% for exhibition in past_exhibition %}
           {% if exhibition.is_group_expo %}
           	<div class="exhibition-block subcontent__all-col">
-  		        <a href="/exhibition/{{exhibition.start.strftime('%d.%m.%Y') }}/">
+  		        <a href="/group-exhibition/{{exhibition.slug }}/">
   		        	<h1>{{ exhibition.exhibition_name }}</h1>
   					    <h4>{{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}</h4>
   		        </a>
@@ -22,8 +25,7 @@
   			    </div>
           {% else %}
           	<div class="exhibition-block subcontent__all-col">
-  				<a href="/exhibition/{{exhibition.start.strftime('%d.%m.%Y') }}/{{
-exhibition.artist.slug }}/">
+  				<a href="/exhibition/{{ exhibition.artist.slug }}/{{exhibition.start.strftime('%d.%m.%Y') }}/">
   					<h1>{{ exhibition.artist.name }}</h1>
   					<h2>{{ exhibition.exhibition_name }}</h2>
   					<h4>{{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}</h4>
