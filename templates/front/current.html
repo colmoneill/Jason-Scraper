@@ -3,53 +3,73 @@
 	{% block title %}Current{% endblock %}
 
 	{% block body %}
-	
+
 	{% for exhibition in exhibition_35 %}
 		<div class="homepage-exhibition" id="exhibition__35">
-            {% if exhibition.is_group_expo == False %}
-			<a href="/exhibition/{{exhibition.start.strftime('%d.%m.%Y') }}/{{
-exhibition.artist.slug }}/">
-                {% if 'coverimage' in exhibition %}
-				<div class="homepage-exhibition__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
+
+      {% if exhibition.is_group_expo %}
+
+				<a href="/group-exhibition/{{ exhibition.slug }}/">
+      	{% if 'coverimage' in exhibition %}
+					<div class="homepage-exhibition__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
 				{% endif %}
 				<div class="homepage-exhibition__text">
 					<h5>Rue de Livourne 35 Livornostraat</h5>
 					<div class="homepage-exhibition__text--line"></div>
-					{% if exhibition.is_group_expo %}
-						<h1>{{ exhibition.exhibition_name }} (group exhibition)</h1>
-					{% else %}
-						<h1>{{ exhibition.artist.name }}</h1>
-						<h2>{{ exhibition.exhibition_name }}</h2>
-					{% endif %}
+					<h1>{{ exhibition.exhibition_name }} (group exhibition)</h1>
 					<h4> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </h4>
 				</div>
-			</a>
+
+			{% else %}
+
+				<a href="/exhibition/{{ exhibition.artist.slug }}/{{exhibition.start.strftime('%d.%m.%Y') }}">
+					{% if 'coverimage' in exhibition %}
+						<div class="homepage-exhibition__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
+					{% endif %}
+					<div class="homepage-exhibition__text">
+						<h5>Rue de Livourne 35 Livornostraat</h5>
+						<div class="homepage-exhibition__text--line"></div>
+						<h1>{{ exhibition.artist.name }}</h1>
+						<h1>{{ exhibition.exhibition_name }}</h1>
+						<h4> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </h4>
+					</div>
 			{% endif %}
+			</a>
 		</div>
 	{% endfor %}
-	
+
 	{% for exhibition in exhibition_32 %}
-		<div class="homepage-exhibition" id="exhibition__32">
-            {% if exhibition.is_group_expo == False %}
-			<a href="/exhibition/{{exhibition.start.strftime('%d.%m.%Y') }}/{{
-exhibition.artist.slug }}/">
-                {% if 'coverimage' in exhibition %}
+	<div class="homepage-exhibition" id="exhibition__32">
+
+		{% if exhibition.is_group_expo %}
+
+			<a href="/group-exhibition/{{ exhibition.slug }}/">
+			{% if 'coverimage' in exhibition %}
 				<div class="homepage-exhibition__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
+			{% endif %}
+			<div class="homepage-exhibition__text">
+				<h5>Rue de Livourne 35 Livornostraat</h5>
+				<div class="homepage-exhibition__text--line"></div>
+				<h1>{{ exhibition.exhibition_name }} (group exhibition)</h1>
+				<h4> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </h4>
+			</div>
+
+		{% else %}
+
+			<a href="/exhibition/{{ exhibition.artist.slug }}/{{exhibition.start.strftime('%d.%m.%Y') }}">
+				{% if 'coverimage' in exhibition %}
+					<div class="homepage-exhibition__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
 				{% endif %}
 				<div class="homepage-exhibition__text">
-					<h5>Rue de Livourne 32 Livornostraat</h5>
+					<h5>Rue de Livourne 35 Livornostraat</h5>
 					<div class="homepage-exhibition__text--line"></div>
-					{% if exhibition.is_group_expo %}
-						<h1>{{ exhibition.exhibition_name }} (group exhibition)</h1>
-					{% else %}
-						<h1>{{ exhibition.artist.name }}</h1>
-						<h2>{{ exhibition.exhibition_name }}</h2>
-					{% endif %}
+					<h1>{{ exhibition.artist.name }}</h1>
+					<h1>{{ exhibition.exhibition_name }}</h1>
 					<h4> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </h4>
 				</div>
-			</a>
-            {% endif %}
-		</div>
-	{% endfor %}
+		{% endif %}
+		</a>
+	</div>
+{% endfor %}
 
 	{% endblock %}

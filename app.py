@@ -142,10 +142,11 @@ def exhibition(slug):
     exhibition = db.exhibition.find_one({ "slug": slug})
     return render_template("front/exhibition.html")
 
-@app.route("/exhibition/<start>/<artist>")
-@app.route("/exhibition/<start>/<artist>/")
+@app.route("/exhibition/<artist>/<start>")
+@app.route("/exhibition/<artist>/<start>/")
+@login_required
 def publicviewExhibition(start, artist):
-    start = datetime.strptime(start, '%d.%m.%Y')
+    start = datetime.strptime(start, ('%d.%m.%Y'))
 
     exhibition = db.exhibitions.find_one({'start': start, 'artist.slug': artist})
 
@@ -154,15 +155,15 @@ def publicviewExhibition(start, artist):
     else:
         abort(404)
 
-#@app.route("/exhibition/<slug>/")
-#@login_required
-#def publicviewExhibition(slug):
-    #exhibition = db.exhibitions.find_one({'slug': slug})
+@app.route("/group-exhibition/<slug>/")
+@login_required
+def publicviewGroupExhibition(slug):
+    exhibition = db.exhibitions.find_one({'slug': slug})
 
-    #if exhibition <> None:
-        #return render_template('front/exhibition.html', exhibition=exhibition)
-    #else:
-        #abort(404)
+    if exhibition <> None:
+        return render_template('front/exhibition.html', exhibition=exhibition)
+    else:
+        abort(404)
 
 @app.route("/gallery/")
 @login_required

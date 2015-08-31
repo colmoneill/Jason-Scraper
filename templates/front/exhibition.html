@@ -50,7 +50,7 @@
     		  	</div>
     		  {% endfor %}
     	  {% endif %}
-    	  
+
         {% if exhibition.images %}
     	  	{% for installation_view in exhibition.images %}
           <div class="image-block">
@@ -104,7 +104,7 @@
         {% if exhibition.press_release %}
           <h1>press</h1>
           	<div class="download-block__text" id="media">
-            	<a class="" href="/{{ exhibition.press_release }}"><h3>Download the press release — PDF (size %)</h3></a><br>
+            	<a class="" href="/{{ exhibition.press_release }}"><h3>Download the press release — PDF ({{ exhibition.press_release_size }})</h3></a><br>
 			  {% endif %}
 			  	<a href="{{ exhibition.link_url1 }}" target="_blank"><h3>{{ exhibition.link_name1 }}</h3></a><br>
 		  		<a href="{{ exhibition.link_url2 }}" target="_blank"><h3>{{ exhibition.link_name2 }}</h3></a><br>

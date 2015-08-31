@@ -67,7 +67,10 @@
 		{% if artist.press_release %}
 			<h1>press</h1>
 				<div class="download-block__text">
-					<a class="" href="/{{ artist.press_release }}"><h3>Download the press release — PDF (size %)</h3></a><br>
+					<a class="" href="/{{ artist.press_release }}"><h3>Download the press release — PDF ({{artist.press_release_size}})</h3></a><br>
+		{% endif %}
+		{% if artist.biography_file %}
+					<a class="" href="/{{ artist.biography_file }}"><h3>Download {{ artist.name }}'s biography — PDF ({{artist.biography_size}})</h3></a><br>
 		{% endif %}
 					<a href="{{ artist.link_url1 }}" target="_blank"><h3>{{ artist.link_name1 }}</h3></a><br>
 					<a href="{{ artist.link_url2 }}" target="_blank"><h3>{{ artist.link_name2 }}</h3></a><br>
