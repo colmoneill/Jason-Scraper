@@ -106,7 +106,8 @@ def fetch_artworks():
                 'stock_number': artwork['stock_number'],
                 'stock_number_sort': artwork['stock_number_sort'],
                 },
-                upsert=True)
+                upsert=True
+            )
 
             print "{0}, {1}".format(artwork['title'], artwork['artist'])
 
