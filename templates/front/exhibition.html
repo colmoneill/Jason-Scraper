@@ -16,7 +16,7 @@
   <div class="subnav" id="sidebar">
     <ul>
       <li><a class="go-to-anchor" href="#images">Images</a></li>
-      <li><a class="go-to-anchor" href="#presentation">presentation</a></li>
+      <li><a class="go-to-anchor" href="#press-release">press release</a></li>
       {% if exhibition.is_group_expo %}
         <li><a class="go-to-anchor" href="#artists">artists</a>
       {% else %}
@@ -84,7 +84,7 @@
     {% else %}
 	{% endif %}
 
-    <section class="subcontent__all-col informations" id="presentation">
+    <section class="subcontent__all-col informations" id="press-release">
     	<div class="separation-rule"></div>
 		{% if exhibition.wysiwig_exhibition_description %}
         	<div class="text-block">
@@ -92,15 +92,6 @@
 				{{ exhibition.wysiwig_exhibition_description|markdown }}
 			</div>
       {% endif %}
-        {% if exhibition.is_group_expo %}
-        {% else %}
-      	{% if exhibition.artist.wysiwig_artist_bio %}
-      		<div class="text-block">
-		  		<h1>about the artist</h1>
-		  		{{ exhibition.artist.wysiwig_artist_bio|markdown }}
-		  	</div>
-		    {% endif %}
-        {% endif %}
 
         <div class="download-block">
         {% if exhibition.press_release %}
