@@ -105,7 +105,7 @@ def fetch_artworks():
                 'dimensions': artwork['dimensions'],
                 'stock_number': artwork['stock_number'],
                 'stock_number_sort': artwork['stock_number_sort'],
-                'id': artwork['id'],
+                'id': artwork['id_AL'],
                 },
                 upsert=True
             )
