@@ -105,11 +105,12 @@ def fetch_artworks():
                 'dimensions': artwork['dimensions'],
                 'stock_number': artwork['stock_number'],
                 'stock_number_sort': artwork['stock_number_sort'],
+                'id': artwork['id'],
                 },
                 upsert=True
             )
 
-            print "{0}, {1}".format(artwork['title'], artwork['artist'])
+            print "image downloaded".format(artwork['title'], artwork['artist'])
 
         #time.sleep(1)
 
