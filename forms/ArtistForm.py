@@ -5,6 +5,7 @@ from wtforms.validators import DataRequired
 
 class ArtistForm(Form):
     name = StringField(u'Artist name *', validators=[DataRequired()])
+    artist_sort = StringField(u'Artist Sorting value // ex: Adamo, David')
     #key image
     #images general
     wysiwig_artist_info = PageDownField('artist info text')

@@ -16,7 +16,7 @@ blueprint = Blueprint('admin_image', __name__)
 def index():
     form = forms.Image()
     form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
-    images = db.image.find().sort("stock_number", -1)
+    images = db.image.find().sort("stock_number", 1)
 
     return render_template('admin/image/index.html', images=images, form=form)
 

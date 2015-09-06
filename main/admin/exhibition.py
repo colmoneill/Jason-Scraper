@@ -59,7 +59,7 @@ def publish(exhibition_id):
 @login_required
 def create():
     form = forms.ExhibitionForm()
-    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find().sort("artist_sort")]
 
     selectedArtworks = []
 
@@ -82,7 +82,7 @@ def create():
                     config.upload['PRESS_RELEASE'],
                     utils.setfilenameroot(request.files['press_release'].filename, exhibition['slug'])
                 )
-                
+
                 exhibition['press_release_size'] = utils.getfilesize(exhibition['press_release'])
 
             exhibition['artworks'] = []
@@ -149,7 +149,7 @@ def update(exhibition_id):
     exhibition = db.exhibitions.find_one({"_id": ObjectId(exhibition_id)})
 
     if form.is_submitted():
-        form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+        form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find().sort("artist_sort")]
 
         if form.validate():
             formdata = form.data
@@ -184,12 +184,12 @@ def update(exhibition_id):
                         config.upload['PRESS_RELEASE'],
                         utils.setfilenameroot(request.files['press_release'].filename, exhibition['slug'])
                     )
-                
+
                 exhibition['press_release_size'] = utils.getfilesize(exhibition['press_release'])
             elif 'press_release' not in request.form \
                 and 'press_release' in exhibition:
                     del exhibition['press_release']
-                    
+
             if 'coverimage' in request.files:
                 uploaded_image = request.files.getlist('coverimage')[0]
                 exhibition['coverimage'] = {
