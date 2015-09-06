@@ -37,7 +37,10 @@ blueprint = Blueprint('admin_exhibition', __name__)
 @login_required
 def index():
     print 'exhibition index function'
-    exhibitions = db.exhibitions.find().sort("end", -1)
+    exhibitions = db.exhibitions.find().sort([
+            ("end", -1 ),
+            ("start", -1 )
+            ])
     return render_template('admin/exhibition/index.html', exhibitions=exhibitions)
 
 """
