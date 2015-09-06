@@ -15,7 +15,7 @@ blueprint = Blueprint('admin_image', __name__)
 @login_required
 def index():
     form = forms.Image()
-    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find().sort("artist_sort")]
     images = db.image.find().sort("stock_number", 1)
 
     return render_template('admin/image/index.html', images=images, form=form)
@@ -24,7 +24,7 @@ def index():
 @login_required
 def create():
     form = forms.Image()
-    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find().sort("artist_sort")]
 
     if form.validate_on_submit():
         formdata = form.data
@@ -52,7 +52,7 @@ def create():
 def update(image_id):
     image = db.image.find_one({"_id": ObjectId(image_id)})
     form = forms.ImageUpdate()
-    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find().sort("artist_sort")]
 
     if request.method == 'POST':
         if form.validate():
@@ -75,7 +75,7 @@ def update(image_id):
     else:
         image['artist'] = str(image['artist']['_id'])
         form = forms.ImageUpdate(data=image)
-        form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+        form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find().sort("artist_sort")]
 
     return render_template('admin/image/edit.html', image=image, form=form)
 
