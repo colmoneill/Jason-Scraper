@@ -159,6 +159,9 @@ def update(artist_id):
             db.image.update({"artist._id": ObjectId(artist_id)}, {"$set": { "artist": artist }}, multi=True)
             ## Update this artist on exhibitions as well
             db.exhibitions.update({"artist._id": ObjectId(artist_id)}, {"$set": { "artist": artist }}, multi=True)
+            ## Should update this artist on group exhibitions as well
+            db.exhibitions.update({"artists._id": ObjectId(artist_id)}, {"$set": {"artists.$": artist}}, multi=True);
+        
 
             # Remove images which were disabled in the form
             for image in db.image.find({"artist._id": ObjectId(artist_id)}):

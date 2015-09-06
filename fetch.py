@@ -15,7 +15,7 @@ import os
 
 import time
 
-from utils import slugify
+from main.utils import slugify
 # from utils import logger
 
 client = pymongo.MongoClient()
@@ -89,29 +89,35 @@ def fetch_artworks():
                           upsert=True)
 
         # download image
-        if artwork['img_url'] == None or artwork['img_url'] == '' or artwork['img_url'] == 'null':
+        if artwork['img_url'] is None \
+            or artwork['img_url'] == '' \
+            or artwork['img_url'] == 'null':
             print "img_url is null, skipping"
+        
         else:
-            extension = os.path.splitext(artwork['img_url'])[1]
-            dest = getsafepath(os.path.join(artwork_image_folder, slugify(artwork['artist']) + extension))
-            fetchfile(artwork['img_url'], dest)
+            existing_image = db.image.find_one({ 'id_AL': artwork['id'] })
+            if not existing_image:
+                extension = os.path.splitext(artwork['img_url'])[1]
+                dest = getsafepath(os.path.join(artwork_image_folder, slugify(artwork['artist']) + extension))
+                fetchfile(artwork['img_url'], dest)
 
-            db.image.insert({
-                'artist': db.artist.find_one({"slug": slugify(artwork['artist'])}),
-                'path': dest,
-                'title': artwork['title'],
-                'year': artwork['year'],
-                'medium': artwork['medium'],
-                'dimensions': artwork['dimensions'],
-                'stock_number': artwork['stock_number'],
-                'stock_number_sort': artwork['stock_number_sort'],
-                'id_AL': artwork['id'],
-                },
-                upsert=True
-            )
+                db.image.insert({
+                    'artist': db.artist.find_one({"slug": slugify(artwork['artist'])}),
+                    'path': dest,
+                    'title': artwork['title'],
+                    'year': artwork['year'],
+                    'medium': artwork['medium'],
+                    'dimensions': artwork['dimensions'],
+                    'stock_number': artwork['stock_number'],
+                    'stock_number_sort': artwork['stock_number_sort'],
+                    'id_AL': artwork['id'],
+                    },
+                    upsert=True
+                )
 
-            print "image downloaded".format(artwork['title'], artwork['artist'])
-
+                print "image downloaded"
+            else:
+                print "Skipped image; already in the database."
         #time.sleep(1)
 
     # db.meta.update({"subject": "artworks"}, {"updated": datetime.now(pytz.utc), "subject": "artworks"}, upsert=True)

@@ -66,6 +66,9 @@ def update(image_id):
 
             db.image.update({"_id": ObjectId(image_id)}, image)
 
+            # Update image on exhibitions
+            db.exhibitions.update({"images._id": ObjectId(image_id)}, {"$set": {"images.$": image}}, multi=True);
+
             flash(u'You just updated this images meta data', 'success')
             return redirect_flask(url_for('.index'))
 
