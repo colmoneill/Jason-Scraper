@@ -2,9 +2,9 @@
 <!--{% block nav_ %}active{% endblock %}-->
 {% block title %}
 {% if exhibition.is_group_expo %}
-{{ exhibition.exhibition_name }}
+ | {{ exhibition.exhibition_name }}
 {% else %}
-{{ exhibition.artist.name }}{{ exhibition.start.strftime('%d.%m.%Y') }}
+ | {{ exhibition.artist.name }} - {{ exhibition.start.strftime('%d.%m.%Y') }}
 {% endif %}
 {% endblock %}
 {% block body %}
