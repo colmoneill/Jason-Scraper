@@ -123,6 +123,24 @@
 }
 
 
-// :: Credits
+// :: Social Medias
 // ------------------------------------------------------------
 
+.social_media_icon{
+	margin-right: 14px;
+	opacity: 0.9;
+	width: 18px;
+	&:hover{
+		@include _hover;
+	}
+	img{
+		width: 18px;
+	}
+}
+
+.social_media_title{
+	padding-top: 2px;
+	@include mq(b){
+		padding-top: 0;
+	}
+}

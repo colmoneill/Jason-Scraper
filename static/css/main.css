@@ -902,6 +902,26 @@ section.exhibition-year div:last-child {
       -webkit-transition-delay: 0s;
       transition: all 0.2s ease-in-out 0s; }
 
+.social_media_icon {
+  margin-right: 14px;
+  opacity: 0.9;
+  width: 18px; }
+  .social_media_icon:hover {
+    opacity: 0.4;
+    -moz-transition: all 0.2s ease-in-out 0s;
+    -o-transition: all 0.2s ease-in-out 0s;
+    -webkit-transition: all 0.2s ease-in-out;
+    -webkit-transition-delay: 0s;
+    transition: all 0.2s ease-in-out 0s; }
+  .social_media_icon img {
+    width: 18px; }
+
+.social_media_title {
+  padding-top: 2px; }
+  @media only screen and (max-width: 750px) {
+    .social_media_title {
+      padding-top: 0; } }
+
 #imagelightbox {
   position: fixed;
   z-index: 9999;
