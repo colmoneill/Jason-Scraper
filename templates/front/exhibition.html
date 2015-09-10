@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 <!--{% block nav_ %}active{% endblock %}-->
-{% block title %}{{ exhibition.name }}{% endblock %}
+{% block title %}
+{% if exhibition.is_group_expo %}
+{{ exhibition.exhibition_name }}
+{% else %}
+{{ exhibition.artist.name }}{{ exhibition.start.strftime('%d.%m.%Y') }}
+{% endif %}
+{% endblock %}
 {% block body %}
 <!--Single exhibition-->
 <div class="container">
