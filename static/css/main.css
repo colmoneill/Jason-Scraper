@@ -60,7 +60,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .font-bold, h1, h3, .text-block h2, .text-block .homepage-exhibition__text--dash, .group-exhibition-artists p {
   font-family: "Maax-Medium", Helvetica, sans-serif; }
 
-.font-mono, h4, h5, .text-block h1, .download-block h1, h6, .subnav, .staff_member__mail, #imagelightbox-close, .imagelightbox-arrow, #slider-text-box p {
+.font-mono, h4, h5, .text-block h1, .download-block h1, h6, .subnav, .staff_member__mail, .colophon p, #imagelightbox-close, .imagelightbox-arrow, #slider-text-box p {
   font-family: "RJ Maax Mono", monospace; }
 
 .container {
@@ -921,6 +921,17 @@ section.exhibition-year div:last-child {
   @media only screen and (max-width: 750px) {
     .social_media_title {
       padding-top: 0; } }
+
+.colophon {
+  margin-top: 50px; }
+  .colophon p {
+    font-size: 0.76923em;
+    line-height: 1.9em;
+    color: #c8c8c8; }
+    .colophon p a {
+      color: #c8c8c8; }
+      .colophon p a:hover {
+        color: #7a7a7a; }
 
 #imagelightbox {
   position: fixed;

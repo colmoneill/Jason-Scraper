@@ -144,3 +144,21 @@
 		padding-top: 0;
 	}
 }
+
+// :: Colophon
+// ------------------------------------------------------------
+
+.colophon{
+	margin-top: 50px;
+	p{
+		@extend .font-mono;
+		@include adjust-font-size-to(10px);
+		color: $gray-4;
+		a{
+			color: $gray-4;
+			&:hover{
+				color: $gray-3;
+			}
+		}
+	}
+}
