@@ -923,7 +923,8 @@ section.exhibition-year div:last-child {
       padding-top: 0; } }
 
 .colophon {
-  margin-top: 50px; }
+  margin-top: 60px;
+  margin-bottom: -20px; }
   .colophon p {
     font-size: 0.76923em;
     line-height: 1.9em;
