@@ -16,8 +16,9 @@ blueprint = Blueprint('admin_image', __name__)
 def index():
     form = forms.Image()
     form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find().sort("artist_sort")]
+    artists = db.artist.find()
     images = db.image.find().sort([("artist_sort", 1)])
-    return render_template('admin/image/index.html', images=images, form=form)
+    return render_template('admin/image/index.html', images=images, artists=artists, form=form)
 
 @blueprint.route("/create/", methods=['GET', 'POST'])
 @login_required
