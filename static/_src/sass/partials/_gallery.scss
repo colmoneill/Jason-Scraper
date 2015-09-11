@@ -158,6 +158,7 @@
 		@extend .font-mono;
 		@include adjust-font-size-to(10px);
 		color: $gray-4;
+		margin-bottom: -1px;
 		a{
 			color: $gray-4;
 			&:hover{

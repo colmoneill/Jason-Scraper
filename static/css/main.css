@@ -926,7 +926,8 @@ section.exhibition-year div:last-child {
   .colophon p {
     font-size: 0.76923em;
     line-height: 1.9em;
-    color: #c8c8c8; }
+    color: #c8c8c8;
+    margin-bottom: -1px; }
     .colophon p a {
       color: #c8c8c8; }
       .colophon p a:hover {
@@ -948,7 +949,8 @@ section.exhibition-year div:last-child {
   left: 0; }
 
 #imagelightbox-close {
-  font-size: 13px;
+  font-size: 1em;
+  line-height: 1.46154em;
   text-align: right;
   position: fixed;
   z-index: 10002;
@@ -969,7 +971,8 @@ section.exhibition-year div:last-child {
   position: fixed;
   z-index: 10001;
   bottom: 0;
-  font-size: 13px; }
+  font-size: 1em;
+  line-height: 1.46154em; }
   .imagelightbox-arrow p {
     position: relative;
     top: 50%;
