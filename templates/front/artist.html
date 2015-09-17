@@ -31,6 +31,8 @@
 									data-artworkmedium="{{ image.medium }}"
 									data-artworkdimensions="{{ image.dimensions }}">
 								</div>
+								{{ image.edition }}
+								<!-- image.edition should be passed over to the gallery, it will contain info about the amount of copies, if it is a photograph for example. -->
 							</a>
 						</div>
 					{% endfor %}
