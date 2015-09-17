@@ -147,7 +147,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 951px) {
-  .col5__span1of5, .subnav, .artist-block {
+  .col5__span1of5, .subnav, .exhibition-block__image, .artist-block {
     width: 18.51852%;
     float: left;
     margin-right: 1.85185%; } }
@@ -206,7 +206,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4__span1of4, .subnav, .artist-block {
+  .col4__span1of4, .subnav, .exhibition-block__image, .artist-block {
     width: 22.85714%;
     float: left;
     margin-right: 2.85714%; } }
@@ -238,7 +238,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     float: left;
     margin-right: 4.0%; } }
 @media (min-width: 0) and (max-width: 500px) {
-  .col2__span2of2, .all-col, .subcontent, .subcontent__all-col, .text-block h1, .text-block h2, .text-block .homepage-exhibition__text--dash, .text-block p, #collapse-button, .download-block h1, .download-block__text, .subnav, .artist-block, .gallery__left, .gallery__right, .gallery__left .text-block h5, .gallery__left .text-block h1, .gallery__left .text-block p, .newsletter, .homepage-exhibition {
+  .col2__span2of2, .all-col, .subcontent, .subcontent__all-col, .text-block h1, .text-block h2, .text-block .homepage-exhibition__text--dash, .text-block p, #collapse-button, .download-block h1, .download-block__text, .subnav, .exhibition-block__image, .artist-block, .gallery__left, .gallery__right, .gallery__left .text-block h5, .gallery__left .text-block h1, .gallery__left .text-block p, .newsletter, .homepage-exhibition {
     width: 100%;
     float: left;
     margin-left: 0;
@@ -404,6 +404,8 @@ a:focus {
     font-style: italic; }
   .text-block b {
     font-weight: bold; }
+  .text-block.artist-bio-text p {
+    margin-bottom: 0; }
   .text-block.artist-exhibition-list {
     max-height: 250px;
     overflow: hidden;
@@ -753,6 +755,9 @@ nav {
 section.informations div:last-child {
   margin-bottom: 0; }
 
+.exhibition-block a {
+  display: inline-block;
+  width: 100%; }
 .exhibition-block a:hover > h1, .exhibition-block a:hover > h2, .exhibition-block a:hover > .homepage-exhibition__text--dash, .exhibition-block a:hover > h4, .exhibition-block a:hover > .exhibition-block__image {
   opacity: 0.4;
   -moz-transition: all 0.2s ease-in-out 0s;
@@ -760,7 +765,7 @@ section.informations div:last-child {
   -webkit-transition: all 0.2s ease-in-out;
   -webkit-transition-delay: 0s;
   transition: all 0.2s ease-in-out 0s; }
-.exhibition-block__image {
+.exhibition-block__inside {
   width: 100%;
   padding-bottom: 67%;
   background: no-repeat center center;
@@ -770,6 +775,8 @@ section.informations div:last-child {
   background-size: cover; }
 .exhibition-block.upcoming {
   clear: both; }
+.exhibition-block:last-of-type .separation-rule, .exhibition-block:last-of-type .subnav {
+  display: none; }
 
 section.exhibition-year div:last-child {
   margin-bottom: 0; }

@@ -210,6 +210,11 @@ a:focus				{outline: none;}
 	b{
 		font-weight: bold;
 	}
+	&.artist-bio-text{
+		p{
+			margin-bottom: 0;
+		}
+	}
 	&.artist-exhibition-list{
 		max-height: 250px;
 		overflow: hidden;

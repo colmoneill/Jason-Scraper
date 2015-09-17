@@ -50,10 +50,9 @@
 				  			{% endif %}
 				  			data-artworkyear="{{ artwork.title }}{% if artwork.year %}, {{ artwork.year }}{% endif %}"
 				  			data-artworkmedium="{{ artwork.medium }}"
-				  			data-artworkdimensions="{{ artwork.dimensions }}">
+				  			data-artworkdimensions="{{ artwork.dimensions }}"
+				  			data-artworkedition="{{ artwork.edition }}">
 				  		</div>
-              {{ artwork.edition }}
-              <!-- image.edition should be passed over to the gallery, it will contain info about the amount of copies, if it is a photograph for example. -->
     			  	</a>
     		  	</div>
     		  {% endfor %}
