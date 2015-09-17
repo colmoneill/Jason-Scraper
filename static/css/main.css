@@ -54,7 +54,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   src: url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.eot');
   src: url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.woff') format('woff'), url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.ttf') format('truetype'), url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.svg') format('svg');
   font-weight: "bold"; }
-.font-body, body, .subnav ul li a.points-to:before, .subnav ul li a:hover:before, .newsletter input {
+.font-body, body, .subnav ul li a.points-to:before, .subnav ul li a:hover:before, .newsletter input, .newsletter button.newsletter__button {
   font-family: "Maax-Regular", Helvetica, sans-serif; }
 
 .font-bold, h1, h3, .text-block h2, .text-block .homepage-exhibition__text--dash, .group-exhibition-artists p {
@@ -875,9 +875,12 @@ section.exhibition-year div:last-child {
     margin-right: 1%; }
     .newsletter input:focus {
       outline-style: solid;
-      outline-width: 1px;
+      outline-width: 2px;
       outline-color: #c8c8c8; }
-  .newsletter input.newsletter__button {
+  .newsletter button.newsletter__button {
+    font-size: 1em;
+    line-height: 1.46154em;
+    width: 39%;
     cursor: pointer;
     background-color: white;
     border-width: 1px;
@@ -891,16 +894,11 @@ section.exhibition-year div:last-child {
     width: 20%;
     margin-right: 0;
     padding: 2px; }
-    .newsletter input.newsletter__button:focus {
+    .newsletter button.newsletter__button:focus {
       outline-width: 0;
       border-color: #c8c8c8; }
-    .newsletter input.newsletter__button:hover {
-      opacity: 0.4;
-      -moz-transition: all 0.2s ease-in-out 0s;
-      -o-transition: all 0.2s ease-in-out 0s;
-      -webkit-transition: all 0.2s ease-in-out;
-      -webkit-transition-delay: 0s;
-      transition: all 0.2s ease-in-out 0s; }
+    .newsletter button.newsletter__button:hover {
+      opacity: 0.4; }
 
 .social_media_icon {
   margin-right: 14px;
@@ -928,7 +926,8 @@ section.exhibition-year div:last-child {
   .colophon p {
     font-size: 0.76923em;
     line-height: 1.9em;
-    color: #c8c8c8; }
+    color: #c8c8c8;
+    margin-bottom: -1px; }
     .colophon p a {
       color: #c8c8c8; }
       .colophon p a:hover {
@@ -950,7 +949,8 @@ section.exhibition-year div:last-child {
   left: 0; }
 
 #imagelightbox-close {
-  font-size: 13px;
+  font-size: 1em;
+  line-height: 1.46154em;
   text-align: right;
   position: fixed;
   z-index: 10002;
@@ -971,7 +971,8 @@ section.exhibition-year div:last-child {
   position: fixed;
   z-index: 10001;
   bottom: 0;
-  font-size: 13px; }
+  font-size: 1em;
+  line-height: 1.46154em; }
   .imagelightbox-arrow p {
     position: relative;
     top: 50%;
