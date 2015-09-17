@@ -174,13 +174,18 @@ a:focus				{outline: none;}
 		@extend .col4__span3of3;
 		@include full_on_mq_b;
 		@extend .col2__span2of2;
+		padding-right: 77%;
 		margin-top: $margin_top;
 		margin-bottom: -30px;
 		&:first-of-type{
 			margin-top: 0;
 			margin-bottom: -20px;
 		}
+		@include mq(a){
+			padding-right: 69%;
+		}
 		@include mq(b){
+			padding-right: 0;
 			margin-bottom: 0;
 			&:first-of-type{
 				margin-bottom: 0;

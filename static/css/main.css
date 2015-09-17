@@ -368,6 +368,7 @@ a:focus {
 .text-block {
   margin-bottom: 20px; }
   .text-block h1 {
+    padding-right: 77%;
     margin-top: 22px;
     margin-bottom: -30px; }
     @media only screen and (max-width: 750px) {
@@ -379,8 +380,12 @@ a:focus {
     .text-block h1:first-of-type {
       margin-top: 0;
       margin-bottom: -20px; }
+    @media only screen and (max-width: 950px) {
+      .text-block h1 {
+        padding-right: 69%; } }
     @media only screen and (max-width: 750px) {
       .text-block h1 {
+        padding-right: 0;
         margin-bottom: 0; }
         .text-block h1:first-of-type {
           margin-bottom: 0; } }
