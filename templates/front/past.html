@@ -7,34 +7,37 @@
   <div class="all-col">
     <div class="subnav" id="sidebar">
 		<ul>
-      {% for years in years_past %}
-        <li>{{ years.start.year }}<li>
+      {% for year in years %}
+        <li>{{ year }}<li>
       {% endfor %}
 		</ul>
 	</div>
-    <div class="subcontent">
-    	<div class="separation-rule"></div>
-      {% for exhibition in past_exhibition %}
-          {% if exhibition.is_group_expo %}
-          	<div class="exhibition-block subcontent__all-col">
-  		        <a href="/group-exhibition/{{exhibition.slug }}/">
-  		        	<h1>{{ exhibition.exhibition_name }}</h1>
-  					    <h4>{{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}</h4>
-  		        </a>
-  				  <div class="separation-rule light-border"></div>
-  			    </div>
-          {% else %}
-          	<div class="exhibition-block subcontent__all-col">
-  				<a href="/exhibition/{{ exhibition.artist.slug }}/{{exhibition.start.strftime('%d.%m.%Y') }}/">
-  					<h1>{{ exhibition.artist.name }}</h1>
-  					<h2>{{ exhibition.exhibition_name }}</h2>
-  					<h4>{{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}</h4>
-  				</a>
-  				<div class="separation-rule light-border"></div>
-          	</div>
-          {% endif %}
-      {% endfor %}
+    {% for year in years %}
+      {{ year }}
+      <div class="subcontent">
+      	<div class="separation-rule"></div>
+        {% for exhibition in past_exhibitions[year] %}
+            {% if exhibition.is_group_expo %}
+            	<div class="exhibition-block subcontent__all-col">
+    		        <a href="/group-exhibition/{{exhibition.slug }}/">
+    		        	<h1>{{ exhibition.exhibition_name }}</h1>
+    					    <h4>{{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}</h4>
+    		        </a>
+    				  <div class="separation-rule light-border"></div>
+    			    </div>
+            {% else %}
+            	<div class="exhibition-block subcontent__all-col">
+    				<a href="/exhibition/{{ exhibition.artist.slug }}/{{exhibition.start.strftime('%d.%m.%Y') }}/">
+    					<h1>{{ exhibition.artist.name }}</h1>
+    					<h2>{{ exhibition.exhibition_name }}</h2>
+    					<h4>{{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}</h4>
+    				</a>
+    				<div class="separation-rule light-border"></div>
+            	</div>
+            {% endif %}
+        {% endfor %}
+      </div>
     </div>
-  </div>
+  {% endfor %}
 </div>
 {% endblock %}
