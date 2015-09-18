@@ -170,13 +170,21 @@ a:focus				{outline: none;}
 	margin-bottom: $margin_bottom;
 	h1{
 		@extend h5;
-		@extend .col5__span4of4;
-		@extend .col4__span3of3;
+		@extend .col5__span1of4;
+		@extend .col4__span1of3;
 		@include full_on_mq_b;
 		@extend .col2__span2of2;
-		padding-right: 77%;
+		clear: both;
 		margin-top: $margin_top;
-		margin-bottom: -30px;
+		//margin-bottom: -30px;
+		& + h2{
+			margin-top: 22px;
+		}
+		&:before{
+			width: 100%;
+			height: 1px;
+			content: "";
+		}
 		&:first-of-type{
 			margin-top: 0;
 			margin-bottom: -20px;
