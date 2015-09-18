@@ -8,11 +8,19 @@
     <ul class="list-group">
       {% for artist in artists %}
         <li class="list-group-item row">
-          <div class="col-md-8">
-            <b>{{ artist.name }}</b>
+          <div class="col-xs-8">
+            <div class="media">
+              <div class="media-left">
+                {% if artist.coverimage %}
+                <a><img class="media-object" style="width: 120px; height: auto;" src="/{{artist.coverimage.path}}"></a>
+                {% endif %}
+              </div>
+              <div class="media-body">
+                <b>{{ artist.name }}</b>
+              </div>
+            </div>
           </div>
-          <br>
-          <div class="col-md-4  text-right">
+          <div class="col-xs-4  text-right">
             <a class="btn btn-primary btn-sm" href="/admin/artist/update/{{ artist._id }}">edit</a>
             <a class="btn btn-danger btn-sm" href="/admin/artist/delete/{{ artist._id }}">delete</a>
             <input type="checkbox" name="checkbox-published" {{ 'checked="checked"' if (artist.is_published) }} value="{{ artist._id }}" />
