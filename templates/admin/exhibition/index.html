@@ -9,16 +9,27 @@
     <ul class="list-group">
       {% for exhibition in exhibitions %}
         <li class="list-group-item row">
-          <div class="col-md-8">
-            {% if exhibition.is_group_expo %}
-              (group exhibition) <b>{{ exhibition.exhibition_name }}</b> <br> participants: {{ exhibition['artists']|join(', ', attribute='name') }}
-            {% else %}
-                <b>{{ exhibition.artist.name }}</b> <br> {{ exhibition.exhibition_name }}
-            {% endif%}
-            <br> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}
+          <div class="col-xs-8">
+            <div class="media">
+              <div class="media-left">
+                {% if exhibition.coverimage %}
+                  <a><img class="media-object" style="width: 120px; height: auto;" src="/{{exhibition.coverimage.path}}"></a>
+                {% else %}
+                  <div  style="width: 120px; border: 1px dotted; padding: 5px;"><p>exhibition has no cover image assigned</p></div>
+                {% endif %}
+              </div>
+              <div class="media-body">
+                {% if exhibition.is_group_expo %}
+                  (group exhibition) <b>{{ exhibition.exhibition_name }}</b> <br> participants: {{ exhibition['artists']|join(', ', attribute='name') }}
+                {% else %}
+                    <b>{{ exhibition.artist.name }}</b> <br> {{ exhibition.exhibition_name }}
+                {% endif%}
+                <br> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}
+              </div>
+            </div>
           </div>
           <br>
-          <div class="col-md-4 text-right">
+          <div class="col-xs text-right">
             {% if exhibition.is_group_expo %}<a class="btn btn-primary btn-sm" href="/admin/group-exhibition/update/{{ exhibition._id }}">edit</a>{% else %}<a class="btn btn-primary btn-sm" href="/admin/exhibition/update/{{ exhibition._id }}">edit</a>{% endif %}
             <a class="btn btn-danger btn-sm" href="/admin/exhibition/delete/{{ exhibition._id }}">delete</a>
             <input type="checkbox" name="checkbox-published" {{ 'checked="checked"' if (exhibition.is_published) }} value="{{ exhibition._id }}" />

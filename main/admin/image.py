@@ -40,6 +40,7 @@ def create():
             'year': form.year.data,
             'medium': form.medium.data,
             'dimensions': form.dimensions.data,
+            'edition': form.edition.data,
         }
         db.image.insert(image)
         flash(u'You successfully added an image', 'success')
@@ -62,6 +63,7 @@ def update(image_id):
             image['year'] = form.year.data
             image['medium'] = form.medium.data
             image['dimensions'] = form.dimensions.data
+            image['edition'] = form.edition.data
             image['artist'] = db.artist.find_one({'_id': ObjectId(form.artist.data)})
 
             db.image.update({"_id": ObjectId(image_id)}, image)

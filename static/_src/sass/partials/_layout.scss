@@ -170,10 +170,27 @@ a:focus				{outline: none;}
 	margin-bottom: $margin_bottom;
 	h1{
 		@extend h5;
-		@extend .col5__span1of4;
-		@extend .col4__span1of3;
+		@extend .col5__span4of4;
+		@extend .col4__span3of3;
 		@include full_on_mq_b;
 		@extend .col2__span2of2;
+		padding-right: 77%;
+		margin-top: $margin_top;
+		margin-bottom: -30px;
+		&:first-of-type{
+			margin-top: 0;
+			margin-bottom: -20px;
+		}
+		@include mq(a){
+			padding-right: 69%;
+		}
+		@include mq(b){
+			padding-right: 0;
+			margin-bottom: 0;
+			&:first-of-type{
+				margin-bottom: 0;
+			}
+		}
 	}
 	h2{
 		@include adjust-font-size-to(11px);
@@ -183,14 +200,28 @@ a:focus				{outline: none;}
 		@include full_on_mq_b;
 		@extend .col2__span2of2;
 		@extend .last;
-		margin-bottom: $margin_bottom / 2;
+		margin-bottom: $margin_bottom / 3;
 		margin-top: $margin_top / 2;
 		&:first-of-type{
 			margin-top: 0;
+			@include mq(b){
+				margin-top: $margin_top / 2;
+			}
+		}
+	}
+	i, em{
+		font-style: italic;
+	}
+	b{
+		font-weight: bold;
+	}
+	&.artist-bio-text{
+		p{
+			margin-bottom: 0;
 		}
 	}
 	&.artist-exhibition-list{
-		max-height: 120px;
+		max-height: 250px;
 		overflow: hidden;
 		position: relative;
 		margin-bottom: 10px;
@@ -200,7 +231,7 @@ a:focus				{outline: none;}
 			 left: 0;
 			 width: 100%;
 			 @include background-image(linear-gradient(rgba(255,255,255,0), white));
-			 height: 25px;
+			 height: 50px;
 		}
 		&.list-open{
 			max-height: none;

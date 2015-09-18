@@ -10,6 +10,7 @@ class Image(Form):
     year = StringField(u'year')
     medium = StringField(u'Artwork medium')
     dimensions = StringField(u'Artwork dimentions in CM')
+    edition = StringField(u'artwork edition info')
 
 class ImageUpdate(Form):
     artist = SelectField(u'Select artist *')
@@ -18,3 +19,4 @@ class ImageUpdate(Form):
     year = StringField(u'year')
     medium = StringField(u'Artwork medium')
     dimensions = StringField(u'Artwork dimentions in CM')
+    edition = StringField(u'artwork edition info')

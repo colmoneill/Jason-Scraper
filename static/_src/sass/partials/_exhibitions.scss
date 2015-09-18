@@ -4,18 +4,32 @@
 
 .exhibition-block{
 	//margin-bottom: $margin_bottom;
+	a{
+		display: inline-block;
+		width: 100%;
+	}
 	a:hover{
 		& > h1, & > h2, & > h4, & > .exhibition-block__image{
 			@include _hover;
 		}
 	}
 	&__image{
+		@extend .col5__span1of5;
+		@extend .col4__span1of4;
+		@extend .col2__span2of2;
+	}
+	&__inside{
 		width: 100%;
 		padding-bottom: $image_ratio;
 		@include background-cover;
 	}
 	&.upcoming{
 		clear: both;
+	}
+	&:last-of-type{
+		.separation-rule{
+			display: none;
+		}
 	}
 }
 

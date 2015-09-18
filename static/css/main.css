@@ -54,7 +54,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   src: url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.eot');
   src: url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.woff') format('woff'), url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.ttf') format('truetype'), url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.svg') format('svg');
   font-weight: "bold"; }
-.font-body, body, .subnav ul li a.points-to:before, .subnav ul li a:hover:before, .newsletter input {
+.font-body, body, .subnav ul li a.points-to:before, .subnav ul li a:hover:before, .newsletter input, .newsletter button.newsletter__button {
   font-family: "Maax-Regular", Helvetica, sans-serif; }
 
 .font-bold, h1, h3, .text-block h2, .text-block .homepage-exhibition__text--dash, .group-exhibition-artists p {
@@ -126,7 +126,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 951px) {
-  .col5__span1of4, .text-block h1, .download-block h1, .image-block {
+  .col5__span1of4, .download-block h1, .image-block {
     width: 23.25581%;
     float: left;
     margin-right: 2.32558%; } }
@@ -141,13 +141,13 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     float: left;
     margin-right: 2.32558%; } }
 @media (min-width: 951px) {
-  .col5__span4of4, .subcontent__all-col {
+  .col5__span4of4, .subcontent__all-col, .text-block h1 {
     width: 100%;
     float: left;
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 951px) {
-  .col5__span1of5, .subnav, .artist-block {
+  .col5__span1of5, .subnav, .exhibition-block__image, .artist-block {
     width: 18.51852%;
     float: left;
     margin-right: 1.85185%; } }
@@ -190,7 +190,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4__span1of3, .text-block h1, .download-block h1, .image-block {
+  .col4__span1of3, .download-block h1, .image-block {
     width: 30.76923%;
     float: left;
     margin-right: 3.84615%; } }
@@ -200,13 +200,13 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     float: left;
     margin-right: 3.84615%; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4__span3of3, .subcontent__all-col {
+  .col4__span3of3, .subcontent__all-col, .text-block h1 {
     width: 100%;
     float: left;
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4__span1of4, .subnav, .artist-block {
+  .col4__span1of4, .subnav, .exhibition-block__image, .artist-block {
     width: 22.85714%;
     float: left;
     margin-right: 2.85714%; } }
@@ -238,7 +238,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     float: left;
     margin-right: 4.0%; } }
 @media (min-width: 0) and (max-width: 500px) {
-  .col2__span2of2, .all-col, .subcontent, .subcontent__all-col, .text-block h1, .text-block h2, .text-block .homepage-exhibition__text--dash, .text-block p, #collapse-button, .download-block h1, .download-block__text, .subnav, .artist-block, .gallery__left, .gallery__right, .gallery__left .text-block h5, .gallery__left .text-block h1, .gallery__left .text-block p, .newsletter, .homepage-exhibition {
+  .col2__span2of2, .all-col, .subcontent, .subcontent__all-col, .text-block h1, .text-block h2, .text-block .homepage-exhibition__text--dash, .text-block p, #collapse-button, .download-block h1, .download-block__text, .subnav, .exhibition-block__image, .artist-block, .gallery__left, .gallery__right, .gallery__left .text-block h5, .gallery__left .text-block h1, .gallery__left .text-block p, .newsletter, .homepage-exhibition {
     width: 100%;
     float: left;
     margin-left: 0;
@@ -367,16 +367,32 @@ a:focus {
 
 .text-block {
   margin-bottom: 20px; }
-  @media only screen and (max-width: 750px) {
-    .text-block h1 {
-      width: 100%;
-      float: left;
-      margin-left: 0;
-      margin-right: 0; } }
+  .text-block h1 {
+    padding-right: 77%;
+    margin-top: 22px;
+    margin-bottom: -30px; }
+    @media only screen and (max-width: 750px) {
+      .text-block h1 {
+        width: 100%;
+        float: left;
+        margin-left: 0;
+        margin-right: 0; } }
+    .text-block h1:first-of-type {
+      margin-top: 0;
+      margin-bottom: -20px; }
+    @media only screen and (max-width: 950px) {
+      .text-block h1 {
+        padding-right: 69%; } }
+    @media only screen and (max-width: 750px) {
+      .text-block h1 {
+        padding-right: 0;
+        margin-bottom: 0; }
+        .text-block h1:first-of-type {
+          margin-bottom: 0; } }
   .text-block h2, .text-block .homepage-exhibition__text--dash {
     font-size: 0.84615em;
     line-height: 1.72727em;
-    margin-bottom: 10px;
+    margin-bottom: 6.66667px;
     margin-top: 11px; }
     @media only screen and (max-width: 750px) {
       .text-block h2, .text-block .homepage-exhibition__text--dash {
@@ -386,8 +402,17 @@ a:focus {
         margin-right: 0; } }
     .text-block h2:first-of-type, .text-block .homepage-exhibition__text--dash:first-of-type {
       margin-top: 0; }
+      @media only screen and (max-width: 750px) {
+        .text-block h2:first-of-type, .text-block .homepage-exhibition__text--dash:first-of-type {
+          margin-top: 11px; } }
+  .text-block i, .text-block em {
+    font-style: italic; }
+  .text-block b {
+    font-weight: bold; }
+  .text-block.artist-bio-text p {
+    margin-bottom: 0; }
   .text-block.artist-exhibition-list {
-    max-height: 120px;
+    max-height: 250px;
     overflow: hidden;
     position: relative;
     margin-bottom: 10px; }
@@ -402,7 +427,7 @@ a:focus {
       background-image: -moz-linear-gradient(rgba(255, 255, 255, 0), #ffffff);
       background-image: -webkit-linear-gradient(rgba(255, 255, 255, 0), #ffffff);
       background-image: linear-gradient(rgba(255, 255, 255, 0), #ffffff);
-      height: 25px; }
+      height: 50px; }
     .text-block.artist-exhibition-list.list-open {
       max-height: none; }
       .text-block.artist-exhibition-list.list-open .bottom-gradient {
@@ -735,6 +760,9 @@ nav {
 section.informations div:last-child {
   margin-bottom: 0; }
 
+.exhibition-block a {
+  display: inline-block;
+  width: 100%; }
 .exhibition-block a:hover > h1, .exhibition-block a:hover > h2, .exhibition-block a:hover > .homepage-exhibition__text--dash, .exhibition-block a:hover > h4, .exhibition-block a:hover > .exhibition-block__image {
   opacity: 0.4;
   -moz-transition: all 0.2s ease-in-out 0s;
@@ -742,7 +770,7 @@ section.informations div:last-child {
   -webkit-transition: all 0.2s ease-in-out;
   -webkit-transition-delay: 0s;
   transition: all 0.2s ease-in-out 0s; }
-.exhibition-block__image {
+.exhibition-block__inside {
   width: 100%;
   padding-bottom: 67%;
   background: no-repeat center center;
@@ -752,6 +780,8 @@ section.informations div:last-child {
   background-size: cover; }
 .exhibition-block.upcoming {
   clear: both; }
+.exhibition-block:last-of-type .separation-rule, .exhibition-block:last-of-type .subnav {
+  display: none; }
 
 section.exhibition-year div:last-child {
   margin-bottom: 0; }
@@ -875,9 +905,12 @@ section.exhibition-year div:last-child {
     margin-right: 1%; }
     .newsletter input:focus {
       outline-style: solid;
-      outline-width: 1px;
+      outline-width: 2px;
       outline-color: #c8c8c8; }
-  .newsletter input.newsletter__button {
+  .newsletter button.newsletter__button {
+    font-size: 1em;
+    line-height: 1.46154em;
+    width: 39%;
     cursor: pointer;
     background-color: white;
     border-width: 1px;
@@ -891,16 +924,11 @@ section.exhibition-year div:last-child {
     width: 20%;
     margin-right: 0;
     padding: 2px; }
-    .newsletter input.newsletter__button:focus {
+    .newsletter button.newsletter__button:focus {
       outline-width: 0;
       border-color: #c8c8c8; }
-    .newsletter input.newsletter__button:hover {
-      opacity: 0.4;
-      -moz-transition: all 0.2s ease-in-out 0s;
-      -o-transition: all 0.2s ease-in-out 0s;
-      -webkit-transition: all 0.2s ease-in-out;
-      -webkit-transition-delay: 0s;
-      transition: all 0.2s ease-in-out 0s; }
+    .newsletter button.newsletter__button:hover {
+      opacity: 0.4; }
 
 .social_media_icon {
   margin-right: 14px;
@@ -923,11 +951,13 @@ section.exhibition-year div:last-child {
       padding-top: 0; } }
 
 .colophon {
-  margin-top: 50px; }
+  margin-top: 60px;
+  margin-bottom: -20px; }
   .colophon p {
     font-size: 0.76923em;
     line-height: 1.9em;
-    color: #c8c8c8; }
+    color: #c8c8c8;
+    margin-bottom: -1px; }
     .colophon p a {
       color: #c8c8c8; }
       .colophon p a:hover {
@@ -949,7 +979,8 @@ section.exhibition-year div:last-child {
   left: 0; }
 
 #imagelightbox-close {
-  font-size: 13px;
+  font-size: 1em;
+  line-height: 1.46154em;
   text-align: right;
   position: fixed;
   z-index: 10002;
@@ -970,7 +1001,8 @@ section.exhibition-year div:last-child {
   position: fixed;
   z-index: 10001;
   bottom: 0;
-  font-size: 13px; }
+  font-size: 1em;
+  line-height: 1.46154em; }
   .imagelightbox-arrow p {
     position: relative;
     top: 50%;
