@@ -12,7 +12,7 @@
 	}
 	.separation-rule{
 		padding-top: $margin-bottom;
-		margin-top: $margin-bottom;
+		margin-top: 15px;
 		@include mq(b){
 			padding-top: 14px;
 		}
@@ -24,14 +24,27 @@
 
 .exhibition-block{
 	//margin-bottom: $margin_bottom;
+	h1,h2,h4{
+		display: block;
+		width: inherit;
+		float: left;
+		clear: left;
+	}
 	a{
-		display: inline-block;
-		width: 100%;
+		//display: inline-block;
+		//width: 100%;
 	}
 	a:hover{
-		& > h1, & > h2, & > h4, & > .exhibition-block__image{
+		& > .exhibition-block__text, & > .exhibition-block__image{ 
 			@include _hover;
 		}
+	}
+	&__wrap{
+		width: 100%;
+		display: inline-block;
+	}
+	&__text{
+		float: left;
 	}
 	&__image{
 		@extend .col5__span1of5;
