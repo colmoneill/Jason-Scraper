@@ -4,9 +4,10 @@
 {% block body %}
 <!--Single exhibition-->
 <div class="container no-margin-top">
-  <div class="all-col">
+  <div class="all-col exhibitions-page">
     {% for exhibitions in future_exhibition %}
       <div class="exhibition-block subcontent__all-col">
+      	<div class="separation-rule upcoming"></div>
         {% if exhibitions.is_group_expo %}
             <h1>{{ exhibitions.exhibition_name }}</h1>
             <h4>{{ exhibitions.start.strftime('%d.%m.%Y') }} > {{ exhibitions.end.strftime('%d.%m.%Y') }}</h4>

@@ -238,7 +238,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     float: left;
     margin-right: 4.0%; } }
 @media (min-width: 0) and (max-width: 500px) {
-  .col2__span2of2, .all-col, .subcontent, .subcontent__all-col, .text-block h1, .text-block h2, .text-block .homepage-exhibition__text--dash, .text-block p, #collapse-button, .download-block h1, .download-block__text, .subnav, .exhibition-block__image, .artist-block, .gallery__left, .gallery__right, .gallery__left .text-block h5, .gallery__left .text-block h1, .gallery__left .text-block p, .newsletter, .homepage-exhibition {
+  .col2__span2of2, .all-col, .subcontent, .subcontent__all-col, .text-block h1, .text-block h2, .text-block .homepage-exhibition__text--dash, .text-block p, #collapse-button, .download-block h1, .download-block__text, .subnav, .artist-block, .gallery__left, .gallery__right, .gallery__left .text-block h5, .gallery__left .text-block h1, .gallery__left .text-block p, .newsletter, .homepage-exhibition {
     width: 100%;
     float: left;
     margin-left: 0;
@@ -306,7 +306,7 @@ body {
   margin-right: 0; }
 
 @media only screen and (max-width: 500px) {
-  .not-mobile {
+  .not-mobile, .exhibitions-page:first-of-type .separation-rule.year:first-of-type, .exhibitions-page:first-of-type .year.subnav:first-of-type {
     display: none; } }
 
 .no-margin-top {
@@ -727,7 +727,7 @@ nav {
     margin-bottom: 20px; } }
 
 @media only screen and (max-width: 500px) {
-  .margin-top-on-mobile {
+  .margin-top-on-mobile, .exhibitions-page:first-of-type {
     padding-top: 40px; } }
 
 .group-exhibition-artists {
@@ -765,6 +765,19 @@ nav {
 section.informations div:last-child {
   margin-bottom: 0; }
 
+.exhibitions-page:first-of-type .separation-rule.year:first-of-type, .exhibitions-page:first-of-type .year.subnav:first-of-type {
+  margin-top: 22px; }
+.exhibitions-page .separation-rule, .exhibitions-page .subnav {
+  padding-top: 20px;
+  margin-top: 20px; }
+  @media only screen and (max-width: 750px) {
+    .exhibitions-page .separation-rule, .exhibitions-page .subnav {
+      padding-top: 14px; } }
+  .exhibitions-page .separation-rule.year, .exhibitions-page .year.subnav {
+    margin-top: 60px; }
+  .exhibitions-page .separation-rule.upcoming, .exhibitions-page .upcoming.subnav {
+    margin-top: 22px; }
+
 .exhibition-block a {
   display: inline-block;
   width: 100%; }
@@ -775,6 +788,9 @@ section.informations div:last-child {
   -webkit-transition: all 0.2s ease-in-out;
   -webkit-transition-delay: 0s;
   transition: all 0.2s ease-in-out 0s; }
+@media only screen and (max-width: 750px) {
+  .exhibition-block__image {
+    display: none; } }
 .exhibition-block__inside {
   width: 100%;
   padding-bottom: 67%;
@@ -785,7 +801,7 @@ section.informations div:last-child {
   background-size: cover; }
 .exhibition-block.upcoming {
   clear: both; }
-.exhibition-block:last-of-type .separation-rule, .exhibition-block:last-of-type .subnav {
+.exhibition-block:last-of-type .separation-rule.light-border, .exhibition-block:last-of-type .light-border.subnav {
   display: none; }
 
 section.exhibition-year div:last-child {
