@@ -22,19 +22,22 @@
 		padding-bottom: $image_ratio;
 		background-color: rgb(240,240,240);
 		position: relative;
-/*
 		&--text{
-			@include vertical-align;
-				p{
-					text-align: center;
-					@extend .font-bold;
-					@include adjust-font-size-to(25px);
-				}
-				h4{
-					text-align: center;
-				}
+			position: absolute;
+			width: 100%;
+			height: 100%;
 		}
-*/
+		&--center{
+			@include vertical-align;
+			p{
+				text-align: center;
+				@extend .font-bold;
+				@include adjust-font-size-to(25px);
+			}
+			h4{
+				text-align: center;
+			}
+		}
 	}
 	&__inside{
 		height: 0;

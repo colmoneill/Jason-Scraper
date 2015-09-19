@@ -57,7 +57,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .font-body, body, .subnav ul li a.points-to:before, .subnav ul li a:hover:before, .newsletter input, .newsletter button.newsletter__button {
   font-family: "Maax-Regular", Helvetica, sans-serif; }
 
-.font-bold, h1, h3, .text-block h2, .text-block .homepage-exhibition__text--dash, .group-exhibition-artists p {
+.font-bold, h1, h3, .text-block h2, .text-block .homepage-exhibition__text--dash, .group-exhibition-artists p, .homepage-exhibition__landing--center p {
   font-family: "Maax-Medium", Helvetica, sans-serif; }
 
 .font-mono, h4, h5, .text-block h1, .download-block h1, h6, .subnav, .staff_member__mail, .colophon p, #imagelightbox-close, .imagelightbox-arrow, #slider-text-box p {
@@ -1122,20 +1122,23 @@ section.exhibition-year div:last-child {
   width: 100%;
   padding-bottom: 67%;
   background-color: #f0f0f0;
-  position: relative;
-  /*
-  		&--text{
-  			@include vertical-align;
-  				p{
-  					text-align: center;
-  					@extend .font-bold;
-  					@include adjust-font-size-to(25px);
-  				}
-  				h4{
-  					text-align: center;
-  				}
-  		}
-  */ }
+  position: relative; }
+  .homepage-exhibition__landing--text {
+    position: absolute;
+    width: 100%;
+    height: 100%; }
+  .homepage-exhibition__landing--center {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%); }
+    .homepage-exhibition__landing--center p {
+      text-align: center;
+      font-size: 1.92308em;
+      line-height: 1.52em; }
+    .homepage-exhibition__landing--center h4 {
+      text-align: center; }
 .homepage-exhibition__inside {
   height: 0;
   width: 100%;
