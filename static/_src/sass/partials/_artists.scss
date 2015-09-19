@@ -30,6 +30,9 @@
 	}
 	@include mq(b){
 		margin-top: 5px;
+		&:nth-of-type(n){
+			margin-top: 5px;
+		}
 		&:first-of-type{
 			margin-top: 0;
 		}
@@ -50,7 +53,7 @@
 		}
 	}
 	p{
-		margin-top: 10px;
+		margin-top: 8px;
 		@include mq(b){
 			@include adjust-font-size-to(18px);
 			font-family: "Maax-Medium", Helvetica, sans-serif;
