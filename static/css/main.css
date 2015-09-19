@@ -757,13 +757,13 @@ section.informations div:last-child {
 
 .exhibitions-page:first-of-type .separation-rule.year:first-of-type, .exhibitions-page:first-of-type .year.subnav:first-of-type {
   margin-top: 22px; }
-.exhibitions-page .separation-rule, .exhibitions-page .subnav {
+.exhibitions-page .separation-rule.light-border, .exhibitions-page .light-border.subnav {
   padding-top: 20px;
   margin-top: 15px; }
   @media only screen and (max-width: 750px) {
-    .exhibitions-page .separation-rule, .exhibitions-page .subnav {
+    .exhibitions-page .separation-rule.light-border, .exhibitions-page .light-border.subnav {
       padding-top: 14px; } }
-  .exhibitions-page .separation-rule.upcoming, .exhibitions-page .upcoming.subnav {
+  .exhibitions-page .separation-rule.light-border.upcoming, .exhibitions-page .light-border.upcoming.subnav {
     margin-top: 22px; }
 
 .exhibition-block h1, .exhibition-block h2, .exhibition-block .homepage-exhibition__text--dash, .exhibition-block h4 {

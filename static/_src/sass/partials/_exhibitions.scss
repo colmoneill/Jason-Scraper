@@ -10,7 +10,7 @@
 			@extend .not-mobile;
 		}
 	}
-	.separation-rule{
+	.separation-rule.light-border{
 		padding-top: $margin-bottom;
 		margin-top: 15px;
 		@include mq(b){
