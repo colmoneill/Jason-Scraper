@@ -16,6 +16,23 @@
 	&:nth-of-type(2){
 		@include last;
 	}
+	&__landing{
+		height: 0;
+		width: 100%;
+		padding-bottom: $image_ratio;
+		background-color: rgb(240,240,240);
+		&--text{
+				@include vertical-align;
+				p{
+					text-align: center;
+					@extend .font-bold;
+					@include adjust-font-size-to(25px);
+				}
+				h4{
+					text-align: center;
+				}
+		}
+	}
 	&__inside{
 		height: 0;
 		width: 100%;

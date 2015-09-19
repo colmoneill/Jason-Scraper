@@ -57,7 +57,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .font-body, body, .subnav ul li a.points-to:before, .subnav ul li a:hover:before, .newsletter input, .newsletter button.newsletter__button {
   font-family: "Maax-Regular", Helvetica, sans-serif; }
 
-.font-bold, h1, h3, .text-block h2, .text-block .homepage-exhibition__text--dash, .group-exhibition-artists p {
+.font-bold, h1, h3, .text-block h2, .text-block .homepage-exhibition__text--dash, .group-exhibition-artists p, .homepage-exhibition__landing--text p {
   font-family: "Maax-Medium", Helvetica, sans-serif; }
 
 .font-mono, h4, h5, .text-block h1, .download-block h1, h6, .subnav, .staff_member__mail, .colophon p, #imagelightbox-close, .imagelightbox-arrow, #slider-text-box p {
@@ -1117,6 +1117,23 @@ section.exhibition-year div:last-child {
 .homepage-exhibition:nth-of-type(2) {
   float: right;
   margin-right: 0; }
+.homepage-exhibition__landing {
+  height: 0;
+  width: 100%;
+  padding-bottom: 67%;
+  background-color: #f0f0f0; }
+  .homepage-exhibition__landing--text {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%); }
+    .homepage-exhibition__landing--text p {
+      text-align: center;
+      font-size: 1.92308em;
+      line-height: 1.52em; }
+    .homepage-exhibition__landing--text h4 {
+      text-align: center; }
 .homepage-exhibition__inside {
   height: 0;
   width: 100%;
