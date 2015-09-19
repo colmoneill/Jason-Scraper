@@ -16,9 +16,6 @@
 		@include mq(b){
 			padding-top: 14px;
 		}
-		&.year{
-			margin-top: $margin-bottom * 3;
-		}
 		&.upcoming{
 			margin-top: $margin-top;
 		}
@@ -53,6 +50,7 @@
 	}
 
 	&:last-of-type{
+		margin-bottom: $margin-bottom * 2;
 		.separation-rule.light-border{
 			display: none;
 		}

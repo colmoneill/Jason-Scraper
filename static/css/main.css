@@ -773,8 +773,6 @@ section.informations div:last-child {
   @media only screen and (max-width: 750px) {
     .exhibitions-page .separation-rule, .exhibitions-page .subnav {
       padding-top: 14px; } }
-  .exhibitions-page .separation-rule.year, .exhibitions-page .year.subnav {
-    margin-top: 60px; }
   .exhibitions-page .separation-rule.upcoming, .exhibitions-page .upcoming.subnav {
     margin-top: 22px; }
 
@@ -801,14 +799,22 @@ section.informations div:last-child {
   background-size: cover; }
 .exhibition-block.upcoming {
   clear: both; }
-.exhibition-block:last-of-type .separation-rule.light-border, .exhibition-block:last-of-type .light-border.subnav {
-  display: none; }
+.exhibition-block:last-of-type {
+  margin-bottom: 40px; }
+  .exhibition-block:last-of-type .separation-rule.light-border, .exhibition-block:last-of-type .light-border.subnav {
+    display: none; }
 
 section.exhibition-year div:last-child {
   margin-bottom: 0; }
 
 .artist-block {
   margin-top: 20px; }
+  @media only screen and (max-width: 750px) {
+    .artist-block {
+      width: 100%;
+      float: left;
+      margin-left: 0;
+      margin-right: 0; } }
   @media only screen and (min-width: 951px) {
     .artist-block:nth-of-type(5n) {
       clear: right;
@@ -823,11 +829,8 @@ section.exhibition-year div:last-child {
       margin-right: 0; }
     .artist-block:nth-of-type(-n+4) {
       margin-top: 0; } }
-  @media only screen and (min-width: 0) and (max-width: 500px) {
+  @media only screen and (max-width: 750px) {
     .artist-block {
-      font-size: 1.38462em;
-      line-height: 1.58333em;
-      font-family: "Maax-Medium", Helvetica, sans-serif;
       margin-top: 5px; }
       .artist-block:first-of-type {
         margin-top: 0; } }
@@ -849,9 +852,17 @@ section.exhibition-year div:last-child {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover; }
-    @media only screen and (max-width: 500px) {
+    @media only screen and (max-width: 750px) {
       .artist-block__image {
         display: none; } }
+  .artist-block p {
+    margin-top: 10px; }
+    @media only screen and (max-width: 750px) {
+      .artist-block p {
+        font-size: 1.38462em;
+        line-height: 1.58333em;
+        font-family: "Maax-Medium", Helvetica, sans-serif;
+        margin-top: 0; } }
 
 @media only screen and (max-width: 750px) {
   .gallery__left {
