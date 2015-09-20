@@ -90,6 +90,7 @@
 		padding: 1px;
 		margin: 0;
 		margin-right: 1%;
+		box-sizing: border-box;
 		&:focus{
 			outline-style: solid;
 			outline-width: 2px;
@@ -113,6 +114,7 @@
 		width: 20%;
 		margin-right: 0;
 		padding: 2px;
+		box-sizing: border-box;
 		&:focus{
 			outline-width: 0;
 			border-color: $gray-4;

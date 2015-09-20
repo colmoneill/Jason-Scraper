@@ -168,6 +168,9 @@ a:focus				{outline: none;}
 .text-block{
 	@extend .clearfix;
 	margin-bottom: $margin_bottom;
+	&.no-margin-bottom{
+		margin-bottom: 0;
+	}
 	h1{
 		@extend h5;
 		@extend .col5__span1of4;
