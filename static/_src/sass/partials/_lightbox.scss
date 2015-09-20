@@ -119,7 +119,7 @@
 		@extend .font-mono;
 		white-space: nowrap;
 		@include mq(c){
-			white-space: normal;
+			white-space: inherit;
 		}
 		&:after{
 			content: "\00a0/\00a0";

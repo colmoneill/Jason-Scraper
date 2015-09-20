@@ -1167,7 +1167,7 @@ section.exhibition-year div:last-child {
     white-space: nowrap; }
     @media only screen and (max-width: 500px) {
       #slider-text-box p {
-        white-space: normal; } }
+        white-space: inherit; } }
     #slider-text-box p:after {
       content: "\00a0/\00a0"; }
     #slider-text-box p:last-of-type:after {

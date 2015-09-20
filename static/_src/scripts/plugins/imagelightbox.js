@@ -87,7 +87,7 @@
 				if( !image.length ) return true;
 
 				var screenWidth	 = $( window ).width() * 0.8,
-					screenHeight = ($( window ).height() - ($('#slider-text-box').height())) * 0.9,
+					screenHeight = (window.innerHeight - ($('#slider-text-box').height())) * 0.9,
 					tmpImage 	 = new Image();
 				tmpImage.src	= image.attr( 'src' );
 				tmpImage.onload = function()
@@ -106,7 +106,7 @@
 					{
 						'width':  imageWidth + 'px',
 						'height': imageHeight + 'px',
-						'top':    ( $( window ).height() - imageHeight - ($('#slider-text-box').height())) / 2 + 'px',
+						'top':    ( window.innerHeight - imageHeight - ($('#slider-text-box').height())) / 2 + 'px',
 						'left':   ( $( window ).width() - imageWidth ) / 2 + 'px'
 					});
 				};
