@@ -1137,8 +1137,32 @@ section.exhibition-year div:last-child {
       text-align: center;
       font-size: 1.92308em;
       line-height: 1.52em; }
+      @media only screen and (max-width: 950px) {
+        .homepage-exhibition__landing--center p {
+          font-size: 1.53846em;
+          line-height: 1.425em; } }
+      @media only screen and (max-width: 750px) {
+        .homepage-exhibition__landing--center p {
+          font-size: 1.30769em;
+          line-height: 1.67647em; } }
+      @media only screen and (max-width: 500px) {
+        .homepage-exhibition__landing--center p {
+          font-size: 1.53846em;
+          line-height: 1.425em; } }
     .homepage-exhibition__landing--center h4 {
       text-align: center; }
+      @media only screen and (max-width: 950px) {
+        .homepage-exhibition__landing--center h4 {
+          font-size: 0.84615em;
+          line-height: 1.72727em; } }
+      @media only screen and (max-width: 750px) {
+        .homepage-exhibition__landing--center h4 {
+          font-size: 0.76923em;
+          line-height: 1.9em; } }
+      @media only screen and (max-width: 500px) {
+        .homepage-exhibition__landing--center h4 {
+          font-size: 0.84615em;
+          line-height: 1.72727em; } }
 .homepage-exhibition__inside {
   height: 0;
   width: 100%;

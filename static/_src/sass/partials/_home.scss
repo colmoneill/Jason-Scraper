@@ -33,9 +33,27 @@
 				text-align: center;
 				@extend .font-bold;
 				@include adjust-font-size-to(25px);
+				@include mq(a){
+					@include adjust-font-size-to(20px);	
+				}
+				@include mq(b){
+					@include adjust-font-size-to(17px);
+				}
+				@include mq(c){
+					@include adjust-font-size-to(20px);
+				}
 			}
 			h4{
 				text-align: center;
+				@include mq(a){
+					@include adjust-font-size-to(11px);	
+				}
+				@include mq(b){
+					@include adjust-font-size-to(10px);	
+				}
+				@include mq(c){
+					@include adjust-font-size-to(11px);	
+				}
 			}
 		}
 	}
