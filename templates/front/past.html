@@ -13,7 +13,7 @@
 	</div>
 	<div class="subcontent">
     	{% for year in years %}
-		<section class="subcontent__all-col exhibitions-page" id="{{ year }}">
+		<section class="subcontent__all-col exhibitions-page upcoming-exhibitions" id="{{ year }}">
       		<div class="separation-rule year"></div>
 	  			{% for exhibition in past_exhibitions[year] %}
 	  				{% if exhibition.is_group_expo %}

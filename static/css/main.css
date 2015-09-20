@@ -306,7 +306,7 @@ body {
   margin-right: 0; }
 
 @media only screen and (max-width: 500px) {
-  .not-mobile, .exhibitions-page:first-of-type .separation-rule.year:first-of-type, .exhibitions-page:first-of-type .year.subnav:first-of-type {
+  .not-mobile, .exhibitions-page.upcoming-exhibitions:first-of-type .separation-rule.year:first-of-type, .exhibitions-page.upcoming-exhibitions:first-of-type .year.subnav:first-of-type {
     display: none; } }
 
 .no-margin-top {
@@ -575,7 +575,7 @@ nav {
           clear: both;
           padding-bottom: 10px;
           padding-right: 10px; }
-          nav ul li a:hover, nav ul li.active a {
+          nav ul li a:hover {
             opacity: 0.4;
             -moz-transition: all 0.2s ease-in-out 0s;
             -o-transition: all 0.2s ease-in-out 0s;
@@ -584,9 +584,12 @@ nav {
             transition: all 0.2s ease-in-out 0s;
             border-bottom: none; } }
         @media only screen and (max-width: 750px) and (max-width: 750px) {
-          nav ul li a:hover, nav ul li.active a {
+          nav ul li a:hover {
             opacity: 1; } }
   @media only screen and (max-width: 750px) {
+          nav ul li.active a {
+            opacity: 0.4;
+            border-bottom: none; }
           nav ul li.active a:hover {
             border-bottom: none; } }
 
@@ -739,7 +742,7 @@ nav {
     margin-bottom: 20px; } }
 
 @media only screen and (max-width: 500px) {
-  .margin-top-on-mobile, .exhibitions-page:first-of-type {
+  .margin-top-on-mobile, .exhibitions-page.upcoming-exhibitions:first-of-type {
     padding-top: 40px; } }
 
 .group-exhibition-artists {

@@ -3,11 +3,15 @@
 // --------------------------------------------------
 
 .exhibitions-page{
-	&:first-of-type{
+	&.upcoming-exhibitions:first-of-type{
 		@extend .margin-top-on-mobile;
 		.separation-rule.year:first-of-type{
-			margin-top: $margin-top;
 			@extend .not-mobile;
+		}
+	}
+	&:first-of-type{
+		.separation-rule.year:first-of-type{
+			margin-top: $margin-top;
 		}
 	}
 	.separation-rule.light-border{
