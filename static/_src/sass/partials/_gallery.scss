@@ -91,6 +91,20 @@
 		margin: 0;
 		margin-right: 1%;
 		box-sizing: border-box;
+/*
+		-webkit-border-radius:0; 
+		border-radius:0;
+		border-width: 1px;
+		border-color: $gray-4;
+		//-webkit-appearance: none;
+*/
+		@include mq(c){
+			width: 49%;
+			margin-right: 2%;
+			&:last-of-type{
+				margin-right: 0;
+			}
+		}
 		&:focus{
 			outline-style: solid;
 			outline-width: 2px;
@@ -99,7 +113,6 @@
 	}
 	button.newsletter__button{
 		@include adjust-font-size-to($base-font-size);
-		width: 39%;
 		@extend .font-body;
 		cursor: pointer;
 		background-color: $white;
@@ -115,6 +128,10 @@
 		margin-right: 0;
 		padding: 2px;
 		box-sizing: border-box;
+		@include mq(c){
+			width: 49%;
+			margin-top: 2%;
+		}
 		&:focus{
 			outline-width: 0;
 			border-color: $gray-4;
