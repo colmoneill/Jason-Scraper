@@ -212,6 +212,9 @@ a:focus				{outline: none;}
 		overflow: hidden;
 		position: relative;
 		margin-bottom: 10px;
+		h2:first-of-type{
+			margin-top: $margin_top / 2;
+		}
 		h1{
 			margin-top: $margin_top;
 			& + h2, & + p{
@@ -220,7 +223,7 @@ a:focus				{outline: none;}
 					margin-top: 0;
 				}
 			}
-			&:first-of-type, &:first-of-type + h2{
+			&:first-of-type, &:first-of-type + h2, &:first-of-type + p{
 				margin-top: 0;
 			}
 		}
