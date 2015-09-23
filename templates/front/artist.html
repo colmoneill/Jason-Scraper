@@ -15,7 +15,7 @@
 				<li><a class="go-to-anchor subnav__information" href="#info"></a></li>
 				<li><a class="go-to-anchor subnav__biography" href="#bio"></a></li>
 				<li><a class="go-to-anchor" href="#exhibition">exhibitions</a></li>
-				<li><a class="go-to-anchor" href="#media">media</a></li>
+				{% if artist.link_url1 %}<li><a class="go-to-anchor" href="#media">media</a></li>{% endif %}
 			</ul>
 		</div>
 		<div class="subcontent">
@@ -81,7 +81,40 @@
 		</div></section>
 			<section class="subcontent__all-col informations">
 				{% for exhibition in involved_in %}
-				{{ exhibition.exhibition_name }}
+				{% if exhibition.is_group_expo %}
+					<div class="exhibition-block subcontent__all-col">
+						<div class="exhibition-block__wrap">
+							<a href="/group-exhibition/{{exhibition.slug }}/">
+								{% if exhibition.coverimage %}
+									<div class="exhibition-block__image">
+										<div class="exhibition-block__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
+									</div>
+								{% endif %}
+									<div class="exhibition-block__text">
+										<h1>{{ exhibition.exhibition_name }}</h1>
+										<h4>{{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}</h4>
+									</div>
+							</a>
+						</div><div class="separation-rule light-border"></div>
+					</div>
+				{% else %}
+					<div class="exhibition-block subcontent__all-col">
+						<div class="exhibition-block__wrap">
+							<a href="/exhibition/{{ exhibition.artist.slug }}/{{exhibition.start.strftime('%d.%m.%Y') }}/">
+								{% if exhibition.coverimage %}
+									<div class="exhibition-block__image">
+										<div class="exhibition-block__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
+									</div>
+								{% endif %}
+									<div class="exhibition-block__text">
+										<h1>{{ exhibition.artist.name }}</h1>
+										<h2>{{ exhibition.exhibition_name }}</h2>
+										<h4>{{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}</h4>
+									</div>
+						 </a>
+					 </div><div class="separation-rule light-border"></div>
+			 </div>
+		{% endif %}
 				{% endfor %}
 			</section>
 		</div></div>
