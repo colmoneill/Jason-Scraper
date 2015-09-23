@@ -14,9 +14,8 @@
 				<li><a class="go-to-anchor" href="#images">images</a></li>
 				<li><a class="go-to-anchor subnav__information" href="#info"></a></li>
 				<li><a class="go-to-anchor subnav__biography" href="#bio"></a></li>
-				{% if involved_in %}<li><a class="go-to-anchor" href="#exhibition">exhibitions</a></li>{% endif %}
 				{% if artist.link_url1 %}<li><a class="go-to-anchor" href="#press">press</a></li>{% endif %}
-				<li><a class="go-to-anchor" href="#exhibition">exhibitions</a></li>
+				{% if involved_in %}<li><a class="go-to-anchor" href="#exhibition">exhibitions</a></li>{% endif %}
 			</ul>
 		</div>
 		<div class="subcontent">
@@ -46,11 +45,11 @@
 				{% endif %}
 			</div>
 	    </section>
+			{% if artist.wysiwig_artist_bio %}
 	    <section class="subcontent__all-col informations" id="bio">
 			<div class="separation-rule"></div>
 			<div class="text-block artist-bio-text">
-				<h1>BIOGRAPHY</h1>
-			{% if artist.wysiwig_artist_bio %}
+			<h1>BIOGRAPHY</h1>
 			{{ artist.wysiwig_artist_bio|markdown }}
 			{% endif %}
 		</div>
