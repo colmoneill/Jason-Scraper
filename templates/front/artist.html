@@ -15,7 +15,8 @@
 				<li><a class="go-to-anchor subnav__information" href="#info"></a></li>
 				<li><a class="go-to-anchor subnav__biography" href="#bio"></a></li>
 				{% if involved_in %}<li><a class="go-to-anchor" href="#exhibition">exhibitions</a></li>{% endif %}
-				{% if artist.link_url1 %}<li><a class="go-to-anchor" href="#media">media</a></li>{% endif %}
+				{% if artist.link_url1 %}<li><a class="go-to-anchor" href="#press">press</a></li>{% endif %}
+				<li><a class="go-to-anchor" href="#exhibition">exhibitions</a></li>
 			</ul>
 		</div>
 		<div class="subcontent">
@@ -60,10 +61,13 @@
 		</div>
 		<h3 id="collapse-button"><a id="collapse-bttn" href="javascript:void(0)"></a></h3>
 			{% endif %}
+			{% if artist.biography_file %}
+			<div class="download-block">
+				<a class="" href="/{{ artist.biography_file }}"><h3>Download {{ artist.name }}'s biography — PDF ({{artist.biography_size}})</h3></a>
+			</div>
+			{% endif %}
 	    </section>
-	    <section class="subcontent__all-col" id="exhibition">
-	    </section>
-		 <section class="subcontent__all-col informations" id="media">
+		 <section class="subcontent__all-col informations" id="press">
 		 <div class="separation-rule"></div>
 		<div class="download-block">
 		{% if artist.press_release %}
@@ -71,15 +75,13 @@
 				<div class="download-block__text">
 					<a class="" href="/{{ artist.press_release }}"><h3>Download the press release — PDF ({{artist.press_release_size}})</h3></a><br>
 		{% endif %}
-		{% if artist.biography_file %}
-					<a class="" href="/{{ artist.biography_file }}"><h3>Download {{ artist.name }}'s biography — PDF ({{artist.biography_size}})</h3></a><br>
-		{% endif %}
 					<a href="{{ artist.link_url1 }}" target="_blank"><h3>{{ artist.link_name1 }}</h3></a><br>
 					<a href="{{ artist.link_url2 }}" target="_blank"><h3>{{ artist.link_name2 }}</h3></a><br>
 					<a href="{{ artist.link_url3 }}" target="_blank"><h3>{{ artist.link_name3 }}</h3></a><br>
 				</div>
 		</div></section>
-			<section class="subcontent__all-col informations">
+			<section class="subcontent__all-col informations" id="exhibition">
+				<div class="separation-rule"></div>
 				{% for exhibition in involved_in %}
 				{% if exhibition.is_group_expo %}
 					<div class="exhibition-block subcontent__all-col">
