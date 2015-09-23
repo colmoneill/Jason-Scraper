@@ -526,7 +526,9 @@ header {
 #logo {
   width: 310px;
   height: auto;
-  float: left; }
+  float: left;
+  position: relative;
+  height: 33px; }
   #logo a:active {
     opacity: 1; }
   @media only screen and (max-width: 750px) {
@@ -534,10 +536,34 @@ header {
       margin-top: 20px; } }
   @media only screen and (max-width: 500px) {
     #logo {
-      width: 240px; } }
+      width: 237px;
+      height: 25px; } }
+
+#logo__name {
+  width: 280px;
+  width: 279.5px;
+  position: absolute;
+  left: 0;
+  top: 0; }
+  @media only screen and (max-width: 500px) {
+    #logo__name {
+      width: 213.497px; } }
 
 #logo__32, #logo__35 {
-  display: none; }
+  display: none;
+  width: 23px;
+  width: 22.7px;
+  position: absolute;
+  right: 0; }
+  @media only screen and (max-width: 500px) {
+    #logo__32, #logo__35 {
+      width: 17.5px; } }
+
+#logo__32 {
+  top: 0; }
+
+#logo__35 {
+  bottom: 0; }
 
 nav {
   float: right;
@@ -1070,8 +1096,8 @@ section.exhibition-year div:last-child {
   left: 0; }
 
 #imagelightbox-close {
-  font-size: 1em;
-  line-height: 1.46154em;
+  font-size: 0.92308em;
+  line-height: 1.58333em;
   text-align: right;
   position: fixed;
   z-index: 10002;
@@ -1095,8 +1121,8 @@ section.exhibition-year div:last-child {
   position: fixed;
   z-index: 10001;
   bottom: 0;
-  font-size: 1em;
-  line-height: 1.46154em; }
+  font-size: 0.92308em;
+  line-height: 1.58333em; }
   .imagelightbox-arrow p {
     position: relative;
     top: 50%;
@@ -1165,6 +1191,8 @@ section.exhibition-year div:last-child {
         text-align: left; } }
   #slider-text-box p {
     display: inline-block;
+    font-size: 0.92308em;
+    line-height: 1.58333em;
     color: black;
     white-space: nowrap; }
     @media only screen and (max-width: 500px) {
