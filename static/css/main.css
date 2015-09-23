@@ -1096,8 +1096,8 @@ section.exhibition-year div:last-child {
   left: 0; }
 
 #imagelightbox-close {
-  font-size: 1em;
-  line-height: 1.46154em;
+  font-size: 0.92308em;
+  line-height: 1.58333em;
   text-align: right;
   position: fixed;
   z-index: 10002;
@@ -1121,8 +1121,8 @@ section.exhibition-year div:last-child {
   position: fixed;
   z-index: 10001;
   bottom: 0;
-  font-size: 1em;
-  line-height: 1.46154em; }
+  font-size: 0.92308em;
+  line-height: 1.58333em; }
   .imagelightbox-arrow p {
     position: relative;
     top: 50%;
@@ -1191,6 +1191,8 @@ section.exhibition-year div:last-child {
         text-align: left; } }
   #slider-text-box p {
     display: inline-block;
+    font-size: 0.92308em;
+    line-height: 1.58333em;
     color: black;
     white-space: nowrap; }
     @media only screen and (max-width: 500px) {
