@@ -51,8 +51,8 @@
 		float: left;
 	}
 	&__image{
-		@extend .col5__span1of5;
-		@extend .col4__span1of4;
+		@extend .col5__span1of4;
+		@extend .col4__span1of3;
 		@include mq(b){
 			display: none;
 		}
