@@ -71,7 +71,6 @@ def create():
                         utils.setfilenameroot(uploaded_image.filename, artist['slug'])
                     )
                 }
-            db.artist.insert(artist)
 
             if 'image' in request.files:
                 for uploaded_image in request.files.getlist('image'):
@@ -87,6 +86,7 @@ def create():
 
                     db.image.insert(image)
 
+            db.artist.insert(artist)
             flash('You successfully created an artist page', 'success')
 
             if (request.is_xhr):

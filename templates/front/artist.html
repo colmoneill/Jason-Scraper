@@ -14,7 +14,7 @@
 				<li><a class="go-to-anchor" href="#images">images</a></li>
 				<li><a class="go-to-anchor subnav__information" href="#info"></a></li>
 				<li><a class="go-to-anchor subnav__biography" href="#bio"></a></li>
-				<li><a class="go-to-anchor" href="#exhibition">exhibitions</a></li>
+				{% if involved_in %}<li><a class="go-to-anchor" href="#exhibition">exhibitions</a></li>{% endif %}
 				{% if artist.link_url1 %}<li><a class="go-to-anchor" href="#media">media</a></li>{% endif %}
 			</ul>
 		</div>
