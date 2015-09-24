@@ -16,8 +16,8 @@
 			<li><a class="go-to-anchor" href="#images">images</a></li>
 			<li><a class="go-to-anchor subnav__information" href="#info"></a></li>
 			<li><a class="go-to-anchor subnav__biography" href="#bio"></a></li>
-			{% if artist.link_url1 %}<li><a class="go-to-anchor" href="#press">press</a></li>{% endif %}
 			{% if involved_in %}<li><a class="go-to-anchor" href="#exhibition">exhibitions</a></li>{% endif %}
+			{% if artist.link_url1 %}<li><a class="go-to-anchor" href="#press">press</a></li>{% endif %}
 		</ul>
 	</div>
 	
@@ -72,22 +72,7 @@
 			{% endif %}
 		</section>
 		
-		<section class="subcontent__all-col informations" id="press">
-			<div class="separation-rule"></div>
-			<div class="download-block">
-				{% if artist.press_release %}
-				<h1>press</h1>
-				<div class="download-block__text">
-				<a class="" href="/{{ artist.press_release }}"><h3>Download the press release — PDF ({{artist.press_release_size}})</h3></a><br>
-				</div>
-				{% endif %}
-				<div class="download-block__text">
-					<a href="{{ artist.link_url1 }}" target="_blank"><h3>{{ artist.link_name1 }}</h3></a><br>
-					<a href="{{ artist.link_url2 }}" target="_blank"><h3>{{ artist.link_name2 }}</h3></a><br>
-					<a href="{{ artist.link_url3 }}" target="_blank"><h3>{{ artist.link_name3 }}</h3></a><br>
-				</div>
-			</div>
-		</section>
+
 		<section class="subcontent__all-col informations" id="exhibition">
 			<div class="separation-rule"></div>
 			{% for exhibition in involved_in %}
@@ -127,6 +112,23 @@
 		{% endif %}
 				{% endfor %}
 			</section>
+			<section class="subcontent__all-col informations" id="press">
+			<div class="separation-rule"></div>
+			<div class="download-block">
+				{% if artist.press_release %}
+				<h1>press</h1>
+				<div class="download-block__text">
+				<a class="" href="/{{ artist.press_release }}"><h3>Download the press release — PDF ({{artist.press_release_size}})</h3></a><br>
+				</div>
+				{% endif %}
+				<div class="download-block__text">
+					<a href="{{ artist.link_url1 }}" target="_blank"><h3>{{ artist.link_name1 }}</h3></a><br>
+					<a href="{{ artist.link_url2 }}" target="_blank"><h3>{{ artist.link_name2 }}</h3></a><br>
+					<a href="{{ artist.link_url3 }}" target="_blank"><h3>{{ artist.link_name3 }}</h3></a><br>
+				</div>
+			</div>
+		</section>
+			
 		</div></div>
 
 {% endblock %}
