@@ -5,84 +5,93 @@
 {% endblock %}
 {% block body %}
 
-	<div class="container">
-		<div class="all-col title-block">
-			<h1>{{ artist.name }}</h1>
-		</div>
-		<div class="subnav" id="sidebar">
-			<ul>
-				<li><a class="go-to-anchor" href="#images">images</a></li>
-				<li><a class="go-to-anchor subnav__information" href="#info"></a></li>
-				<li><a class="go-to-anchor subnav__biography" href="#bio"></a></li>
-				{% if artist.link_url1 %}<li><a class="go-to-anchor" href="#press">press</a></li>{% endif %}
-				{% if involved_in %}<li><a class="go-to-anchor" href="#exhibition">exhibitions</a></li>{% endif %}
-			</ul>
-		</div>
-		<div class="subcontent">
+<div class="container">
+	<div class="all-col title-block">
+		<h1>{{ artist.name }}</h1>
+	</div>
+	
+	
+	<div class="subnav" id="sidebar">
+		<ul>
+			<li><a class="go-to-anchor" href="#images">images</a></li>
+			<li><a class="go-to-anchor subnav__information" href="#info"></a></li>
+			<li><a class="go-to-anchor subnav__biography" href="#bio"></a></li>
+			{% if artist.link_url1 %}<li><a class="go-to-anchor" href="#press">press</a></li>{% endif %}
+			{% if involved_in %}<li><a class="go-to-anchor" href="#exhibition">exhibitions</a></li>{% endif %}
+		</ul>
+	</div>
+	
+	
+	<div class="subcontent">
 	    <section class="subcontent__all-col margin-top-on-mobile" id="images">
 			<div class="separation-rule not-mobile"></div>
 				<div>
 					{% for image in artworks %}
-						<div class="image-block">
-							<a href="/{{ image.path }}">
-								<div class="image-block__inside" style="background-image: url('/{{ image.path }}')"
-									data-exhibitionartistname="{{ image.artist.name }}"
-									data-artworkyear="{{ image.title }}{% if image.year %}, {{ image.year }}{% endif %}"
-									data-artworkmedium="{{ image.medium }}"
-									data-artworkdimensions="{{ image.dimensions }}"
-									data-artworkedition="{{ image.edition }}">
-								</div>
-							</a>
-						</div>
+					<div class="image-block">
+						<a href="/{{ image.path }}">
+							<div class="image-block__inside" style="background-image: url('/{{ image.path }}')"
+								data-exhibitionartistname="{{ image.artist.name }}"
+								data-artworkyear="{{ image.title }}{% if image.year %}, {{ image.year }}{% endif %}"
+								data-artworkmedium="{{ image.medium }}"
+								data-artworkdimensions="{{ image.dimensions }}"
+								data-artworkedition="{{ image.edition }}">
+							</div>
+						</a>
+					</div>
 					{% endfor %}
 				</div>
 		</section>
+		
 		<section class="subcontent__all-col informations" id="info">
 			<div class="separation-rule"></div>
 			<div class="text-block">
-				{% if artist.wysiwig_artist_info %}
-					{{ artist.wysiwig_artist_info|markdown }}
-				{% endif %}
+			{% if artist.wysiwig_artist_info %}
+				{{ artist.wysiwig_artist_info|markdown }}
+			{% endif %}
 			</div>
 	    </section>
-			{% if artist.wysiwig_artist_bio %}
 	    <section class="subcontent__all-col informations" id="bio">
 			<div class="separation-rule"></div>
+			{% if artist.wysiwig_artist_bio %}
 			<div class="text-block artist-bio-text">
-			<h1>BIOGRAPHY</h1>
-			{{ artist.wysiwig_artist_bio|markdown }}
+				<h1>BIOGRAPHY</h1>
+				{{ artist.wysiwig_artist_bio|markdown }}
+			</div>
 			{% endif %}
-		</div>
 			{% if artist.wysiwig_artist_exhibitions_list %}
-		<div class="text-block artist-exhibition-list" id="exhib-list">
+			<div class="text-block artist-exhibition-list" id="exhib-list">
 			{{ artist.wysiwig_artist_exhibitions_list|markdown }}
-			<div class="bottom-gradient"></div>
-		</div>
-		<h3 id="collapse-button"><a id="collapse-bttn" href="javascript:void(0)"></a></h3>
+				<div class="bottom-gradient"></div>
+			</div>
+			<h3 id="collapse-button"><a id="collapse-bttn" href="javascript:void(0)"></a></h3>
 			{% endif %}
 			{% if artist.biography_file %}
 			<div class="download-block">
 				<a class="" href="/{{ artist.biography_file }}"><h3>Download {{ artist.name }}'s biography — PDF ({{artist.biography_size}})</h3></a>
 			</div>
 			{% endif %}
-	    </section>
-		 <section class="subcontent__all-col informations" id="press">
-		 <div class="separation-rule"></div>
-		<div class="download-block">
-		{% if artist.press_release %}
-			<h1>press</h1>
+		</section>
+		
+		<section class="subcontent__all-col informations" id="press">
+			<div class="separation-rule"></div>
+			<div class="download-block">
+				{% if artist.press_release %}
+				<h1>press</h1>
 				<div class="download-block__text">
-					<a class="" href="/{{ artist.press_release }}"><h3>Download the press release — PDF ({{artist.press_release_size}})</h3></a><br>
-		{% endif %}
+				<a class="" href="/{{ artist.press_release }}"><h3>Download the press release — PDF ({{artist.press_release_size}})</h3></a><br>
+				</div>
+				{% endif %}
+				<div class="download-block__text">
 					<a href="{{ artist.link_url1 }}" target="_blank"><h3>{{ artist.link_name1 }}</h3></a><br>
 					<a href="{{ artist.link_url2 }}" target="_blank"><h3>{{ artist.link_name2 }}</h3></a><br>
 					<a href="{{ artist.link_url3 }}" target="_blank"><h3>{{ artist.link_name3 }}</h3></a><br>
 				</div>
-		</div></section>
-			<section class="subcontent__all-col informations" id="exhibition">
-				<div class="separation-rule"></div>
-				{% for exhibition in involved_in %}
-				{% if exhibition.is_group_expo %}
+			</div>
+		</section>
+		<section class="subcontent__all-col informations" id="exhibition">
+			<div class="separation-rule"></div>
+			{% for exhibition in involved_in %}
+			{% if exhibition.is_group_expo %}
 					<div class="exhibition-block subcontent__all-col">
 						<div class="exhibition-block__wrap">
 							<a href="/group-exhibition/{{exhibition.slug }}/">
