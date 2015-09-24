@@ -22,10 +22,11 @@
   <div class="subnav" id="sidebar">
     <ul>
       <li><a class="go-to-anchor" href="#images">Images</a></li>
-      <li><a class="go-to-anchor" href="#press-release">press release</a></li>
       {% if exhibition.is_group_expo %}
         <li><a class="go-to-anchor" href="#artists">artists</a>
+        <li><a class="go-to-anchor" href="#press-release">press release</a></li>
       {% else %}
+      	<li><a class="go-to-anchor" href="#press-release">press release</a></li>
         <li><a href="/artist/{{ exhibition.artist.slug }}">artist's page</a>
       {% endif %}
       {% if exhibition.iframe1 %}
