@@ -85,7 +85,7 @@ def create():
                     }
 
                     db.image.insert(image)
-
+                    
             db.artist.insert(artist)
             flash('You successfully created an artist page', 'success')
 
