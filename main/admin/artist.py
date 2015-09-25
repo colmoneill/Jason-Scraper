@@ -41,15 +41,15 @@ def create():
     if request.method == 'POST':
         if form.validate():
             formdata = form.data
-            artist = utils.handle_form_data({}, formdata, ['press_release_file', 'biography_file'])
+            artist = utils.handle_form_data({}, formdata, ['press_release', 'biography_file'])
             artist['slug'] = utils.slugify(artist['name'])
 
-            if 'press_release_file' in request.files \
-                and request.files['press_release_file']:
+            if 'press_release' in request.files \
+                and request.files['press_release']:
                 artist['press_release'] = utils.handle_uploaded_file(
-                        request.files['press_release_file'],
+                        request.files['press_release'],
                         config.upload['PRESS_RELEASE'],
-                        utils.setfilenameroot(request.files['press_release_file'].filename, artist['slug'])
+                        utils.setfilenameroot(request.files['press_release'].filename, artist['slug'])
                     )
                 artist['press_release_size'] = utils.getfilesize(artist['press_release'])
 
@@ -114,7 +114,7 @@ def update(artist_id):
 
         if form.validate_on_submit():
             formdata = form.data
-            artist =  utils.handle_form_data(artist, formdata, ['press_release_file', 'biography_file'])
+            artist =  utils.handle_form_data(artist, formdata, ['press_release', 'biography_file'])
 
             if 'press_release' in request.files \
                 and request.files['press_release']:
