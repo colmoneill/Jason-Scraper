@@ -4,6 +4,7 @@
   <form action="" method="post" enctype="multipart/form-data" id="artistForm">
     {{ form.csrf_token }}
     {{ render_field(form.name) }}
+    {{ render_field(form.artist_sort) }}
     <hr>
     {{ upload_field('image', 'Artworks', images) }}
     <hr>

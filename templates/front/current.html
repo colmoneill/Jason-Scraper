@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 	{% block nav_current %}active{% endblock %}
-	{% block title %}Current{% endblock %}
+	{% block title %} | Current{% endblock %}
 
 	{% block body %}
 
@@ -10,8 +10,17 @@
       {% if exhibition.is_group_expo %}
 
 				<a href="/group-exhibition/{{ exhibition.slug }}/">
-      	{% if 'coverimage' in exhibition %}
+					{% if 'coverimage' in exhibition %}
 					<div class="homepage-exhibition__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
+					{% else %}
+						<div class="homepage-exhibition__landing">
+							<div class="homepage-exhibition__landing--text">
+								<div class="homepage-exhibition__landing--center">
+									<p>{{ exhibition.exhibition_name }}</p>
+									<h4> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </h4>
+								</div>
+							</div>
+						</div>	
 				{% endif %}
 				<div class="homepage-exhibition__text">
 					<h5>Rue de Livourne 35 Livornostraat</h5>
@@ -25,12 +34,21 @@
 				<a href="/exhibition/{{ exhibition.artist.slug }}/{{exhibition.start.strftime('%d.%m.%Y') }}">
 					{% if 'coverimage' in exhibition %}
 						<div class="homepage-exhibition__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
+					{% else %}
+						<div class="homepage-exhibition__landing">
+							<div class="homepage-exhibition__landing--text">
+								<div class="homepage-exhibition__landing--center">
+									<p>{{ exhibition.artist.name }}</p>
+									<h4> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </h4>
+								</div>
+							</div>
+						</div>	
 					{% endif %}
 					<div class="homepage-exhibition__text">
 						<h5>Rue de Livourne 35 Livornostraat</h5>
 						<div class="homepage-exhibition__text--line"></div>
 						<h1>{{ exhibition.artist.name }}</h1>
-						<h1>{{ exhibition.exhibition_name }}</h1>
+						<h2>{{ exhibition.exhibition_name }}</h2>
 						<h4> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </h4>
 					</div>
 			{% endif %}
@@ -46,9 +64,18 @@
 			<a href="/group-exhibition/{{ exhibition.slug }}/">
 			{% if 'coverimage' in exhibition %}
 				<div class="homepage-exhibition__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
+					{% else %}
+						<div class="homepage-exhibition__landing">
+							<div class="homepage-exhibition__landing--text">
+								<div class="homepage-exhibition__landing--center">
+									<p>{{ exhibition.exhibition_name }}</p>
+									<h4> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </h4>
+								</div>
+							</div>
+						</div>	
 			{% endif %}
 			<div class="homepage-exhibition__text">
-				<h5>Rue de Livourne 35 Livornostraat</h5>
+				<h5>Rue de Livourne 32 Livornostraat</h5>
 				<div class="homepage-exhibition__text--line"></div>
 				<h1>{{ exhibition.exhibition_name }} (group exhibition)</h1>
 				<h4> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </h4>
@@ -58,10 +85,19 @@
 
 			<a href="/exhibition/{{ exhibition.artist.slug }}/{{exhibition.start.strftime('%d.%m.%Y') }}">
 				{% if 'coverimage' in exhibition %}
-					<div class="homepage-exhibition__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
+					<div class="homepage-exhibition__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>	
+					{% else %}
+						<div class="homepage-exhibition__landing">
+							<div class="homepage-exhibition__landing--text">
+								<div class="homepage-exhibition__landing--center">
+									<p>{{ exhibition.artist.name }}</p>
+									<h4> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </h4>
+								</div>
+							</div>
+						</div>					
 				{% endif %}
 				<div class="homepage-exhibition__text">
-					<h5>Rue de Livourne 35 Livornostraat</h5>
+					<h5>Rue de Livourne 32 Livornostraat</h5>
 					<div class="homepage-exhibition__text--line"></div>
 					<h1>{{ exhibition.artist.name }}</h1>
 					<h1>{{ exhibition.exhibition_name }}</h1>

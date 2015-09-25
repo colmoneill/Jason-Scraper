@@ -33,7 +33,7 @@
 }
 
 @mixin border-box-everywhere{
-	*, *:before, *:after, input[type='search']{
+	*{
 		@include border-box-sizing;
 	}
 }

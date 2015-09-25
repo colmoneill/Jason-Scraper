@@ -101,15 +101,26 @@ def home():
 @app.route("/past/")
 @login_required
 def pastExhibitions():
-    past_exhibition = db.exhibitions.find({
+    exhibitions = {}
+
+    past_exhibitions = db.exhibitions.find({
         "is_published": True,
         "end": { "$lt": datetime.combine(date.today(), datetime.min.time()) }
-    })
-    years_past = db.exhibitions.find({
-        "is_published": True,
-    })
+    }).sort("start", -1)
 
-    return render_template("front/past.html", past_exhibition=past_exhibition, years_past=years_past)
+    for exhibition in past_exhibitions:
+      year = exhibition['start'].year
+
+      if year not in exhibitions:
+        exhibitions[year] = []
+
+      exhibitions[year].append(exhibition)
+
+
+    years = exhibitions.keys()
+    years.sort(reverse=True)
+
+    return render_template("front/past.html", past_exhibitions=exhibitions, years=years)
 
 @app.route("/upcoming/")
 @login_required
@@ -135,7 +146,8 @@ def artist(slug):
      artist = db.artist.find_one({"slug": slug})
      #artworks = db.image.find({"artist_id": artist._id})
      artworks = db.image.find({"artist._id": artist['_id']})
-     involved_in = db.exhibition.find({"artist._id": artist['_id']})
+     involved_in = db.exhibitions.find({"artist._id": artist['_id']})
+
      return render_template("front/artist.html", artist=artist, artworks=artworks, involved_in=involved_in )
 
 @app.route("/current/<slug>/")

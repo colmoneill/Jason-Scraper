@@ -16,6 +16,47 @@
 	&:nth-of-type(2){
 		@include last;
 	}
+	&__landing{
+		height: 0;
+		width: 100%;
+		padding-bottom: $image_ratio;
+		background-color: rgb(240,240,240);
+		position: relative;
+		&--text{
+			position: absolute;
+			width: 100%;
+			height: 100%;
+		}
+		&--center{
+			@include vertical-align;
+			p{
+				text-align: center;
+				@extend .font-bold;
+				@include adjust-font-size-to(25px);
+				@include mq(a){
+					@include adjust-font-size-to(20px);	
+				}
+				@include mq(b){
+					@include adjust-font-size-to(17px);
+				}
+				@include mq(c){
+					@include adjust-font-size-to(20px);
+				}
+			}
+			h4{
+				text-align: center;
+				@include mq(a){
+					@include adjust-font-size-to(11px);	
+				}
+				@include mq(b){
+					@include adjust-font-size-to(10px);	
+				}
+				@include mq(c){
+					@include adjust-font-size-to(11px);	
+				}
+			}
+		}
+	}
 	&__inside{
 		height: 0;
 		width: 100%;

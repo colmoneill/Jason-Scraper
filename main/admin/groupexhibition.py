@@ -58,15 +58,15 @@ def publish(exhibition_id):
 def createGroupExhibition():
     form = forms.GroupExhibitionForm()
     artist = db.artist.find()
-    form.artists.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+    form.artists.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find().sort("artist_sort")]
 
     selectedArtworks = []
 
     if form.is_submitted():
         if form.validate():
-            
+
             formdata = form.data
-            
+
             exhibition = utils.handle_form_data({}, formdata, ['press_release', 'artists', 'extra_artists'])
             exhibition['artists'] = [db.artist.find_one({'_id': ObjectId(artist_id)}) for artist_id in request.form.getlist('artists')]
             exhibition['slug'] = utils.slugify(exhibition['exhibition_name'])
@@ -74,7 +74,7 @@ def createGroupExhibition():
             exhibition['is_group_expo'] = True
             exhibition['extra_artists'] = request.form.getlist('extra_artists')
             exhibition['artworks'] = []
-            
+
             if 'artworks' in request.files:
                 for uploaded_image in request.files.getlist('artworks'):
                     image_id = db.image.insert({
@@ -85,7 +85,7 @@ def createGroupExhibition():
                                 utils.setfilenameroot(uploaded_image.filename, artist['slug'])
                             )
                     })
-                        
+
                     exhibition['artworks'].append(db.image.find_one({'_id': image_id}))
 
             if 'artworks' in request.form:
@@ -109,7 +109,7 @@ def createGroupExhibition():
                         utils.setfilenameroot(uploaded_image.filename, exhibition['slug'])
                     )
                 }
-            
+
             if 'image' in request.files:
                 exhibition['images'] = []
                 for uploaded_image in request.files.getlist('image'):
@@ -123,7 +123,7 @@ def createGroupExhibition():
 
             db.exhibitions.insert(exhibition)
             flash(u'You successfully created a group exhibition', 'success')
-            
+
             if request.is_xhr:
                 return bson_dumps(exhibition), 201
             else:
@@ -141,8 +141,8 @@ def updateGroupExhibition(exhibition_id):
     exhibition = db.exhibitions.find_one({"_id": ObjectId(exhibition_id)})
 
     form = forms.GroupExhibitionForm()
-    form.artists.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
-    
+    form.artists.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find().sort("artist_sort")]
+
     if form.is_submitted():
         if form.validate():
             formdata = form.data
@@ -151,7 +151,7 @@ def updateGroupExhibition(exhibition_id):
             exhibition['artists'] = [db.artist.find_one({'_id': ObjectId(artist_id)}) for artist_id in request.form.getlist('artists')]
             exhibition['extra_artists'] = request.form.getlist('extra_artists')
             exhibition['artworks'] = []
-            
+
             if 'artworks' in request.files:
                 for uploaded_image in request.files.getlist('artworks'):
                     image_id = db.image.insert({
@@ -162,7 +162,7 @@ def updateGroupExhibition(exhibition_id):
                                 utils.setfilenameroot(uploaded_image.filename, artist['slug'])
                             )
                     })
-                        
+
                     exhibition['artworks'].append(db.image.find_one({'_id': image_id}))
 
             if 'artworks' in request.form:
@@ -180,7 +180,7 @@ def updateGroupExhibition(exhibition_id):
             elif 'press_release' not in request.form \
                 and 'press_release' in exhibition:
                     del exhibition['press_release']
-                    
+
             if 'coverimage' in request.files:
                 uploaded_image = request.files.getlist('coverimage')[0]
                 exhibition['coverimage'] = {
@@ -190,16 +190,16 @@ def updateGroupExhibition(exhibition_id):
                         utils.setfilenameroot(uploaded_image.filename, exhibition['slug'])
                     )
                 }
-                    
+
             elif 'coverimage' not in request.form:
                 if 'coverimage' in exhibition:
                     del exhibition['coverimage']
-            
+
             exhibition['images'] = []
-            
+
             for path in request.form.getlist('image'):
                 exhibition['images'].append({'path': path})
-            
+
             if 'image' in request.files:
                 for uploaded_image in request.files.getlist('image'):
                     exhibition['images'].append({
@@ -209,15 +209,15 @@ def updateGroupExhibition(exhibition_id):
                             utils.setfilenameroot(uploaded_image.filename, exhibition['slug'])
                         )
                     })
-           
+
             db.exhibitions.update({ "_id": ObjectId(exhibition_id) }, exhibition)
             flash(u'You successfully updated the exhibition data', 'success')
-            
+
             if request.is_xhr:
                 return bson_dumps(exhibition), 201
             else:
                 return redirect_flask(url_for('.index'))
-        
+
         elif request.is_xhr:
             json.dumps(form.errors), 400
     else:

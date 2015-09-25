@@ -29,7 +29,7 @@ blueprint = Blueprint('admin_artist', __name__)
 @blueprint.route('/', methods=['GET'])
 @login_required
 def index():
-    artists = db.artist.find()
+    artists = db.artist.find().sort("artist_sort", 1)
     return render_template('admin/artist/index.html', artists=artists)
 
 @blueprint.route('/create/', methods=['GET','POST'])
@@ -71,8 +71,7 @@ def create():
                         utils.setfilenameroot(uploaded_image.filename, artist['slug'])
                     )
                 }
-            db.artist.insert(artist)
-            
+
             if 'image' in request.files:
                 for uploaded_image in request.files.getlist('image'):
                     image = {
@@ -84,21 +83,22 @@ def create():
 
                         )
                     }
-                    
+
                     db.image.insert(image)
-            
+
+            db.artist.insert(artist)
             flash('You successfully created an artist page', 'success')
-            
+
             if (request.is_xhr):
                 return bson_dumps(artist), 201
-            
+
             else:
                 return redirect_flask(url_for('.index'))
-            
+
         elif (request.is_xhr):
             # Invalid and xhr, return the errors, rather than full HTML
             return json.dumps(form.errors), 400
-            
+
     return render_template('admin/artist/create.html', form=form, exhibitions=exhibitions)
 
 
@@ -106,7 +106,7 @@ def create():
 @login_required
 def update(artist_id):
     artist = db.artist.find_one({"_id": ObjectId(artist_id)})
-    
+
     exhibitions = db.exhibitions.find()
 
     if request.method == 'POST':
@@ -115,7 +115,7 @@ def update(artist_id):
         if form.validate_on_submit():
             formdata = form.data
             artist =  utils.handle_form_data(artist, formdata, ['press_release_file', 'biography_file'])
-            
+
             if 'press_release' in request.files \
                 and request.files['press_release']:
                 artist['press_release'] = utils.handle_uploaded_file(
@@ -127,7 +127,7 @@ def update(artist_id):
             elif 'press_release' not in request.form \
                 and 'press_release' in artist:
                     del artist['press_release']
-                    
+
             if 'biography_file' in request.files \
                 and request.files['biography_file']:
                 artist['biography_file'] = utils.handle_uploaded_file(
@@ -139,7 +139,7 @@ def update(artist_id):
             elif 'biography_file' not in request.form \
                 and 'biography_file' in artist:
                     del artist['biography_file']
-            
+
             if 'coverimage' in request.files:
                 uploaded_image = request.files.getlist('coverimage')[0]
                 artist['coverimage'] = {
@@ -152,7 +152,7 @@ def update(artist_id):
             elif 'coverimage' not in request.form:
                 if 'coverimage' in artist:
                     del artist['coverimage']
-            
+
             db.artist.update({"_id": ObjectId(artist_id)}, artist)
 
             ## Update this artist on images as well
@@ -161,13 +161,13 @@ def update(artist_id):
             db.exhibitions.update({"artist._id": ObjectId(artist_id)}, {"$set": { "artist": artist }}, multi=True)
             ## Should update this artist on group exhibitions as well
             db.exhibitions.update({"artists._id": ObjectId(artist_id)}, {"$set": {"artists.$": artist}}, multi=True);
-        
+
 
             # Remove images which were disabled in the form
             for image in db.image.find({"artist._id": ObjectId(artist_id)}):
                 if str (image['_id']) not in request.form.getlist('image'):
                     db.image.remove({'_id': image['_id']})
-            
+
             if 'image' in request.files:
                 for uploaded_image in request.files.getlist('image'):
                     image = {
@@ -179,11 +179,11 @@ def update(artist_id):
 
                         )
                     }
-                    
+
                     db.image.insert(image)
-            
+
             flash('You\'ve updated the artist page successfully', 'success')
-            
+
             if request.is_xhr:
                 return bson_dumps(artist), 201
             else:
@@ -194,15 +194,15 @@ def update(artist_id):
                 return json.dumps(form.errors), 400
             else:
                 return render_template('admin/artist/edit.html',
-                                            form=form, 
-                                            images=db.image.find({"artist._id": ObjectId(artist_id)}), 
-                                            exhibitions=exhibitions, 
+                                            form=form,
+                                            images=db.image.find({"artist._id": ObjectId(artist_id)}),
+                                            exhibitions=exhibitions,
                                             coverimage=[artist['coverimage']] if 'coverimage' in artist else [])
 
 
     else:
         form = forms.ArtistForm(data=artist)
-        
+
     return render_template('admin/artist/edit.html',
                                 form=form,
                                 images=db.image.find({"artist._id": ObjectId(artist_id)}),

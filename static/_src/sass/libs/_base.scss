@@ -6,7 +6,6 @@
 // :: Typography using compass Vertical Rhythm
 // ------------------------------------------------------------
 // http://compass-style.org/reference/compass/typography/vertical_rhythm/
-
 $base-font-size						: 13px;
 $base-line-height					: 19px;
 
@@ -148,6 +147,9 @@ $links-opacity						: 0.4;
 @mixin _hover{
 	opacity: $links-opacity;
 	@include _transition;
+	@include mq(b){
+		opacity: 1;
+	}
 }
 
 @mixin no-click{

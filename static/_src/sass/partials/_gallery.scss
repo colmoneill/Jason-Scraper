@@ -90,13 +90,30 @@
 		padding: 1px;
 		margin: 0;
 		margin-right: 1%;
+		box-sizing: border-box;
+/*
+		-webkit-border-radius:0; 
+		border-radius:0;
+		border-width: 1px;
+		border-color: $gray-4;
+		//-webkit-appearance: none;
+*/
+		@include mq(c){
+			width: 49%;
+			margin-right: 2%;
+			&:last-of-type{
+				margin-right: 0;
+			}
+		}
 		&:focus{
 			outline-style: solid;
-			outline-width: 1px;
+			outline-width: 2px;
 			outline-color: $gray-4;
 		}
 	}
-	input.newsletter__button{
+	button.newsletter__button{
+		@include adjust-font-size-to($base-font-size);
+		@extend .font-body;
 		cursor: pointer;
 		background-color: $white;
 		border-width: 1px;
@@ -110,6 +127,11 @@
 		width: 20%;
 		margin-right: 0;
 		padding: 2px;
+		box-sizing: border-box;
+		@include mq(c){
+			width: 49%;
+			margin-top: 2%;
+		}
 		&:focus{
 			outline-width: 0;
 			border-color: $gray-4;
@@ -117,12 +139,50 @@
 		&:active{
 		}
 		&:hover{
-			@include _hover;
+			opacity: $links-opacity;
 		}
 	}
 }
 
 
-// :: Credits
+// :: Social Medias
 // ------------------------------------------------------------
 
+.social_media_icon{
+	margin-right: 14px;
+	opacity: 0.9;
+	width: 18px;
+	&:hover{
+		@include _hover;
+	}
+	img{
+		width: 18px;
+	}
+}
+
+.social_media_title{
+	padding-top: 2px;
+	@include mq(b){
+		padding-top: 0;
+	}
+}
+
+// :: Colophon
+// ------------------------------------------------------------
+
+.colophon{
+	margin-top: 60px;
+	margin-bottom: -20px;
+	p{
+		@extend .font-mono;
+		@include adjust-font-size-to(10px);
+		color: $gray-4;
+		margin-bottom: -1px;
+		a{
+			color: $gray-4;
+			&:hover{
+				color: $gray-3;
+			}
+		}
+	}
+}

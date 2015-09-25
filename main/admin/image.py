@@ -1,5 +1,6 @@
 import os
 import forms
+import config
 from flask import Blueprint, render_template, abort,\
      url_for, redirect as redirect_flask, request, flash
 
@@ -15,16 +16,15 @@ blueprint = Blueprint('admin_image', __name__)
 @login_required
 def index():
     form = forms.Image()
-    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
-    images = db.image.find().sort("stock_number", -1)
-
+    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find().sort("artist_sort")]
+    images = db.image.find().sort([("artist_sort", 1)])
     return render_template('admin/image/index.html', images=images, form=form)
 
 @blueprint.route("/create/", methods=['GET', 'POST'])
 @login_required
 def create():
     form = forms.Image()
-    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find().sort("artist_sort")]
 
     if form.validate_on_submit():
         formdata = form.data
@@ -34,12 +34,13 @@ def create():
             'artist': db.artist.find_one({'_id': ObjectId(formdata['artist'])}),
             'path': utils.handle_uploaded_file(
                 request.files['image_file'],
-                app.config['UPLOAD']['ARTWORK_IMAGE'],
+                config.upload['ARTWORK_IMAGE'],
             ),
             'title': form.title.data,
             'year': form.year.data,
             'medium': form.medium.data,
             'dimensions': form.dimensions.data,
+            'edition': form.edition.data,
         }
         db.image.insert(image)
         flash(u'You successfully added an image', 'success')
@@ -52,7 +53,7 @@ def create():
 def update(image_id):
     image = db.image.find_one({"_id": ObjectId(image_id)})
     form = forms.ImageUpdate()
-    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find().sort("artist_sort")]
 
     if request.method == 'POST':
         if form.validate():
@@ -62,6 +63,7 @@ def update(image_id):
             image['year'] = form.year.data
             image['medium'] = form.medium.data
             image['dimensions'] = form.dimensions.data
+            image['edition'] = form.edition.data
             image['artist'] = db.artist.find_one({'_id': ObjectId(form.artist.data)})
 
             db.image.update({"_id": ObjectId(image_id)}, image)
@@ -75,7 +77,7 @@ def update(image_id):
     else:
         image['artist'] = str(image['artist']['_id'])
         form = forms.ImageUpdate(data=image)
-        form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
+        form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find().sort("artist_sort")]
 
     return render_template('admin/image/edit.html', image=image, form=form)
 
