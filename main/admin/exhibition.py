@@ -106,11 +106,12 @@ def create():
 
             if 'artworks' in request.form:
                 for artwork_id in request.form.getlist('artworks'):
-                    if artwork_id[0:9] == 'uploaded:':
-                        artwork_index = int(artwork_id[9:])
-                        artwork_id = uploaded_artworks[artwork_index]
-                    
-                    exhibition['artworks'].append(db.image.find_one({'_id': ObjectId(artwork_id)}))
+                    if artwork_id:
+                        if artwork_id[0:9] == 'uploaded:':
+                            artwork_index = int(artwork_id[9:])
+                            artwork_id = uploaded_artworks[artwork_index]
+                        
+                        exhibition['artworks'].append(db.image.find_one({'_id': ObjectId(artwork_id)}))
 
             if 'coverimage' in request.files:
                 uploaded_image = request.files.getlist('coverimage')[0]
@@ -137,9 +138,10 @@ def create():
 
             if 'image' in request.form:
                 for image in request.form.getlist('image'):
-                    if image[0:9] == 'uploaded:':
-                        image_index = int(image[9:])
-                        exhibition['images'].append(uploaded_images[image_index])
+                    if image:
+                        if image[0:9] == 'uploaded:':
+                            image_index = int(image[9:])
+                            exhibition['images'].append({'path': uploaded_images[image_index]})
 
             db.exhibitions.insert(exhibition)
             flash(u'You successfully created an exhibition', 'success')
