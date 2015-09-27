@@ -80,7 +80,6 @@ def create():
                             uploaded_image,
                             config.upload['ARTWORK_IMAGE'],
                             utils.setfilenameroot(uploaded_image.filename, artist['slug'])
-
                         )
                     }
 

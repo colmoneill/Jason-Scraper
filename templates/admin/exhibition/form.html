@@ -100,6 +100,28 @@
         var preselectedArtworks = JSON.parse('{{ selectedArtworks }}');
         {% endautoescape %}
 
+        var preselectedArtworksSort = function (a, b) {
+            var index_a = preselectedArtworks.indexOf(a._id.$oid),
+                index_b = preselectedArtworks.indexOf(b._id.$oid);
+                
+            // a is selected
+            if (index_a > -1) {
+                if (index_b > -1 && index_a > index_b) {
+                    return 1;
+                }
+                
+                // a is selected, but b isn't, or b is bigger
+                return -1
+            }
+            // a is not selected, but b is
+            else if (index_b > -1) {
+                return 1;
+            }
+            
+            // Both unselected, equal
+            return 0;
+        };
+        
         $('select#artist').change(function () {
             var id = $(this).val();
 
@@ -113,6 +135,8 @@
                 '/admin/api/artist/' + id + '/image',
                 null,
                 function (images) {
+                    images.sort(preselectedArtworksSort);
+                
                     for (var i=0; i<images.length;i++) {
                         var thumb = artworksField.addThumbnail('/' + images[i].path);
                         thumb.$el.append('<input type="hidden" name="' + artworksField.name + '" value="' + images[i]._id.$oid + '" />');

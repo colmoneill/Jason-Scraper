@@ -1,3 +1,5 @@
+var draggedThumbnail;
+
 function extend (obj, dict) { 
     for (var i=1;i<arguments.length;i++) {
         for (key in arguments[i]) {
@@ -6,7 +8,9 @@ function extend (obj, dict) {
     }
 }
 
-var Thumbnail = function (input) {
+var Thumbnail = function (input, fieldname) {
+    this.fieldname = fieldname;
+    
     if (input instanceof File) {
         this.$el = $(this.template());
         this.file = input;
@@ -18,18 +22,31 @@ var Thumbnail = function (input) {
         this.$el = input;
     }
     
+    
     var self = this;
     this.$('.action.delete').click(function () { self.delete(); });
     this.$('.action.restore').click(function () { self.restore(); });
+    
+    this.$el.on('dragstart', function startdrag (e) {
+            // register
+            self.startdrag(e);
+        }).on('drop', function (e) {
+            self.ondrop(e);
+        }).on('dragover', function (e) {
+            self.dragover(e);
+        }).on('dragleave', function (e) {
+            self.dragleave(e);
+        });
 }
 
 extend(Thumbnail.prototype, {
     $: function (selector) { return this.$el.find(selector); },
     
     template: function () {
-        html = '<div class="upload-thumbnail selectable">'
+        html = '<div class="upload-thumbnail selectable" draggable="true">'
         + '<span class="glyphicon glyphicon-remove action delete"></span>'
         + '<span class="glyphicon glyphicon-restore action restore"></span>'
+        + '<input type="hidden" name="' + this.fieldname + '" value="" />'
         + '<img src="">'
         + '</div>';
         return html;
@@ -59,11 +76,52 @@ extend(Thumbnail.prototype, {
         this.$el.removeClass('disabled');
         this.$('input').removeProp('disabled');
         if (this.onRestore) this.onRestore();
+    },
+    
+    ondrop: function (e) {
+        e.preventDefault();
+        if (this.$el != draggedThumbnail) {
+            this.$el.removeClass('drop-suggestion-before drop-suggestion-after');
+            var offset = e.originalEvent.clientX - this.$el.offset().left;
+            
+            if ((offset) > (this.$el.width() / 2)) {
+                this.$el.after($(draggedThumbnail).detach());
+            } else {
+                this.$el.before($(draggedThumbnail).detach());
+            }
+        }
+        draggedThumbnail = null;
+    },
+    
+    startdrag: function (e) {
+        e.originalEvent.dataTransfer.setData('text/drag-type', 'thumbnail');
+        draggedThumbnail = this.$el;
+    },
+    
+    dragover: function (e) {
+        e.preventDefault();
+        if (this.$el != draggedThumbnail) {
+            var offset = e.originalEvent.clientX - this.$el.offset().left;
+            this.$el.removeClass('drop-suggestion-before drop-suggestion-after');
+            if ((offset) > (this.$el.width() / 2)) {
+                this.$el.addClass('drop-suggestion-after');
+            } else {
+                this.$el.addClass('drop-suggestion-before');
+            }
+        }
+    },
+    
+    dragleave: function (e) {
+        this.$el.removeClass('drop-suggestion-before drop-suggestion-after');
+    },
+    
+    setUploadIndex: function (i) {
+        this.$el.find('input[type=hidden]').val('uploaded:' + i.toString());
     }
 });
 
-var SelectableThumbnail = function (input) {
-    Thumbnail.call(this, input);
+var SelectableThumbnail = function (input, fieldname) {
+    Thumbnail.call(this, input, fieldname);
     
     var self = this;
 };
@@ -73,6 +131,7 @@ extend(SelectableThumbnail.prototype, Thumbnail.prototype, {
         html = '<div class="upload-thumbnail selectable">'
         + '<span class="glyphicon glyphicon-remove action delete"></span>'
         + '<span class="glyphicon glyphicon-ok action restore"></span>'
+        + '<input type="hidden" name="' + this.fieldname + '" value="" />'
         + '<img src="">'
         + '</div>';
         return html;
@@ -84,6 +143,7 @@ var UploadField = function (name, $el) {
     this.$el             = $el;
     this.acceptedTypes   = ['image/png', 'image/jpeg', 'image/gif'];
     this.files           = [];
+    this.thumbnails      = [];
     
     this.attachElements();
     this.setListeners();
@@ -107,8 +167,10 @@ extend(UploadField.prototype, {
         var self = this;
         
         this.$el.on('dragenter', function (e) {
-            e.preventDefault();
-            self.$dropmask.show();
+            if (self.dragContainsFiles(e)) {
+                e.preventDefault();
+                self.$dropmask.show();
+            }
         });
         
         this.$dropmask.on('dragover', function (e) {
@@ -124,6 +186,7 @@ extend(UploadField.prototype, {
         .on('drop', function (e) {
             e.preventDefault();
             e.originalEvent.dataTransfer.dropEffect = 'copy';
+            
             // hide dropmask
             $(this).hide();
             self.handleFiles(e.originalEvent.dataTransfer.files);
@@ -152,38 +215,50 @@ extend(UploadField.prototype, {
     
     handleFile: function (file) {
         if (this.acceptedTypes.indexOf(file.type) > -1) {
+            var thumbnail = this.addThumbnail(file);
             this.files.push(file);
-            var $thumb = this.addThumbnail(file);
+            this.thumbnails.push(thumbnail);
         }
     },
     
     addThumbnail: function (data) {
-        var thumbnail = new this.thumbnailPrototype(data),
+        var thumbnail = new this.thumbnailPrototype(data, this.name),
             self = this;
        
         thumbnail.onDelete = function() { self.deleteUploadThumbnail(thumbnail); };
         thumbnail.onRestore = function() { self.restoreUploadThumbnail(thumbnail); };
 
         this.$thumbnails.append(thumbnail.$el);
-
+        
         return thumbnail;
     },
     
     deleteUploadThumbnail: function (thumbnail) {
         if (thumbnail.file && this.files.indexOf(thumbnail.file) > -1) {
+            delete this.thumbnails[this.thumbnails.indexOf(thumbnail)];
             delete this.files[this.files.indexOf(thumbnail.file)];
         }
     },
     
     restoreUploadThumbnail: function (thumbnail) {
         if (thumbnail.file && this.files.indexOf(thumbnail.file) < 0) {
+            this.thumbnails.push(thumbnail);
             this.files.push(thumbnail.file);
+        }
+    },
+    
+    dragContainsFiles: function (e) {
+        return (e.originalEvent.dataTransfer.types.indexOf("Files") > -1);
+    },
+    
+    setUploadIndexes: function () {
+        for (var i=0;i<this.thumbnails.length;i++) {
+            this.thumbnails[i].setUploadIndex(i);
         }
     }
 });
 
 var BoundUploadField = function (name, $el) {
-    console.log('?');
     UploadField.call(this, name, $el);
 };
 
@@ -275,6 +350,10 @@ extend(Form.prototype, {
         e.preventDefault();
         this.clearErrors();        
         this.markProcessing();
+        
+        for (var i=0;i<this.uploadFields.length;i++){
+            this.uploadFields[i].setUploadIndexes();
+        }
         
         var formData = new FormData(this.$el.get(0));
         
