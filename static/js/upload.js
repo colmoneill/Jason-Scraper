@@ -248,7 +248,13 @@ extend(UploadField.prototype, {
     },
     
     dragContainsFiles: function (e) {
-        return (e.originalEvent.dataTransfer.types.indexOf("Files") > -1);
+        var types = e.originalEvent.dataTransfer.types;
+        for (var i=0; i<types.length;i++) {
+            if (types[i] == 'Files') {
+                return true;
+            }
+        }
+        return false;
     },
     
     setUploadIndexes: function () {
