@@ -87,13 +87,14 @@ def home():
         "is_published": True,
         "location": "32",
         "end": { "$gte": datetime.combine(date.today(), datetime.min.time()) }
-        }).sort("end", -1).limit(1)
+        }).sort("end", 1).limit(1)
 
     exhibition_35 = db.exhibitions.find({
         "is_published": True,
         "location": "35",
         "end": { "$gte": datetime.combine(date.today(), datetime.min.time()) }
-        }).sort("end", -1).limit(1)
+        }).sort({ "end" : 1 })
+        }).limit(1)
 
     return render_template("front/current.html", exhibition_32=exhibition_32, exhibition_35=exhibition_35)
 
