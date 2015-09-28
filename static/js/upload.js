@@ -167,7 +167,7 @@ extend(UploadField.prototype, {
         var self = this;
         
         this.$el.on('dragenter', function (e) {
-            if (self.dragContainsFiles(e)) {
+            if (!self.isInternalDrag(e)) {
                 e.preventDefault();
                 self.$dropmask.show();
             }
@@ -247,10 +247,10 @@ extend(UploadField.prototype, {
         }
     },
     
-    dragContainsFiles: function (e) {
+    isInternalDrag: function (e) {
         var types = e.originalEvent.dataTransfer.types;
         for (var i=0; i<types.length;i++) {
-            if (types[i] == 'Files') {
+            if (types[i] == 'text/drag-type') {
                 return true;
             }
         }
