@@ -77,13 +77,15 @@ def create():
             exhibition_md = form.wysiwig_exhibition_description.data
             exhibition['artworks'] = [db.image.find_one({'_id': ObjectId(image_id)}) for image_id in request.form.getlist('artwork')]
 
+            filenamebase = artist['slug'] + '-' + exhibition['start'].strftime('%d-%m-%Y')
+            
             artist_md = form.wysiwig_artist_bio.data
 
             if request.files['press_release']:
                 exhibition['press_release'] = utils.handle_uploaded_file(
                     request.files['press_release'],
                     config.upload['PRESS_RELEASE'],
-                    utils.setfilenameroot(request.files['press_release'].filename, exhibition['slug'])
+                    utils.setfilenameroot(request.files['press_release'].filename, filenamebase)
                 )
 
                 exhibition['press_release_size'] = utils.getfilesize(exhibition['press_release'])
@@ -119,7 +121,7 @@ def create():
                     'path': utils.handle_uploaded_file(
                         uploaded_image,
                         config.upload['EXHIBITION_COVER_IMAGE'],
-                        utils.setfilenameroot(uploaded_image.filename, exhibition['slug'])
+                        utils.setfilenameroot(uploaded_image.filename, filenamebase)
                     )
                 }
 
@@ -132,7 +134,7 @@ def create():
                         utils.handle_uploaded_file(
                             uploaded_image,
                             config.upload['EXHIBITION_VIEW'],
-                            utils.setfilenameroot(uploaded_image.filename, exhibition['slug'])
+                            utils.setfilenameroot(uploaded_image.filename, filenamebase)
                         )
                     )
 
@@ -174,6 +176,8 @@ def update(exhibition_id):
             exhibition = utils.handle_form_data(exhibition, formdata, ['press_release'])
             exhibition['artist'] = artist
 
+            filenamebase = artist['slug'] + '-' + exhibition['start'].strftime('%d-%m-%Y')
+
             exhibition['artworks'] = []
             uploaded_artworks = []
     
@@ -204,7 +208,7 @@ def update(exhibition_id):
                 exhibition['press_release'] = utils.handle_uploaded_file(
                         request.files['press_release'],
                         config.upload['PRESS_RELEASE'],
-                        utils.setfilenameroot(request.files['press_release'].filename, exhibition['slug'])
+                        utils.setfilenameroot(request.files['press_release'].filename, filenamebase)
                     )
 
                 exhibition['press_release_size'] = utils.getfilesize(exhibition['press_release'])
@@ -218,7 +222,7 @@ def update(exhibition_id):
                     'path': utils.handle_uploaded_file(
                         uploaded_image,
                         config.upload['EXHIBITION_COVER_IMAGE'],
-                        utils.setfilenameroot(uploaded_image.filename, exhibition['slug'])
+                        utils.setfilenameroot(uploaded_image.filename, filenamebase)
                     )
                 }
 
@@ -235,7 +239,7 @@ def update(exhibition_id):
                         utils.handle_uploaded_file(
                             uploaded_image,
                             config.upload['EXHIBITION_VIEW'],
-                            utils.setfilenameroot(uploaded_image.filename, exhibition['slug'])
+                            utils.setfilenameroot(uploaded_image.filename, filenamebase)
                         )
                     )
 
