@@ -2,6 +2,7 @@ import settings
 import utils
 import shutil
 import os.path
+import re
 from bson import ObjectId
 
 for exhibition in settings.db.exhibitions.find():
@@ -10,7 +11,7 @@ for exhibition in settings.db.exhibitions.find():
         
         if 'images' in exhibition:
             for key, image in enumerate(exhibition['images']):
-                if image['path'] and image['path'] <> 'undefined':
+                if image['path'] and re.test(r"jpg\-\d+", image.['path']):
                     newpath = utils.getsafepath('static/uploads/exhibition-view/' + filenamebase + '.jpg')
                     shutil.move(os.path.join(settings.appdir, image['path']), os.path.join(settings.appdir, newpath))
                     exhibition['images'][key]['path'] = newpath
