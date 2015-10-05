@@ -144,12 +144,12 @@ def artists():
 def artist(slug):
      artist = db.artist.find_one({"slug": slug})
      artworks = db.image.find({"artist._id": artist['_id']})
-     has_artworks = db.image.find({"artist._id": artist['_id']})
+     has_artworks = db.image.find_one({"artist._id": artist['_id']})
      involved_in = db.exhibitions.find({
         "is_published": True,
         "artist._id": artist['_id']
     })
-     has_involved_in = db.exhibitions.find({
+     has_involved_in = db.exhibitions.find_one({
        "is_published": True,
        "artist._id": artist['_id']
     })
