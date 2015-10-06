@@ -77,10 +77,18 @@ $image_ratio						: 67%;
 		"205-MaaxStandardMedium/205-maaxstandardmedium-webfont.svg"), 
 	"205-MaaxStandardMedium/205-maaxstandardmedium-webfont.eot", 
 	"bold");
+	
+@include font-face(
+	"Maax-Mono", 
+	font-files(
+		"205-MaaxMono/205-maaxmono-webfont.woff",
+		"205-MaaxMono/205-maaxmono-webfont.ttf", 
+		"205-MaaxMono/205-maaxmono-webfont.svg"), 
+	"205-MaaxMono/205-maaxmono-webfont.eot");
 
 .font-body 					{  font-family: "Maax-Regular", Helvetica, sans-serif; }
 .font-bold					{  font-family: "Maax-Medium", Helvetica, sans-serif;}
-.font-mono 					{  font-family: "RJ Maax Mono", monospace; }
+.font-mono 					{  font-family: "Maax-Mono", monospace; }
 
 
 // :: Breakpoints
