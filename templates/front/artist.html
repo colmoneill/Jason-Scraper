@@ -52,6 +52,7 @@
 		{% endif %}
 	    <section class="subcontent__all-col informations" id="bio">
 			{% if artist.wysiwig_artist_bio %}
+			<div class="separation-rule"></div>
 			<div class="text-block artist-bio-text">
 				<h1>BIOGRAPHY</h1>
 				{{ artist.wysiwig_artist_bio|markdown }}
