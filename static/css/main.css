@@ -54,6 +54,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   src: url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.eot');
   src: url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.woff') format('woff'), url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.ttf') format('truetype'), url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.svg') format('svg');
   font-weight: "bold"; }
+@font-face {
+  font-family: "Maax-Mono";
+  src: url('../fonts/205-MaaxMono/205-maaxmono-webfont.eot');
+  src: url('../fonts/205-MaaxMono/205-maaxmono-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/205-MaaxMono/205-maaxmono-webfont.woff') format('woff'), url('../fonts/205-MaaxMono/205-maaxmono-webfont.ttf') format('truetype'), url('../fonts/205-MaaxMono/205-maaxmono-webfont.svg') format('svg'); }
 .font-body, body, .subnav ul li a.points-to:before, .subnav ul li a:hover:before, .newsletter input, .newsletter button.newsletter__button {
   font-family: "Maax-Regular", Helvetica, sans-serif; }
 
@@ -61,7 +65,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   font-family: "Maax-Medium", Helvetica, sans-serif; }
 
 .font-mono, h4, h5, .text-block h1, .download-block h1, h6, .subnav, .staff_member__mail, .colophon p, #imagelightbox-close, .imagelightbox-arrow, #slider-text-box p {
-  font-family: "RJ Maax Mono", monospace; }
+  font-family: "Maax-Mono", monospace; }
 
 .container {
   max-width: 100%;
