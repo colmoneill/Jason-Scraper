@@ -18,31 +18,9 @@ blueprint = Blueprint('admin_json_api', __name__)
 """
 @blueprint.route('/artist/<artist_id>/image', methods=['GET'])
 def imagesPerArtist(artist_id):
-    images = db.image.find({'artist._id': ObjectId(artist_id)})
+    artist = db.artist.find_one({'_id': ObjectId(artist_id)})
     
-    if images:
-        return bson_dumps(images)
+    if 'images' in artist:
+        return bson_dumps(artist['images'])
     else:
         abort(404)
-        
-"""
-    Direct upload function. Stores given image in the artist images
-    store location. Returns JSON DB-entry
-"""
-@blueprint.route("/artist/<artist_id>/image/create", methods=['POST'])
-def uploadArtistImage(artist_id):
-    artist = db.artist.find_one({'_id': ObjectId(artist_id)})
-
-    if artist:
-        image = {
-            'artist': artist,
-            'path': utils.handle_uploaded_file(
-                request.files['image'],
-                app.config['UPLOAD']['ARTWORK_IMAGE']
-            )
-        }
-
-        db.image.insert(image)
-        return bson_dumps(image)
-    else:
-       abort(404)

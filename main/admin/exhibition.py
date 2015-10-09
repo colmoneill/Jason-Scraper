@@ -104,7 +104,9 @@ def create():
                                 utils.setfilenameroot(uploaded_image.filename, artist['slug'])
                             )
                     })
+                    artist['images'].append(db.image.find_one({'_id': ObjectId(image_id)}))
                     uploaded_artworks.append(image_id)
+                db.artist.update({'_id': artist['_id']}, artist)
 
             if 'artworks' in request.form:
                 for artwork_id in request.form.getlist('artworks'):
@@ -183,17 +185,14 @@ def update(exhibition_id):
     
             # New artworks
             if 'artworks' in request.files:
-                for uploaded_image in request.files.getlist('artworks'):
-                    image_id = db.image.insert({
-                        'artist': artist,
-                        'path': utils.handle_uploaded_file(
-                                uploaded_image,
-                                config.upload['ARTWORK_IMAGE'],
-                                utils.setfilenameroot(uploaded_image.filename, artist['slug'])
-                            )
-                    })
-
-                    uploaded_artworks.append(image_id)
+                for uploaded_artwork_image in request.files.getlist('artworks'):
+                    image_path = utils.handle_uploaded_file(
+                            uploaded_artwork_image,
+                            config.upload['ARTWORK_IMAGE'],
+                            utils.setfilenameroot(uploaded_image.filename, artist['slug'])
+                        )
+                    
+                    uploaded_artworks.append(image_path)
 
             if 'artworks' in request.form:
                 for artwork_id in request.form.getlist('artworks'):

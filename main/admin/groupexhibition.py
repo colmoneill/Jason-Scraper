@@ -87,9 +87,10 @@ def createGroupExhibition():
                                 utils.setfilenameroot(uploaded_image.filename, artist['slug'])
                             )
                     })
-
+                    exhibition['artists'][0]['images'].append(db.image.find_one({'_id': ObjectId(image_id)}))
                     uploaded_artworks.append(image_id)
-
+                db.artist.update({'_id': exhibition['artists'][0]['_id']}, exhibition['artists'][0])
+                
             if 'artworks' in request.form:
                 for artwork_id in request.form.getlist('artworks'):
                     if artwork_id:
@@ -163,7 +164,6 @@ def updateGroupExhibition(exhibition_id):
     if form.is_submitted():
         if form.validate():
             formdata = form.data
-            artists = db.artist.find()
             exhibition = utils.handle_form_data(exhibition, formdata, ['press_release', 'artists', 'extra_artists'])
             exhibition['artists'] = [db.artist.find_one({'_id': ObjectId(artist_id)}) for artist_id in request.form.getlist('artists')]
             exhibition['extra_artists'] = request.form.getlist('extra_artists')
@@ -180,8 +180,10 @@ def updateGroupExhibition(exhibition_id):
                                 utils.setfilenameroot(uploaded_image.filename, artist['slug'])
                             )
                     })
-
+        
+                    exhibition['artists'][0]['images'].append(db.image.find_one({'_id': ObjectId(image_id)}))
                     uploaded_artworks.append(image_id)
+                db.artist.update({'_id': exhibition['artists'][0]['_id']}, exhibition['artists'][0])
 
             if 'artworks' in request.form:
                 for artwork_id in request.form.getlist('artworks'):
