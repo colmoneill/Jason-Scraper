@@ -66,10 +66,9 @@
 			<h3 id="collapse-button"><a id="collapse-bttn" href="javascript:void(0)"></a></h3>
 			{% endif %}
 			{% if artist.biography_file %}
-			<div class="download-block">
+			<div class="download-block__text">
 				<a class="" href="/{{ artist.biography_file }}"><h3>Download {{ artist.name }}'s biography — PDF ({{artist.biography_size}})</h3></a>
 			</div>
-			<div class="separation-rule"></div>
 			{% endif %}
 		</section>
 
