@@ -84,7 +84,7 @@ def create():
                     }
 
                     db.image.insert(image)
-                    
+
             db.artist.insert(artist)
             flash('You successfully created an artist page', 'success')
 
@@ -232,4 +232,9 @@ def publishArtist (artist_id):
         {'_id': ObjectId(artist_id)},
         {'$set': {'is_published': is_published}}
     )
+    ## Update this artist on exhibitions as well
+    db.exhibitions.update({"artist._id": ObjectId(artist_id)}, {"$set": { "artist.is_published": is_published }}, multi=True)
+    ## Should update this artist on group exhibitions as well
+    db.exhibitions.update({"artists._id": ObjectId(artist_id)}, {"$set": {"artists.$.is_published": is_published}}, multi=True);
+
     return bson_dumps(db.artist.find_one({'_id': ObjectId(artist_id)}))

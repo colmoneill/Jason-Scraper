@@ -33,7 +33,9 @@
         {% if exhibition.press_release %}
       	<li><a class="go-to-anchor" href="#press-release">press release</a></li>
         {% endif %}
+        {% if exhibition.artist.is_published %}
         <li><a href="/artist/{{ exhibition.artist.slug }}">artist's page</a>
+        {% endif %}
       {% endif %}
       {% if exhibition.iframe1 %}
         <li><a class="go-to-anchor" href="#media">Media</a></li>
