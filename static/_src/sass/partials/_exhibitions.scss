@@ -56,6 +56,13 @@
 		@include mq(b){
 			display: none;
 		}
+		&--upcoming{
+			@extend .col5__span1of5;
+			@extend .col4__span1of4;
+			@include mq(b){
+				display: none;
+			}
+		}
 	}
 	&__inside{
 		width: 100%;

@@ -151,7 +151,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 951px) {
-  .col5__span1of5, .subnav, .artist-block {
+  .col5__span1of5, .subnav, .exhibition-block__image--upcoming, .artist-block {
     width: 18.51852%;
     float: left;
     margin-right: 1.85185%; } }
@@ -210,7 +210,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4__span1of4, .subnav, .artist-block {
+  .col4__span1of4, .subnav, .exhibition-block__image--upcoming, .artist-block {
     width: 22.85714%;
     float: left;
     margin-right: 2.85714%; } }
@@ -848,6 +848,9 @@ section.informations div:last-child {
   float: left; }
 @media only screen and (max-width: 750px) {
   .exhibition-block__image {
+    display: none; } }
+@media only screen and (max-width: 750px) {
+  .exhibition-block__image--upcoming {
     display: none; } }
 .exhibition-block__inside {
   width: 100%;

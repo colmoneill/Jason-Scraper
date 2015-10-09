@@ -12,7 +12,7 @@
             <div class="exhibition-block__wrap">
               <a href="/group-exhibition/{{exhibition.slug }}/">
                 {% if exhibition.coverimage %}
-                  <div class="exhibition-block__image">
+                  <div class="exhibition-block__image--upcoming">
                     <div class="exhibition-block__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
                   </div>
                 {% endif %}
@@ -21,14 +21,14 @@
                     <h4>{{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}</h4>
                   </div>
               </a>
-            </div><div class="separation-rule"></div>
+            </div><div class="separation-rule light-border"></div>
           </div>
         {% else %}
         <div class="exhibition-block subcontent__all-col">
           <div class="exhibition-block__wrap">
             <a href="/exhibition/{{ exhibition.artist.slug }}/{{exhibition.start.strftime('%d.%m.%Y') }}/">
               {% if exhibition.coverimage %}
-                <div class="exhibition-block__image">
+                <div class="exhibition-block__image--upcoming">
                   <div class="exhibition-block__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
                 </div>
               {% endif %}
@@ -38,7 +38,7 @@
                   <h4>{{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}</h4>
                 </div>
            </a>
-         </div><div class="separation-rule"></div>
+         </div><div class="separation-rule light-border"></div>
      </div>
   {% endif %}
       </div>
