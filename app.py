@@ -75,12 +75,7 @@ def login():
 ####################################################################################
 
 @app.route("/")
-def tempHome():
-    return render_template("front/temporaryhome.html")
-
-#@app.route("/")
 @app.route("/current/")
-@login_required
 def home():
     artworks = db.artworks.find().sort("id", -1).limit(10)
     exhibition_32 = db.exhibitions.find({
@@ -98,7 +93,7 @@ def home():
     return render_template("front/current.html", exhibition_32=exhibition_32, exhibition_35=exhibition_35)
 
 @app.route("/past/")
-@login_required
+
 def pastExhibitions():
     exhibitions = {}
 
@@ -122,7 +117,6 @@ def pastExhibitions():
     return render_template("front/past.html", past_exhibitions=exhibitions, years=years)
 
 @app.route("/upcoming/")
-@login_required
 def upcomingExhibitions():
     future_exhibition = db.exhibitions.find({
         "is_published": True,
@@ -133,7 +127,6 @@ def upcomingExhibitions():
 
 
 @app.route("/artists/")
-@login_required
 def artists():
     artists = db.artist.find({
     "is_published": True,
@@ -158,14 +151,12 @@ def artist(slug):
      return render_template("front/artist.html", artist=artist, artworks=artworks, involved_in=involved_in, has_involved_in=has_involved_in, has_artworks=has_artworks)
 
 @app.route("/current/<slug>/")
-@login_required
 def exhibition(slug):
     exhibition = db.exhibition.find_one({ "slug": slug})
     return render_template("front/exhibition.html")
 
 @app.route("/exhibition/<artist>/<start>")
 @app.route("/exhibition/<artist>/<start>/")
-@login_required
 def publicviewExhibition(start, artist):
     start = datetime.strptime(start, ('%d.%m.%Y'))
 
@@ -177,7 +168,6 @@ def publicviewExhibition(start, artist):
         abort(404)
 
 @app.route("/group-exhibition/<slug>/")
-@login_required
 def publicviewGroupExhibition(slug):
     exhibition = db.exhibitions.find_one({'slug': slug})
     all_artists = db.exhibition.find({
@@ -189,7 +179,6 @@ def publicviewGroupExhibition(slug):
         abort(404)
 
 @app.route("/gallery/")
-@login_required
 def GalleryInfo():
     teammembers = db.teammember.find()
     openinghours = db.openinghours.find()
