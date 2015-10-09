@@ -55,7 +55,7 @@ def create():
             and request.files['biography_file']:
                 uploaded_file = request.files['biography_file']
                 basepath = utils.setfilenameroot(uploaded_file.filename, artist['slug'])
-                artist['biography_file'] = utils.handle_uploaded_file(uploaded_file, config.upload['BIOGRAPHY'], basepath))
+                artist['biography_file'] = utils.handle_uploaded_file(uploaded_file, config.upload['BIOGRAPHY'], basepath)
                 artist['biography_size'] = utils.getfilesize(artist['biography_file'])
 
             if 'coverimage' in request.files:
@@ -79,7 +79,7 @@ def create():
             if 'images' in request.form:
                 for image_path in request.form.getlist('image'):
                     if image_path and image_path[0:9] == 'uploaded:':
-                        image_index = int(image_path[9:]
+                        image_index = int(image_path[9:])
                         image_path = uploaded_images[image_index]
                         artist['images'].append({ 'path': image_path, 'enabled': True })
                     else:
@@ -130,7 +130,7 @@ def update(artist_id):
             and request.files['biography_file']:
                 uploaded_file = request.files['biography_file']
                 basepath = utils.setfilenameroot(uploaded_file.filename, artist['slug'])
-                artist['biography_file'] = utils.handle_uploaded_file(uploaded_file, config.upload['BIOGRAPHY'], basepath))
+                artist['biography_file'] = utils.handle_uploaded_file(uploaded_file, config.upload['BIOGRAPHY'], basepath)
                 artist['biography_size'] = utils.getfilesize(artist['biography_file'])
             elif 'biography_file' not in request.form \
                 and 'biography_file' in artist:
@@ -163,7 +163,7 @@ def update(artist_id):
                 for image_path in request.form.getlist('image'):
                     if image_path:
                         if image_path[0:9] == 'uploaded:':
-                            image_index = int(image_path[9:]
+                            image_index = int(image_path[9:])
                             image_path = uploaded_images[image_index]
                             artist['images'].append({ 'path': image_path, 'enabled': True })
                         else:
