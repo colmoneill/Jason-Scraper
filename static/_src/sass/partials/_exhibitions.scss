@@ -39,7 +39,7 @@
 		//width: 100%;
 	}
 	a:hover{
-		& > .exhibition-block__text, & > .exhibition-block__image{ 
+		& > .exhibition-block__text, & > .exhibition-block__image, & > .exhibition-block__image--upcoming{ 
 			@include _hover;
 		}
 	}

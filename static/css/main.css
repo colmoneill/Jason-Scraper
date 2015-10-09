@@ -831,7 +831,7 @@ section.informations div:last-child {
   width: inherit;
   float: left;
   clear: left; }
-.exhibition-block a:hover > .exhibition-block__text, .exhibition-block a:hover > .exhibition-block__image {
+.exhibition-block a:hover > .exhibition-block__text, .exhibition-block a:hover > .exhibition-block__image, .exhibition-block a:hover > .exhibition-block__image--upcoming {
   opacity: 0.4;
   -moz-transition: all 0.2s ease-in-out 0s;
   -o-transition: all 0.2s ease-in-out 0s;
@@ -839,7 +839,7 @@ section.informations div:last-child {
   -webkit-transition-delay: 0s;
   transition: all 0.2s ease-in-out 0s; }
   @media only screen and (max-width: 750px) {
-    .exhibition-block a:hover > .exhibition-block__text, .exhibition-block a:hover > .exhibition-block__image {
+    .exhibition-block a:hover > .exhibition-block__text, .exhibition-block a:hover > .exhibition-block__image, .exhibition-block a:hover > .exhibition-block__image--upcoming {
       opacity: 1; } }
 .exhibition-block__wrap {
   width: 100%;
