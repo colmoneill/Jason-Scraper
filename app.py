@@ -340,7 +340,7 @@ app.register_blueprint(admin.artist, url_prefix='/admin/artist')
 app.register_blueprint(admin.exhibition, url_prefix='/admin/exhibition')
 app.register_blueprint(admin.groupexhibition, url_prefix='/admin/group-exhibition')
 app.register_blueprint(admin.image, url_prefix='/admin/image')
-#app.register_blueprint(admin.exhib_views, url_prefix='/admin/exhib-views')
+app.register_blueprint(admin.exhib_views, url_prefix='/admin/exhib-views')
 app.register_blueprint(admin.api, url_prefix='/admin/api')
 
 if __name__ == '__main__':

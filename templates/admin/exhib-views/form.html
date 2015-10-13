@@ -1,0 +1,30 @@
+{% block title %}
+{% endblock %}
+
+{% block body %}
+  {% from "helpers/_form.html" import render_field, render_datepicker %}
+  <form method="post" enctype="multipart/form-data" action="/admin/exhib_views/create/">
+      {{ form.csrf_token }}
+
+      <br>
+      <div class="row">
+      <div>
+      <div class="row">
+        <div class="col-sm-4">
+        </div>
+          <div class="col-sm-4">
+          </div>
+          <div class="col-sm-4">
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-4">
+          </div>
+          <div class="col-sm-4">
+          </div>
+          <div class="col-sm-4">
+          </div>
+        </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+{% endblock %}
