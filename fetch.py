@@ -80,20 +80,27 @@ def fetch_artworks():
         # upsert int the database:
         db.AL_artworks.update({"id": artwork['id']}, artwork, upsert=True)
 
+        slug = slugify(artwork['artist'])
+        exisiting_artist = db.artist.find_one({ "slug": slug })
+
+        if not exisiting_artist:
         # artwork['artist_id'] is not functioning properly
-        db.artist.update({"name": artwork['artist']},
-                          {"name":  artwork['artist'],
-                           "slug": slugify(artwork['artist']),
-                           "artist_sort": artwork['artist_sort'],
-                           },
-                          upsert=True)
+            db.artist.update({"name": artwork['artist']},
+                              {"$set": {"name":  artwork['artist'],
+                               "slug": slug,
+                               "artist_sort": artwork['artist_sort']
+                               }},
+                              upsert=True)
+        else:
+            print "Artist already exists"
+
 
         # download image
         if artwork['img_url'] is None \
             or artwork['img_url'] == '' \
             or artwork['img_url'] == 'null':
             print "img_url is null, skipping"
-        
+
         else:
             existing_image = db.image.find_one({ 'id_AL': artwork['id'] })
             if not existing_image:

@@ -54,14 +54,18 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   src: url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.eot');
   src: url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.woff') format('woff'), url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.ttf') format('truetype'), url('../fonts/205-MaaxStandardMedium/205-maaxstandardmedium-webfont.svg') format('svg');
   font-weight: "bold"; }
-.font-body, body, .subnav ul li a.points-to:before, .subnav ul li a:hover:before, .newsletter input {
+@font-face {
+  font-family: "Maax-Mono";
+  src: url('../fonts/205-MaaxMono/205-maaxmono-webfont.eot');
+  src: url('../fonts/205-MaaxMono/205-maaxmono-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/205-MaaxMono/205-maaxmono-webfont.woff') format('woff'), url('../fonts/205-MaaxMono/205-maaxmono-webfont.ttf') format('truetype'), url('../fonts/205-MaaxMono/205-maaxmono-webfont.svg') format('svg'); }
+.font-body, body, .subnav ul li a.points-to:before, .subnav ul li a:hover:before, .newsletter input, .newsletter button.newsletter__button {
   font-family: "Maax-Regular", Helvetica, sans-serif; }
 
-.font-bold, h1, h3, .text-block h2, .text-block .homepage-exhibition__text--dash, .group-exhibition-artists p {
+.font-bold, h1, h3, .text-block h2, .text-block .homepage-exhibition__text--dash, .group-exhibition-artists p, .homepage-exhibition__landing--center p {
   font-family: "Maax-Medium", Helvetica, sans-serif; }
 
 .font-mono, h4, h5, .text-block h1, .download-block h1, h6, .subnav, .staff_member__mail, .colophon p, #imagelightbox-close, .imagelightbox-arrow, #slider-text-box p {
-  font-family: "RJ Maax Mono", monospace; }
+  font-family: "Maax-Mono", monospace; }
 
 .container {
   max-width: 100%;
@@ -126,7 +130,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 951px) {
-  .col5__span1of4, .text-block h1, .download-block h1, .image-block {
+  .col5__span1of4, .text-block h1, .download-block h1, .image-block, .exhibition-block__image {
     width: 23.25581%;
     float: left;
     margin-right: 2.32558%; } }
@@ -147,7 +151,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 951px) {
-  .col5__span1of5, .subnav, .artist-block {
+  .col5__span1of5, .subnav, .exhibition-block__image--upcoming, .artist-block {
     width: 18.51852%;
     float: left;
     margin-right: 1.85185%; } }
@@ -190,7 +194,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4__span1of3, .text-block h1, .download-block h1, .image-block {
+  .col4__span1of3, .text-block h1, .download-block h1, .image-block, .exhibition-block__image {
     width: 30.76923%;
     float: left;
     margin-right: 3.84615%; } }
@@ -206,7 +210,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     margin-left: 0;
     margin-right: 0; } }
 @media (min-width: 501px) and (max-width: 950px) {
-  .col4__span1of4, .subnav, .artist-block {
+  .col4__span1of4, .subnav, .exhibition-block__image--upcoming, .artist-block {
     width: 22.85714%;
     float: left;
     margin-right: 2.85714%; } }
@@ -247,7 +251,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   float: right;
   margin-right: 0; }
 
-* *, * *:before, * *:after, *:before *, *:before *:before, *:before *:after, *:after *, *:after *:before, *:after *:after, input[type='search'] *, input[type='search'] *:before, input[type='search'] *:after {
+* *, * *:before, * *:after {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box; }
@@ -289,7 +293,7 @@ body {
   width: 95%;
   max-width: 1300px;
   margin: 0 auto;
-  padding-bottom: 50px;
+  padding-bottom: 80px;
   overflow: hidden;
   *zoom: 1; }
   @media only screen and (max-width: 950px) {
@@ -306,7 +310,7 @@ body {
   margin-right: 0; }
 
 @media only screen and (max-width: 500px) {
-  .not-mobile {
+  .not-mobile, .exhibitions-page.upcoming-exhibitions:first-of-type .separation-rule.year:first-of-type, .exhibitions-page.upcoming-exhibitions:first-of-type .year.subnav:first-of-type {
     display: none; } }
 
 .no-margin-top {
@@ -367,16 +371,20 @@ a:focus {
 
 .text-block {
   margin-bottom: 20px; }
-  @media only screen and (max-width: 750px) {
-    .text-block h1 {
-      width: 100%;
-      float: left;
-      margin-left: 0;
-      margin-right: 0; } }
+  .text-block.no-margin-bottom {
+    margin-bottom: 0; }
+  .text-block h1 {
+    clear: both; }
+    @media only screen and (max-width: 750px) {
+      .text-block h1 {
+        width: 100%;
+        float: left;
+        margin-left: 0;
+        margin-right: 0; } }
   .text-block h2, .text-block .homepage-exhibition__text--dash {
     font-size: 0.84615em;
     line-height: 1.72727em;
-    margin-bottom: 10px;
+    margin-bottom: 6.66667px;
     margin-top: 11px; }
     @media only screen and (max-width: 750px) {
       .text-block h2, .text-block .homepage-exhibition__text--dash {
@@ -386,11 +394,31 @@ a:focus {
         margin-right: 0; } }
     .text-block h2:first-of-type, .text-block .homepage-exhibition__text--dash:first-of-type {
       margin-top: 0; }
+      @media only screen and (max-width: 750px) {
+        .text-block h2:first-of-type, .text-block .homepage-exhibition__text--dash:first-of-type {
+          margin-top: 11px; } }
+  .text-block i, .text-block em {
+    font-style: italic; }
+  .text-block b {
+    font-weight: bold; }
+  .text-block.artist-bio-text p {
+    margin-bottom: 0; }
   .text-block.artist-exhibition-list {
-    max-height: 120px;
+    max-height: 250px;
     overflow: hidden;
     position: relative;
     margin-bottom: 10px; }
+    .text-block.artist-exhibition-list h2:first-of-type, .text-block.artist-exhibition-list .homepage-exhibition__text--dash:first-of-type {
+      margin-top: 11px; }
+    .text-block.artist-exhibition-list h1 {
+      margin-top: 22px; }
+      .text-block.artist-exhibition-list h1 + h2, .text-block.artist-exhibition-list h1 + .homepage-exhibition__text--dash, .text-block.artist-exhibition-list h1 + p {
+        margin-top: 22px; }
+        @media only screen and (max-width: 750px) {
+          .text-block.artist-exhibition-list h1 + h2, .text-block.artist-exhibition-list h1 + .homepage-exhibition__text--dash, .text-block.artist-exhibition-list h1 + p {
+            margin-top: 0; } }
+      .text-block.artist-exhibition-list h1:first-of-type, .text-block.artist-exhibition-list h1:first-of-type + h2, .text-block.artist-exhibition-list h1:first-of-type + .homepage-exhibition__text--dash, .text-block.artist-exhibition-list h1:first-of-type + p {
+        margin-top: 0; }
     .text-block.artist-exhibition-list .bottom-gradient {
       position: absolute;
       bottom: 0;
@@ -402,7 +430,7 @@ a:focus {
       background-image: -moz-linear-gradient(rgba(255, 255, 255, 0), #ffffff);
       background-image: -webkit-linear-gradient(rgba(255, 255, 255, 0), #ffffff);
       background-image: linear-gradient(rgba(255, 255, 255, 0), #ffffff);
-      height: 25px; }
+      height: 50px; }
     .text-block.artist-exhibition-list.list-open {
       max-height: none; }
       .text-block.artist-exhibition-list.list-open .bottom-gradient {
@@ -435,6 +463,9 @@ a:focus {
         -webkit-transition: all 0.2s ease-in-out;
         -webkit-transition-delay: 0s;
         transition: all 0.2s ease-in-out 0s; }
+        @media only screen and (max-width: 750px) {
+          .text-block p a:hover {
+            opacity: 1; } }
 
 @media only screen and (max-width: 750px) {
   #collapse-button {
@@ -457,6 +488,9 @@ a:focus {
     -webkit-transition-delay: 0s;
     transition: all 0.2s ease-in-out 0s;
     border-bottom-color: #323232; }
+    @media only screen and (max-width: 750px) {
+      #collapse-button a:hover {
+        opacity: 1; } }
 
 .download-block {
   margin-bottom: 20px; }
@@ -476,6 +510,9 @@ a:focus {
       -webkit-transition-delay: 0s;
       transition: all 0.2s ease-in-out 0s;
       border-bottom-color: #323232; }
+      @media only screen and (max-width: 750px) {
+        .download-block a:hover {
+          opacity: 1; } }
 
 header {
   display: inline-block;
@@ -493,7 +530,9 @@ header {
 #logo {
   width: 310px;
   height: auto;
-  float: left; }
+  float: left;
+  position: relative;
+  height: 33px; }
   #logo a:active {
     opacity: 1; }
   @media only screen and (max-width: 750px) {
@@ -501,10 +540,34 @@ header {
       margin-top: 20px; } }
   @media only screen and (max-width: 500px) {
     #logo {
-      width: 250px; } }
+      width: 237px;
+      height: 25px; } }
+
+#logo__name {
+  width: 280px;
+  width: 279.5px;
+  position: absolute;
+  left: 0;
+  top: 0; }
+  @media only screen and (max-width: 500px) {
+    #logo__name {
+      width: 213.497px; } }
 
 #logo__32, #logo__35 {
-  display: none; }
+  display: none;
+  width: 23px;
+  width: 22.7px;
+  position: absolute;
+  right: 0; }
+  @media only screen and (max-width: 500px) {
+    #logo__32, #logo__35 {
+      width: 17.5px; } }
+
+#logo__32 {
+  top: 0; }
+
+#logo__35 {
+  bottom: 0; }
 
 nav {
   float: right;
@@ -544,13 +607,20 @@ nav {
           clear: both;
           padding-bottom: 10px;
           padding-right: 10px; }
-          nav ul li a:hover, nav ul li.active a {
+          nav ul li a:hover {
             opacity: 0.4;
             -moz-transition: all 0.2s ease-in-out 0s;
             -o-transition: all 0.2s ease-in-out 0s;
             -webkit-transition: all 0.2s ease-in-out;
             -webkit-transition-delay: 0s;
             transition: all 0.2s ease-in-out 0s;
+            border-bottom: none; } }
+        @media only screen and (max-width: 750px) and (max-width: 750px) {
+          nav ul li a:hover {
+            opacity: 1; } }
+  @media only screen and (max-width: 750px) {
+          nav ul li.active a {
+            opacity: 0.4;
             border-bottom: none; }
           nav ul li.active a:hover {
             border-bottom: none; } }
@@ -635,7 +705,9 @@ nav {
       .subnav ul li a {
         padding-bottom: 3px; } }
     .subnav ul li a.points-to:before {
-      content: "\2192\2002"; }
+      content: "\2192\2002";
+      font-size: 1em;
+      line-height: 1.46154em; }
       @media only screen and (max-width: 500px) {
         .subnav ul li a.points-to:before {
           content: none; } }
@@ -643,7 +715,9 @@ nav {
       .subnav ul li a.points-to {
         border-bottom: 1px solid #7a7a7a; } }
     .subnav ul li a:hover:before {
-      content: "\2192\2002"; }
+      content: "\2192\2002";
+      font-size: 1em;
+      line-height: 1.46154em; }
       @media only screen and (max-width: 500px) {
         .subnav ul li a:hover:before {
           content: none; } }
@@ -664,6 +738,9 @@ nav {
     -webkit-transition: all 0.2s ease-in-out;
     -webkit-transition-delay: 0s;
     transition: all 0.2s ease-in-out 0s; }
+    @media only screen and (max-width: 750px) {
+      .image-block a:hover {
+        opacity: 1; } }
   .image-block__inside {
     height: 0;
     width: 100%;
@@ -697,7 +774,7 @@ nav {
     margin-bottom: 20px; } }
 
 @media only screen and (max-width: 500px) {
-  .margin-top-on-mobile {
+  .margin-top-on-mobile, .exhibitions-page.upcoming-exhibitions:first-of-type {
     padding-top: 40px; } }
 
 .group-exhibition-artists {
@@ -727,6 +804,9 @@ nav {
     -webkit-transition: all 0.2s ease-in-out;
     -webkit-transition-delay: 0s;
     transition: all 0.2s ease-in-out 0s; }
+    @media only screen and (max-width: 750px) {
+      .group-exhibition-artists a:hover {
+        opacity: 1; } }
   .group-exhibition-artists p {
     font-size: 1.15385em;
     line-height: 1.26667em;
@@ -735,14 +815,44 @@ nav {
 section.informations div:last-child {
   margin-bottom: 0; }
 
-.exhibition-block a:hover > h1, .exhibition-block a:hover > h2, .exhibition-block a:hover > .homepage-exhibition__text--dash, .exhibition-block a:hover > h4, .exhibition-block a:hover > .exhibition-block__image {
+.exhibitions-page:first-of-type .separation-rule.year:first-of-type, .exhibitions-page:first-of-type .year.subnav:first-of-type {
+  margin-top: 22px; }
+.exhibitions-page .separation-rule.light-border, .exhibitions-page .light-border.subnav {
+  padding-top: 20px;
+  margin-top: 15px; }
+  @media only screen and (max-width: 750px) {
+    .exhibitions-page .separation-rule.light-border, .exhibitions-page .light-border.subnav {
+      padding-top: 14px; } }
+  .exhibitions-page .separation-rule.light-border.upcoming, .exhibitions-page .light-border.upcoming.subnav {
+    margin-top: 22px; }
+
+.exhibition-block h1, .exhibition-block h2, .exhibition-block .homepage-exhibition__text--dash, .exhibition-block h4 {
+  display: block;
+  width: inherit;
+  float: left;
+  clear: left; }
+.exhibition-block a:hover > .exhibition-block__text, .exhibition-block a:hover > .exhibition-block__image, .exhibition-block a:hover > .exhibition-block__image--upcoming {
   opacity: 0.4;
   -moz-transition: all 0.2s ease-in-out 0s;
   -o-transition: all 0.2s ease-in-out 0s;
   -webkit-transition: all 0.2s ease-in-out;
   -webkit-transition-delay: 0s;
   transition: all 0.2s ease-in-out 0s; }
-.exhibition-block__image {
+  @media only screen and (max-width: 750px) {
+    .exhibition-block a:hover > .exhibition-block__text, .exhibition-block a:hover > .exhibition-block__image, .exhibition-block a:hover > .exhibition-block__image--upcoming {
+      opacity: 1; } }
+.exhibition-block__wrap {
+  width: 100%;
+  display: inline-block; }
+.exhibition-block__text {
+  float: left; }
+@media only screen and (max-width: 750px) {
+  .exhibition-block__image {
+    display: none; } }
+@media only screen and (max-width: 750px) {
+  .exhibition-block__image--upcoming {
+    display: none; } }
+.exhibition-block__inside {
   width: 100%;
   padding-bottom: 67%;
   background: no-repeat center center;
@@ -752,12 +862,22 @@ section.informations div:last-child {
   background-size: cover; }
 .exhibition-block.upcoming {
   clear: both; }
+.exhibition-block:last-of-type {
+  margin-bottom: 40px; }
+  .exhibition-block:last-of-type .separation-rule.light-border, .exhibition-block:last-of-type .light-border.subnav {
+    display: none; }
 
 section.exhibition-year div:last-child {
   margin-bottom: 0; }
 
 .artist-block {
   margin-top: 20px; }
+  @media only screen and (max-width: 750px) {
+    .artist-block {
+      width: 100%;
+      float: left;
+      margin-left: 0;
+      margin-right: 0; } }
   @media only screen and (min-width: 951px) {
     .artist-block:nth-of-type(5n) {
       clear: right;
@@ -772,12 +892,11 @@ section.exhibition-year div:last-child {
       margin-right: 0; }
     .artist-block:nth-of-type(-n+4) {
       margin-top: 0; } }
-  @media only screen and (min-width: 0) and (max-width: 500px) {
+  @media only screen and (max-width: 750px) {
     .artist-block {
-      font-size: 1.38462em;
-      line-height: 1.58333em;
-      font-family: "Maax-Medium", Helvetica, sans-serif;
       margin-top: 5px; }
+      .artist-block:nth-of-type(n) {
+        margin-top: 5px; }
       .artist-block:first-of-type {
         margin-top: 0; } }
   .artist-block a {
@@ -790,6 +909,9 @@ section.exhibition-year div:last-child {
     -webkit-transition: all 0.2s ease-in-out;
     -webkit-transition-delay: 0s;
     transition: all 0.2s ease-in-out 0s; }
+    @media only screen and (max-width: 750px) {
+      .artist-block a:hover {
+        opacity: 1; } }
   .artist-block__image {
     width: 100%;
     padding-bottom: 67%;
@@ -798,9 +920,17 @@ section.exhibition-year div:last-child {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover; }
-    @media only screen and (max-width: 500px) {
+    @media only screen and (max-width: 750px) {
       .artist-block__image {
         display: none; } }
+  .artist-block p {
+    margin-top: 8px; }
+    @media only screen and (max-width: 750px) {
+      .artist-block p {
+        font-size: 1.38462em;
+        line-height: 1.58333em;
+        font-family: "Maax-Medium", Helvetica, sans-serif;
+        margin-top: 0; } }
 
 @media only screen and (max-width: 750px) {
   .gallery__left {
@@ -856,6 +986,9 @@ section.exhibition-year div:last-child {
         -webkit-transition: all 0.2s ease-in-out;
         -webkit-transition-delay: 0s;
         transition: all 0.2s ease-in-out 0s; }
+        @media only screen and (max-width: 750px) {
+          .staff_member__mail a:hover {
+            opacity: 1; } }
 
 .newsletter {
   float: right;
@@ -872,12 +1005,28 @@ section.exhibition-year div:last-child {
     width: 39%;
     padding: 1px;
     margin: 0;
-    margin-right: 1%; }
+    margin-right: 1%;
+    box-sizing: border-box;
+    /*
+    		-webkit-border-radius:0; 
+    		border-radius:0;
+    		border-width: 1px;
+    		border-color: $gray-4;
+    		//-webkit-appearance: none;
+    */ }
+    @media only screen and (max-width: 500px) {
+      .newsletter input {
+        width: 49%;
+        margin-right: 2%; }
+        .newsletter input:last-of-type {
+          margin-right: 0; } }
     .newsletter input:focus {
       outline-style: solid;
-      outline-width: 1px;
+      outline-width: 2px;
       outline-color: #c8c8c8; }
-  .newsletter input.newsletter__button {
+  .newsletter button.newsletter__button {
+    font-size: 1em;
+    line-height: 1.46154em;
     cursor: pointer;
     background-color: white;
     border-width: 1px;
@@ -890,17 +1039,17 @@ section.exhibition-year div:last-child {
     border-radius: 0;
     width: 20%;
     margin-right: 0;
-    padding: 2px; }
-    .newsletter input.newsletter__button:focus {
+    padding: 2px;
+    box-sizing: border-box; }
+    @media only screen and (max-width: 500px) {
+      .newsletter button.newsletter__button {
+        width: 49%;
+        margin-top: 2%; } }
+    .newsletter button.newsletter__button:focus {
       outline-width: 0;
       border-color: #c8c8c8; }
-    .newsletter input.newsletter__button:hover {
-      opacity: 0.4;
-      -moz-transition: all 0.2s ease-in-out 0s;
-      -o-transition: all 0.2s ease-in-out 0s;
-      -webkit-transition: all 0.2s ease-in-out;
-      -webkit-transition-delay: 0s;
-      transition: all 0.2s ease-in-out 0s; }
+    .newsletter button.newsletter__button:hover {
+      opacity: 0.4; }
 
 .social_media_icon {
   margin-right: 14px;
@@ -913,6 +1062,9 @@ section.exhibition-year div:last-child {
     -webkit-transition: all 0.2s ease-in-out;
     -webkit-transition-delay: 0s;
     transition: all 0.2s ease-in-out 0s; }
+    @media only screen and (max-width: 750px) {
+      .social_media_icon:hover {
+        opacity: 1; } }
   .social_media_icon img {
     width: 18px; }
 
@@ -923,11 +1075,13 @@ section.exhibition-year div:last-child {
       padding-top: 0; } }
 
 .colophon {
-  margin-top: 50px; }
+  margin-top: 60px;
+  margin-bottom: -20px; }
   .colophon p {
     font-size: 0.76923em;
     line-height: 1.9em;
-    color: #c8c8c8; }
+    color: #c8c8c8;
+    margin-bottom: -1px; }
     .colophon p a {
       color: #c8c8c8; }
       .colophon p a:hover {
@@ -949,7 +1103,8 @@ section.exhibition-year div:last-child {
   left: 0; }
 
 #imagelightbox-close {
-  font-size: 13px;
+  font-size: 0.92308em;
+  line-height: 1.58333em;
   text-align: right;
   position: fixed;
   z-index: 10002;
@@ -963,6 +1118,9 @@ section.exhibition-year div:last-child {
     -webkit-transition: all 0.2s ease-in-out;
     -webkit-transition-delay: 0s;
     transition: all 0.2s ease-in-out 0s; }
+    @media only screen and (max-width: 750px) {
+      #imagelightbox-close:hover {
+        opacity: 1; } }
 
 .imagelightbox-arrow {
   width: 15%;
@@ -970,7 +1128,8 @@ section.exhibition-year div:last-child {
   position: fixed;
   z-index: 10001;
   bottom: 0;
-  font-size: 13px; }
+  font-size: 0.92308em;
+  line-height: 1.58333em; }
   .imagelightbox-arrow p {
     position: relative;
     top: 50%;
@@ -986,6 +1145,9 @@ section.exhibition-year div:last-child {
     -webkit-transition: all 0.2s ease-in-out;
     -webkit-transition-delay: 0s;
     transition: all 0.2s ease-in-out 0s; }
+    @media only screen and (max-width: 750px) {
+      .imagelightbox-arrow:hover {
+        opacity: 1; } }
   @media only screen and (max-width: 950px) {
     .imagelightbox-arrow {
       width: 25%; } }
@@ -1036,8 +1198,13 @@ section.exhibition-year div:last-child {
         text-align: left; } }
   #slider-text-box p {
     display: inline-block;
+    font-size: 0.92308em;
+    line-height: 1.58333em;
     color: black;
     white-space: nowrap; }
+    @media only screen and (max-width: 500px) {
+      #slider-text-box p {
+        white-space: inherit; } }
     #slider-text-box p:after {
       content: "\00a0/\00a0"; }
     #slider-text-box p:last-of-type:after {
@@ -1054,6 +1221,52 @@ section.exhibition-year div:last-child {
 .homepage-exhibition:nth-of-type(2) {
   float: right;
   margin-right: 0; }
+.homepage-exhibition__landing {
+  height: 0;
+  width: 100%;
+  padding-bottom: 67%;
+  background-color: #f0f0f0;
+  position: relative; }
+  .homepage-exhibition__landing--text {
+    position: absolute;
+    width: 100%;
+    height: 100%; }
+  .homepage-exhibition__landing--center {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%); }
+    .homepage-exhibition__landing--center p {
+      text-align: center;
+      font-size: 1.92308em;
+      line-height: 1.52em; }
+      @media only screen and (max-width: 950px) {
+        .homepage-exhibition__landing--center p {
+          font-size: 1.53846em;
+          line-height: 1.425em; } }
+      @media only screen and (max-width: 750px) {
+        .homepage-exhibition__landing--center p {
+          font-size: 1.30769em;
+          line-height: 1.67647em; } }
+      @media only screen and (max-width: 500px) {
+        .homepage-exhibition__landing--center p {
+          font-size: 1.53846em;
+          line-height: 1.425em; } }
+    .homepage-exhibition__landing--center h4 {
+      text-align: center; }
+      @media only screen and (max-width: 950px) {
+        .homepage-exhibition__landing--center h4 {
+          font-size: 0.84615em;
+          line-height: 1.72727em; } }
+      @media only screen and (max-width: 750px) {
+        .homepage-exhibition__landing--center h4 {
+          font-size: 0.76923em;
+          line-height: 1.9em; } }
+      @media only screen and (max-width: 500px) {
+        .homepage-exhibition__landing--center h4 {
+          font-size: 0.84615em;
+          line-height: 1.72727em; } }
 .homepage-exhibition__inside {
   height: 0;
   width: 100%;
@@ -1084,6 +1297,9 @@ section.exhibition-year div:last-child {
     -webkit-transition: all 0.2s ease-in-out;
     -webkit-transition-delay: 0s;
     transition: all 0.2s ease-in-out 0s; }
+    @media only screen and (max-width: 750px) {
+      .homepage-exhibition__text:hover {
+        opacity: 1; } }
 
 .hidden {
   display: none !important;

@@ -34,14 +34,16 @@
 
 		<section class="contact">
 		<div class="separation-rule"></div>
+	
+
 			<div class="text-block">
 				<h5>Newsletter</h5>
-				<form class="newsletter">
-					<input type="text" name="firstname" placeholder="Name"><input type="text" name="lastname" placeholder="E-Mail"><input type="submit" value="Subscribe" class="newsletter__button">
+				<form action="http://janssen.createsend.com/t/r/s/pgdur/" method="post" id="subForm" class="newsletter">
+					<input id="fieldName" name="cm-name" type="text" placeholder="Name"/><input id="fieldEmail" name="cm-pgdur-pgdur" type="email" required placeholder="E-Mail"/><button type="submit" class="newsletter__button">Subscribe</button>
 				</form>
 			</div>
 
-			<div class="text-block">
+			<div class="text-block no-margin-bottom">
 				<h5 class="social_media_title">Social Medias</h5>
 				<a href="https://www.facebook.com/GRJanssen" target=_blank class="social_media_icon"><img src="/static/img/facebook.png"></a><a href="https://instagram.com/rodolphejanssen/" target="_blank" class="social_media_icon"><img src="/static/img/instagram.png"></a><a href="https://twitter.com/GalerieRJ" target="_blank" class="social_media_icon"><img src="/static/img/twitter.png"></a>
 			</div>
@@ -57,7 +59,7 @@
 				<p class="staff_member__mail"><a href="mailto:{{ teammember.email }}">{{ teammember.email }}</a></p>
 			</div>
 		{% endfor %}
-	</div>
+
 
 </section>
 		</div>

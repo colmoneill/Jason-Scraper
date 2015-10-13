@@ -77,19 +77,22 @@ def create():
             exhibition_md = form.wysiwig_exhibition_description.data
             exhibition['artworks'] = [db.image.find_one({'_id': ObjectId(image_id)}) for image_id in request.form.getlist('artwork')]
 
+            filenamebase = artist['slug'] + '-' + exhibition['start'].strftime('%d-%m-%Y')
+            
             artist_md = form.wysiwig_artist_bio.data
 
             if request.files['press_release']:
                 exhibition['press_release'] = utils.handle_uploaded_file(
                     request.files['press_release'],
                     config.upload['PRESS_RELEASE'],
-                    utils.setfilenameroot(request.files['press_release'].filename, exhibition['slug'])
+                    utils.setfilenameroot(request.files['press_release'].filename, filenamebase)
                 )
 
                 exhibition['press_release_size'] = utils.getfilesize(exhibition['press_release'])
 
             exhibition['artworks'] = []
-
+            uploaded_artworks = []
+    
             # New artworks
             if 'artworks' in request.files:
                 for uploaded_image in request.files.getlist('artworks'):
@@ -101,12 +104,16 @@ def create():
                                 utils.setfilenameroot(uploaded_image.filename, artist['slug'])
                             )
                     })
-
-                    exhibition['artworks'].append(db.image.find_one({'_id': image_id}))
+                    uploaded_artworks.append(image_id)
 
             if 'artworks' in request.form:
                 for artwork_id in request.form.getlist('artworks'):
-                    exhibition['artworks'].append(db.image.find_one({'_id': ObjectId(artwork_id)}))
+                    if artwork_id:
+                        if artwork_id[0:9] == 'uploaded:':
+                            artwork_index = int(artwork_id[9:])
+                            artwork_id = uploaded_artworks[artwork_index]
+                        
+                        exhibition['artworks'].append(db.image.find_one({'_id': ObjectId(artwork_id)}))
 
             if 'coverimage' in request.files:
                 uploaded_image = request.files.getlist('coverimage')[0]
@@ -114,20 +121,29 @@ def create():
                     'path': utils.handle_uploaded_file(
                         uploaded_image,
                         config.upload['EXHIBITION_COVER_IMAGE'],
-                        utils.setfilenameroot(uploaded_image.filename, exhibition['slug'])
+                        utils.setfilenameroot(uploaded_image.filename, filenamebase)
                     )
                 }
 
+            exhibition['images'] = []
+            uploaded_images = []
+            
             if 'image' in request.files:
-                exhibition['images'] = []
                 for uploaded_image in request.files.getlist('image'):
-                    exhibition['images'].append({
-                        'path': utils.handle_uploaded_file(
+                    uploaded_images.append(
+                        utils.handle_uploaded_file(
                             uploaded_image,
                             config.upload['EXHIBITION_VIEW'],
-                            utils.setfilenameroot(uploaded_image.filename, exhibition['slug'])
+                            utils.setfilenameroot(uploaded_image.filename, filenamebase)
                         )
-                    })
+                    )
+
+            if 'image' in request.form:
+                for image in request.form.getlist('image'):
+                    if image:
+                        if image[0:9] == 'uploaded:':
+                            image_index = int(image[9:])
+                            exhibition['images'].append({'path': uploaded_images[image_index]})
 
             db.exhibitions.insert(exhibition)
             flash(u'You successfully created an exhibition', 'success')
@@ -160,8 +176,12 @@ def update(exhibition_id):
             exhibition = utils.handle_form_data(exhibition, formdata, ['press_release'])
             exhibition['artist'] = artist
 
-            exhibition['artworks'] = []
+            filenamebase = artist['slug'] + '-' + exhibition['start'].strftime('%d-%m-%Y')
 
+            exhibition['artworks'] = []
+            uploaded_artworks = []
+    
+            # New artworks
             if 'artworks' in request.files:
                 for uploaded_image in request.files.getlist('artworks'):
                     image_id = db.image.insert({
@@ -173,19 +193,22 @@ def update(exhibition_id):
                             )
                     })
 
-                    exhibition['artworks'].append(db.image.find_one({'_id': image_id}))
-
+                    uploaded_artworks.append(image_id)
 
             if 'artworks' in request.form:
                 for artwork_id in request.form.getlist('artworks'):
-                    print artwork_id
-                    exhibition['artworks'].append(db.image.find_one({'_id': ObjectId(artwork_id)}))
+                    if artwork_id:
+                        if artwork_id[0:9] == 'uploaded:':
+                            artwork_index = int(artwork_id[9:])
+                            artwork_id = uploaded_artworks[artwork_index]
+                        
+                        exhibition['artworks'].append(db.image.find_one({'_id': ObjectId(artwork_id)}))
 
             if request.files['press_release']:
                 exhibition['press_release'] = utils.handle_uploaded_file(
                         request.files['press_release'],
                         config.upload['PRESS_RELEASE'],
-                        utils.setfilenameroot(request.files['press_release'].filename, exhibition['slug'])
+                        utils.setfilenameroot(request.files['press_release'].filename, filenamebase)
                     )
 
                 exhibition['press_release_size'] = utils.getfilesize(exhibition['press_release'])
@@ -199,7 +222,7 @@ def update(exhibition_id):
                     'path': utils.handle_uploaded_file(
                         uploaded_image,
                         config.upload['EXHIBITION_COVER_IMAGE'],
-                        utils.setfilenameroot(uploaded_image.filename, exhibition['slug'])
+                        utils.setfilenameroot(uploaded_image.filename, filenamebase)
                     )
                 }
 
@@ -208,20 +231,25 @@ def update(exhibition_id):
                     del exhibition['coverimage']
 
             exhibition['images'] = []
-
-            for path in request.form.getlist('image'):
-                exhibition['images'].append({'path': path})
-
+            uploaded_images = []
 
             if 'image' in request.files:
                 for uploaded_image in request.files.getlist('image'):
-                    exhibition['images'].append({
-                        'path': utils.handle_uploaded_file(
+                    uploaded_images.append(
+                        utils.handle_uploaded_file(
                             uploaded_image,
                             config.upload['EXHIBITION_VIEW'],
-                            utils.setfilenameroot(uploaded_image.filename, exhibition['slug'])
+                            utils.setfilenameroot(uploaded_image.filename, filenamebase)
                         )
-                    })
+                    )
+
+            for path in request.form.getlist('image'):
+                if path:
+                    if path[0:9] == 'uploaded:':
+                        image_index = int(path[9:])
+                        path = uploaded_images[image_index]
+                        
+                    exhibition['images'].append({'path': path})
 
             db.exhibitions.update({"_id": ObjectId(exhibition_id)}, exhibition)
             flash(u'You successfully updated the exhibition data', 'success')

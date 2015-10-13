@@ -7,6 +7,7 @@
 @mixin points_to{
 	&:before{
 		content:"\2192\2002";
+		@include adjust-font-size-to($base-font-size);
 		@extend .font-body;
 		@include mq(c){
 			content: none;

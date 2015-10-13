@@ -2,20 +2,82 @@
 // EXHIBITIONS
 // --------------------------------------------------
 
+.exhibitions-page{
+	&.upcoming-exhibitions:first-of-type{
+		@extend .margin-top-on-mobile;
+		.separation-rule.year:first-of-type{
+			@extend .not-mobile;
+		}
+	}
+	&:first-of-type{
+		.separation-rule.year:first-of-type{
+			margin-top: $margin-top;
+		}
+	}
+	.separation-rule.light-border{
+		padding-top: $margin-bottom;
+		margin-top: 15px;
+		@include mq(b){
+			padding-top: 14px;
+		}
+		&.upcoming{
+			margin-top: $margin-top;
+		}
+	}
+}
+
 .exhibition-block{
 	//margin-bottom: $margin_bottom;
+	h1,h2,h4{
+		display: block;
+		width: inherit;
+		float: left;
+		clear: left;
+	}
+	a{
+		//display: inline-block;
+		//width: 100%;
+	}
 	a:hover{
-		& > h1, & > h2, & > h4, & > .exhibition-block__image{
+		& > .exhibition-block__text, & > .exhibition-block__image, & > .exhibition-block__image--upcoming{ 
 			@include _hover;
 		}
 	}
+	&__wrap{
+		width: 100%;
+		display: inline-block;
+	}
+	&__text{
+		float: left;
+	}
 	&__image{
+		@extend .col5__span1of4;
+		@extend .col4__span1of3;
+		@include mq(b){
+			display: none;
+		}
+		&--upcoming{
+			@extend .col5__span1of5;
+			@extend .col4__span1of4;
+			@include mq(b){
+				display: none;
+			}
+		}
+	}
+	&__inside{
 		width: 100%;
 		padding-bottom: $image_ratio;
 		@include background-cover;
 	}
 	&.upcoming{
 		clear: both;
+	}
+
+	&:last-of-type{
+		margin-bottom: $margin-bottom * 2;
+		.separation-rule.light-border{
+			display: none;
+		}
 	}
 }
 

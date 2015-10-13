@@ -3,6 +3,9 @@
 // --------------------------------------------------
 // Styles for the Lightbox
 
+// :: General
+// ------------------------------------------------------------
+
 #imagelightbox{
     position: fixed;
     z-index: 9999;
@@ -21,9 +24,11 @@
     left: 0;
 }
 
+// :: Buttons
+// ------------------------------------------------------------
+
 #imagelightbox-close {
-   
-    font-size: 13px;
+    @include adjust-font-size-to(12px);
     @extend .font-mono;
     text-align: right;
     position: fixed;
@@ -38,12 +43,11 @@
 
 .imagelightbox-arrow {
     width: 15%;
-    //background-color: #444;
     display: none;
     position: fixed;
     z-index: 10001;
     bottom: 0;
-    font-size: 13px;
+    @include adjust-font-size-to(12px);
     @extend .font-mono;
     p{
 	    @include vertical-align;
@@ -72,6 +76,9 @@
     padding-left: 15px;
 }
 
+
+// :: Text
+// ------------------------------------------------------------
 
 #slider-text-box{
 	min-height: 40px;
@@ -108,12 +115,15 @@
 	}
 	p{
 		display: inline-block;
+		@include adjust-font-size-to(12px);
 		color: black;
 		@extend .font-mono;
 		white-space: nowrap;
+		@include mq(c){
+			white-space: inherit;
+		}
 		&:after{
 			content: "\00a0/\00a0";
-			//content: ",\00a0";
 		}
 		&:last-of-type:after{
 			content: none;

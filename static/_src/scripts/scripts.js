@@ -52,7 +52,7 @@ $(document).ready(function() {
 		$('.subnav a.go-to-anchor').each(function () {
 			var currentLink = $(this);
 			var refElement = $(currentLink.attr("href"));
-			if (refElement.position().top <= scrollPosition && refElement.position().top + refElement.height()  > scrollPosition) {
+			if ((refElement.position().top) - 1 <= scrollPosition && refElement.position().top + refElement.height()  > scrollPosition) {
 				$('.subnav ul li a').removeClass("points-to");
 				currentLink.addClass("points-to");
 			}
@@ -103,11 +103,12 @@ $(document).ready(function() {
 				var artwork_artist = $( source_image_location ).attr( 'data-exhibitionartistname' );
 				var artwork_year = $( source_image_location ).attr( 'data-artworkyear' );
 				var artwork_medium = $( source_image_location ).attr( 'data-artworkmedium' ); 
+				var artwork_edition = $( source_image_location ).attr( 'data-artworkedition' ); 
 				var artwork_dimensions = $( source_image_location ).attr( 'data-artworkdimensions' ); 
 				var installation_group = $( source_image_location ).attr( 'data-installation-group' ); 
 				var installation_solo = $( source_image_location ).attr( 'data-installation-solo' ); 
 				
-				var artwork_data = [artwork_group_name, artwork_gorup_artist, artwork_artist, artwork_year, artwork_medium, artwork_dimensions, installation_group, installation_solo];
+				var artwork_data = [artwork_group_name, artwork_gorup_artist, artwork_artist, artwork_year, artwork_medium, artwork_dimensions, installation_group, installation_solo, artwork_edition];
 				 
 				$( '<div id="imagelightbox-caption"></div>' ).appendTo( '#slider-text-box' );
 				
