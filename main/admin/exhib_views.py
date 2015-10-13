@@ -17,64 +17,32 @@ def index():
     exhibition_views = db.exhibitions.find()
     return render_template('admin/exhib-views/index.html', exhibition_views=exhibition_views)
 
-@blueprint.route("/create/", methods=['GET', 'POST'])
-@login_required
-def create():
-    form = forms.Image()
-    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find().sort("artist_sort")]
-
-    if form.validate_on_submit():
-        formdata = form.data
-
-
-        image = {
-            'artist': db.artist.find_one({'_id': ObjectId(formdata['artist'])}),
-            'path': utils.handle_uploaded_file(
-                request.files['image_file'],
-                app.config['UPLOAD']['ARTWORK_IMAGE'],
-            ),
-            'title': form.title.data,
-            'year': form.year.data,
-            'medium': form.medium.data,
-            'dimensions': form.dimensions.data,
-        }
-        db.image.insert(image)
-        flash(u'You successfully added an image', 'success')
-        return redirect_flask(url_for('.index'))
-
-    return render_template('admin/image/create.html', form=form)
-
-@blueprint.route("/update/<image_id>", methods=['GET', 'POST'])
+@blueprint.route("/update-views/<image_id>", methods=['GET', 'POST'])
 @login_required
 def update(image_id):
-    image = db.image.find_one({"_id": ObjectId(image_id)})
-    form = forms.ImageUpdate()
-    form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find().sort("artist_sort")]
+    image = db.exhibitions.find_one({"_id": ObjectId(image_id)})
+    form = forms.ExhibitionView()
 
     if request.method == 'POST':
         if form.validate():
             formdata = form.data
-            image['stock_number'] = form.stock_number.data
-            image['title'] = form.title.data
-            image['year'] = form.year.data
-            image['medium'] = form.medium.data
-            image['dimensions'] = form.dimensions.data
-            image['artist'] = db.artist.find_one({'_id': ObjectId(form.artist.data)})
+            images = []
+            images['path'] = image.path
+            images['artist'] = form.artist.data
+            images['exhbition_title'] = form.exhbition_title.data
+            images['year'] = form.year.data
+            images['institution'] = form.institution.data
+            images['country'] = form.country.data
 
-            db.image.update({"_id": ObjectId(image_id)}, image)
+            db.exhibition.update(images)
 
-            # Update image on exhibitions
-            db.exhibitions.update({"images._id": ObjectId(image_id)}, {"$set": {"images.$": image}}, multi=True);
-
-            flash(u'You just updated this images meta data', 'success')
+            flash(u'You just updated this views meta data', 'success')
             return redirect_flask(url_for('.index'))
 
     else:
-        image['artist'] = str(image['artist']['_id'])
-        form = forms.ImageUpdate(data=image)
-        form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find().sort("artist_sort")]
+        form = forms.ExhibitionView(data=image)
 
-    return render_template('admin/image/edit.html', image=image, form=form)
+    return render_template('admin/exhib-views/edit.html', image=image, form=form)
 
 
 @blueprint.route("/delete/<image_id>", methods=['GET', 'POST'])
