@@ -21,6 +21,16 @@ def index():
     images = db.image.find().sort([("artist_sort", 1)])
     return render_template('admin/image/index.html', images=images, artists=artists, form=form)
 
+@blueprint.route("/list/<artist_id>")
+@login_required
+def individual_index(artist_id):
+    artist = db.artist.find_one({"_id": ObjectId(artist_id)})
+    images = db.image.find({
+        "artist._id": artist['_id']
+        }).sort([("artist_sort", 1)])
+    return render_template('admin/image/individual_index.html', images=images, artist=artist)
+
+
 @blueprint.route("/create/", methods=['GET', 'POST'])
 @login_required
 def create():

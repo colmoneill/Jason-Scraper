@@ -8,68 +8,39 @@
   <h3>add images</h3>
   {% include 'admin/image/form.html' %}
   <br>
-  <h3>edit images</h3>
-  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-  {% for artist in artists %}
-  <div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="">
-      <h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">{{ artist.name }}</a></h4>
-    </div>
-    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-      <div class="panel-body">
-        {% for image in images %}
-              <div class="col-xs-8">
-                <div class="media">
-                  <div class="media-left">
-                    <a><img class="media-object" style="width: 120px; height: auto;" src="/{{ image.path }}" alt="..."></a>
-                  </div>
-                  <div class="media-body">
-                    <code>{{image.stock_number}}</code>
-                    <h4 class="media-heading">{{ image.artist.name }}</h4>
-                    <b>{{image.title}}</b>, {{image.year}}<br>
-                    {{image.medium}}<br>
-                    {{image.dimensions}}<br>
-                  </div>
-                </div>
-                <hr>
-              </div>
-              <div class="col-xs-4 text-right">
-                  <a class="btn btn-primary btn-sm" href="/admin/image/update/{{ image._id }}">update image data</a>
-                  <a class="btn btn-danger btn-sm" href="/admin/image/delete/{{ image._id }}">delete</a>
-              </div>
-        {%- endfor %}
-      </div>
-    </div>
-  </div>
-  {% endfor %}
-</div>
-<!--
+  <h3>edit images of</h3>
     <ul class="list-group">
-        {% for image in images %}
-            <li class="list-group-item row">
-              <div class="col-xs-8">
-                <div class="media">
-                  <div class="media-left">
-                    <a>
-                      <img class="media-object" style="width: 120px; height: auto;" src="/{{ image.path }}" alt="...">
-                    </a>
-                  </div>
-                  <div class="media-body">
-                    <code>{{image.stock_number}}</code>
-                    <h4 class="media-heading">{{ image.artist.name }}</h4>
-                    <b>{{image.title}}</b>, {{image.year}}<br>
-                    {{image.medium}}<br>
-                    {{image.dimensions}}<br>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xs-4 text-right">
-                  <a class="btn btn-primary btn-sm" href="/admin/image/update/{{ image._id }}">update image data</a>
-                  <a class="btn btn-danger btn-sm" href="/admin/image/delete/{{ image._id }}">delete</a>
-              </div>
-            </li>
+        {% for artist in artists %}
+        <ul>
+          <li><a href="/admin/image/list/{{artist._id}}">{{artist.name}}</a></li>
+        </ul>
         {% endfor %}
     </ul>
--->
+
 </div>
 {% endblock %}
+
+#{% for image in images %}
+#    <li class="list-group-item row">
+#      <div class="col-xs-8">
+#        <div class="media">
+#          <div class="media-left">
+#            <a>
+#              <img class="media-object" style="width: 120px; height: auto;" src="/{{ image.path }}" alt="...">
+#            </a>
+#          </div>
+#          <div class="media-body">
+#            <code>{{image.stock_number}}</code>
+#            <h4 class="media-heading">{{ image.artist.name }}</h4>
+#            <b>{{image.title}}</b>, {{image.year}}<br>
+#            {{image.medium}}<br>
+#            {{image.dimensions}}<br>
+#          </div>
+#        </div>
+#      </div>
+#      <div class="col-xs-4 text-right">
+#          <a class="btn btn-primary btn-sm" href="/admin/image/update/{{ image._id }}">update image data</a>
+#          <a class="btn btn-danger btn-sm" href="/admin/image/delete/{{ image._id }}">delete</a>
+#      </div>
+#    </li>
+#{% endfor %}
