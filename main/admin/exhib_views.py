@@ -17,22 +17,22 @@ def index():
     exhibition_views = db.exhibitions.find()
     return render_template('admin/exhib-views/index.html', exhibition_views=exhibition_views)
 
-@blueprint.route("/update-views/<image_id>", methods=['GET', 'POST'])
+@blueprint.route("/update-views/<slug>", methods=['GET', 'POST'])
 @login_required
-def update(image_id):
-    image = db.exhibitions.find_one({"_id": ObjectId(image_id)})
+def update(slug):
+    image = db.exhibitions.find_one({"slug": slug})
     form = forms.ExhibitionView()
 
     if request.method == 'POST':
         if form.validate():
             formdata = form.data
-            images = []
-            images['path'] = image.path
-            images['artist'] = form.artist.data
-            images['exhbition_title'] = form.exhbition_title.data
-            images['year'] = form.year.data
-            images['institution'] = form.institution.data
-            images['country'] = form.country.data
+            image = []
+            image['path'] == image.path
+            image['artist'] = form.artist.data
+            image['exhbition_title'] = form.exhbition_title.data
+            image['year'] = form.year.data
+            image['institution'] = form.institution.data
+            image['country'] = form.country.data
 
             db.exhibition.update(images)
 
@@ -49,8 +49,6 @@ def update(image_id):
 def delete(image_id):
     if request.method == 'POST':
         image = db.image.find_one({"_id": ObjectId(image_id)})
-        os.remove(os.path.join(settings.appdir, image['path']))
-        db.image.remove({"_id": ObjectId(image_id)})
         flash('You successfully deleted the image', 'success')
         return redirect_flask(url_for('.index'))
 
