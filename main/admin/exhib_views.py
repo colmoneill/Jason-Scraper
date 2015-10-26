@@ -49,6 +49,8 @@ def update(slug):
 def delete(image_id):
     if request.method == 'POST':
         image = db.image.find_one({"_id": ObjectId(image_id)})
+        #os.remove(os.path.join(settings.appdir, image['path']))
+        db.exhibitions.remove({"_id": ObjectId(image_id)})
         flash('You successfully deleted the image', 'success')
         return redirect_flask(url_for('.index'))
 
