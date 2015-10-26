@@ -150,6 +150,11 @@ def artist(slug):
         "is_published": True,
         "artist._id": artist['_id']
     })
+    involved_in_group = db.exhibitions.find({
+        "is_published": True,
+        "is_group_expo": True,
+        "artists._id": artist['_id'],
+    })
     has_involved_in = db.exhibitions.find_one({
       "is_published": True,
       "artist._id": artist['_id']
