@@ -41,15 +41,15 @@ def create():
     if request.method == 'POST':
         if form.validate():
             formdata = form.data
-            artist = utils.handle_form_data({}, formdata, ['press_release_file', 'biography_file'])
+            artist = utils.handle_form_data({}, formdata, ['press_release', 'biography_file'])
             artist['slug'] = utils.slugify(artist['name'])
 
-            if 'press_release_file' in request.files \
-                and request.files['press_release_file']:
+            if 'press_release' in request.files \
+                and request.files['press_release']:
                 artist['press_release'] = utils.handle_uploaded_file(
-                        request.files['press_release_file'],
+                        request.files['press_release'],
                         config.upload['PRESS_RELEASE'],
-                        utils.setfilenameroot(request.files['press_release_file'].filename, artist['slug'])
+                        utils.setfilenameroot(request.files['press_release'].filename, artist['slug'])
                     )
                 artist['press_release_size'] = utils.getfilesize(artist['press_release'])
 
@@ -71,7 +71,6 @@ def create():
                         utils.setfilenameroot(uploaded_image.filename, artist['slug'])
                     )
                 }
-            db.artist.insert(artist)
 
             if 'image' in request.files:
                 for uploaded_image in request.files.getlist('image'):
@@ -81,12 +80,12 @@ def create():
                             uploaded_image,
                             config.upload['ARTWORK_IMAGE'],
                             utils.setfilenameroot(uploaded_image.filename, artist['slug'])
-
                         )
                     }
 
                     db.image.insert(image)
 
+            db.artist.insert(artist)
             flash('You successfully created an artist page', 'success')
 
             if (request.is_xhr):
@@ -114,7 +113,7 @@ def update(artist_id):
 
         if form.validate_on_submit():
             formdata = form.data
-            artist =  utils.handle_form_data(artist, formdata, ['press_release_file', 'biography_file'])
+            artist =  utils.handle_form_data(artist, formdata, ['press_release', 'biography_file'])
 
             if 'press_release' in request.files \
                 and request.files['press_release']:
@@ -233,4 +232,9 @@ def publishArtist (artist_id):
         {'_id': ObjectId(artist_id)},
         {'$set': {'is_published': is_published}}
     )
+    ## Update this artist on exhibitions as well
+    db.exhibitions.update({"artist._id": ObjectId(artist_id)}, {"$set": { "artist.is_published": is_published }}, multi=True)
+    ## Should update this artist on group exhibitions as well
+    db.exhibitions.update({"artists._id": ObjectId(artist_id)}, {"$set": {"artists.$.is_published": is_published}}, multi=True);
+
     return bson_dumps(db.artist.find_one({'_id': ObjectId(artist_id)}))

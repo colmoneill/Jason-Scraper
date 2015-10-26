@@ -52,7 +52,7 @@ $(document).ready(function() {
 		$('.subnav a.go-to-anchor').each(function () {
 			var currentLink = $(this);
 			var refElement = $(currentLink.attr("href"));
-			if (refElement.position().top <= scrollPosition && refElement.position().top + refElement.height()  > scrollPosition) {
+			if ((refElement.position().top) - 1 <= scrollPosition && refElement.position().top + refElement.height()  > scrollPosition) {
 				$('.subnav ul li a').removeClass("points-to");
 				currentLink.addClass("points-to");
 			}

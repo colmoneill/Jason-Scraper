@@ -48,7 +48,7 @@ body{
 	width: 95%;
 	max-width: $max-vp;
 	margin: 0 auto;
-	padding-bottom: 50px;
+	padding-bottom: 80px;
 	@include clearfix;
 	@include mq(a){
 		width: 94%;
@@ -168,29 +168,16 @@ a:focus				{outline: none;}
 .text-block{
 	@extend .clearfix;
 	margin-bottom: $margin_bottom;
+	&.no-margin-bottom{
+		margin-bottom: 0;
+	}
 	h1{
 		@extend h5;
-		@extend .col5__span4of4;
-		@extend .col4__span3of3;
+		@extend .col5__span1of4;
+		@extend .col4__span1of3;
 		@include full_on_mq_b;
 		@extend .col2__span2of2;
-		padding-right: 77%;
-		margin-top: $margin_top;
-		margin-bottom: -30px;
-		&:first-of-type{
-			margin-top: 0;
-			margin-bottom: -20px;
-		}
-		@include mq(a){
-			padding-right: 69%;
-		}
-		@include mq(b){
-			padding-right: 0;
-			margin-bottom: 0;
-			&:first-of-type{
-				margin-bottom: 0;
-			}
-		}
+		clear: both;
 	}
 	h2{
 		@include adjust-font-size-to(11px);
@@ -225,6 +212,21 @@ a:focus				{outline: none;}
 		overflow: hidden;
 		position: relative;
 		margin-bottom: 10px;
+		h2:first-of-type{
+			margin-top: $margin_top / 2;
+		}
+		h1{
+			margin-top: $margin_top;
+			& + h2, & + p{
+				margin-top: $margin_top;
+				@include mq(b){
+					margin-top: 0;
+				}
+			}
+			&:first-of-type, &:first-of-type + h2, &:first-of-type + p{
+				margin-top: 0;
+			}
+		}
 		.bottom-gradient{
 			 position: absolute;
 			 bottom: 0;

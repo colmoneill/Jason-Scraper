@@ -5,6 +5,7 @@
 .artist-block{
 	@extend .col5__span1of5;
 	@extend .col4__span1of4;
+	@include full_on_mq_b;
 	@extend .col2__span2of2;
 	//
 	margin-top: $margin_bottom;
@@ -27,10 +28,11 @@
 			margin-top: 0;
 		}
 	}
-	@include mq-small{
-		@include adjust-font-size-to(18px);
-		font-family: "Maax-Medium", Helvetica, sans-serif;
+	@include mq(b){
 		margin-top: 5px;
+		&:nth-of-type(n){
+			margin-top: 5px;
+		}
 		&:first-of-type{
 			margin-top: 0;
 		}
@@ -46,11 +48,16 @@
 		width: 100%;
 		padding-bottom: $image_ratio;
 		@include background-cover;
-		@include mq(c){
+		@include mq(b){
 			display: none;
 		}
 	}
 	p{
-
+		margin-top: 8px;
+		@include mq(b){
+			@include adjust-font-size-to(18px);
+			font-family: "Maax-Medium", Helvetica, sans-serif;
+			margin-top: 0;
+		}
 	}
 }

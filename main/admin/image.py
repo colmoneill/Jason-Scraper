@@ -1,5 +1,6 @@
 import os
 import forms
+import config
 from flask import Blueprint, render_template, abort,\
      url_for, redirect as redirect_flask, request, flash
 
@@ -34,7 +35,7 @@ def create():
             'artist': db.artist.find_one({'_id': ObjectId(formdata['artist'])}),
             'path': utils.handle_uploaded_file(
                 request.files['image_file'],
-                app.config['UPLOAD']['ARTWORK_IMAGE'],
+                config.upload['ARTWORK_IMAGE'],
             ),
             'title': form.title.data,
             'year': form.year.data,
@@ -69,7 +70,7 @@ def update(image_id):
             db.image.update({"_id": ObjectId(image_id)}, image)
 
             # Update image on exhibitions
-            db.exhibitions.update({"images._id": ObjectId(image_id)}, {"$set": {"images.$": image}}, multi=True);
+            db.exhibitions.update({"images._id": ObjectId(image_id)}, {"$set": {"images.$": image}}, multi=True)
 
             flash(u'You just updated this images meta data', 'success')
             return redirect_flask(url_for('.index'))

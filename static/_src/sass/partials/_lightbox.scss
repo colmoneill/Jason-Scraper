@@ -28,7 +28,7 @@
 // ------------------------------------------------------------
 
 #imagelightbox-close {
-    @include adjust-font-size-to(13px);
+    @include adjust-font-size-to(12px);
     @extend .font-mono;
     text-align: right;
     position: fixed;
@@ -47,7 +47,7 @@
     position: fixed;
     z-index: 10001;
     bottom: 0;
-    @include adjust-font-size-to(13px);
+    @include adjust-font-size-to(12px);
     @extend .font-mono;
     p{
 	    @include vertical-align;
@@ -115,9 +115,13 @@
 	}
 	p{
 		display: inline-block;
+		@include adjust-font-size-to(12px);
 		color: black;
 		@extend .font-mono;
 		white-space: nowrap;
+		@include mq(c){
+			white-space: inherit;
+		}
 		&:after{
 			content: "\00a0/\00a0";
 		}

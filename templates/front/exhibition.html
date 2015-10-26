@@ -21,12 +21,21 @@
   </div>
   <div class="subnav" id="sidebar">
     <ul>
+      {% if exhibition.artworks %}
       <li><a class="go-to-anchor" href="#images">Images</a></li>
-      <li><a class="go-to-anchor" href="#press-release">press release</a></li>
+      {% endif %}
       {% if exhibition.is_group_expo %}
         <li><a class="go-to-anchor" href="#artists">artists</a>
+        {% if exhibition.press_release %}
+        <li><a class="go-to-anchor" href="#press-release">press release</a></li>
+        {% endif %}
       {% else %}
+        {% if exhibition.press_release %}
+      	<li><a class="go-to-anchor" href="#press-release">press release</a></li>
+        {% endif %}
+        {% if exhibition.artist.is_published %}
         <li><a href="/artist/{{ exhibition.artist.slug }}">artist's page</a>
+        {% endif %}
       {% endif %}
       {% if exhibition.iframe1 %}
         <li><a class="go-to-anchor" href="#media">Media</a></li>
@@ -37,6 +46,21 @@
     <section class="subcontent__all-col margin-top-on-mobile" id="images">
       <div class="separation-rule not-mobile"></div>
       <div>
+        {% if exhibition.images %}
+    	  	{% for installation_view in exhibition.images %}
+          <div class="image-block">
+            <a href="/{{ installation_view.path }}">
+              <div class="image-block__inside" style="background-image: url('/{{ installation_view.path }}')"
+              		{% if exhibition.is_group_expo %}
+              		data-installation-group="{% if exhibition.exhibition_name %},{{ exhibition.exhibition_name }} {% endif %}installation view"
+				  	{% else %}
+					data-installation-solo="{{ exhibition.artist.name }},{% if exhibition.exhibition_name %} {{ exhibition.exhibition_name }},{%endif%} installation view"
+					{% endif %} >
+              </div>
+            </a>
+          </div>
+          {% endfor %}
+        {% endif %}
     	  {% if exhibition.artworks %}
     	  	{% for artwork in exhibition.artworks %}
     	  		<div class="image-block">
@@ -58,21 +82,7 @@
     		  {% endfor %}
     	  {% endif %}
 
-        {% if exhibition.images %}
-    	  	{% for installation_view in exhibition.images %}
-          <div class="image-block">
-            <a href="/{{ installation_view.path }}">
-              <div class="image-block__inside" style="background-image: url('/{{ installation_view.path }}')"
-              		{% if exhibition.is_group_expo %}
-              		data-installation-group="{{ exhibition.exhibition_name }}, installation view"
-				  	{% else %}
-					data-installation-solo="{{ exhibition.artist.name }}, {{ exhibition.exhibition_name }}, installation view"
-					{% endif %} >
-              </div>
-            </a>
-          </div>
-          {% endfor %}
-        {% endif %}
+
       </div>
     </section>
 
@@ -92,8 +102,8 @@
 	{% endif %}
 
     <section class="subcontent__all-col informations" id="press-release">
-    	<div class="separation-rule"></div>
 		{% if exhibition.wysiwig_exhibition_description %}
+      <div class="separation-rule"></div>
         	<div class="text-block">
 				<h1>information</h1>
 				{{ exhibition.wysiwig_exhibition_description|markdown }}

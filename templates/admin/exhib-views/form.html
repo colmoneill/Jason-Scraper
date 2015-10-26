@@ -1,0 +1,34 @@
+{% block title %}
+{% endblock %}
+
+{% block body %}
+  {% from "helpers/_form.html" import render_field, render_datepicker %}
+  <form method="post" enctype="multipart/form-data">
+      {{ form.csrf_token }}
+
+      <br>
+      <div class="row">
+
+      <div>
+      <div class="row">
+        <div class="col-sm-4">
+          {{render_field(form.artist)}}
+        </div>
+          <div class="col-sm-4">
+            {{render_field(form.exhibition_title)}}
+          </div>
+          <div class="col-sm-4">
+            {{render_field(form.year)}}
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-4">
+            {{render_field(form.institution)}}
+          </div>
+          <div class="col-sm-4">
+            {{render_field(form.country)}}
+          </div>
+        </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+{% endblock %}

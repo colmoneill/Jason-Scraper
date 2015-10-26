@@ -50,7 +50,7 @@
         <label>{{ label }}</label>
         <div class="thumbnail-container">
           {% for file in files %}
-            <div class="upload-thumbnail">
+            <div class="upload-thumbnail" draggable="true">
                 <span class="glyphicon glyphicon-remove action delete"></span>
                 <span class="glyphicon glyphicon-repeat action restore"></span>
                 {% if '_id' in file: %}
@@ -58,7 +58,7 @@
                 {% else: %}
                     <input type="hidden" name="{{ fieldname }}" value="{{ file.path }}" />
                 {% endif %}
-                <img src="/{{ file.path }}" class="upload-thumbnail" />
+                <img src="/{{ file.path }}" />
             </div>
           {% endfor %}
         </div>

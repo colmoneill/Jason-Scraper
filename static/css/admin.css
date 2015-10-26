@@ -31,6 +31,18 @@ img.small-vignette{
     margin: 5px;
 }
 
+div.upload-thumbnail.drop-suggestion-before {
+    margin-left: -2px;
+    padding-left: 5px;
+    border-left: 2px solid black;
+}
+
+div.upload-thumbnail.drop-suggestion-after {
+    margin-right: -2px;
+    padding-right: 5px;
+    border-right: 2px solid black;
+}
+
 .upload-thumbnail img {
     max-height: 100%;
 }
@@ -47,6 +59,10 @@ img.small-vignette{
     cursor: pointer;
     color: white;
     text-shadow: 0px 0px 1px #000;
+}
+
+.upload-thumbnail.drop-suggestion-after .action {
+    right: 17px;
 }
 
 .upload-thumbnail .delete {

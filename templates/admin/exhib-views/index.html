@@ -1,0 +1,54 @@
+{% extends "admin.html" %}
+{% block title %}
+Managing views
+{% endblock %}
+
+{% block body %}
+<div class="col-md-8">
+  <h3>edit exhibition views</h3>
+  <h6>note: only displays exhibitions that contain exhibition views</h6>
+    <ul class="list-group">
+        {% for exhibition in exhibition_views %}
+        {% if exhibition.images %}
+            <li class="list-group-item row">
+              <div class="col-xs-8">
+                <div class="media">
+                  <div class="media-left">
+                  </div>
+                  <div class="media-body">
+                    {% if exhibition.is_group_expo %}
+                    <hr>
+                    <h4 class="media-heading">group exhibition: {{exhibition.exhibition_name}}</h4>
+                    <hr>
+                    {% else %}
+                    <hr>
+                    <h4 class="media-heading">{{exhibition.artist.name}}</h4>
+                    <hr>
+                    {% endif %}
+                    {% for views in exhibition.images %}
+                    <a>
+                      <img class="media-object" style="width: 120px; height: auto;" src="/{{views.path}}" alt="...">
+                    </a>
+                    {% if views.location %}
+                    {{views.location}}
+                    {{views.artist}}
+                    {{views.contains}}
+                    {% else %}
+                    no location data associated with this exhibition view
+                    {% endif %}
+                    <div class="">
+                        <a class="btn btn-primary btn-sm" href="/admin/exhib-views/update-views/{{ exhibition._id }}">update exhibition view data</a>
+                        <a class="btn btn-danger btn-sm" href="/admin/exhib-views/delete/{{ exhibition._id }}">delete</a>
+                    </div>
+                    <br>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+
+</div>
+{% endblock %}
