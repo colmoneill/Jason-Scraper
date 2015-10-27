@@ -14,8 +14,16 @@ blueprint = Blueprint('exhib_views', __name__)
 @blueprint.route("/")
 @login_required
 def index():
-    exhibition_views = db.exhibitions.find()
-    return render_template('admin/exhib-views/index.html', exhibition_views=exhibition_views)
+    exhibition = db.exhibitions.find()
+    return render_template('admin/exhib-views/index.html', exhibition=exhibition)
+
+@blueprint.route("/list/<exhibition_id>")
+@login_required
+def individual_index(exhibition_id):
+    exhibition = db.exhibitions.find_one({"_id": ObjectId(exhibition_id)})
+    exhibition_view = db.exhibition.find()
+
+    return render_template('admin/exhib-views/individual_index.html', exhibition=exhibition, exhibition_view=exhibition_view)
 
 @blueprint.route("/update-views/<image_id>", methods=['GET', 'POST'])
 @login_required

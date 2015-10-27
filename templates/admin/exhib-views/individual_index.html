@@ -1,0 +1,36 @@
+{% extends "admin.html" %}
+{% block title %}
+Managing views
+{% endblock %}
+
+{% block body %}
+<div class="col-md-8">
+  <h3>edit views of {% if exhibition.is_group_expo %}(group show) <b>{{exhibition.exhibition_name}}</b>{% else %}{{ exhibition.artist.name }} exhibition on <code>{{exhibition.start.strftime('%d.%m.%Y')}}</code>{% endif %}</h3>
+    <ul class="list-group">
+        {% for view in exhibition.images %}
+        <li class="list-group-item row">
+        <div class="media">
+        <div class="media-left">
+          <img class="media-object" style="width: 120px; height: auto;" src="/{{view.path}}" alt="...">
+        </div>
+        <div class="media-body">
+          {% if view.location %}
+          {{view.location}}
+          {{view.artist}}
+          {{view.contains}}
+          {% else %}
+          <code>no data associated with this exhibition view yet</code>
+          {% endif %}
+        </div>
+        <div class="col-xs text-right">
+          <a class="btn btn-primary btn-sm" href="/admin/exhib-views/update-views/{{exhibition._id}}">edit</a>
+          <a class="btn btn-danger btn-sm" href="/admin/exhib-views/delete/{{exhibition._id}}">delete</a>
+        </div>
+        </div>
+        </li>
+        {% endfor %}
+
+    </ul>
+
+</div>
+{% endblock %}
