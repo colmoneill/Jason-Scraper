@@ -20,8 +20,7 @@ def index():
     artists = db.artist.find({
     "is_published": True,
     }).sort([("artist_sort", 1)])
-    images = db.image.find().sort([("artist_sort", 1)])
-    return render_template('admin/image/index.html', images=images, artists=artists, form=form)
+    return render_template('admin/image/index.html', artists=artists, form=form)
 
 @blueprint.route("/list/<artist_id>")
 @login_required
