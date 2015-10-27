@@ -17,16 +17,17 @@ Managing views
                     {% if exhibition.coverimage %}
                     <img class="media-object" style="width: 120px; height: auto;" src="/{{ exhibition.coverimage.path }}" alt="...">
                     {% else %}
-                    <div  style="width: 120px; border: 1px dotted; padding: 5px;"><p>artist has no cover image assigned</p></div>
+                    <div  style="width: 120px; border: 1px dotted; padding: 5px;"><p>exhibition has no cover image assigned</p></div>
                     {% endif %}
                   </div>
                   <div class="media-body">
+                    <code>{{exhibition.location}} Livornostraat</code>
                     {% if exhibition.is_group_expo %}
-                    <h4 class="media-heading"><a href="/admin/exhib-views/list/{{exhibition._id}}">(group exhibition:) {{exhibition.exhibition_name}}</h4></a>
+                    <h5 class="media-heading"><a href="/admin/exhib-views/list/{{exhibition._id}}">(group exhibition:) {{exhibition.exhibition_name}}</h5></a>
                     {% else %}
-                    <h4 class="media-heading"><a href="/admin/exhib-views/list/{{exhibition._id}}">{{exhibition.artist.name}}</a></h4>
+                    <h5 class="media-heading"><a href="/admin/exhib-views/list/{{exhibition._id}}">{{exhibition.artist.name}}</a></h5>
                     {% endif %}
-
+                    {{exhibition.start.strftime('%d.%m.%Y')}} > {{exhibition.end.strftime('%d.%m.%Y')}}
                   </div>
                 </div>
               </div>
