@@ -14,7 +14,10 @@ blueprint = Blueprint('exhib_views', __name__)
 @blueprint.route("/")
 @login_required
 def index():
-    exhibition = db.exhibitions.find()
+    exhibition = db.exhibitions.find().sort([
+            ("end", -1 ),
+            ("start", -1 )
+            ])
     return render_template('admin/exhib-views/index.html', exhibition=exhibition)
 
 @blueprint.route("/list/<exhibition_id>")
