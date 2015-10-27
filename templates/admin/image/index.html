@@ -5,13 +5,14 @@
 
 {% block body %}
 <div class="col-md-8">
+  <div class="row">
   <h3>add images</h3>
+</div>
   {% include 'admin/image/form.html' %}
   <br>
   <h3>edit the data of the artworks of:</h3>
     {% for artist in artists %}
     <li class="list-group-item row">
-      <div class="col-xs-8">
         <div class="media">
           <div class="media-left">
               {% if artist.coverimage %}
@@ -24,7 +25,6 @@
             <a href="/admin/image/list/{{artist._id}}">{{artist.name}}</a>
           </div>
         </div>
-      </div>
     </li>
   {% endfor %}
 </div>

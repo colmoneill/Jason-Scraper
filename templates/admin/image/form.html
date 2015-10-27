@@ -4,9 +4,11 @@
 {% block body %}
   {% from "helpers/_form.html" import render_field, render_datepicker %}
   <form method="post" enctype="multipart/form-data" action="/admin/image/create/">
+      <div class="row">
       {{ form.csrf_token }}
       {{ render_field(form.artist) }}
       {{ form.image_file }}
+    </div>
       <br>
       <div class="row">
       <div>
