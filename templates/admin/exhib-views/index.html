@@ -5,13 +5,14 @@ Managing views
 
 {% block body %}
 <div class="col-md-8">
+<div class="row">
   <h3>edit exhibition views</h3>
   <h6><code>note: This list only displays exhibitions that contain exhibition views, uploads are done on the exhibition page itself. <br>Meanwhile, the list displays exhibitions that are offline for pre-publishing cases</code></h6>
     <ul class="list-group">
         {% for exhibition in exhibition %}
         {% if exhibition.images %}
             <li class="list-group-item row">
-              <div class="col-xs-8">
+              <div class="">
                 <div class="media">
                   <div class="media-left">
                     {% if exhibition.coverimage %}
@@ -36,5 +37,6 @@ Managing views
         {% endfor %}
     </ul>
 
+</div>
 </div>
 {% endblock %}
