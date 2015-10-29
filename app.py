@@ -144,7 +144,7 @@ def artists():
 def artist(slug):
      artist = db.artist.find_one({"slug": slug})
      #artworks = db.image.find({"artist_id": artist._id})
-     artworks = db.image.find({"artist._id": artist['_id']})
+     artworks = db.artist.find({"artist._id": artist['_id']})
      involved_in = db.exhibitions.find({"artist._id": artist['_id']})
 
      return render_template("front/artist.html", artist=artist, artworks=artworks, involved_in=involved_in )
