@@ -64,6 +64,7 @@ def create():
                 artist['coverimage'] = { 'path': utils.handle_uploaded_file(uploaded_image, config.upload['COVER_IMAGE'], basepath) }
 
             artist['images'] = []
+            uploaded_images = []
 
             if 'images' in request.files:
                 for uploaded_image in request.files.getlist('images'):
@@ -76,7 +77,7 @@ def create():
                     uploaded_images.append(image_path)
             
             if 'images' in request.form:
-                for image_path in request.form.getlist('image'):
+                for image_path in request.form.getlist('images'):
                     if image_path and image_path[0:9] == 'uploaded:':
                         image_index = int(image_path[9:])
                         image_path = uploaded_images[image_index]
@@ -98,7 +99,7 @@ def create():
     return render_template('admin/artist/create.html',
                                 form=form,
                                 exhibitions=exhibitions,
-                                images=json.dumps([{'path': image['path'], 'published': image['published']} for image in artist['images']] if 'images' in artist else [])
+                                images=[]
                           )
 
 
