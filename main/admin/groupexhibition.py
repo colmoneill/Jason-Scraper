@@ -90,6 +90,10 @@ def createGroupExhibition():
                     uploaded_artworks.append(image_path)
                     
                 db.artist.update({'_id': exhibition['artists'][0]['_id']}, exhibition['artists'][0])
+                ## Update this artist on exhibitions as well
+                db.exhibitions.update({"artist._id": ObjectId(artist_id)}, {"$set": { "artist": artist }}, multi=True)
+                ## Should update this artist on group exhibitions as well
+                db.exhibitions.update({"artists._id": ObjectId(artist_id)}, {"$set": {"artists.$": artist}}, multi=True)
 
             if 'artworks' in request.form:
                 for artwork_image_path in request.form.getlist('artworks'):
@@ -182,12 +186,15 @@ def updateGroupExhibition(exhibition_id):
                         config.upload['ARTWORK_IMAGE'],
                         utils.setfilenameroot(uploaded_image.filename, exhibition['artists'][0]['slug'])
                     )
-                    
         
                     exhibition['artists'][0]['images'].append({ 'path': image_path, 'published': False })
                     uploaded_artworks.append(image_path)
                     
                 db.artist.update({'_id': exhibition['artists'][0]['_id']}, exhibition['artists'][0])
+                ## Update this artist on exhibitions as well
+                db.exhibitions.update({"artist._id": ObjectId(artist['_id'])}, {"$set": { "artist": artist }}, multi=True)
+                ## Should update this artist on group exhibitions as well
+                db.exhibitions.update({"artists._id": ObjectId(artist['_id'])}, {"$set": {"artists.$": artist}}, multi=True)
 
             if 'artworks' in request.form:
                 for artwork_image_path in request.form.getlist('artworks'):
@@ -266,7 +273,7 @@ def updateGroupExhibition(exhibition_id):
         form = forms.GroupExhibitionForm(data=exhibition)
         form.artists.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
 
-    selectedArtworks = [str(image['_id']) for image in exhibition['artworks']] if 'artworks' in exhibition else []
+    selectedArtworks = [image['path'] for image in exhibition['artworks']] if 'artworks' in exhibition else []
 
     return render_template('admin/group-exhibition/exhibitionEdit.html',
                                 form=form,

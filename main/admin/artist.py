@@ -183,7 +183,7 @@ def update(artist_id):
             ## Update this artist on exhibitions as well
             db.exhibitions.update({"artist._id": ObjectId(artist_id)}, {"$set": { "artist": artist }}, multi=True)
             ## Should update this artist on group exhibitions as well
-            db.exhibitions.update({"artists._id": ObjectId(artist_id)}, {"$set": {"artists.$": artist}}, multi=True);
+            db.exhibitions.update({"artists._id": ObjectId(artist_id)}, {"$set": {"artists.$": artist}}, multi=True)
 
             flash('You\'ve updated the artist page successfully', 'success')
 

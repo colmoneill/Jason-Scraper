@@ -106,7 +106,11 @@ def create():
                     artist['images'].append({ 'path': image_path, 'published': False })
                     
                 db.artist.update({'_id': artist['_id']}, artist)
-
+                ## Update this artist on exhibitions as well
+                db.exhibitions.update({"artist._id": ObjectId(artist['_id'])}, {"$set": { "artist": artist }}, multi=True)
+                ## Should update this artist on group exhibitions as well
+                db.exhibitions.update({"artists._id": ObjectId(artist['_id'])}, {"$set": {"artists.$": artist}}, multi=True)
+                
             if 'artworks' in request.form:
                 for artwork_image_path in request.form.getlist('artworks'):
                     if artwork_image_path:
@@ -195,7 +199,11 @@ def update(exhibition_id):
                     uploaded_artworks.append(image_path)
                     artist['images'].append({ 'path': image_path, 'published': False })
     
-                db.artist.update({'_id': artist['_id']}, artist)                        
+                db.artist.update({'_id': artist['_id']}, artist)
+                ## Update this artist on exhibitions as well
+                db.exhibitions.update({"artist._id": ObjectId(artist['_id'])}, {"$set": { "artist": artist }}, multi=True)
+                ## Should update this artist on group exhibitions as well
+                db.exhibitions.update({"artists._id": ObjectId(artist['_id'])}, {"$set": {"artists.$": artist}}, multi=True)                        
     
             if 'artworks' in request.form:
                 for artwork_image_path in request.form.getlist('artworks'):
