@@ -64,7 +64,6 @@ def create():
                 artist['coverimage'] = { 'path': utils.handle_uploaded_file(uploaded_image, config.upload['COVER_IMAGE'], basepath) }
 
             artist['images'] = []
-            uploaded_images = []
 
             if 'images' in request.files:
                 for uploaded_image in request.files.getlist('images'):
@@ -81,10 +80,7 @@ def create():
                     if image_path and image_path[0:9] == 'uploaded:':
                         image_index = int(image_path[9:])
                         image_path = uploaded_images[image_index]
-                        artist['images'].append({ 'path': image_path, 'enabled': True })
-                    else:
-                        artist['images'].append(utils.find_where('path', image_path, old_images))
-           
+                        artist['images'].append({ 'path': image_path, 'published': True })
                                     
             db.artist.insert(artist)
             flash('You successfully created an artist page', 'success')
@@ -99,7 +95,11 @@ def create():
             # Invalid and xhr, return the errors, rather than full HTML
             return json.dumps(form.errors), 400
 
-    return render_template('admin/artist/create.html', form=form, exhibitions=exhibitions, images=artist['images'] if 'images' in artist else [])
+    return render_template('admin/artist/create.html',
+                                form=form,
+                                exhibitions=exhibitions,
+                                images=json.dumps(artist['images'] if 'images' in artist else [])
+                          )
 
 
 @blueprint.route('/update/<artist_id>', methods=['GET', 'POST'])
@@ -160,14 +160,23 @@ def update(artist_id):
                     uploaded_artworks.append(image_path)
             
             if 'images' in request.form:
-                for image_path in request.form.getlist('image'):
+                for image_path in request.form.getlist('images'):
                     if image_path:
                         if image_path[0:9] == 'uploaded:':
                             image_index = int(image_path[9:])
                             image_path = uploaded_images[image_index]
-                            artist['images'].append({ 'path': image_path, 'enabled': True })
+                            artist['images'].append({ 'path': image_path, 'published': True })
                         else:
-                            artist['images'].append(utils.find_where('path', image_path, old_images))
+                            image = utils.find_where('path', image_path, old_images)
+                                                        
+                            if image:
+                                image['published'] = True
+                                artist['images'].append(image)
+                                old_images.remove(image)
+                
+            for image in old_images:
+                image['published'] = False
+                artist['images'].append(image)
            
             db.artist.update({"_id": ObjectId(artist_id)}, artist)
 
@@ -189,6 +198,7 @@ def update(artist_id):
             else:
                 return render_template('admin/artist/edit.html',
                             form=form,
+                            images=json.dumps(artist['images'] if 'images' in artist else []),
                             exhibitions=exhibitions,
                             coverimage=[artist['coverimage']] if 'coverimage' in artist else [])
 
@@ -198,6 +208,7 @@ def update(artist_id):
 
     return render_template('admin/artist/edit.html',
                                 form=form,
+                                images=json.dumps(artist['images'] if 'images' in artist else []),
                                 exhibitions=exhibitions,
                                 coverimage=[artist['coverimage']] if 'coverimage' in artist else [])
 

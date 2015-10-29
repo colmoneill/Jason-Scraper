@@ -166,8 +166,8 @@
             {% endautoescape %}
             
             var preselectedArtworksSort = function (a, b) {
-                var index_a = preselectedArtworks.indexOf(a._id.$oid),
-                    index_b = preselectedArtworks.indexOf(b._id.$oid);
+                var index_a = preselectedArtworks.indexOf(a.path),
+                    index_b = preselectedArtworks.indexOf(b.path);
                     
                 // a is selected
                 if (index_a > -1) {
@@ -205,8 +205,8 @@
                 images.sort(preselectedArtworksSort);
                 for (var i=0; i<images.length;i++) {
                                         var thumb = artworksField.addThumbnail('/' + images[i].path);
-                    thumb.$el.append('<input type="hidden" name="' + artworksField.name + '" value="' + images[i]._id.$oid + '" />');
-                    if (preselectedArtworks.indexOf(images[i]._id.$oid) < 0) {
+                    thumb.$el.append('<input type="hidden" name="' + artworksField.name + '" value="' + images[i].path + '" />');
+                    if (preselectedArtworks.indexOf(images[i].path) < 0) {
                         thumb.delete();
                     }
                     thumbnails[id].push(thumb);

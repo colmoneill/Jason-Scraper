@@ -104,3 +104,5 @@ def find_where (key, search, datalist):
     for row in datalist:
         if row[key] == search:
             return row
+    
+    return None
