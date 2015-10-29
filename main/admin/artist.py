@@ -98,7 +98,7 @@ def create():
     return render_template('admin/artist/create.html',
                                 form=form,
                                 exhibitions=exhibitions,
-                                images=json.dumps(artist['images'] if 'images' in artist else [])
+                                images=json.dumps([{'path': image['path'], 'published': image['published']} for image in artist['images']] if 'images' in artist else [])
                           )
 
 
@@ -198,7 +198,7 @@ def update(artist_id):
             else:
                 return render_template('admin/artist/edit.html',
                             form=form,
-                            images=json.dumps(artist['images'] if 'images' in artist else []),
+                            images=json.dumps([{'path': image['path'], 'published': image['published']} for image in artist['images']] if 'images' in artist else []),
                             exhibitions=exhibitions,
                             coverimage=[artist['coverimage']] if 'coverimage' in artist else [])
 
@@ -208,7 +208,7 @@ def update(artist_id):
 
     return render_template('admin/artist/edit.html',
                                 form=form,
-                                images=json.dumps(artist['images'] if 'images' in artist else []),
+                                images=json.dumps([{'path': image['path'], 'published': image['published']} for image in artist['images']] if 'images' in artist else []),
                                 exhibitions=exhibitions,
                                 coverimage=[artist['coverimage']] if 'coverimage' in artist else [])
 

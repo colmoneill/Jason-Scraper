@@ -21,6 +21,6 @@ def imagesPerArtist(artist_id):
     artist = db.artist.find_one({'_id': ObjectId(artist_id)})
     
     if 'images' in artist:
-        return bson_dumps(artist['images'])
+        return bson_dumps([{'path': image['path'], 'published': image['published']} for image in artist['images']])
     else:
-        abort(404)
+        return  bson_dumps([])
