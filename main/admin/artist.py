@@ -73,7 +73,7 @@ def create():
                         utils.setfilenameroot(uploaded_image.filename, artist['slug'])
                     )
                     
-                    uploaded_artworks.append(image_path)
+                    uploaded_images.append(image_path)
             
             if 'images' in request.form:
                 for image_path in request.form.getlist('image'):
@@ -157,7 +157,7 @@ def update(artist_id):
                         utils.setfilenameroot(uploaded_image.filename, artist['slug'])
                     )
                     
-                    uploaded_artworks.append(image_path)
+                    uploaded_images.append(image_path)
             
             if 'images' in request.form:
                 for image_path in request.form.getlist('images'):
