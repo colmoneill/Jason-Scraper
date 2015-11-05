@@ -25,7 +25,7 @@ for image in db.image.find():
             
             db.image.update({'_id' : ObjectId(image['_id']) }, image)
             
-            del image['_id']
+            image['_id'] = ObjectId()
             
             image['published'] = True
             

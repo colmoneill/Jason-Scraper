@@ -81,7 +81,7 @@ def create():
                     if image_path and image_path[0:9] == 'uploaded:':
                         image_index = int(image_path[9:])
                         image_path = uploaded_images[image_index]
-                        artist['images'].append({ 'path': image_path, 'published': True })
+                        artist['images'].append({ '_id': ObjectId(), 'path': image_path, 'published': True })
                                     
             db.artist.insert(artist)
             flash('You successfully created an artist page', 'success')
@@ -166,7 +166,7 @@ def update(artist_id):
                         if image_path[0:9] == 'uploaded:':
                             image_index = int(image_path[9:])
                             image_path = uploaded_images[image_index]
-                            artist['images'].append({ 'path': image_path, 'published': True })
+                            artist['images'].append({ '_id': ObjectId(), 'path': image_path, 'published': True })
                         else:
                             image = utils.find_where('path', image_path, old_images)
                                                         
@@ -180,7 +180,6 @@ def update(artist_id):
                 artist['images'].append(image)
            
             db.artist.update({"_id": ObjectId(artist_id)}, artist)
-
             ## Update this artist on exhibitions as well
             db.exhibitions.update({"artist._id": ObjectId(artist_id)}, {"$set": { "artist": artist }}, multi=True)
             ## Should update this artist on group exhibitions as well

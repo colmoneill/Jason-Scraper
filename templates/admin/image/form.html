@@ -5,30 +5,28 @@
   {% from "helpers/_form.html" import render_field, render_datepicker %}
   <form method="post" enctype="multipart/form-data" action="/admin/image/create/">
       {{ form.csrf_token }}
-      {{ render_field(form.artist) }}
       {{ form.image_file }}
       <br>
       <div class="row">
+        {{ render_field(form.artist) }}
       <div>
       <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-4 col-xs-6">
           {{ render_field(form.stock_number) }}
         </div>
-          <div class="col-sm-4">
+          <div class="col-sm-4 col-xs-6">
             {{ render_field(form.title) }}
           </div>
-          <div class="col-sm-4">
+          <div class="col-sm-4 col-xs-6">
             {{ render_field(form.year) }}
           </div>
-      </div>
-      <div class="row">
-          <div class="col-sm-4">
+          <div class="col-sm-4 col-xs-6">
             {{ render_field(form.medium) }}
           </div>
-          <div class="col-sm-4">
+          <div class="col-sm-4 col-xs-6">
             {{ render_field(form.dimensions) }}
           </div>
-          <div class="col-sm-4">
+          <div class="col-sm-4 col-xs-6">
             {{ render_field(form.edition) }}
           </div>
         </div>

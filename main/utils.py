@@ -89,7 +89,7 @@ def allowed_file(filename, allowed_extensions):
 
 # login decorator
 def login_required(action):
-    @wraps(action)
+    @wraps(action) 
     def wrap (*args, **kwargs):
         if 'logged_in' in session:
             return action (*args, **kwargs)

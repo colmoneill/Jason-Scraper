@@ -86,7 +86,7 @@ def createGroupExhibition():
                     )
                     
         
-                    exhibition['artists'][0]['images'].append({ 'path': image_path, 'published': False })
+                    exhibition['artists'][0]['images'].append({ '_id': ObjectId(), 'path': image_path, 'published': False })
                     uploaded_artworks.append(image_path)
                     
                 db.artist.update({'_id': exhibition['artists'][0]['_id']}, exhibition['artists'][0])
@@ -187,7 +187,7 @@ def updateGroupExhibition(exhibition_id):
                         utils.setfilenameroot(uploaded_image.filename, exhibition['artists'][0]['slug'])
                     )
         
-                    exhibition['artists'][0]['images'].append({ 'path': image_path, 'published': False })
+                    exhibition['artists'][0]['images'].append({ '_id': ObjectId(), 'path': image_path, 'published': False })
                     uploaded_artworks.append(image_path)
                     
                 db.artist.update({'_id': exhibition['artists'][0]['_id']}, exhibition['artists'][0])

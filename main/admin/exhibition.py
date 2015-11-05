@@ -103,7 +103,7 @@ def create():
                         )    
                         
                     uploaded_artworks.append(image_path)
-                    artist['images'].append({ 'path': image_path, 'published': False })
+                    artist['images'].append({ '_id': ObjectId(), 'path': image_path, 'published': False })
                     
                 db.artist.update({'_id': artist['_id']}, artist)
                 ## Update this artist on exhibitions as well
@@ -197,7 +197,7 @@ def update(exhibition_id):
                         )
                     
                     uploaded_artworks.append(image_path)
-                    artist['images'].append({ 'path': image_path, 'published': False })
+                    artist['images'].append({ '_id': ObjectId(), 'path': image_path, 'published': False })
     
                 db.artist.update({'_id': artist['_id']}, artist)
                 ## Update this artist on exhibitions as well
