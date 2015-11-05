@@ -15,7 +15,8 @@ import os
 
 import time
 
-from main.utils import slugify
+from bson import ObjectId
+from main.utils import slugify, find_where
 # from utils import logger
 
 client = pymongo.MongoClient()
@@ -47,6 +48,7 @@ def fetch_artworks():
 
     AL_artworks = []
     AL_artists = []
+    
     url = "http://feeds.artlogic.net/websites/2.0/rodolphejanssen/artworks/json"
 
     while True:
@@ -75,59 +77,68 @@ def fetch_artworks():
         # Mongo does not like keys that have a dot in their name,
         # this property does not seem to be used anyway so let us
         # delete it:
-        if 'artworks.description2' in artwork:
-            del artwork['artworks.description2']
-        # upsert int the database:
-        db.AL_artworks.update({"id": artwork['id']}, artwork, upsert=True)
+        #if 'artworks.description2' in artwork:
+            #del artwork['artworks.description2']
+            
+        ## upsert int the database:
+        #db.AL_artworks.update({"id": artwork['id']}, artwork, upsert=True)
 
         slug = slugify(artwork['artist'])
-        exisiting_artist = db.artist.find_one({ "slug": slug })
+        artist = db.artist.find_one({ "slug": slug })
 
-        if not exisiting_artist:
-        # artwork['artist_id'] is not functioning properly
-            db.artist.update({"name": artwork['artist']},
-                              {"$set": {"name":  artwork['artist'],
-                               "slug": slug,
-                               "artist_sort": artwork['artist_sort']
-                               }},
-                              upsert=True)
-        else:
-            print "Artist already exists"
+        if not artist:
+            print 'created artist'
+            artist = {
+                'name': artwork['artist'],
+                'slug': slug, 
+                'artist_sort': artwork['artist_sort'],
+                'images': []
+            }
+            
+            db.artist.insert(artist)
+            artist = db.artist.find_one({ "slug": slug })
 
-
-        # download image
-        if artwork['img_url'] is None \
-            or artwork['img_url'] == '' \
-            or artwork['img_url'] == 'null':
-            print "img_url is null, skipping"
-
-        else:
-            existing_image = db.image.find_one({ 'id_AL': artwork['id'] })
-            if not existing_image:
+        if artwork['img_url'] is not None \
+        and artwork['img_url'] <> '' \
+        and artwork['img_url'] <> 'null' :
+            image = find_where('id_AL', artwork['id'], artist['images'])
+            
+            if not image:
+                print 'created image'
                 extension = os.path.splitext(artwork['img_url'])[1]
                 dest = getsafepath(os.path.join(artwork_image_folder, slugify(artwork['artist']) + extension))
                 fetchfile(artwork['img_url'], dest)
 
-                db.image.insert({
-                    'artist': db.artist.find_one({"slug": slugify(artwork['artist'])}),
+                artist['images'].append({
+                    '_id': ObjectId(),
+                    'id_AL': artwork['id'],
                     'path': dest,
                     'title': artwork['title'],
                     'year': artwork['year'],
                     'medium': artwork['medium'],
                     'dimensions': artwork['dimensions'],
                     'stock_number': artwork['stock_number'],
-                    'stock_number_sort': artwork['stock_number_sort'],
-                    'id_AL': artwork['id'],
-                    },
-                    upsert=True
-                )
-
-                print "image downloaded"
+                    'stock_number_sort': artwork['stock_number_sort']
+                })
+                
+                db.artist.update({'_id': artist['_id']}, {'$set': { 'images': artist['images'] } })                
+                
             else:
-                print "Skipped image; already in the database."
-        #time.sleep(1)
+                print 'updated artist'
+                image['title'] = artwork['title']
+                image['year'] = artwork['year']
+                image['medium'] = artwork['medium']
+                image['dimensions'] = artwork['dimensions']
+                image['stock_number'] = artwork['stock_number']
+                
+                db.artist.update({'images._id': image['_id']}, {'$set': { 'images.$': image }})
+                db.exhibitions.update({'artworks._id': image['_id']}, {'$set': { 'artworks.$': image }}, multi=True)
+                
+            artist = db.artist.find_one({"_id": artist['_id']})
+            db.exhibitions.update({"artist._id": artist['_id']}, {"$set": { "artist": artist }}, multi=True)
+            ## Should update this artist on group exhibitions as well
+            db.exhibitions.update({"artists._id": artist['_id']}, {"$set": {"artists.$": artist}}, multi=True)
 
-    # db.meta.update({"subject": "artworks"}, {"updated": datetime.now(pytz.utc), "subject": "artworks"}, upsert=True)
     return AL_artworks
 
 if __name__ == "__main__":
