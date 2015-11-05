@@ -101,6 +101,10 @@ def fetch_artworks():
         if artwork['img_url'] is not None \
         and artwork['img_url'] <> '' \
         and artwork['img_url'] <> 'null' :
+            
+            if 'images' not in artist or type(artist['images']) is not list:
+                artist['images'] = []
+            
             image = find_where('id_AL', artwork['id'], artist['images'])
             
             if not image:
@@ -124,7 +128,7 @@ def fetch_artworks():
                 db.artist.update({'_id': artist['_id']}, {'$set': { 'images': artist['images'] } })                
                 
             else:
-                print 'updated artist'
+                print 'updated image'
                 image['title'] = artwork['title']
                 image['year'] = artwork['year']
                 image['medium'] = artwork['medium']
