@@ -38,6 +38,7 @@ def create():
                 config.upload['ARTWORK_IMAGE'],
                 utils.setfilenameroot(request.files['image_file'].filename, artist['slug'])
             ),
+            'published': True,
             'title': form.title.data,
             'year': form.year.data,
             'medium': form.medium.data,
