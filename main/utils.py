@@ -89,7 +89,7 @@ def allowed_file(filename, allowed_extensions):
 
 # login decorator
 def login_required(action):
-    @wraps(action)
+    @wraps(action) 
     def wrap (*args, **kwargs):
         if 'logged_in' in session:
             return action (*args, **kwargs)
@@ -99,3 +99,10 @@ def login_required(action):
             return redirect_flask(url_for('login'))
 
     return wrap
+
+def find_where (key, search, datalist):
+    for row in datalist:
+        if row[key] == search:
+            return row
+    
+    return None

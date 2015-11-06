@@ -68,7 +68,7 @@
     		  			<div class="image-block__inside" style="background-image: url('/{{ artwork.path }}')"
     		  				{% if exhibition.is_group_expo %}
 				  			data-groupexhibitionname="in {{ exhibition.exhibition_name }} (group exhibition)"
-				  			data-groupexhibtionartist="{{ artwork.artist.name }}"
+				  			data-groupexhibtionartist=""
 				  			{% else %}
 				  			data-exhibitionartistname="{{ exhibition.artist.name }}"
 				  			{% endif %}

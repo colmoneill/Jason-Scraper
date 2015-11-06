@@ -13,7 +13,6 @@ class Image(Form):
     edition = StringField(u'artwork edition info')
 
 class ImageUpdate(Form):
-    artist = SelectField(u'Select artist *')
     title = StringField(u'title of the artwork')
     stock_number = StringField(u'Stock number')
     year = StringField(u'year')

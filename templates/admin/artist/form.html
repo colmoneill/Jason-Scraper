@@ -1,12 +1,12 @@
 {% block body %}
-{% from "helpers/_form.html" import render_field, upload_field, render_uploadfield %}
+{% from "helpers/_form.html" import render_field, upload_field, render_uploadfield, bound_upload_field %}
 <div class="col-md-12">
   <form action="" method="post" enctype="multipart/form-data" id="artistForm">
     {{ form.csrf_token }}
     {{ render_field(form.name) }}
     {{ render_field(form.artist_sort) }}
     <hr>
-    {{ upload_field('image', 'Artworks', images) }}
+    {{ bound_upload_field('images', 'Artworks') }}
     <hr>
     {{ upload_field('coverimage', 'Cover Image', coverimage) }}
     <hr>
@@ -109,10 +109,26 @@
 </form>
 <script type="text/javascript" src="/static/js/upload.js"></script>
 <script type="text/javascript">
+    {% autoescape false %}
+    var images = JSON.parse('{{ images }}');
+    {% endautoescape %}
+
     window.addEventListener("load", function () {
-        var form = new Form($('form#artistForm'));
-        form.addUploadField("image");
+        var form = new Form($('form#artistForm')),
+        imageField = form.addBoundUploadField("images");
         form.addUploadField("coverimage");
+        
+        for (var i=0; i< images.length;i++) {
+            var img = images[i],
+                path = images[i]['path'],
+                thumb = imageField.addThumbnail('/' + path);
+            
+            thumb.$el.find('input[type=hidden]').attr('value', path);
+            
+            if (!img['published']) {
+                thumb.delete();
+            }
+        }
     }, false);
 </script>
 </div>

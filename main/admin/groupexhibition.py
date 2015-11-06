@@ -79,25 +79,35 @@ def createGroupExhibition():
 
             if 'artworks' in request.files:
                 for uploaded_image in request.files.getlist('artworks'):
-                    image_id = db.image.insert({
-                        'artist': exhibition['artists'][0],
-                        'path': utils.handle_uploaded_file(
-                                uploaded_image,
-                                config.upload['ARTWORK_IMAGE'],
-                                utils.setfilenameroot(uploaded_image.filename, artist['slug'])
-                            )
-                    })
-
-                    uploaded_artworks.append(image_id)
+                    image_path = utils.handle_uploaded_file(
+                        uploaded_image,
+                        config.upload['ARTWORK_IMAGE'],
+                        utils.setfilenameroot(uploaded_image.filename, exhibition['artists'][0]['slug'])
+                    )
+                    
+        
+                    exhibition['artists'][0]['images'].append({ '_id': ObjectId(), 'path': image_path, 'published': False })
+                    uploaded_artworks.append(image_path)
+                    
+                db.artist.update({'_id': exhibition['artists'][0]['_id']}, exhibition['artists'][0])
+                ## Update this artist on exhibitions as well
+                db.exhibitions.update({"artist._id": ObjectId(artist_id)}, {"$set": { "artist": artist }}, multi=True)
+                ## Should update this artist on group exhibitions as well
+                db.exhibitions.update({"artists._id": ObjectId(artist_id)}, {"$set": {"artists.$": artist}}, multi=True)
 
             if 'artworks' in request.form:
-                for artwork_id in request.form.getlist('artworks'):
-                    if artwork_id:
-                        if artwork_id[0:9] == 'uploaded:':
-                            artwork_index = int(artwork_id[9:])
-                            artwork_id = uploaded_artworks[artwork_index]
+                for artwork_image_path in request.form.getlist('artworks'):
+                    if artwork_image_path:
+                        if artwork_image_path[0:9] == 'uploaded:':
+                            artwork_index = int(artwork_image_path[9:])
+                            artwork_image_path = uploaded_artworks[artwork_index]
                         
-                        exhibition['artworks'].append(db.image.find_one({'_id': ObjectId(artwork_id)}))
+                        for artist in exhibition['artists']:
+                            image = utils.find_where('path', artwork_image_path, artist['images'])
+                            
+                            if image:
+                                exhibition['artworks'].append(image)
+                                break
 
             if request.files['press_release']:
                 exhibition['press_release'] = utils.handle_uploaded_file(
@@ -163,7 +173,6 @@ def updateGroupExhibition(exhibition_id):
     if form.is_submitted():
         if form.validate():
             formdata = form.data
-            artists = db.artist.find()
             exhibition = utils.handle_form_data(exhibition, formdata, ['press_release', 'artists', 'extra_artists'])
             exhibition['artists'] = [db.artist.find_one({'_id': ObjectId(artist_id)}) for artist_id in request.form.getlist('artists')]
             exhibition['extra_artists'] = request.form.getlist('extra_artists')
@@ -172,25 +181,34 @@ def updateGroupExhibition(exhibition_id):
             
             if 'artworks' in request.files:
                 for uploaded_image in request.files.getlist('artworks'):
-                    image_id = db.image.insert({
-                        'artist': exhibition['artists'][0],
-                        'path': utils.handle_uploaded_file(
-                                uploaded_image,
-                                config.upload['ARTWORK_IMAGE'],
-                                utils.setfilenameroot(uploaded_image.filename, artist['slug'])
-                            )
-                    })
-
-                    uploaded_artworks.append(image_id)
+                    image_path = utils.handle_uploaded_file(
+                        uploaded_image,
+                        config.upload['ARTWORK_IMAGE'],
+                        utils.setfilenameroot(uploaded_image.filename, exhibition['artists'][0]['slug'])
+                    )
+        
+                    exhibition['artists'][0]['images'].append({ '_id': ObjectId(), 'path': image_path, 'published': False })
+                    uploaded_artworks.append(image_path)
+                    
+                db.artist.update({'_id': exhibition['artists'][0]['_id']}, exhibition['artists'][0])
+                ## Update this artist on exhibitions as well
+                db.exhibitions.update({"artist._id": ObjectId(artist['_id'])}, {"$set": { "artist": artist }}, multi=True)
+                ## Should update this artist on group exhibitions as well
+                db.exhibitions.update({"artists._id": ObjectId(artist['_id'])}, {"$set": {"artists.$": artist}}, multi=True)
 
             if 'artworks' in request.form:
-                for artwork_id in request.form.getlist('artworks'):
-                    if artwork_id:
-                        if artwork_id[0:9] == 'uploaded:':
-                            artwork_index = int(artwork_id[9:])
-                            artwork_id = uploaded_artworks[artwork_index]
+                for artwork_image_path in request.form.getlist('artworks'):
+                    if artwork_image_path:
+                        if artwork_image_path[0:9] == 'uploaded:':
+                            artwork_index = int(artwork_image_path[9:])
+                            artwork_image_path = uploaded_artworks[artwork_index]
                         
-                        exhibition['artworks'].append(db.image.find_one({'_id': ObjectId(artwork_id)}))
+                        for artist in exhibition['artists']:
+                            image = utils.find_where('path', artwork_image_path, artist['images'])
+                            
+                            if image:
+                                exhibition['artworks'].append(image)
+                                break
 
 
             if request.files['press_release']:
@@ -255,7 +273,7 @@ def updateGroupExhibition(exhibition_id):
         form = forms.GroupExhibitionForm(data=exhibition)
         form.artists.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
 
-    selectedArtworks = [str(image['_id']) for image in exhibition['artworks']] if 'artworks' in exhibition else []
+    selectedArtworks = [image['path'] for image in exhibition['artworks']] if 'artworks' in exhibition else []
 
     return render_template('admin/group-exhibition/exhibitionEdit.html',
                                 form=form,
