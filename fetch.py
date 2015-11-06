@@ -116,6 +116,7 @@ def fetch_artworks():
                 artist['images'].append({
                     '_id': ObjectId(),
                     'id_AL': artwork['id'],
+                    'published': True,
                     'path': dest,
                     'title': artwork['title'],
                     'year': artwork['year'],
