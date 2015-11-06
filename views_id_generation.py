@@ -12,6 +12,7 @@ for exhibition in db.exhibitions.find():
             if type(image) is dict:
                 image['_id'] = ObjectId()
                 images.append(image)
+            print 'added id to exhibition view'
     exhibition['images'] = images
 
     db.exhibitions.update({ '_id': exhibition['_id'] }, exhibition)
