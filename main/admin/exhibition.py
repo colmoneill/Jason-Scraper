@@ -78,7 +78,7 @@ def create():
             exhibition['artworks'] = [db.image.find_one({'_id': ObjectId(image_id)}) for image_id in request.form.getlist('artwork')]
 
             filenamebase = artist['slug'] + '-' + exhibition['start'].strftime('%d-%m-%Y')
-            
+
             artist_md = form.wysiwig_artist_bio.data
 
             if request.files['press_release']:
@@ -92,7 +92,7 @@ def create():
 
             exhibition['artworks'] = []
             uploaded_artworks = []
-    
+
             # New artworks
             if 'artworks' in request.files:
                 for uploaded_artwork_image in request.files.getlist('artworks'):
@@ -100,24 +100,24 @@ def create():
                             uploaded_artwork_image,
                             config.upload['ARTWORK_IMAGE'],
                             utils.setfilenameroot(uploaded_artwork_image.filename, artist['slug'])
-                        )    
-                        
+                        )
+
                     uploaded_artworks.append(image_path)
                     artist['images'].append({ '_id': ObjectId(), 'path': image_path, 'published': False })
-                    
+
                 db.artist.update({'_id': artist['_id']}, artist)
                 ## Update this artist on exhibitions as well
                 db.exhibitions.update({"artist._id": ObjectId(artist['_id'])}, {"$set": { "artist": artist }}, multi=True)
                 ## Should update this artist on group exhibitions as well
                 db.exhibitions.update({"artists._id": ObjectId(artist['_id'])}, {"$set": {"artists.$": artist}}, multi=True)
-                
+
             if 'artworks' in request.form:
                 for artwork_image_path in request.form.getlist('artworks'):
                     if artwork_image_path:
                         if artwork_image_path[0:9] == 'uploaded:':
                             artwork_index = int(artwork_image_path[9:])
                             artwork_image_path = uploaded_artworks[artwork_index]
-                        
+
                         image = utils.find_where('path', artwork_image_path, artist['images'])
                         exhibition['artworks'].append(image)
 
@@ -133,7 +133,7 @@ def create():
 
             exhibition['images'] = []
             uploaded_images = []
-            
+
             if 'image' in request.files:
                 for uploaded_image in request.files.getlist('image'):
                     uploaded_images.append(
@@ -149,7 +149,10 @@ def create():
                     if image:
                         if image[0:9] == 'uploaded:':
                             image_index = int(image[9:])
-                            exhibition['images'].append({'path': uploaded_images[image_index]})
+                            exhibition['images'].append({
+                            '_id': ObjectId(),
+                            'path': uploaded_images[image_index]
+                            })
 
             db.exhibitions.insert(exhibition)
             flash(u'You successfully created an exhibition', 'success')
@@ -186,7 +189,7 @@ def update(exhibition_id):
 
             exhibition['artworks'] = []
             uploaded_artworks = []
-    
+
             # New artworks
             if 'artworks' in request.files:
                 for uploaded_artwork_image in request.files.getlist('artworks'):
@@ -195,23 +198,23 @@ def update(exhibition_id):
                             config.upload['ARTWORK_IMAGE'],
                             utils.setfilenameroot(uploaded_artwork_image.filename, artist['slug'])
                         )
-                    
+
                     uploaded_artworks.append(image_path)
                     artist['images'].append({ '_id': ObjectId(), 'path': image_path, 'published': False })
-    
+
                 db.artist.update({'_id': artist['_id']}, artist)
                 ## Update this artist on exhibitions as well
                 db.exhibitions.update({"artist._id": ObjectId(artist['_id'])}, {"$set": { "artist": artist }}, multi=True)
                 ## Should update this artist on group exhibitions as well
-                db.exhibitions.update({"artists._id": ObjectId(artist['_id'])}, {"$set": {"artists.$": artist}}, multi=True)                        
-    
+                db.exhibitions.update({"artists._id": ObjectId(artist['_id'])}, {"$set": {"artists.$": artist}}, multi=True)
+
             if 'artworks' in request.form:
                 for artwork_image_path in request.form.getlist('artworks'):
                     if artwork_image_path:
                         if artwork_image_path[0:9] == 'uploaded:':
                             artwork_index = int(artwork_image_path[9:])
                             artwork_image_path = uploaded_artworks[artwork_index]
-                        
+
                         image = utils.find_where('path', artwork_image_path, artist['images'])
                         exhibition['artworks'].append(image)
 
@@ -259,8 +262,8 @@ def update(exhibition_id):
                     if path[0:9] == 'uploaded:':
                         image_index = int(path[9:])
                         path = uploaded_images[image_index]
-                        
-                    exhibition['images'].append({'path': path})
+
+                    exhibition['images'].append({'path': path, '_id': ObjectId()})
 
             db.exhibitions.update({"_id": ObjectId(exhibition_id)}, exhibition)
             flash(u'You successfully updated the exhibition data', 'success')
