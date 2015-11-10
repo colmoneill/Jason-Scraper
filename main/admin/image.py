@@ -43,7 +43,7 @@ def create():
             'year': form.year.data,
             'medium': form.medium.data,
             'dimensions': form.dimensions.data,
-            'edition': form.edition.data,
+            'edition': form.edition.data
         }
 
         artist['images'].append(image)
