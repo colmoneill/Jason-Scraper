@@ -53,11 +53,7 @@
             <div class="upload-thumbnail" draggable="true">
                 <span class="glyphicon glyphicon-remove action delete"></span>
                 <span class="glyphicon glyphicon-repeat action restore"></span>
-                {% if '_id' in file: %}
-                    <input type="hidden" name="{{ fieldname }}" value="{{ file._id }}" />
-                {% else: %}
-                    <input type="hidden" name="{{ fieldname }}" value="{{ file.path }}" />
-                {% endif %}
+                <input type="hidden" name="{{ fieldname }}" value="{{ file.path }}" />
                 <img src="/{{ file.path }}" />
             </div>
           {% endfor %}
