@@ -236,6 +236,7 @@ def updateGroupExhibition(exhibition_id):
                 if 'coverimage' in exhibition:
                     del exhibition['coverimage']
 
+            old_images = artist['images']
             exhibition['images'] = []
             uploaded_images = []
             
@@ -254,9 +255,12 @@ def updateGroupExhibition(exhibition_id):
                     if path[0:9] == 'uploaded:':
                         image_index = int(path[9:])
                         path = uploaded_images[image_index]
+                        exhibition['images'].append({'_id': ObjectId(), 'path': path})
+                    else:
+                        image = utils.find_where('path', path, old_images)
                         
-                    exhibition['images'].append({'path': path})
-
+                        if image:
+                            exhibition['images'].append(image)
 
             db.exhibitions.update({ "_id": ObjectId(exhibition_id) }, exhibition)
             flash(u'You successfully updated the exhibition data', 'success')
