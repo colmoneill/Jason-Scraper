@@ -14,13 +14,11 @@ Managing views
           <img class="media-object" style="width: 120px; height: auto;" src="/{{view.path}}" alt="...">
         </div>
         <div class="media-body">
-          {% if view.location %}
-          {{view.location}}
-          {{view.artist}}
-          {{view.contains}}
-          {% else %}
-          <code>no data associated with this exhibition view yet</code>
-          {% endif %}
+          <b>Artist work visibile in the view:</b> {{view.artist}}<br>
+          <b>Exhibition title:</b> {{view.exhibition_title}}<br>
+          <b>Year:</b> {{view.year}}<br>
+          <b>Institution:</b> {{view.institution}}<br>
+          <b>Country:</b> {{view.country}}<br>
         </div>
         <div class="col-xs text-right">
           <a class="btn btn-primary btn-sm" href="/admin/exhib-views/update/{{view._id}}">edit</a>
