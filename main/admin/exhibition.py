@@ -244,7 +244,7 @@ def update(exhibition_id):
                 if 'coverimage' in exhibition:
                     del exhibition['coverimage']
 
-            old_images = artist['images']
+            old_images = exhibition['images']
             exhibition['images'] = []
             uploaded_images = []
 
@@ -266,7 +266,7 @@ def update(exhibition_id):
                         exhibition['images'].append({'_id': ObjectId(), 'path': path})
                     else:
                         image = utils.find_where('path', path, old_images)
-                        
+                            
                         if image:
                             exhibition['images'].append(image)
                         

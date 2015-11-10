@@ -236,7 +236,7 @@ def updateGroupExhibition(exhibition_id):
                 if 'coverimage' in exhibition:
                     del exhibition['coverimage']
 
-            old_images = artist['images']
+            old_images = exhibition['images']
             exhibition['images'] = []
             uploaded_images = []
             
