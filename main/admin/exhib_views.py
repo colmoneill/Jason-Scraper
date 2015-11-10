@@ -28,27 +28,28 @@ def individual_index(exhibition_id):
 
     return render_template('admin/exhib-views/individual_index.html', exhibition=exhibition, exhibition_view=exhibition_view)
 
-@blueprint.route("/update-views/<image_id>", methods=['GET', 'POST'])
+@blueprint.route("/update/<image_id>", methods=['GET', 'POST'])
 @login_required
 def update(image_id):
-    image = db.exhibitions.find_one({"_id": ObjectId(image_id)})
+    # Retreive exhibition which contains image
+    exhibition = db.exhibitions.find_one({"images._id": ObjectId(image_id)})
+    image = utils.find_where('_id', ObjectId(image_id), exhibition['images'])
+    
     form = forms.ExhibitionView()
 
     if request.method == 'POST':
         if form.validate():
             formdata = form.data
-            images = []
-            images['path'] = image.path
-            images['artist'] = form.artist.data
-            images['exhbition_title'] = form.exhbition_title.data
-            images['year'] = form.year.data
-            images['institution'] = form.institution.data
-            images['country'] = form.country.data
+            image['artist'] = form.artist.data
+            image['exhbition_title'] = form.exhibition_title.data
+            image['year'] = form.year.data
+            image['institution'] = form.institution.data
+            image['country'] = form.country.data
 
-            db.exhibition.update(images)
+            db.exhibitions.update({'images._id': image['_id']}, {'$set': { 'images.$': image }})
 
             flash(u'You just updated this views meta data', 'success')
-            return redirect_flask(url_for('.index'))
+            return redirect_flask(url_for('.individual_index', exhibition_id=str(exhibition['_id'])))
 
     else:
         form = forms.ExhibitionView(data=image)
@@ -59,7 +60,8 @@ def update(image_id):
 @blueprint.route("/delete/<image_id>", methods=['GET', 'POST'])
 def delete(image_id):
     if request.method == 'POST':
-        image = db.image.find_one({"_id": ObjectId(image_id)})
+        exhibition = db.exhibitions.find_one({"images._id": ObjectId(image_id)})
+        image = utils.find_where('_id', ObjectId(image_id), exhibition['images'])
         os.remove(os.path.join(settings.appdir, image['path']))
         db.image.remove({"_id": ObjectId(image_id)})
         flash('You successfully deleted the image', 'success')
