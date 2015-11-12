@@ -14,7 +14,6 @@ class MultiCheckboxField(SelectMultipleField):
     widget = ListWidget(prefix_label=False)
     option_widget = CheckboxInput()
 
-
 class GroupExhibitionForm(Form):
     exhibition_name = StringField('Title', validators=[DataRequired()])
     start = DateTimeField('From', format='%d-%m-%Y')

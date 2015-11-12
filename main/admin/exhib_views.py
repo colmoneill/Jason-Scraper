@@ -1,5 +1,6 @@
 import os
 import forms
+import config
 from flask import Blueprint, render_template, abort,\
      url_for, redirect as redirect_flask, request, flash
 
@@ -14,11 +15,14 @@ blueprint = Blueprint('exhib_views', __name__)
 @blueprint.route("/")
 @login_required
 def index():
+    form = forms.externalExhibitionView()
+    form.artists.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find().sort("artist_sort")]
+    artists = db.artist.find().sort("artist_sort")
     exhibition = db.exhibitions.find().sort([
             ("end", -1 ),
             ("start", -1 )
             ])
-    return render_template('admin/exhib-views/index.html', exhibition=exhibition)
+    return render_template('admin/exhib-views/index.html', form=form, artist=artist, exhibition=exhibition)
 
 @blueprint.route("/list/<exhibition_id>")
 @login_required
@@ -28,13 +32,52 @@ def individual_index(exhibition_id):
 
     return render_template('admin/exhib-views/individual_index.html', exhibition=exhibition, exhibition_view=exhibition_view)
 
+@blueprint.route("/create", methods=['GET', 'POST'])
+@login_required
+def create():
+    form = forms.externalExhibitionView()
+    form.artists.choices = [(str(artist['_id']), artist['name']) for artist in   db.artist.find().sort("artist_sort")]
+
+    if form.validate_on_submit():
+        formdata = form.data
+        # artist = db.artist.find_one({'_id': ObjectId(formdata['artists'])})
+
+        externalExhibitionView = {
+            '_id': ObjectId(),
+            'path': utils.handle_uploaded_file(
+                request.files['image_file'],
+                config.upload['EXTERNAL_EXHIBITION_VIEW'],
+                utils.setfilenameroot(request.files['image_file'].filename, artist['slug'])
+                ),
+            'external_exhibiton_view': True,
+            'published': True,
+            'exhibition_title': form.exhibition_title.data,
+            'year': form.year.data,
+            'institution': form.institution.data,
+            'city': form.city.data,
+            'country': form.country.data,
+        }
+
+        artist['external_exhibition_view'].append(externalExhibitionView)
+
+        ##db.artist.update({"_id": ObjectId(formdata['artist'])}, artist)
+        ## Update this artist on exhibitions as well
+        #db.exhibitions.update({"artist._id": ObjectId(formdata['artist'])}, {"$set": { "artist":    artist }}, multi=True)
+        ## Should update this artist on group exhibitions as well
+        #db.exhibitions.update({"artists._id": ObjectId(formdata['artist'])}, {"$set":   {"artists.$": artist}}, multi=True)
+
+        flash(u'You successfully added an external exhibition view', 'success')
+        return redirect_flask(url_for('.index'))
+
+    return render_template('admin/exhib-views/create.html', form=form, artist=artist)
+
 @blueprint.route("/update/<image_id>", methods=['GET', 'POST'])
 @login_required
 def update(image_id):
     # Retreive exhibition which contains image
     exhibition = db.exhibitions.find_one({"images._id": ObjectId(image_id)})
     image = utils.find_where('_id', ObjectId(image_id), exhibition['images'])
-    
+
     form = forms.ExhibitionView()
 
     if request.method == 'POST':
