@@ -52,9 +52,9 @@
             <a href="/{{ installation_view.path }}">
               <div class="image-block__inside" style="background-image: url('/{{ installation_view.path }}')"
               		{% if exhibition.is_group_expo %}
-              		data-installation-group="{% if exhibition.exhibition_name %},{{ exhibition.exhibition_name }} {% endif %}installation view"
+              		data-installation-group="{% if exhibition.exhibition_name %},{{ exhibition.exhibition_name }}, {% endif %}installation view, {{ exhibition.start.strftime('%Y') }}"
 				  	{% else %}
-					data-installation-solo="{{ exhibition.artist.name }},{% if exhibition.exhibition_name %} {{ exhibition.exhibition_name }},{%endif%} installation view"
+					data-installation-solo="{{ exhibition.artist.name }},{% if exhibition.exhibition_name %} {{ exhibition.exhibition_name }},{%endif%} installation view, {{ exhibition.start.strftime('%Y') }}"
 					{% endif %} >
               </div>
             </a>
