@@ -51,11 +51,18 @@
           <div class="image-block">
             <a href="/{{ installation_view.path }}">
               <div class="image-block__inside" style="background-image: url('/{{ installation_view.path }}')"
-              		{% if exhibition.is_group_expo %}
-              		data-installation-group="{% if exhibition.exhibition_name %},{{ exhibition.exhibition_name }}, {% endif %}installation view, {{ exhibition.start.strftime('%Y') }}"
+            {% if exhibition.is_group_expo %}
+              data-installation-group="
+              {% if exhibition.exhibition_name %}{{ exhibition.exhibition_name }}, (group exhibition) {% endif %}installation view,
+              {% if installation_view.institution %}{{installation_view.institution}}, {% else %}Rodolphe Janssen,{% endif %}
+              {% if installation_view.location %}{{installation_view.location}}, {% else %}Brussels,{% endif %}
+              {% if installation_view.year %}{{installation_view.year}} {% else %}{{ exhibition.start.strftime('%Y') }}{% endif %}"
 				  	{% else %}
-					data-installation-solo="{{ exhibition.artist.name }},{% if exhibition.exhibition_name %} {{ exhibition.exhibition_name }},{%endif%} installation view, {{ exhibition.start.strftime('%Y') }}"
-					{% endif %} >
+					    data-installation-solo="
+              {% if installation_view.artist %}{{ installation_view.artist }}{% else %}{{ exhibition.artist.name }}{% endif %},
+              {% if exhibition.exhibition_name %} {{ exhibition.exhibition_name }},{% endif %}
+              installation view, {{ exhibition.start.strftime('%Y') }}"
+					  {% endif %} >
               </div>
             </a>
           </div>
