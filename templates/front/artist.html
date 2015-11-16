@@ -27,6 +27,7 @@
 			<div class="separation-rule not-mobile"></div>
 				<div>
 					{% for image in artist.images %}
+					{% if image.published %}
 					<div class="image-block">
 						<a href="/{{ image.path }}">
 							<div class="image-block__inside" style="background-image: url('/{{ image.path }}')"
@@ -38,6 +39,7 @@
 							</div>
 						</a>
 					</div>
+					{% endif %}
 					{% endfor %}
 				</div>
 		</section>
