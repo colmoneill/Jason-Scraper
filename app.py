@@ -127,7 +127,7 @@ def upcomingExhibitions():
     future_exhibition = db.exhibitions.find({
         "is_published": True,
         "start": { "$gt": datetime.combine(date.today(), datetime.min.time()) + timedelta(days=3) }
-    }).sort("start", -1)
+    }).sort("start", 1)
 
     return render_template("front/upcoming.html", future_exhibition=future_exhibition)
 
