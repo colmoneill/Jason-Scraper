@@ -9,7 +9,7 @@
 #imagelightbox{
     position: fixed;
     z-index: 9999;
- 
+
     -ms-touch-action: none;
     touch-action: none;
 }
@@ -118,7 +118,7 @@
 		@include adjust-font-size-to(12px);
 		color: black;
 		@extend .font-mono;
-		white-space: nowrap;
+		//white-space: nowrap;
 		@include mq(c){
 			white-space: inherit;
 		}
