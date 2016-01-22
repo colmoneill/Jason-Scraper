@@ -38,7 +38,6 @@ def create():
                 config.upload['ARTWORK_IMAGE'],
                 utils.setfilenameroot(request.files['image_file'].filename, artist['slug'])
             ),
-            'published': True,
             'title': form.title.data,
             'year': form.year.data,
             'medium': form.medium.data,
@@ -47,6 +46,7 @@ def create():
         }
 
         artist['images'].append(image)
+        artist['selected_images'].append(image)
 
         db.artist.update({"_id": ObjectId(formdata['artist'])}, artist)
         ## Update this artist on exhibitions as well
@@ -79,6 +79,7 @@ def update(image_id):
                 image['edition'] = form.edition.data
 
                 db.artist.update({'images._id': image['_id']}, {'$set': { 'images.$': image }})
+                db.artist.update({'selected_images._id': image['_id']}, {'$set': { 'selected_images.$': image }})
                 db.exhibitions.update({'artworks._id': image['_id']}, {'$set': { 'artworks.$': image }}, multi=True)
 
                 artist = db.artist.find_one({"_id": artist['_id']})
@@ -101,7 +102,7 @@ def delete(image_id):
         artist = db.artist.find_one({"images._id": ObjectId(image_id)})
         image = utils.find_where('_id', ObjectId(image_id), artist['images'])
         os.remove(os.path.join(settings.appdir, image['path']))
-        db.artist.update({ '_id': artist['_id'] }, { '$pull': { 'images': {'_id': image['_id'] } } });
+        db.artist.update({ '_id': artist['_id'] }, { '$pull': { 'images': {'_id': image['_id'] }, 'selected_images': {'_id': image['_id'] } } });
         db.exhibitions.update({}, { '$pull': { 'artworks': {'_id': image['_id'] } } }, multi=True);
 
         artist = db.artist.find_one({"_id": artist['_id']})
