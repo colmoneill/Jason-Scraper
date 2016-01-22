@@ -47,7 +47,9 @@ def update(image_id):
             image['country'] = form.country.data
 
             db.exhibitions.update({'images._id': image['_id']}, {'$set': { 'images.$': image }})
-
+            # Update the image if it's visible on an artist page
+            db.artist.update({'selected_images._id': image['_id']}, {'$set': { 'selected_images.$': image }})
+            
             flash(u'You just updated this views meta data', 'success')
             return redirect_flask(url_for('.individual_index', exhibition_id=str(exhibition['_id'])))
 

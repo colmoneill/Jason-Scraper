@@ -92,7 +92,8 @@ def fetch_artworks():
                 'name': artwork['artist'],
                 'slug': slug, 
                 'artist_sort': artwork['artist_sort'],
-                'images': []
+                'images': [],
+                'selected_images': []
             }
             
             db.artist.insert(artist)
@@ -105,6 +106,9 @@ def fetch_artworks():
             if 'images' not in artist or type(artist['images']) is not list:
                 artist['images'] = []
             
+            if 'selected_images' not in artist or type(artist['selected_images']) is not list:
+                artist['selected_images'] = []
+            
             image = find_where('id_AL', artwork['id'], artist['images'])
             
             if not image:
@@ -113,10 +117,9 @@ def fetch_artworks():
                 dest = getsafepath(os.path.join(artwork_image_folder, slugify(artwork['artist']) + extension))
                 fetchfile(artwork['img_url'], dest)
 
-                artist['images'].append({
+                image = {
                     '_id': ObjectId(),
                     'id_AL': artwork['id'],
-                    'published': True,
                     'path': dest,
                     'title': artwork['title'],
                     'year': artwork['year'],
@@ -124,9 +127,12 @@ def fetch_artworks():
                     'dimensions': artwork['dimensions'],
                     'stock_number': artwork['stock_number'],
                     'stock_number_sort': artwork['stock_number_sort']
-                })
+                }
+
+                artist['images'].append(image)
+                artist['selected_images'].append(image)
                 
-                db.artist.update({'_id': artist['_id']}, {'$set': { 'images': artist['images'] } })                
+                db.artist.update({'_id': artist['_id']}, {'$set': { 'images': artist['images'], 'selected_images': artist['selected_images'] } })                
                 
             else:
                 print 'updated image'
@@ -137,6 +143,7 @@ def fetch_artworks():
                 image['stock_number'] = artwork['stock_number']
                 
                 db.artist.update({'images._id': image['_id']}, {'$set': { 'images.$': image }})
+                db.artist.update({'selected_images._id': image['_id']}, {'$set': { 'selected_images.$': image }})
                 db.exhibitions.update({'artworks._id': image['_id']}, {'$set': { 'artworks.$': image }}, multi=True)
                 
             artist = db.artist.find_one({"_id": artist['_id']})
