@@ -5,6 +5,7 @@ import os
 import re
 import settings
 import unicodedata
+import json
 
 from werkzeug import secure_filename
 from flask import redirect as redirect_flask, session, flash, url_for, request
@@ -100,9 +101,16 @@ def login_required(action):
 
     return wrap
 
+"""
+    Returns first item in list of dictionaries where the given
+    key has the given value
+"""
 def find_where (key, search, datalist):
     for row in datalist:
         if row[key] == search:
             return row
     
     return None
+
+def prepare_images (images):
+    return json.dumps([image['path'] for image in images])

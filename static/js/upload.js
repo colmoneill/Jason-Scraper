@@ -312,7 +312,7 @@ extend(Form.prototype, {
         this.$('.has-error').removeClass('has-error');
     },
 
-    showErrors: function (errors) {
+    showValueErrors: function (errors) {
         var fieldName,
             fieldNames = Object.getOwnPropertyNames(errors);
         
@@ -381,8 +381,8 @@ extend(Form.prototype, {
             cache: false,
             contentType: false,
             processData: false,
-            success: function (response) { self.onSuccess() },
-            error: function (response) { self.onError(response.responseJSON); },
+            success: function (response) { self.onSuccess(); },
+            error: function (response) { self.onError(response); },
             dataType: 'json'
         });
     },
@@ -400,8 +400,22 @@ extend(Form.prototype, {
         }
     },
        
-    onError: function (errors) {
+    onError: function (response) {
         this.markDone();
-        this.showErrors(errors);
+        
+        if (response.status == 400) {
+            this.onValueError(response);
+        } else {
+            this.showError();
+        }
+    },
+    
+    onValueError: function (response) {
+        var errors = response.responseJSON || [];
+        this.showValueErrors(errors);
+    },
+    
+    showError: function () {
+        alert('Unknown error while saving. Try again');
     }
 });

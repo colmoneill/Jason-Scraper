@@ -32,6 +32,10 @@ def index():
     artists = db.artist.find().sort("artist_sort", 1)
     return render_template('admin/artist/index.html', artists=artists)
 
+"""    
+    Create artist method
+    
+"""
 @blueprint.route('/create/', methods=['GET','POST'])
 @login_required
 def create():
@@ -64,25 +68,27 @@ def create():
                 artist['coverimage'] = { 'path': utils.handle_uploaded_file(uploaded_image, config.upload['COVER_IMAGE'], basepath) }
 
             artist['images'] = []
-            uploaded_images = []
-
-            if 'images' in request.files:
-                for uploaded_image in request.files.getlist('images'):
-                    image_path = utils.handle_uploaded_file(
-                        uploaded_image,
-                        config.upload['ARTWORK_IMAGE'],
-                        utils.setfilenameroot(uploaded_image.filename, artist['slug'])
-                    )
-
-                    uploaded_images.append(image_path)
-
+            artist['selected_images'] = []
+            uploaded_images = request.files.getlist('images')
+                    
+            # Go through added images. Should only be uploaded images
             if 'images' in request.form:
-                for image_path in request.form.getlist('images'):
-                    if image_path and image_path[0:9] == 'uploaded:':
-                        image_index = int(image_path[9:])
-                        image_path = uploaded_images[image_index]
-                        artist['images'].append({ '_id': ObjectId(), 'path': image_path, 'published': True })
-
+                for image_name in request.form.getlist('images'):
+                    if image_name and image_name.find('uploaded:') > -1:
+                        index = int(image_name[9:])
+                        uploaded_image = uploaded_images[index]
+                        
+                        image_path = utils.handle_uploaded_file(
+                            uploaded_image,
+                            config.upload['ARTWORK_IMAGE'],
+                            utils.setfilenameroot(uploaded_image.filename, artist['slug'])
+                        )
+                        
+                        image = { '_id': ObjectId(), 'path': image_path, 'published': True }
+                        uploaded_images.append(image)
+                        artist['images'].append(image)
+                        artist['selected_images'].append(image)
+                        
             db.artist.insert(artist)
             flash('You successfully created an artist page', 'success')
 
@@ -99,16 +105,32 @@ def create():
     return render_template('admin/artist/create.html',
                                 form=form,
                                 exhibitions=exhibitions,
+                                selected_images=[],
                                 images=[]
                           )
 
-
+"""    
+    Update artist method
+    
+"""
 @blueprint.route('/update/<artist_id>', methods=['GET', 'POST'])
 @login_required
 def update(artist_id):
     artist = db.artist.find_one({"_id": ObjectId(artist_id)})
+    
+    # All the images 
+    available_images = artist['images']
 
-    exhibitions = db.exhibitions.find()
+    # Find all exhibitions this arist participates in
+    exhibitions = db.exhibitions.find({
+        "$or": [
+            {'artist._id': artist['_id']},
+            {'artists._id': artist['_id']}
+        ]
+    })
+
+    for exhibition in exhibitions:
+        available_images.extend(exhibition['images'])
 
     if request.method == 'POST':
         form = forms.ArtistForm()
@@ -145,11 +167,9 @@ def update(artist_id):
                 if 'coverimage' in artist:
                     del artist['coverimage']
 
-            # Remove images which were disabled in the form
-            old_images = artist['images']
-            artist['images'] = []
+            # Construct an array to fill with uploaded images
             uploaded_images = []
-
+           
             if 'images' in request.files:
                 for uploaded_image in request.files.getlist('images'):
                     image_path = utils.handle_uploaded_file(
@@ -157,32 +177,19 @@ def update(artist_id):
                         config.upload['ARTWORK_IMAGE'],
                         utils.setfilenameroot(uploaded_image.filename, artist['slug'])
                     )
-
-                    uploaded_images.append(image_path)
+                    
+                    image = { '_id': ObjectId(), 'path': image_path, 'published': True }
+                    artist['images'].append(image)
+                    uploaded_images.append(image)
 
             if 'images' in request.form:
-                for image_path in request.form.getlist('images'):
-                    if image_path:
-                        if image_path[0:9] == 'uploaded:':
-                            image_index = int(image_path[9:])
-                            image_path = uploaded_images[image_index]
-                            artist['images'].append({ '_id': ObjectId(), 'path': image_path, 'published': True })
-                        else:
-                            image = utils.find_where('path', image_path, old_images)
-
-                            if image:
-                                image['published'] = True
-                                artist['images'].append(image)
-                                old_images.remove(image)
-
-            for image in old_images:
-                image['published'] = False
-                artist['images'].append(image)
+                # Find all the selected images
+                artist['selected_images'] = [uploaded_images[int(path[9:])] if path.find('uploaded:') > -1 else utils.find_where('path', path, available_images) for path in request.form.getlist('images')]
 
             db.artist.update({"_id": ObjectId(artist_id)}, artist)
-            ## Update this artist on exhibitions as well
+            # Update this artist on exhibitions as well
             db.exhibitions.update({"artist._id": ObjectId(artist_id)}, {"$set": { "artist": artist }}, multi=True)
-            ## Should update this artist on group exhibitions as well
+            # Should update this artist on group exhibitions as well
             db.exhibitions.update({"artists._id": ObjectId(artist_id)}, {"$set": {"artists.$": artist}}, multi=True)
 
             flash('You\'ve updated the artist page successfully', 'success')
@@ -198,7 +205,8 @@ def update(artist_id):
             else:
                 return render_template('admin/artist/edit.html',
                             form=form,
-                            images=json.dumps([{'path': image['path'], 'published': image['published']} for image in artist['images']] if 'images' in artist else []),
+                            images=utils.prepare_images(available_images),
+                            selected_images=utils.prepare_images(artist['selected_images'] if 'selected_images' in artist else []),
                             exhibitions=exhibitions,
                             coverimage=[artist['coverimage']] if 'coverimage' in artist else [])
 
@@ -208,7 +216,8 @@ def update(artist_id):
 
     return render_template('admin/artist/edit.html',
                                 form=form,
-                                images=json.dumps([{'path': image['path'], 'published': image['published']} for image in artist['images']] if 'images' in artist else []),
+                                images=utils.prepare_images(available_images),
+                                selected_images=utils.prepare_images(artist['selected_images'] if 'selected_images' in artist else []),
                                 exhibitions=exhibitions,
                                 coverimage=[artist['coverimage']] if 'coverimage' in artist else [])
 

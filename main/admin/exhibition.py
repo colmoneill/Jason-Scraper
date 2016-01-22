@@ -36,7 +36,6 @@ blueprint = Blueprint('admin_exhibition', __name__)
 @blueprint.route("/")
 @login_required
 def index():
-    print 'exhibition index function'
     exhibitions = db.exhibitions.find().sort([
             ("end", -1 ),
             ("start", -1 )
@@ -280,15 +279,13 @@ def update(exhibition_id):
         elif request.is_xhr:
             return json.dumps(form.errors), 400
 
-    selectedArtworks = [image['path'] for image in exhibition['artworks']] if 'artworks' in exhibition else []
-
     exhibition['artist'] = str(exhibition['artist']['_id'])
     form = forms.ExhibitionForm(data=exhibition)
     form.artist.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
 
     return render_template('admin/exhibition/edit.html',
                                 form=form,
-                                selectedArtworks=json.dumps(selectedArtworks),
+                                selectedArtworks=utils.prepare_images(exhibition['artworks'] if 'artworks' in exhibition else []),
                                 coverimage=[exhibition['coverimage']] if 'coverimage' in exhibition else [],
                                 images=exhibition['images'] if 'images' in exhibition else [])
 

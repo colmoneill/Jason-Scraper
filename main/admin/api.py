@@ -20,7 +20,4 @@ blueprint = Blueprint('admin_json_api', __name__)
 def imagesPerArtist(artist_id):
     artist = db.artist.find_one({'_id': ObjectId(artist_id)})
     
-    if 'images' in artist:
-        return bson_dumps([{'path': image['path'], 'published': image['published']} for image in artist['images']])
-    else:
-        return  bson_dumps([])
+    return utils.prepare_images(artist['images'] if 'images' in artist else [])

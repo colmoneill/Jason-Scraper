@@ -137,7 +137,7 @@ def artists():
 @app.route("/artist/<slug>/")
 def artist(slug):
     artist = db.artist.find_one({"slug": slug})
-    has_artworks = db.image.find_one({"artist._id": artist['_id']})
+    has_artworks = True if 'selected_images' in artist and len(artist['selected_images']) > 0 else False
     involved_in = db.exhibitions.find({
         "is_published": True,
         "artist._id": artist['_id']

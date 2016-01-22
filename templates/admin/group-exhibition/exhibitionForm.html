@@ -162,12 +162,12 @@
             var thumbnails = {};
             var artworks = {};
             {% autoescape false %}
-            var preselectedArtworks = JSON.parse('{{ selectedArtworks }}');
+            var preselectedArtworks = JSON.parse({{ selectedArtworks }});
             {% endautoescape %}
             
             var preselectedArtworksSort = function (a, b) {
-                var index_a = preselectedArtworks.indexOf(a.path),
-                    index_b = preselectedArtworks.indexOf(b.path);
+                var index_a = preselectedArtworks.indexOf(a),
+                    index_b = preselectedArtworks.indexOf(b);
                     
                 // a is selected
                 if (index_a > -1) {
@@ -204,9 +204,9 @@
                 
                 images.sort(preselectedArtworksSort);
                 for (var i=0; i<images.length;i++) {
-                                        var thumb = artworksField.addThumbnail('/' + images[i].path);
-                    thumb.$el.append('<input type="hidden" name="' + artworksField.name + '" value="' + images[i].path + '" />');
-                    if (preselectedArtworks.indexOf(images[i].path) < 0) {
+                                        var thumb = artworksField.addThumbnail('/' + images[i]);
+                    thumb.$el.append('<input type="hidden" name="' + artworksField.name + '" value="' + images[i] + '" />');
+                    if (preselectedArtworks.indexOf(images[i]) < 0) {
                         thumb.delete();
                     }
                     thumbnails[id].push(thumb);

@@ -160,7 +160,7 @@ def createGroupExhibition():
 
         selectedArtworks = request.form.getlist('artworks')
 
-    return render_template('admin/group-exhibition/exhibitionCreate.html', form=form, selectedArtworks=selectedArtworks)
+    return render_template('admin/group-exhibition/exhibitionCreate.html', form=form, selectedArtworks=json.dumps(selectedArtworks))
 
 @blueprint.route("/update/<exhibition_id>", methods=['GET', 'POST'])
 @login_required
@@ -276,12 +276,10 @@ def updateGroupExhibition(exhibition_id):
         exhibition['artists'] = [str(artist['_id']) for artist in exhibition['artists']]
         form = forms.GroupExhibitionForm(data=exhibition)
         form.artists.choices = [(str(artist['_id']), artist['name']) for artist in db.artist.find()]
-
-    selectedArtworks = [image['path'] for image in exhibition['artworks']] if 'artworks' in exhibition else []
-
+        
     return render_template('admin/group-exhibition/exhibitionEdit.html',
                                 form=form,
-                                selectedArtworks=json.dumps(selectedArtworks),
+                                selectedArtworks=utils.prepare_images(exhibition['artworks']),
                                 coverimage = [exhibition['coverimage']] if 'coverimage' in exhibition else [],
                                 images=exhibition['images'] if 'images' in exhibition else [],
                                 extra_artists=exhibition['extra_artists'] if 'extra_artists' in exhibition else [])

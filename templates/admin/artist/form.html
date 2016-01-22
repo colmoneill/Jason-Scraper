@@ -111,7 +111,33 @@
 <script type="text/javascript">
     {% autoescape false %}
     var images = JSON.parse('{{ images }}');
+    var preselectedImages = JSON.parse('{{ selected_images }}');
     {% endautoescape %}
+    
+    
+    var preselectedImagesSort = function (a, b) {
+        var index_a = preselectedImages.indexOf(a),
+            index_b = preselectedImages.indexOf(b);
+            
+        // a is selected
+        if (index_a > -1) {
+            if (index_b > -1 && index_a > index_b) {
+                return 1;
+            }
+            
+            // a is selected, but b isn't, or b is bigger
+            return -1
+        }
+        // a is not selected, but b is
+        else if (index_b > -1) {
+            return 1;
+        }
+        
+        // Both unselected, equal
+        return 0;
+    };
+    
+    images.sort(preselectedImagesSort);
 
     window.addEventListener("load", function () {
         var form = new Form($('form#artistForm')),
@@ -120,12 +146,12 @@
         
         for (var i=0; i< images.length;i++) {
             var img = images[i],
-                path = images[i]['path'],
+                path = images[i],
                 thumb = imageField.addThumbnail('/' + path);
             
             thumb.$el.find('input[type=hidden]').attr('value', path);
             
-            if (!img['published']) {
+            if (preselectedImages.indexOf(path) < 0) {
                 thumb.delete();
             }
         }
