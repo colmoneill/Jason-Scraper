@@ -93,7 +93,34 @@
             </div>
         </script>
       <hr>
-      {{ upload_field('artworks', 'Select artworks in exhibition') }}
+      <div class="row">
+      <div class="col-md-12 form-group" id="artworks-upload-field">
+        <label>Select artworks in exhibition</label>
+        <div class="thumbnail-container">
+          {% for file in files %}
+            <div class="upload-thumbnail" draggable="true">
+                <span class="glyphicon glyphicon-remove action delete"></span>
+                <span class="glyphicon glyphicon-repeat action restore"></span>
+                <input type="hidden" name="artworks" value="{{ file.path }}" />
+                <img src="/{{ file.path }}" />
+            </div>
+          {% endfor %}
+        </div>
+        <br>
+        <div class="upload-container">
+          <p>
+            <input type="file" class="filepicker hidden-filepicker" multiple="true" accept="image/*" />
+            <button id="artworks-upload" class="btn btn-default">Select images to upload</button>
+            or drag-and-drop them on this container.
+          </p>
+        </div>
+        <br>
+        <div class="message alert alert-info">
+            <p>Artworks can be selected or uploaded when an artist associated with the gallery is selected in the group exhibition.</p>
+        </div>
+        <div class="dropmask bg-info"></div>
+      </div>
+    </div>
       <hr>
       {{ upload_field('coverimage', 'Cover Image', coverimage) }}
       <hr>
@@ -162,7 +189,7 @@
             var thumbnails = {};
             var artworks = {};
             {% autoescape false %}
-            var preselectedArtworks = JSON.parse({{ selectedArtworks }});
+            var preselectedArtworks = JSON.parse('{{ selectedArtworks }}');
             {% endautoescape %}
             
             var preselectedArtworksSort = function (a, b) {
@@ -211,6 +238,18 @@
                     }
                     thumbnails[id].push(thumb);
                 }
+                
+                if ($('[name="artists"]:checked').length < 1) {
+                    // Hide artworks div
+                    $('#artworks-upload-field .thumbnail-container').hide();
+                    $('#artworks-upload-field .upload-container').hide();
+                    $('#artworks-upload-field .message').show();
+                } else {
+                    // Show artworks div
+                    $('#artworks-upload-field .thumbnail-container').show();
+                    $('#artworks-upload-field .upload-container').show();
+                    $('#artworks-upload-field .message').hide();
+                }
             };
 
             $('[name="artists"]').each(function () {
@@ -246,7 +285,7 @@
                         reflowImages();
                     }
                 });
-
+                
                 $(this).trigger('change');
             });
         }, false);

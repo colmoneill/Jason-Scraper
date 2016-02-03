@@ -119,7 +119,7 @@ def update(artist_id):
     artist = db.artist.find_one({"_id": ObjectId(artist_id)})
     
     # All the images 
-    available_images = artist['images']
+    available_images = [image for image in artist['images']]
 
     # Find all exhibitions this arist participates in
     exhibitions = db.exhibitions.find({
@@ -178,7 +178,7 @@ def update(artist_id):
                         utils.setfilenameroot(uploaded_image.filename, artist['slug'])
                     )
                     
-                    image = { '_id': ObjectId(), 'path': image_path, 'published': True }
+                    image = { '_id': ObjectId(), 'path': image_path }
                     artist['images'].append(image)
                     uploaded_images.append(image)
 

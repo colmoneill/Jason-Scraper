@@ -10,7 +10,7 @@ for artist in db.artist.find():
     if 'images' in artist:
         for image in artist['images']:
             if 'published' in image \
-            and image['published']:
+            and image['published'] == True:
                 artist['selected_images'].append(image)
 
         db.artist.update({'_id' : artist['_id'] }, artist)
