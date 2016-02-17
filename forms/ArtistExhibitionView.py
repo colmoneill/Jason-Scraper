@@ -6,4 +6,5 @@ class ArtistExhibitionView(Form):
     exhibition_title = StringField(u'Exhibition views exhibition title')
     year = StringField(u'Year of the exhibition')
     institution = StringField(u'Institution')
+    city = StringField(u'City')
     country = StringField(u'Country')

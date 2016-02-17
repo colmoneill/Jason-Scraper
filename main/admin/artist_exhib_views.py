@@ -33,6 +33,7 @@ def update(view_id):
                 image['exhibition_title'] = form.exhibition_title.data
                 image['year'] = form.year.data
                 image['institution'] = form.institution.data
+                image['city'] = form.city.data
                 image['country'] = form.country.data
 
                 db.artist.update({'views._id': image['_id']}, {'$set': { 'views.$': image }})
@@ -58,7 +59,7 @@ def delete(view_id):
         image = utils.find_where('_id', ObjectId(view_id), artist['views'])
         os.remove(os.path.join(settings.appdir, image['path']))
         db.artist.update({ '_id': artist['_id'] }, { '$pull': { 'views': {'_id': image['_id'] }, 'selected_images': {'_id': image['_id'] } } });
-        
+
         artist = db.artist.find_one({"_id": artist['_id']})
         db.exhibitions.update({"artist._id": artist['_id']}, {"$set": { "artist": artist }}, multi=True)
         ## Should update this artist on group exhibitions as well
@@ -68,5 +69,3 @@ def delete(view_id):
         return redirect_flask(url_for('.index'))
 
     return render_template('admin/artist-exhib-views/delete.html')
-
-
