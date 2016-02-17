@@ -6,7 +6,10 @@
     {{ render_field(form.name) }}
     {{ render_field(form.artist_sort) }}
     <hr>
-    {{ bound_upload_field('images', 'Artworks') }}
+    <p>This next section labelled 'Artworks & external exhbition views' is both an upload field, and an image gallery organisation area. It manages 3 types of image files: artist artworks, internal exhibition views and external exhibition views.<br> Artworks are uploaded with this field and so are <b>external</b> exhibition views. Internal exhibition views are listed here, to chose which should be displayed, but their upload is managed on their specific exhibition form in Manage Exhibitions.<br><br>
+    on upload select this icon <span class="glyphicon glyphicon-picture icon artwork"></span> to signify that this picture is an artwork<br>
+    on upload, select this icon <span class="glyphicon glyphicon-camera icon exhibition-view"></span> to signify that this picture is an external exhibition view</h4></p>
+    {{ bound_upload_field('images', 'Artworks & external exhbition views') }}
     <hr>
     {{ upload_field('coverimage', 'Cover Image', coverimage) }}
     <hr>
@@ -113,18 +116,18 @@
     var images = JSON.parse('{{ images }}');
     var preselectedImages = JSON.parse('{{ selected_images }}');
     {% endautoescape %}
-    
-    
+
+
     var preselectedImagesSort = function (a, b) {
         var index_a = preselectedImages.indexOf(a),
             index_b = preselectedImages.indexOf(b);
-            
+
         // a is selected
         if (index_a > -1) {
             if (index_b > -1 && index_a > index_b) {
                 return 1;
             }
-            
+
             // a is selected, but b isn't, or b is bigger
             return -1
         }
@@ -132,25 +135,25 @@
         else if (index_b > -1) {
             return 1;
         }
-        
+
         // Both unselected, equal
         return 0;
     };
-    
+
     images.sort(preselectedImagesSort);
 
     window.addEventListener("load", function () {
         var form = new Form($('form#artistForm')),
-        imageField = form.addBoundUploadField("images");
+        imageField = form.addArtistImageUploadField("images", "views");
         form.addUploadField("coverimage");
-        
+
         for (var i=0; i< images.length;i++) {
             var img = images[i],
                 path = images[i],
                 thumb = imageField.addThumbnail('/' + path);
-            
+
             thumb.$el.find('input[type=hidden]').attr('value', path);
-            
+
             if (preselectedImages.indexOf(path) < 0) {
                 thumb.delete();
             }

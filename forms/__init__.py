@@ -1,4 +1,5 @@
 from ArtistForm import ArtistForm
+from ArtistExhibitionView import ArtistExhibitionView
 from ExhibitionForm import ExhibitionForm
 from GroupExhibitionForm import GroupExhibitionForm
 from GalleryEmployees import GalleryEmployees

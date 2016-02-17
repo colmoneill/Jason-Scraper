@@ -61,6 +61,35 @@ div.upload-thumbnail.drop-suggestion-after {
     text-shadow: 0px 0px 1px #000;
 }
 
+.upload-thumbnail .image-type-switch {
+    position: absolute;
+    bottom: 10px;
+    text-align: center;
+    left: 0px;
+    right: 0px;
+}
+
+.upload-thumbnail .image-type-switch .icon {
+    cursor: pointer;
+    color: white;
+    font-size: 20px;
+    text-shadow: 0px 0px 1px #000;
+    padding: 5px;
+}
+
+.upload-thumbnail.artwork .image-type-switch .exhibition-view {
+    opacity: .5;
+}
+
+.upload-thumbnail .image-type-switch .icon:hover {
+    opacity: 1;
+}
+
+.upload-thumbnail.exhibition-view .image-type-switch .artwork {
+    opacity: .5;
+}
+
+
 .upload-thumbnail.drop-suggestion-after .action {
     right: 17px;
 }
