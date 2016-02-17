@@ -38,7 +38,7 @@
 								data-artworkedition="{{ image.edition }}"
 							{% endif %}
 							{% if image.institution %} {# image is external exhibition view #}
-								data-exhibitionartistname="{{ artist.name }}, exhibition view, {{image.exhibition_title}}, {{image.institution}}, {{image.year}}, {{image.country}}"
+								data-exhibitionartistname="{{ artist.name }}, installation view, {{image.exhibition_title}}, {{image.institution}}, {{image.year}}, {{image.country}}"
 							{% else %} {# image is internal exhitibion view #}
 								data-exhibitionartistname="{{ artist.name }}, exhibition view, Rodolphe Janssen"
 							{% endif %}
