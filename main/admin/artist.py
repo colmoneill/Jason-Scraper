@@ -13,9 +13,8 @@ from .. import utils
 from bson import ObjectId
 from bson.json_util import dumps as bson_dumps
 import forms
-
 import config
-
+import re
 import json
 
 from ..utils import login_required
@@ -68,27 +67,42 @@ def create():
                 artist['coverimage'] = { 'path': utils.handle_uploaded_file(uploaded_image, config.upload['COVER_IMAGE'], basepath) }
 
             artist['images'] = []
+            artist['views'] = []
             artist['selected_images'] = []
-            uploaded_images = request.files.getlist('images')
-                    
+            
+            uploaded_views = request.files.getlist('views')
+            uploaded_images = request.files.getlist('images')            
+            
             # Go through added images. Should only be uploaded images
             if 'images' in request.form:
                 for image_name in request.form.getlist('images'):
                     if image_name and image_name.find('uploaded:') > -1:
-                        index = int(image_name[9:])
-                        uploaded_image = uploaded_images[index]
+                        index = int(re.search(':(\d+)$', image_name).group(1))
                         
-                        image_path = utils.handle_uploaded_file(
-                            uploaded_image,
-                            config.upload['ARTWORK_IMAGE'],
-                            utils.setfilenameroot(uploaded_image.filename, artist['slug'])
-                        )
+                        if image_name.find(':artwork:') > -1:
+                            # image is an artwork
+                            image_path = utils.handle_uploaded_file(
+                                uploaded_images[index],
+                                config.upload['ARTWORK_IMAGE'],
+                                utils.setfilenameroot(uploaded_images[index].filename, artist['slug'])
+                            )
+                            
+                            image = { '_id': ObjectId(), 'path': image_path }
+                            artist['images'].append(image)
                         
-                        image = { '_id': ObjectId(), 'path': image_path, 'published': True }
-                        uploaded_images.append(image)
-                        artist['images'].append(image)
+                        else:
+                            # image is a view
+                            image_path = utils.handle_uploaded_file(
+                                uploaded_views[index],
+                                config.upload['EXTERNAL_EXHIBITION_VIEW'],
+                                utils.setfilenameroot(uploaded_views[index].filename, artist['slug'])
+                            )
+                            
+                            image = { '_id': ObjectId(), 'path': image_path }
+                            artist['views'].append(image)
+                        
                         artist['selected_images'].append(image)
-                        
+            
             db.artist.insert(artist)
             flash('You successfully created an artist page', 'success')
 
@@ -120,6 +134,8 @@ def update(artist_id):
     
     # All the images 
     available_images = [image for image in artist['images']]
+    
+    available_images.extend(artist['views'])
 
     # Find all exhibitions this arist participates in
     exhibitions = db.exhibitions.find({
@@ -169,6 +185,7 @@ def update(artist_id):
 
             # Construct an array to fill with uploaded images
             uploaded_images = []
+            uploaded_views = []
            
             if 'images' in request.files:
                 for uploaded_image in request.files.getlist('images'):
@@ -182,9 +199,37 @@ def update(artist_id):
                     artist['images'].append(image)
                     uploaded_images.append(image)
 
+            if 'views' in request.files:
+                for uploaded_image in request.files.getlist('views'):
+                    image_path = utils.handle_uploaded_file(
+                        uploaded_image,
+                        config.upload['EXTERNAL_EXHIBITION_VIEW'],
+                        utils.setfilenameroot(uploaded_image.filename, artist['slug'])
+                    )
+                    
+                    image = { '_id': ObjectId(), 'path': image_path }
+                    artist['views'].append(image)
+                    uploaded_views.append(image)
+
+            artist['selected_images'] = []
+            
             if 'images' in request.form:
                 # Find all the selected images
-                artist['selected_images'] = [uploaded_images[int(path[9:])] if path.find('uploaded:') > -1 else utils.find_where('path', path, available_images) for path in request.form.getlist('images')]
+                for path in request.form.getlist('images'):
+                    if path.find('uploaded:') > -1:
+                        index = int(re.search(':(\d+)$', path).group(1))
+                        # uploaded image
+                        if path.find(':artwork:') > -1:
+                            # artwork
+                            artist['selected_images'].append(uploaded_images[index])
+                        else:
+                            # external view
+                            artist['selected_images'].append(uploaded_views[index])
+                    else:
+                        image = utils.find_where('path', path, available_images)
+                                                 
+                        if image:
+                            artist['selected_images'].append(image)
 
             db.artist.update({"_id": ObjectId(artist_id)}, artist)
             # Update this artist on exhibitions as well
@@ -226,7 +271,6 @@ def update(artist_id):
 @login_required
 def deleteArtist(artist_id):
     if request.method == 'POST':
-        print artist_id
         db.artist.remove({"_id": ObjectId(artist_id)})
         flash(u'You deleted the artist page', 'warning')
         return redirect_flask(url_for('.index'))

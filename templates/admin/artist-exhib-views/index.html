@@ -1,0 +1,50 @@
+{% extends "admin.html" %}
+{% block title %}
+    edit images
+{% endblock %}
+
+{% block body %}
+<div class="col-md-8">
+  <h3>Edit exhibition-views</h3>
+    <div class="panel-group" id="artist-accordion" role="tablist" aria-multiselectable="true">
+      {% for artist in artists %}
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="artist-panel-heading-{{ artist.slug }}">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#artist-accordion" aria-expanded="false" href="#artist-panel-{{ artist.slug }}" aria-controls="artist-panel-{{ artist.slug }}">
+              {{ artist.name }}
+            </a>
+          </h4>
+        </div>
+        <div id="artist-panel-{{ artist.slug }}" class="panel-collapse collapse" role="tabpanel"  aria-labelledby="artist-panel-heading-{{ artist.slug }}">
+          <ul class="list-group">
+            {% for image in artist['views'] %}
+            <li class="list-group-item clearfix">
+              <div class="row">
+                <div class="col-xs-8">
+                  <div class="media">
+                    <div class="media-left">
+                      <a><img class="media-object" style="width: 120px; height: auto;" src="/{{ image.path }}"></a>
+                    </div>
+                    <div class="media-body">
+                      <b>{{image.exhibition_title}}</b>, {{image.year}}<br>
+                      {{image.institution}}<br>
+                      {{image.country}}<br>
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div class="col-xs-4 text-right">
+                  <a class="btn btn-primary btn-sm" href="/admin/artist-exhib-views/update/{{ image._id }}">update image data</a>
+                  <a class="btn btn-danger btn-sm" href="/admin/artist-exhib-views/delete/{{ image._id }}">delete</a>
+                </div>
+              </div>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+</div>
+{% endblock %}

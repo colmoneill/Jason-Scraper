@@ -141,7 +141,7 @@
 
     window.addEventListener("load", function () {
         var form = new Form($('form#artistForm')),
-        imageField = form.addBoundUploadField("images");
+        imageField = form.addArtistImageUploadField("images", "views");
         form.addUploadField("coverimage");
         
         for (var i=0; i< images.length;i++) {
