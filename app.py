@@ -35,7 +35,13 @@ app.secret_key = secret_key
 
 if not app.debug:
     import logging, os.path
-    file_handler = logging.FileHandler(os.path.join(settings.appdir, 'logs/flask.log'))
+    
+    file_handler = logging.RotatingFileHandler(
+        filename= settings.logFilename,
+        backupCount=settings.logBackupCount,
+        maxBytes=setttings.logMaxBytes
+    )
+    
     file_handler.setLevel(logging.WARNING)
     app.logger.addHandler(file_handler)
 
