@@ -135,9 +135,11 @@ def update(artist_id):
     # All the images 
     available_images = [image for image in artist['images']]
     
-    available_images.extend(artist['views'])
+    for image in artist['views']:
+        if image and not utils.find_where('_id', image['_id'], available_images):
+                available_images.append(image)
 
-    # Find all exhibitions this arist participates in
+    # Find all exhibitions this artist participates in
     exhibitions = db.exhibitions.find({
         "$or": [
             {'artist._id': artist['_id']},
@@ -146,7 +148,9 @@ def update(artist_id):
     })
 
     for exhibition in exhibitions:
-        available_images.extend(exhibition['images'])
+        for image in exhibition['images']:
+            if image and not utils.find_where('_id', image['_id'], available_images):
+                available_images.append(image)
 
     if request.method == 'POST':
         form = forms.ArtistForm()

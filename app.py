@@ -34,12 +34,12 @@ Misaka(app)
 app.secret_key = secret_key
 
 if not app.debug:
-    import logging, os.path
+    import logging.handlers, os.path
     
-    file_handler = logging.RotatingFileHandler(
-        filename= settings.logFilename,
+    file_handler=logging.handlers.RotatingFileHandler(
+        filename=settings.logFilename,
         backupCount=settings.logBackupCount,
-        maxBytes=setttings.logMaxBytes
+        maxBytes=settings.logMaxBytes
     )
     
     file_handler.setLevel(logging.WARNING)
