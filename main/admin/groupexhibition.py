@@ -263,6 +263,16 @@ def updateGroupExhibition(exhibition_id):
                             exhibition['images'].append(image)
 
             db.exhibitions.update({ "_id": ObjectId(exhibition_id) }, exhibition)
+            
+            # Update exhibition data on views from this exhibition on artists
+            for artist in db.artist.find({'selected_images': { '$elemMatch': { 'exhibition._id': exhibition['_id'] } } } ):
+                for image in artist['selected_images']:
+                    if 'exhibition' in image and image['exhibition']['_id'] == exhibition['_id']:
+                        image['exhibition'] = utils.without(['images', 'artists'], exhibition)
+                
+                db.artist.update({'_id': artist['_id']}, {'$set': {'selected_images': artist['selected_images'] } } )
+
+            
             flash(u'You successfully updated the exhibition data', 'success')
 
             if request.is_xhr:
@@ -279,7 +289,7 @@ def updateGroupExhibition(exhibition_id):
         
     return render_template('admin/group-exhibition/exhibitionEdit.html',
                                 form=form,
-                                selectedArtworks=utils.prepare_images(exhibition['artworks']),
+                                selectedArtworks=utils.prepare_images(exhibition['artworks'] if 'artworks' in exhibition else []),
                                 coverimage = [exhibition['coverimage']] if 'coverimage' in exhibition else [],
                                 images=exhibition['images'] if 'images' in exhibition else [],
                                 extra_artists=exhibition['extra_artists'] if 'extra_artists' in exhibition else [])

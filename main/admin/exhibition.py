@@ -270,8 +270,17 @@ def update(exhibition_id):
                             exhibition['images'].append(image)
                         
             db.exhibitions.update({"_id": ObjectId(exhibition_id)}, exhibition)
-            flash(u'You successfully updated the exhibition data', 'success')
 
+            # Update exhibition data on views from this exhibition on artists
+            for artist in db.artist.find({'selected_images': { '$elemMatch': { 'exhibition._id': exhibition['_id'] } } } ):
+                for image in artist['selected_images']:
+                    if 'exhibition' in image and image['exhibition']['_id'] == exhibition['_id']:
+                        image['exhibition'] = utils.without(['images', 'artist'], exhibition)
+                
+                db.artist.update({'_id': artist['_id']}, {'$set': {'selected_images': artist['selected_images'] } } )
+
+            flash(u'You successfully updated the exhibition data', 'success')
+            
             if request.is_xhr:
                 return bson_dumps(exhibition), 201
             else:

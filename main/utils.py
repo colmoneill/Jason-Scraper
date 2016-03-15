@@ -6,6 +6,7 @@ import re
 import settings
 import unicodedata
 import json
+import copy
 
 from werkzeug import secure_filename
 from flask import redirect as redirect_flask, session, flash, url_for, request
@@ -111,6 +112,16 @@ def find_where (key, search, datalist):
             return row
     
     return None
+
+def without (keys, dictionary):
+    if type(keys) <> list:
+        keys = [keys]
+        
+    dict_copy = copy.copy(dictionary)
+    for key in keys:
+        if key in dictionary:
+            del dict_copy[key] 
+    return dict_copy
 
 def prepare_images (images):
     return json.dumps([image['path'] for image in images])

@@ -150,6 +150,7 @@ def update(artist_id):
     for exhibition in exhibitions:
         for image in exhibition['images']:
             if image and not utils.find_where('_id', image['_id'], available_images):
+                image['exhibition'] = utils.without(['images', 'artist', 'artists'], exhibition) # exhibition['_id']#
                 available_images.append(image)
 
     if request.method == 'POST':

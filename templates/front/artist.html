@@ -39,8 +39,8 @@
 							{% endif %}
 							{% if image.institution %} {# image is external exhibition view #}
 								data-exhibitionartistname="{{ artist.name }}, installation view, {{image.exhibition_title}}, {{image.institution}}, {{image.year}}, {{image.city}}, {{image.country}}"
-							{% else %} {# image is internal exhitibion view #}
-								data-exhibitionartistname="{{ artist.name }}, exhibition view, Rodolphe Janssen"
+							{% elif 'exhibition' in image %} {# image is internal exhitibion view #}
+								data-exhibitionartistname="{{ artist.name }}, {{ image.exhibition.exhibition_name }}, exhibition view, Rodolphe Janssen"
 							{% endif %}
 								>
 							</div>
