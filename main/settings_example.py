@@ -11,7 +11,7 @@ db = client.artlogic
 appdir = '/home/Jason-Scraper/'
 
 # Logfile location
-logFilename = os.path.join(settings.appdir, 'logs/flask.log')
+logFilename = os.path.join(appdir, 'logs/flask.log')
 # Amount of logs kept
 logBackupCount = 25
 # Max log file size
