@@ -100,7 +100,7 @@
      	<div class="separation-rule"></div>
      	<div class="group-exhibition-artists">
 				{% for artists in exhibition.artists %}
-				<p><a href="/artist/{{ artists.slug }}" >{{ artists.name }}</a></p>
+				<p>{% if artists.is_published %}<a href="/artist/{{ artists.slug }}" >{{ artists.name }}</a>{% else %}{{ artists.name }}{% endif %}</p>
 				{% endfor %}
         {% for extra_artists in exhibition.extra_artists  %}
 				<p>{{ extra_artists }}</p>
