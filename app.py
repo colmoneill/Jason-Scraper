@@ -180,8 +180,13 @@ def publicviewExhibition(start, artist):
 @app.route("/group-exhibition/<slug>/")
 def publicviewGroupExhibition(slug):
     exhibition = db.exhibitions.find_one({'slug': slug})
-    all_artists = db.exhibition.find({
-    })
+    all_artists = db.exhibition.find({})
+
+    for artwork in exhibition['artworks']:
+        for artist in exhibition['artists']:
+            if utils.find_where('_id', artwork['_id'], artist['images']):
+                artwork['artist'] = artist
+                break
 
     if exhibition <> None:
         return render_template('front/exhibition.html', exhibition=exhibition)
