@@ -12,3 +12,4 @@ static/uploads/
 .ftpconfig
 static/fonts/205-*
 main/settings.py
+data
