@@ -177,10 +177,16 @@ def publicviewExhibition(start, artist):
     else:
         abort(404)
 
+def sort_all_artists (a, b):
+    name_a = a['name'] if type(a) is dict else a
+    name_b = b['name'] if type(b) is dict else b
+    return cmp(name_a.lower(), name_b.lower())
+
 @app.route("/group-exhibition/<slug>/")
 def publicviewGroupExhibition(slug):
     exhibition = db.exhibitions.find_one({'slug': slug})
-    all_artists = db.exhibition.find({})
+    exhibition['all_artists'] = exhibition['artists'] + exhibition['extra_artists']
+    exhibition['all_artists'].sort(cmp=sort_all_artists)
 
     for artwork in exhibition['artworks']:
         for artist in exhibition['artists']:
