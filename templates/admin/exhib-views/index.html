@@ -14,7 +14,7 @@ Managing views
                 <div class="media">
                   <div class="media-left">
                     {% if exhibition.coverimage %}
-                    <a href="/admin/exhib-views/list/{{exhibition._id}}"><img class="media-object" style="width: 120px; height: auto;" src="/{{ exhibition.coverimage.path }}" alt="..."></a>
+                    <a href="/admin/exhib-views/list/{{exhibition._id}}"><img class="media-object" style="width: 120px; height: auto;" src="/{{ exhibition.coverimage.path.replace('/uploads/', '/thumbs/') }}" alt="..."></a>
                     {% else %}
                     <a href="/admin/exhib-views/list/{{exhibition._id}}"><div  style="width: 120px; border: 1px dotted; padding: 5px;"><p>exhibition has no cover image assigned</p></div></a>
                     {% endif %}

@@ -12,7 +12,7 @@
             <div class="media">
               <div class="media-left">
                 {% if artist.coverimage %}
-                <a><img class="media-object" style="width: 120px; height: auto;" src="/{{artist.coverimage.path}}"></a>
+                <a><img class="media-object" style="width: 120px; height: auto;" src="/{{artist.coverimage.path.replace('/uploads/', '/thumbs/')}}"></a>
                 {% else %}
                   <div  style="width: 120px; border: 1px dotted; padding: 5px;"><p>artist has no cover image assigned</p></div>
                 {% endif %}

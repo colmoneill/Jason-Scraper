@@ -11,7 +11,7 @@ Managing views
         <li class="list-group-item row">
         <div class="media">
         <div class="media-left">
-          <img class="media-object" style="width: 120px; height: auto;" src="/{{view.path}}" alt="...">
+          <img class="media-object" style="width: 120px; height: auto;" src="/{{view.path.replace('/uploads/', '/thumbs/')}}" alt="...">
         </div>
         <div class="media-body">
           <b>Artist work visibile in the view:</b> {{view.artist}}<br>
