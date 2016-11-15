@@ -361,7 +361,7 @@ def generateThumb(path):
 
     if os.path.exists(os.path.join(settings.appdir, 'static/uploads', folder)) and os.path.exists(os.path.join(settings.appdir, inpath)):
         im = Image.open(os.path.join(settings.appdir, inpath))
-        im.thumbnail((240, 160), Image.ANTIALIAS)
+        im.thumbnail(settings.thumbsize, Image.ANTIALIAS)
         im.save(os.path.join(settings.appdir, 'static/thumbs', path), quality='keep')
         return send_from_directory(os.path.join(settings.appdir, 'static/thumbs'), path)
 

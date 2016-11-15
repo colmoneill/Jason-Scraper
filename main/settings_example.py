@@ -16,3 +16,4 @@ logFilename = os.path.join(appdir, 'logs/flask.log')
 logBackupCount = 25
 # Max log file size
 logMaxBytes = 1024 * 1024 # For now 1MB
+thumbsize = (240, 160)
