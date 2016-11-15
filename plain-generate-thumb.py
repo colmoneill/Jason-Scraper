@@ -15,7 +15,7 @@ for image in glob.glob(os.path.join(infolder, "*.jpg")):
         print "generating reg thumbnail " + (outfolder) + (name)
         im.thumbnail((240, 160), Image.ANTIALIAS)
         outpath = os.path.join(outfolder, base+ext)
-        if not os.path.exists(outpath_reg):
+        if not os.path.exists(outpath):
             im.save(outpath)
     except IOError:
         print "image corrupt; skipping"
@@ -28,7 +28,7 @@ for image in glob.glob(os.path.join(infolder2, "*.jpg")):
         print "generating reg thumbnail " + (outfolder) + (name)
         im.thumbnail((240, 160), Image.ANTIALIAS)
         outpath = os.path.join(outfolder, base+ext)
-        if not os.path.exists(outpath_reg):
+        if not os.path.exists(outpath):
             im.save(outpath)
     except IOError:
         print "image corrupt; skipping"
@@ -41,7 +41,7 @@ for image in glob.glob(os.path.join(infolder3, "*.jpg")):
         print "generating reg thumbnail " + (outfolder) + (name)
         im.thumbnail((240, 160), Image.ANTIALIAS)
         outpath = os.path.join(outfolder, base+ext)
-        if not os.path.exists(outpath_reg):
+        if not os.path.exists(outpath):
             im.save(outpath)
     except IOError:
         print "image corrupt; skipping"
@@ -54,7 +54,7 @@ for image in glob.glob(os.path.join(infolder4, "*.jpg")):
         print "generating reg thumbnail " + (outfolder) + (name)
         im.thumbnail((240, 160), Image.ANTIALIAS)
         outpath = os.path.join(outfolder, base+ext)
-        if not os.path.exists(outpath_reg):
+        if not os.path.exists(outpath):
             im.save(outpath)
     except IOError:
         print "image corrupt; skipping"
