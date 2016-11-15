@@ -146,6 +146,7 @@ def artist(slug):
     has_artworks = True if 'selected_images' in artist and len(artist['selected_images']) > 0 else False
     involved_in = db.exhibitions.find({
         "is_published": True,
+        "is_group_expo": {'$exists': False},
         "artist._id": artist['_id']
     })
     involved_in_group = db.exhibitions.find({
