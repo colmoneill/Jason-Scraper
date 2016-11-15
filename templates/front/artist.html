@@ -29,7 +29,7 @@
 					{% for image in artist.selected_images %}
 					<div class="image-block">
 						<a href="/{{ image.path }}">
-							<div class="image-block__inside" style="background-image: url('/{{ image.path }}')"
+							<div class="image-block__inside" style="background-image: url('/{{ image.path.replace('/uploads/', '/thumbs/') }}')"
 							{% if image.title %} {# image is artwork #}
 								data-exhibitionartistname="{{ artist.name }}"
 								data-artworkyear="{{ image.title }}{% if image.year %}, {{ image.year }}{% endif %}"
@@ -92,7 +92,7 @@
 							<a href="/group-exhibition/{{exhibition.slug }}/">
 								{% if exhibition.coverimage %}
 									<div class="exhibition-block__image">
-										<div class="exhibition-block__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
+										<div class="exhibition-block__inside" style="background-image: url('/{{ exhibition.coverimage.path.replace('/uploads/', '/thumbs/') }}')"></div>
 									</div>
 								{% endif %}
 									<div class="exhibition-block__text">
@@ -109,7 +109,7 @@
 							<a href="/exhibition/{{ exhibition.artist.slug }}/{{exhibition.start.strftime('%d.%m.%Y') }}/">
 								{% if exhibition.coverimage %}
 								<div class="exhibition-block__image">
-									<div class="exhibition-block__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
+									<div class="exhibition-block__inside" style="background-image: url('/{{ exhibition.coverimage.path.replace('/uploads/', '/thumbs/') }}')"></div>
 								</div>
 								{% endif %}
 								<div class="exhibition-block__text">
@@ -129,7 +129,7 @@
 						<a href="/group-exhibition/{{exhibition.slug }}/">
 							{% if exhibition.coverimage %}
 							<div class="exhibition-block__image">
-								<div class="exhibition-block__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
+								<div class="exhibition-block__inside" style="background-image: url('/{{ exhibition.coverimage.path.replace('/uploads/', '/thumbs/') }}')"></div>
 							</div>
 							{% endif %}
 							<div class="exhibition-block__text">
