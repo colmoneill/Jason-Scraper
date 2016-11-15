@@ -12,7 +12,7 @@ for image in glob.glob(os.path.join(infolder, "*.jpg")):
     base, ext = os.path.splitext(name)
     try:
         im = Image.open(image)
-        print "generating reg thumbnail " + (outfolder) + (name)
+        print "generating thumbnail " + (outfolder) + (name)
         im.thumbnail((240, 160), Image.ANTIALIAS)
         outpath = os.path.join(outfolder, base+ext)
         if not os.path.exists(outpath):
@@ -25,7 +25,7 @@ for image in glob.glob(os.path.join(infolder2, "*.jpg")):
     base, ext = os.path.splitext(name)
     try:
         im = Image.open(image)
-        print "generating reg thumbnail " + (outfolder) + (name)
+        print "generating thumbnail " + (outfolder) + (name)
         im.thumbnail((240, 160), Image.ANTIALIAS)
         outpath = os.path.join(outfolder, base+ext)
         if not os.path.exists(outpath):
@@ -38,7 +38,7 @@ for image in glob.glob(os.path.join(infolder3, "*.jpg")):
     base, ext = os.path.splitext(name)
     try:
         im = Image.open(image)
-        print "generating reg thumbnail " + (outfolder) + (name)
+        print "generating thumbnail " + (outfolder) + (name)
         im.thumbnail((240, 160), Image.ANTIALIAS)
         outpath = os.path.join(outfolder, base+ext)
         if not os.path.exists(outpath):
@@ -51,7 +51,7 @@ for image in glob.glob(os.path.join(infolder4, "*.jpg")):
     base, ext = os.path.splitext(name)
     try:
         im = Image.open(image)
-        print "generating reg thumbnail " + (outfolder) + (name)
+        print "generating thumbnail " + (outfolder) + (name)
         im.thumbnail((240, 160), Image.ANTIALIAS)
         outpath = os.path.join(outfolder, base+ext)
         if not os.path.exists(outpath):
