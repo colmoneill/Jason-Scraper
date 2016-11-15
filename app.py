@@ -349,6 +349,24 @@ def deleteOpeningHours(opening_hour_id):
 
     return render_template('admin/gallery/openinghours/galleryOpeningHoursDelete.html')
 
+@app.route("/static/thumbs/<path:path>")
+def generateThumb(path):
+    from PIL import Image
+    import os.path
+
+    inpath = 'static/uploads/' + path
+
+    folder, name = os.path.split(path)
+    folder = os.path.normpath(folder)
+
+    if os.path.exists(os.path.join('static/uploads/', folder)) and os.path.exists(inpath):
+        im = Image.open(inpath)
+        im.thumbnail((240, 160), Image.ANTIALIAS)
+        im.save("static/thumbs/" + path)
+        return send_from_directory("static/thumbs/", path)
+
+    abort(404)
+
 app.register_blueprint(admin.artist, url_prefix='/admin/artist')
 app.register_blueprint(admin.exhibition, url_prefix='/admin/exhibition')
 app.register_blueprint(admin.groupexhibition, url_prefix='/admin/group-exhibition')
