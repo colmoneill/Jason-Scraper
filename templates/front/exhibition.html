@@ -50,7 +50,7 @@
     	  	{% for installation_view in exhibition.images %}
           <div class="image-block">
             <a href="/{{ installation_view.path }}">
-              <div class="image-block__inside" style="background-image: url('/{{ installation_view.path }}')"
+              <div class="image-block__inside" style="background-image: url('/{{ installation_view.path.replace('/uploads/', '/thumbs/') }}')"
             {% if exhibition.is_group_expo %}
               data-installation-group="
               {% if exhibition.exhibition_name %}{{ exhibition.exhibition_name }} {% if exhibition.exhibition_title %} {{ exhibition.exhibition_title }},{% endif %}{% endif %}installation view,
@@ -74,7 +74,7 @@
     	  	{% for artwork in exhibition.artworks %}
     	  		<div class="image-block">
     		  		<a href="/{{ artwork.path }}">
-    		  			<div class="image-block__inside" style="background-image: url('/{{ artwork.path }}')"
+    		  			<div class="image-block__inside" style="background-image: url('/{{ artwork.path.replace('/uploads/', '/thumbs/') }}')"
     		  				{% if exhibition.is_group_expo %}
 				  			data-groupexhibitionname="in {{ exhibition.exhibition_name }}"
 				  			data-groupexhibtionartist="{% if artwork.artist %}{{ artwork.artist.name }}{% endif %}"
