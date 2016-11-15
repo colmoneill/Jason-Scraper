@@ -354,16 +354,16 @@ def generateThumb(path):
     from PIL import Image
     import os.path
 
-    inpath = 'static/uploads/' + path
+    inpath = os.path.join('static/uploads', path)
 
     folder, name = os.path.split(path)
     folder = os.path.normpath(folder)
 
-    if os.path.exists(os.path.join('static/uploads/', folder)) and os.path.exists(inpath):
+    if os.path.exists(os.path.join(settings.appdir, 'static/uploads', folder)) and os.path.exists(os.path.join(settings.appdir, inpath)):
         im = Image.open(inpath)
         im.thumbnail((240, 160), Image.ANTIALIAS)
-        im.save("static/thumbs/" + path)
-        return send_from_directory("static/thumbs/", path)
+        im.save(os.path.join(settings.appdir, 'static/thumbs', path))
+        return send_from_directory(os.path.join(settings.appdir, 'static/thumbs'), path)
 
     abort(404)
 
