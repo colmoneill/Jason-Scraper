@@ -1,5 +1,9 @@
 var draggedThumbnail;
 
+/**
+ * Function inspired by underscores extend to allow for easier object definition
+ */
+
 function extend (obj, dict) {
     for (var i=1;i<arguments.length;i++) {
         for (key in arguments[i]) {
@@ -242,8 +246,8 @@ extend(UploadField.prototype, {
 
     deleteUploadThumbnail: function (thumbnail) {
         if (thumbnail.file && this.files.indexOf(thumbnail.file) > -1) {
-            delete this.thumbnails[this.thumbnails.indexOf(thumbnail)];
-            delete this.files[this.files.indexOf(thumbnail.file)];
+            this.thumbnails.splice(this.thumbnails.indexOf(thumbnail), 1);
+            this.files.splice(this.files.indexOf(thumbnail.file), 1);
         }
     },
 

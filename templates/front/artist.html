@@ -102,53 +102,53 @@
 						</div>
 						<div class="separation-rule light-border"></div>
 					</div>
-						{% else %}
+					{% else %}
 					<div class="exhibition-block subcontent__all-col">
 						<div class="exhibition-block__wrap">
 							<a href="/exhibition/{{ exhibition.artist.slug }}/{{exhibition.start.strftime('%d.%m.%Y') }}/">
 								{% if exhibition.coverimage %}
-									<div class="exhibition-block__image">
-										<div class="exhibition-block__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
-									</div>
+								<div class="exhibition-block__image">
+									<div class="exhibition-block__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
+								</div>
 								{% endif %}
-									<div class="exhibition-block__text">
-										<h1>{{ exhibition.artist.name }}</h1>
-										<h2>{{ exhibition.exhibition_name }}</h2>
-										<h4>{{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}</h4>
-									</div>
-						 </a>
-						 </div>
-						 <div class="separation-rule light-border"></div>
-			 	 </div>
-			 {% endif %}
-		{% endfor %}
-		{% for exhibition in involved_in_group %}
-		<div class="exhibition-block subcontent__all-col">
-			<div class="exhibition-block__wrap">
-				<a href="/group-exhibition/{{exhibition.slug }}/">
-					{% if exhibition.coverimage %}
-						<div class="exhibition-block__image">
-							<div class="exhibition-block__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
-						</div>
-					{% endif %}
-						<div class="exhibition-block__text">
-							<h1>{{ exhibition.exhibition_name }} (group exhibition)</h1>
-							<h4>{{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}</h4>
-						</div>
-				</a>
-			</div>
-			<div class="separation-rule light-border"></div>
-		</div>
-		{% endfor %}
-		{% endif %}
+								<div class="exhibition-block__text">
+									<h1>{{ exhibition.artist.name }}</h1>
+									<h2>{{ exhibition.exhibition_name }}</h2>
+									<h4>{{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}</h4>
+								</div>
+						  </a>
+					  </div>
+						<div class="separation-rule light-border"></div>
+			 	 	</div>
+				  {% endif %}
+		    {% endfor %}
+				{% for exhibition in involved_in_group %}
+				<div class="exhibition-block subcontent__all-col">
+					<div class="exhibition-block__wrap">
+						<a href="/group-exhibition/{{exhibition.slug }}/">
+							{% if exhibition.coverimage %}
+							<div class="exhibition-block__image">
+								<div class="exhibition-block__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
+							</div>
+							{% endif %}
+							<div class="exhibition-block__text">
+								<h1>{{ exhibition.exhibition_name }} (group exhibition)</h1>
+								<h4>{{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}</h4>
+							</div>
+						</a>
+					</div>
+					<div class="separation-rule light-border"></div>
+				</div>
+				{% endfor %}
+			{% endif %}
 		</section>
-			<section class="subcontent__all-col informations" id="press">
+		<section class="subcontent__all-col informations" id="press">
 			<div class="download-block">
 				{% if artist.press_release %}
 				<div class="separation-rule light-border"></div>
 				<h1>press</h1>
 				<div class="download-block__text">
-				<a class="" href="/{{ artist.press_release }}"><h3>Download the press kit — PDF ({{artist.press_release_size}})</h3></a><br>
+					<a class="" href="/{{ artist.press_release }}"><h3>Download the press kit — PDF ({{artist.press_release_size}})</h3></a><br>
 				</div>
 				{% endif %}
 				{% if artist.link_url1 %}
@@ -161,7 +161,6 @@
 				{% endif %}
 			</div>
 		</section>
-
-		</div></div>
-
+	</div>
+</div>
 {% endblock %}

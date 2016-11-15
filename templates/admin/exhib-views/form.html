@@ -4,7 +4,7 @@
 {% block body %}
   {% from "helpers/_form.html" import render_field, render_datepicker %}
   <img style="width: 75%;" src="/{{image.path}}" alt="...">
-  <form method="post" enctype="multipart/form-data">
+  <form action="" method="post" enctype="multipart/form-data" >
       {{ form.csrf_token }}
 
       <br>

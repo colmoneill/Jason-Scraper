@@ -41,7 +41,7 @@ def update(image_id):
         if form.validate():
             formdata = form.data
             image['artist'] = form.artist.data
-            image['exhbition_title'] = form.exhibition_title.data
+            image['exhibition_title'] = form.exhibition_title.data
             image['year'] = form.year.data
             image['institution'] = form.institution.data
             image['country'] = form.country.data

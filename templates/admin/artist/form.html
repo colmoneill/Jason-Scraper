@@ -152,7 +152,7 @@
                 path = images[i],
                 thumb = imageField.addThumbnail('/' + path);
 
-            thumb.$el.find('input[type=hidden]').attr('value', path);
+            thumb.$('input[type=hidden]').attr('value', path);
 
             if (preselectedImages.indexOf(path) < 0) {
                 thumb.delete();
