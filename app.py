@@ -154,6 +154,12 @@ def artist(slug):
         "artists._id": artist['_id'],
     })
 
+    for image in artist['selected_images']:
+        exhibition = db.exhibitions.find_one({'images._id': image['_id']})
+
+        if exhibition:
+            image['exhibition'] = exhibition
+
     has_involved_in = True if (involved_in.count() > 0 or involved_in_group.count() > 0) else False
     
     return render_template("front/artist.html", artist=artist, involved_in=involved_in, involved_in_group=involved_in_group, has_involved_in=has_involved_in, has_artworks=has_artworks)
