@@ -16,6 +16,8 @@ from flask.ext.misaka import Misaka
 
 import pymongo
 
+from itertools import chain
+
 from main import utils
 from main.utils import login_required
 from bson import ObjectId
@@ -154,6 +156,19 @@ def artist(slug):
         "artists._id": artist['_id'],
     }).sort("start", -1)
 
+    artist_involved_in = db.exhibitions.find({
+        "is_published": True,
+        "artist._id": artist['_id']
+    }).sort("start", -1)
+    artist_involved_in_group = db.exhibitions.find({
+        "is_published": True,
+        "is_group_expo": True,
+        "artists._id": artist['_id'],
+    }).sort("start", -1)
+
+    artist_involved_in = chain(artist_involved_in, artist_involved_in_group)
+    print artist_involved_in
+
     for image in artist['selected_images']:
         exhibition = db.exhibitions.find_one({'images._id': image['_id']})
 
@@ -162,7 +177,7 @@ def artist(slug):
 
     has_involved_in = True if (involved_in.count() > 0 or involved_in_group.count() > 0) else False
 
-    return render_template("front/artist.html", artist=artist, involved_in=involved_in, involved_in_group=involved_in_group, has_involved_in=has_involved_in, has_artworks=has_artworks)
+    return render_template("front/artist.html", artist=artist, involved_in=involved_in, involved_in_group=involved_in_group, has_involved_in=has_involved_in, artist_involved_in=artist_involved_in, has_artworks=has_artworks)
 
 @app.route("/current/<slug>/")
 def exhibition(slug):
