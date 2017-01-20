@@ -147,12 +147,12 @@ def artist(slug):
     involved_in = db.exhibitions.find({
         "is_published": True,
         "artist._id": artist['_id']
-    })
+    }).sort("start", -1)
     involved_in_group = db.exhibitions.find({
         "is_published": True,
         "is_group_expo": True,
         "artists._id": artist['_id'],
-    })
+    }).sort("start", -1)
 
     for image in artist['selected_images']:
         exhibition = db.exhibitions.find_one({'images._id': image['_id']})
@@ -193,7 +193,8 @@ def publicviewGroupExhibition(slug):
     print 'external artists before sort', extra_artists
     extra_artists = sorted(sorted(extra_artists), key=lambda s: s.split()[1])
     print 'external artists after sort', extra_artists
-    exhibition['all_artists'] = exhibition['artists'] + extra_artists
+    exhibition['all_artists'] = exhibition['artists'] + exhibition['extra_artists']
+    all_artists = exhibition['artists'] + extra_artists
     exhibition['all_artists'].sort(cmp=sort_all_artists)
 
     for artwork in exhibition['artworks']:
