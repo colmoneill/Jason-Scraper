@@ -55,14 +55,14 @@
               data-installation-group="
               {% if exhibition.exhibition_name %}{{ exhibition.exhibition_name }} {% if exhibition.exhibition_title %} {{ exhibition.exhibition_title }},{% endif %}{% endif %}installation view,
               {% if installation_view.institution %}{{installation_view.institution}}, {% else %}rodolphe janssen,{% endif %}
-              {% if installation_view.location %}{{installation_view.location}}, {% else %}Brussels,{% endif %}
+              {% if installation_view.location %}{{installation_view.location}}, {% else %}Brussels, Belgium{% endif %}
               {% if installation_view.year %}{{installation_view.year}} {% else %}{{ exhibition.start.strftime('%Y') }}{% endif %}"
 				  	{% else %}
 					    data-installation-solo="
               {% if installation_view.artist %}{{ installation_view.artist }}{% else %}{{ exhibition.artist.name }}{% endif %},
               {% if exhibition.exhibition_name %} {{ exhibition.exhibition_name }},{% endif %}{% if installation_view.exhbition_title %} {{ installation_view.exhbition_title }},{% endif %} installation view,
               {% if installation_view.institution %}{{installation_view.institution}}, {% else %}rodolphe janssen,{% endif %}
-              {% if installation_view.country %}{{installation_view.country}}, {% endif %}
+              {% if installation_view.location %}{{installation_view.location}}, {% else %}Brussels, Belgium{% endif %}
               {% if installation_view.year %}{{installation_view.year}} {% else %}{{ exhibition.start.strftime('%Y') }}{% endif %}"
 					  {% endif %} >
               </div>
