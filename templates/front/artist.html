@@ -37,9 +37,9 @@
 								data-artworkdimensions="{{ image.dimensions }}"
 								data-artworkedition="{{ image.edition }}"
 							{% elif image.institution %} {# image is external exhibition view #}
-								data-exhibitionartistname="{{ artist.name }}, installation view, {{image.exhibition_title}}, {{image.institution}}, {{image.year}}, {{image.city}}, {{image.country}}"
+								data-exhibitionartistname="{{ artist.name }}, installation view{% if image.exhibition_title %}, {{image.exhibition_title}}{% endif %}{% if image.institution %}, {{image.institution}}{% endif %}{% if image.year %}, {{image.year}}{% endif %}{% if image.city %}, {{image.city}}{% endif %}{% if image.country %}, {{image.country}}{% endif %}"
 							{% elif image.exhibition %} {# image has an exhibition #}
-							  data-exhibitionartistname="{{ artist.name }}, exhibition view, in {{image.exhibition_title}}: {{ image.exhibition.start.strftime('%d.%m.%Y') }} > {{ image.exhibition.end.strftime('%d.%m.%Y') }}"
+							  data-exhibitionartistname="{{ artist.name }}, exhibition view, rodolphe janssen, Brussels, Belgium, {{ image.exhibition.start.strftime('%Y') }} }}"
 							{% else %} {# image is internal exhitibion view #}
 								data-exhibitionartistname="{{ artist.name }}, exhibition view, Rodolphe Janssen"
 							{% endif %}
@@ -85,7 +85,7 @@
 		<section class="subcontent__all-col informations" id="exhibition">
 			{% if has_involved_in %}
 				<div class="separation-rule"></div>
-				{% for exhibition in involved_in %}
+				{% for exhibition in artist_involved_in %}
 					{% if exhibition.is_group_expo %}
 					<div class="exhibition-block subcontent__all-col">
 						<div class="exhibition-block__wrap">
