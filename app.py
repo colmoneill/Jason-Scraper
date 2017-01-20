@@ -190,9 +190,9 @@ def sort_all_artists (a, b):
 def publicviewGroupExhibition(slug):
     exhibition = db.exhibitions.find_one({'slug': slug})
     extra_artists = exhibition['extra_artists']
-    #print 'external artists before sort', extra_artists
+    print 'external artists before sort', extra_artists
     extra_artists = sorted(sorted(extra_artists), key=lambda s: s.split()[1])
-    #print 'external artists after sort', extra_artists
+    print 'external artists after sort', extra_artists
     exhibition['all_artists'] = exhibition['artists'] + extra_artists
     exhibition['all_artists'].sort(cmp=sort_all_artists)
 
