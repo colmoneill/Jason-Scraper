@@ -35,13 +35,13 @@ app.secret_key = secret_key
 
 if not app.debug:
     import logging.handlers, os.path
-    
+
     file_handler=logging.handlers.RotatingFileHandler(
         filename=settings.logFilename,
         backupCount=settings.logBackupCount,
         maxBytes=settings.logMaxBytes
     )
-    
+
     file_handler.setLevel(logging.WARNING)
     app.logger.addHandler(file_handler)
 
@@ -161,7 +161,7 @@ def artist(slug):
             image['exhibition'] = exhibition
 
     has_involved_in = True if (involved_in.count() > 0 or involved_in_group.count() > 0) else False
-    
+
     return render_template("front/artist.html", artist=artist, involved_in=involved_in, involved_in_group=involved_in_group, has_involved_in=has_involved_in, has_artworks=has_artworks)
 
 @app.route("/current/<slug>/")
@@ -189,7 +189,11 @@ def sort_all_artists (a, b):
 @app.route("/group-exhibition/<slug>/")
 def publicviewGroupExhibition(slug):
     exhibition = db.exhibitions.find_one({'slug': slug})
-    exhibition['all_artists'] = exhibition['artists'] + exhibition['extra_artists']
+    extra_artists = exhibition['extra_artists']
+    #print 'external artists before sort', extra_artists
+    extra_artists = sorted(sorted(extra_artists), key=lambda s: s.split()[1])
+    #print 'external artists after sort', extra_artists
+    exhibition['all_artists'] = exhibition['artists'] + extra_artists
     exhibition['all_artists'].sort(cmp=sort_all_artists)
 
     for artwork in exhibition['artworks']:
