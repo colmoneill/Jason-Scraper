@@ -25,8 +25,11 @@
       <div class="extra-artist-container">
         {% for artist in extra_artists: %}
             <div class="row form-group">
-                <div class="col-xs-8 col-sm-6">
-                    <input type="text" name="extra_artists" value="{{ artist }}" class="form-control extra-artist-row-field" />
+                <div class="col-xs-4 col-sm-3">
+                    <input type="text" name="extra_artists_name" value="{{ artist['name'] }}" class="form-control extra-artist-row-namefield" />
+                </div>
+                <div class="col-xs-4 col-sm-3">
+                    <input type="text" name="extra_artists_sort" value="{{ artist['artist_sort'] }}" class="form-control extra-artist-row-sortfield" />
                 </div>
                 <div class="col-xs-4 col-sm-2">
                     <button type="button" class="btn btn-danger btn-sm extra-artist-row-remove">Remove</button>
@@ -36,8 +39,11 @@
         {% endfor %}
       </div>
       <div class="row form-group">
-        <div class="col-xs-8 col-sm-6">
-            <input type="text" value="" class="form-control" id="extra-artist-input" />
+        <div class="col-xs-4 col-sm-3">
+            <input type="text" value="" placeholder="Name" class="form-control" id="extra-artist-input-name" />
+        </div>
+        <div class="col-xs-4 col-sm-3">
+            <input type="text" value="" placeholder="Sortname" class="form-control" id="extra-artist-input-sort" />
         </div>
         <div class="col-xs-4 col-sm-2">
             <button type="button" class="btn btn-default" id="extra-artist-button">Add</button>
@@ -45,22 +51,26 @@
       </div>
     <script type="text/javascript">
             window.addEventListener('load', function () {
-                var sourceFieldQuery = '#extra-artist-input';
-                var addButtonQuery = '#extra-artist-button';
-                var templateQuery = '#extra-artist-row-template';
-                var containerQuery = '.extra-artist-container';
-                var fieldQuery = '.extra-artist-row-field';
-                var removeQuery = '.extra-artist-row-remove';
-                var restoreQuery = '.extra-artist-row-restore';
+                var nameInputQuery = '#extra-artist-input-name',
+                    sortInputQuery = '#extra-artist-input-sort',
+                    addButtonQuery = '#extra-artist-button',
+                    templateQuery = '#extra-artist-row-template',
+                    containerQuery = '.extra-artist-container',
+                    nameFieldQuery = '.extra-artist-row-namefield',
+                    sortFieldQuery = '.extra-artist-row-sortfield',
+                    removeQuery = '.extra-artist-row-remove',
+                    restoreQuery = '.extra-artist-row-restore';
             
                 var remove = function () {
-                    $(this).parents('.row').find(fieldQuery).prop('disabled', true);
+                    $(this).parents('.row').find(nameFieldQuery).prop('disabled', true);
+                    $(this).parents('.row').find(sortFieldQuery).prop('disabled', true);
                     $(this).parents('.row').find(restoreQuery).show();
                     $(this).hide();
                 };
             
                 var restore = function () {
-                    $(this).parents('.row').find(fieldQuery).removeProp('disabled');
+                    $(this).parents('.row').find(nameFieldQuery).removeProp('disabled');
+                    $(this).parents('.row').find(sortFieldQuery).removeProp('disabled');
                     $(this).parents('.row').find(removeQuery).show();
                     $(this).hide();
                 };
@@ -69,13 +79,16 @@
                 $(restoreQuery).click(restore);
                 
                 $(addButtonQuery).click(function () {
-                    var $sourceField = $(sourceFieldQuery);
-                    var $el = $($(templateQuery).text());
+                    var $nameInput = $(nameInputQuery),
+                        $sortInput = $(sortInputQuery),
+                        $el = $($(templateQuery).text());
                     
                     $el.find(restoreQuery).click(restore);
                     $el.find(removeQuery).click(remove);
-                    $el.find(fieldQuery).val($sourceField.val());
-                    $sourceField.val('');
+                    $el.find(nameFieldQuery).val($nameInput.val());
+                    $el.find(sortFieldQuery).val($sortInput.val());
+                    $nameInput.val('');
+                    $sortInput.val('');
                     
                     $(containerQuery).append($el);
                 });
@@ -83,8 +96,11 @@
         </script>
         <script type="text/template" id="extra-artist-row-template">
             <div class="row form-group">
-                <div class="col-xs-8 col-sm-6">
-                    <input type="text" name="extra_artists" value="{{ artist }}"  class="form-control extra-artist-row-field" />
+                 <div class="col-xs-4 col-sm-3">
+                    <input type="text" name="extra_artists_name" value="" class="form-control extra-artist-row-namefield" />
+                </div>
+                <div class="col-xs-4 col-sm-3">
+                    <input type="text" name="extra_artists_sort" value="" class="form-control extra-artist-row-sortfield" />
                 </div>
                 <div class="col-xs-4 col-sm-2">
                     <button type="button" class="btn btn-danger btn-sm extra-artist-row-remove">Remove</button>
