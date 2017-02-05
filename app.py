@@ -146,28 +146,17 @@ def artists():
 def artist(slug):
     artist = db.artist.find_one({"slug": slug})
     has_artworks = True if 'selected_images' in artist and len(artist['selected_images']) > 0 else False
-    involved_in = db.exhibitions.find({
+    involved_in = [e for e in db.exhibitions.find({
         "is_published": True,
         "artist._id": artist['_id']
-    }).sort("start", -1)
-    involved_in_group = db.exhibitions.find({
+    }).sort("start", -1)]
+    involved_in_group = [e for e in db.exhibitions.find({
         "is_published": True,
         "is_group_expo": True,
         "artists._id": artist['_id'],
-    }).sort("start", -1)
+    }).sort("start", -1)]
 
-    artist_involved_in = db.exhibitions.find({
-        "is_published": True,
-        "artist._id": artist['_id']
-    }).sort("start", -1)
-    artist_involved_in_group = db.exhibitions.find({
-        "is_published": True,
-        "is_group_expo": True,
-        "artists._id": artist['_id'],
-    }).sort("start", -1)
-
-    artist_involved_in = chain(artist_involved_in, artist_involved_in_group)
-    print artist_involved_in
+    involved_in_all = sorted(involved_in + involved_in_group, cmp=lambda x, y: cmp(x['start'], y['start']), reverse=True)
 
     for image in artist['selected_images']:
         exhibition = db.exhibitions.find_one({'images._id': image['_id']})
@@ -175,9 +164,9 @@ def artist(slug):
         if exhibition:
             image['exhibition'] = exhibition
 
-    has_involved_in = True if (involved_in.count() > 0 or involved_in_group.count() > 0) else False
+    has_involved_in = True if (len(involved_in_all) > 0) else False
 
-    return render_template("front/artist.html", artist=artist, involved_in=involved_in, involved_in_group=involved_in_group, has_involved_in=has_involved_in, artist_involved_in=artist_involved_in, has_artworks=has_artworks)
+    return render_template("front/artist.html", artist=artist, involved_in=involved_in_all, has_involved_in=has_involved_in, has_artworks=has_artworks)
 
 @app.route("/current/<slug>/")
 def exhibition(slug):
@@ -195,21 +184,18 @@ def publicviewExhibition(start, artist):
         return render_template('front/exhibition.html', artist=artist, date=date, exhibition=exhibition)
     else:
         abort(404)
-
+"""
+    Sort function to alphabetically sort all the artitsts in the list
+"""
 def sort_all_artists (a, b):
-    name_a = a['name'] if type(a) is dict else a
-    name_b = b['name'] if type(b) is dict else b
+    name_a = a['artist_sort'] if type(a) is dict else a
+    name_b = b['artist_sort'] if type(b) is dict else b
     return cmp(name_a.lower(), name_b.lower())
 
 @app.route("/group-exhibition/<slug>/")
 def publicviewGroupExhibition(slug):
     exhibition = db.exhibitions.find_one({'slug': slug})
-    extra_artists = exhibition['extra_artists']
-    print 'external artists before sort', extra_artists
-    extra_artists = sorted(sorted(extra_artists), key=lambda s: s.split()[1])
-    print 'external artists after sort', extra_artists
     exhibition['all_artists'] = exhibition['artists'] + exhibition['extra_artists']
-    all_artists = exhibition['artists'] + extra_artists
     exhibition['all_artists'].sort(cmp=sort_all_artists)
 
     for artwork in exhibition['artworks']:
