@@ -8,7 +8,7 @@ for exhib in db.exhibitions.find({'is_group_expo': True}):
 
   for key, artist in enumerate(artists):
     old = exhib['extra_artists'][key]
-    parts = old.rsplit(' ', 1)
+    parts = old.strip().rsplit(' ', 1)
 
     if len(parts) > 1:
       sort = u'{1}, {0}'.format(parts[0], parts[1])
