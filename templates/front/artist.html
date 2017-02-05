@@ -96,7 +96,7 @@
 									</div>
 								{% endif %}
 									<div class="exhibition-block__text">
-										<h1>{{ exhibition.exhibition_name }}</h1>
+										<h1>{{ exhibition.exhibition_name }} (group exhibition)</h1>
 										<h4>{{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}</h4>
 									</div>
 							</a>
@@ -123,24 +123,6 @@
 			 	 	</div>
 				  {% endif %}
 		    {% endfor %}
-				{% for exhibition in involved_in_group %}
-				<div class="exhibition-block subcontent__all-col">
-					<div class="exhibition-block__wrap">
-						<a href="/group-exhibition/{{exhibition.slug }}/">
-							{% if exhibition.coverimage %}
-							<div class="exhibition-block__image">
-								<div class="exhibition-block__inside" style="background-image: url('/{{ exhibition.coverimage.path.replace('/uploads/', '/thumbs/') }}')"></div>
-							</div>
-							{% endif %}
-							<div class="exhibition-block__text">
-								<h1>{{ exhibition.exhibition_name }} (group exhibition)</h1>
-								<h4>{{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }}</h4>
-							</div>
-						</a>
-					</div>
-					<div class="separation-rule light-border"></div>
-				</div>
-				{% endfor %}
 			{% endif %}
 		</section>
 		<section class="subcontent__all-col informations" id="press">
