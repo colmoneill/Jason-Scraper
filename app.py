@@ -216,6 +216,11 @@ def GalleryInfo():
 
     return render_template('front/gallery.html', teammembers=teammembers, openinghours=openinghours)
 
+@app.route("/temp-home/")
+def TempHome():
+
+    return render_template('front/temp-home.html')
+
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('page_not_found.html'), 404
