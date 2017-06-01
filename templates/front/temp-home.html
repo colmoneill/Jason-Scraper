@@ -1,6 +1,205 @@
 {% extends "base.html" %}
 
-{% block title %}Foo Bar{% endblock %}
+{% block title %} | Current{% endblock %}
 {% block body %}
+	<div class="container">
+		<div class="all-col">
+			<a href="http://rodolphejanssen.com/group-exhibition/e-x-i-t/">
+			<div class="homepage-exhibition__inside" id="exit" style="background-color: #0b519d; position: relative;">
+				 <canvas id="canvas" resize style="position: absolute; width: 100%; height: 100%;"></canvas>
+			</div>
+			
+			<div class="homepage-exhibition__text">
+				<h5>Rue de Livourne 35 Livornostraat</h5>
+				<div class="homepage-exhibition__text--line"></div>
+				<h1>E X I T</h1>
+				<h4>22.06.17 > 20.07.17</h4>
+			</div>
+			</a>
+	  
+		</div>
+	</div>
+	
+	<script>
+		
+	$(window).on(" load resize", function () {
+		var windowHeight = $(window).height();
+		var headerHeight = $("header").outerHeight(true);
+		var textHeight = $(".homepage-exhibition__text").outerHeight(true);
+		var footerHeight = parseInt($(".wrapper").css("padding-bottom"));
+		
+		var canvasHeight = windowHeight - (headerHeight + textHeight + 20);
+		var wrapperWidth = $(".wrapper").width();
+		
+		console.log(windowHeight);
+		console.log(headerHeight);
+		console.log(textHeight);
+		console.log(footerHeight);
+		console.log(canvasHeight);
+		
+		if(wrapperWidth/canvasHeight >= 3.3){
+			$("#exit").css({"height" : wrapperWidth/2.5+"px", "padding-bottom" : "0"});
+		}
+		else{
+    			$("#exit").css({"height" : canvasHeight+"px", "padding-bottom" : "0"});
+    		}
+	}).resize();
+		
+	</script>
+	<script type="text/paperscript" canvas="canvas">
+		
+		var width, height, center;
+	        
+        var path1 = new Path({fillColor: '#fdef35'});
+        var path2 = new Path({fillColor: '#fdef35'});
+        var path3 = new Path({fillColor: '#fdef35'});
+        var path4 = new Path({fillColor: '#fdef35'});
+        var path5 = new Path({fillColor: '#fdef35'});
+        var path6 = new Path({fillColor: '#fdef35'});
+        var path7 = new Path({fillColor: '#fdef35'});
+        var path8 = new Path({fillColor: '#fdef35'});
+        var path9 = new Path({fillColor: '#fdef35'});
+        
+        initializePath();
+
+        function initializePath() {
+            width = (view.size.width)/100;
+            height = (view.size.height)/100;
+            
+            var sideMargin = width*4*0.8;
+            
+            var strokeThickness = width*8;
+            var strokeThicknessTwo = width*7.6;
+            var strokeThicknessThree = width*7.2;
+            
+            var eTopBottomWidth = width*15;
+            var eMiddleWidth = width*14;
+            var eMiddlePos = height*46;
+            //var xMargin = width*28;
+            var xWidth = width*21;
+            var xOffset = height*0.75;
+            //var iMargin = width*54;
+            var tTopBar = width*20;
+                        
+            var middlePoint = height*50;
+            var letterHeight = (height*100)-sideMargin;
+			var edgePoint = width*100 - sideMargin;
+			
+			var contentWidth = eTopBottomWidth + xWidth + tTopBar + strokeThickness;
+			var letterMargin = width*100 - sideMargin*2 - contentWidth;
+			var xMargin = sideMargin + eTopBottomWidth + letterMargin/3;
+			var iMargin = xMargin + xWidth + letterMargin/3;
+			
+			if(width/height >= 1.8 && width/height <= 2){
+				eMiddlePos = height*(((width/height)+1.282)/0.067);
+								
+				strokeThicknessTwo = (width*(4+(width/height)*2));
+				strokeThicknessThree = (width*(width/height)*4);
+				xOffset = height*(-3.5*(width/height)+7);
+			}
+			
+			if(width/height > 2){
+				eMiddlePos = height*49;
+				eMiddleWidth = width*(39.33-(width/height))/2.67;
+				
+				sideMargin = (width*4*0.8)/((width/height)/2);
+				
+				strokeThickness = (width*8)/((width/height)/2);
+				strokeThicknessTwo = (width*8)/((width/height)/2);
+				strokeThicknessThree = (width*8)/((width/height)/2)*(((width/height)+4.15)/6.15);
+				xOffset = 0;
+				
+				letterHeight = (height*100)-sideMargin;
+				edgePoint = width*100 - sideMargin;
+				
+				contentWidth = eTopBottomWidth + xWidth + tTopBar + strokeThickness;
+				letterMargin = width*100 - sideMargin*2 - contentWidth;
+				xMargin = sideMargin + eTopBottomWidth + letterMargin/3;
+				iMargin = xMargin + xWidth + letterMargin/3;
+			}
+            
+            
+            //E
+            
+            path1.segments = [];
+            path1.add(new Point(sideMargin, sideMargin)); 
+            path1.add(new Point(sideMargin+strokeThickness, sideMargin)); 
+            path1.add(new Point(sideMargin+strokeThickness, letterHeight)); 
+            path1.add(new Point(sideMargin, letterHeight)); 
+            
+            path2.segments = [];
+			path2.add(new Point(sideMargin, sideMargin));
+			path2.add(new Point(sideMargin+eTopBottomWidth, sideMargin)); 
+			path2.add(new Point(sideMargin+eTopBottomWidth, sideMargin+strokeThicknessTwo)); 
+			path2.add(new Point(sideMargin, sideMargin+strokeThicknessTwo)); 
+			
+			path3.segments = [];
+			path3.add(new Point(sideMargin, eMiddlePos+strokeThicknessTwo/2));
+			path3.add(new Point(sideMargin+eMiddleWidth, eMiddlePos+strokeThicknessTwo/2)); 
+			path3.add(new Point(sideMargin+eMiddleWidth, (eMiddlePos+strokeThicknessTwo/2)-(strokeThicknessTwo))); 
+			path3.add(new Point(sideMargin, (eMiddlePos+strokeThicknessTwo/2)-(strokeThicknessTwo))); 
+			
+			path4.segments = [];
+			path4.add(new Point(sideMargin, letterHeight-strokeThicknessTwo));
+			path4.add(new Point(sideMargin+eTopBottomWidth, letterHeight-strokeThicknessTwo)); 
+			path4.add(new Point(sideMargin+eTopBottomWidth, letterHeight)); 
+			path4.add(new Point(sideMargin, letterHeight)); 
+			
+			
+			//X
+			
+			path5.segments = [];
+			path5.add(new Point(xMargin, sideMargin));
+			path5.add(new Point(xMargin+strokeThicknessThree, sideMargin)); 
+			path5.add(new Point((xMargin+(xWidth-strokeThicknessThree)/2+strokeThicknessThree)-xOffset, middlePoint-2)); 
+			path5.add(new Point(xMargin+(xWidth-strokeThicknessThree)/2+strokeThicknessThree, middlePoint)); 
+			path5.add(new Point(xMargin+strokeThicknessThree+(xWidth-strokeThicknessThree), letterHeight));
+			path5.add(new Point(xMargin+(xWidth-strokeThicknessThree), letterHeight));
+			path5.add(new Point(xMargin+(xWidth-strokeThicknessThree)/2+xOffset, middlePoint+2)); 
+			path5.add(new Point(xMargin+(xWidth-strokeThicknessThree)/2, middlePoint)); 
+			
+			
+			path6.segments = [];
+			path6.add(new Point(xMargin, letterHeight));
+			path6.add(new Point(xMargin+strokeThicknessThree, letterHeight)); 
+			path6.add(new Point(xMargin+(xWidth-strokeThicknessThree)/2+strokeThicknessThree-xOffset, middlePoint+2)); 
+			path6.add(new Point(xMargin+(xWidth-strokeThicknessThree)/2+strokeThicknessThree, middlePoint)); 
+			path6.add(new Point(xMargin+strokeThicknessThree+(xWidth-strokeThicknessThree), sideMargin));
+			path6.add(new Point(xMargin+(xWidth-strokeThicknessThree), sideMargin));
+			path6.add(new Point(xMargin+(xWidth-strokeThicknessThree)/2+xOffset, middlePoint-2)); 
+			path6.add(new Point(xMargin+(xWidth-strokeThicknessThree)/2, middlePoint)); 
+			
+			
+			//I
+			
+			path7.segments = [];
+            path7.add(new Point(iMargin, sideMargin)); 
+            path7.add(new Point(iMargin+strokeThickness, sideMargin)); 
+            path7.add(new Point(iMargin+strokeThickness, letterHeight)); 
+            path7.add(new Point(iMargin, letterHeight)); 
+            
+            
+            //T
+            
+            path8.segments = [];
+			path8.add(new Point(edgePoint, sideMargin));
+			path8.add(new Point(edgePoint-tTopBar, sideMargin)); 
+			path8.add(new Point(edgePoint-tTopBar, sideMargin+strokeThicknessTwo)); 
+			path8.add(new Point(edgePoint, sideMargin+strokeThicknessTwo));
+			
+			path9.segments = [];
+            path9.add(new Point(edgePoint-(tTopBar-strokeThickness)/2, sideMargin)); 
+            path9.add(new Point(edgePoint-(tTopBar/2+strokeThickness/2), sideMargin)); 
+            path9.add(new Point(edgePoint-(tTopBar/2+strokeThickness/2), letterHeight)); 
+            path9.add(new Point(edgePoint-(tTopBar-strokeThickness)/2, letterHeight)); 
+			
+        }
+
+        // Reposition the path whenever the window is resized:
+        function onResize(event) {
+            initializePath();
+        }
+	
+	</script>
 	
 {% endblock %}
