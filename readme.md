@@ -10,5 +10,6 @@ From this database one can, for example, generate a public website for the Galle
 The first iteration of this tool has been created for Gallerie Rodolphe Janssen, Brussels.
 
 The Python scripts are available under the terms of the AGPLv3 license.
-The Templates and CSS files are all rights reserved.
+
+The Templates and CSS files are GNU general public lisence.
 
