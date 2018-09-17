@@ -381,6 +381,7 @@ def generateThumb(path):
     abort(404)
 
 @app.route("/admin/regenerate-thumbs", methods=["GET", "POST"])
+@login_required
 def regenerateThumbs():
     import subprocess
     import shlex
@@ -393,6 +394,7 @@ def regenerateThumbs():
     time.sleep(5)
     flash(u'Thumbnail cache has been deleted, new thumbnails generated.', 'success')
     return redirect_flask(url_for('viewAdmin'))
+    return render_template('admin.html')
 
 app.register_blueprint(admin.artist, url_prefix='/admin/artist')
 app.register_blueprint(admin.exhibition, url_prefix='/admin/exhibition')
