@@ -10,7 +10,7 @@ from functools import wraps
 from flask import   Flask, flash, send_from_directory, \
                     redirect as redirect_flask, \
                     render_template, url_for, request, \
-                    abort, Response, session
+                    abort, Response, session, redirect
 from flask_pagedown import PageDown
 from flask.ext.misaka import Misaka
 
