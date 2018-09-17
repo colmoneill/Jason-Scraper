@@ -380,6 +380,19 @@ def generateThumb(path):
 
     abort(404)
 
+@app.route("/admin/regenerate-thumbs")
+def regenerateThumbs():
+    import subprocess
+    import shlex
+    import time
+    cmd	= "cd /home/janssen/webapps/new_rodolphejanssen_com/Jason-Scraper/static/thumbs/ && rm artworks/* && rm cover/* && rm exhibition-cover/* && rm exhibition-view/*"
+    parsed_cmd = shlex.split(cmd)
+    # print(parsed_cmd)
+    subprocess.call(parsed_cmd)
+    time.sleep(5)
+    return redirect(url_for('admin'))
+
+
 app.register_blueprint(admin.artist, url_prefix='/admin/artist')
 app.register_blueprint(admin.exhibition, url_prefix='/admin/exhibition')
 app.register_blueprint(admin.groupexhibition, url_prefix='/admin/group-exhibition')
