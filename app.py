@@ -387,8 +387,9 @@ def regenerateThumbs():
     import time
     cmd	= "cd /home/janssen/webapps/new_rodolphejanssen_com/Jason-Scraper/static/thumbs/ && rm artworks/* && rm cover/* && rm exhibition-cover/* && rm exhibition-view/*"
     parsed_cmd = shlex.split(cmd)
-    # print(parsed_cmd)
+    print(parsed_cmd)
     subprocess.call(parsed_cmd)
+    print("removed all thumbs")
     time.sleep(5)
     return render_template('admin.html')
 
