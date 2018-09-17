@@ -391,8 +391,7 @@ def regenerateThumbs():
     subprocess.call(parsed_cmd)
     print("removed all thumbs")
     time.sleep(5)
-    return render_template('admin.html')
-
+    return redirect(url_for('viewAdmin'))
 
 app.register_blueprint(admin.artist, url_prefix='/admin/artist')
 app.register_blueprint(admin.exhibition, url_prefix='/admin/exhibition')
