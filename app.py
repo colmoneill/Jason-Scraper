@@ -390,7 +390,7 @@ def regenerateThumbs():
     # print(parsed_cmd)
     subprocess.call(parsed_cmd)
     time.sleep(5)
-    return redirect(url_for('admin'))
+    return render_template('admin.html')
 
 
 app.register_blueprint(admin.artist, url_prefix='/admin/artist')
