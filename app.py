@@ -386,7 +386,7 @@ def regenerateThumbs():
     import shlex
     import time
     static/thumbs
-    cmd	= "sh /home/janssen/webapps/new_rodolphejanssen_com/Jason-Scraper/regenerate-thumbs.sh"
+    cmd	= "sh /home/janssen/webapps/new_rodolphejanssen_com/Jason-Scraper/regenerateThumbs.sh"
     parsed_cmd = shlex.split(cmd)
     print(parsed_cmd)
     subprocess.call(parsed_cmd)
