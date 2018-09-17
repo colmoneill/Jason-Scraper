@@ -380,12 +380,13 @@ def generateThumb(path):
 
     abort(404)
 
-@app.route("/admin/regenerate-thumbs")
+@app.route("/admin/regenerate-thumbs", methods=["GET", "POST"])
 def regenerateThumbs():
     import subprocess
     import shlex
     import time
-    cmd	= "cd /home/janssen/webapps/new_rodolphejanssen_com/Jason-Scraper/static/thumbs/ && rm artworks/* && rm cover/* && rm exhibition-cover/* && rm exhibition-view/*"
+    static/thumbs
+    cmd	= "sh /home/janssen/webapps/new_rodolphejanssen_com/Jason-Scraper/regenerate-thumbs.sh"
     parsed_cmd = shlex.split(cmd)
     print(parsed_cmd)
     subprocess.call(parsed_cmd)
