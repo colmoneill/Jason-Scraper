@@ -1,0 +1,17 @@
+{% block title %}
+    <h3>change homepage attitude</h3>
+{% endblock %}
+
+{% block body %}
+  {% from "helpers/_form.html" import render_field, render_datepicker, upload_field, bound_upload_field, render_uploadfield %}
+  <form method="post" enctype="multipart/form-data" id="homepageForm"  action="">
+      {{ form.csrf_token }}
+      {{ render_field(form.status) }}
+
+      <hr>
+      {{ render_field(form.location) }}
+      (fill out following section only if 'External show' has been selected in the location fields above)
+      <button type="submit" class="btn btn-default" id="submit-button">Submit</button>
+      <button class="btn btn-default hide" disabled="disabled" id="processing-button"><span class="glyphicon glyphicon-refresh spin" aria-hidden="true"></span>&nbsp;Processing...</button>
+  </form>
+{% endblock %}

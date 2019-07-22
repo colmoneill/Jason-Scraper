@@ -17,6 +17,8 @@
       </div>
       <hr>
       {{ render_field(form.location) }}
+      (fill out following section only if 'External show' has been selected in the location fields above)
+      {{ render_field(form.external_location) }}
       <hr>
       {{ render_field(form.artist) }}
       <hr>
@@ -103,13 +105,13 @@
         var preselectedArtworksSort = function (a, b) {
             var index_a = preselectedArtworks.indexOf(a),
                 index_b = preselectedArtworks.indexOf(b);
-                
+
             // a is selected
             if (index_a > -1) {
                 if (index_b > -1 && index_a > index_b) {
                     return 1;
                 }
-                
+
                 // a is selected, but b isn't, or b is bigger
                 return -1
             }
@@ -117,11 +119,11 @@
             else if (index_b > -1) {
                 return 1;
             }
-            
+
             // Both unselected, equal
             return 0;
         };
-        
+
         $('select#artist').change(function () {
             var id = $(this).val();
 
@@ -136,7 +138,7 @@
                 null,
                 function (images) {
                     images.sort(preselectedArtworksSort);
-                
+
                     for (var i=0; i<images.length;i++) {
                         var thumb = artworksField.addThumbnail('/' + images[i]);
                         thumb.$('input[type=hidden]').val(images[i]);

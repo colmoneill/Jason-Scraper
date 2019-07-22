@@ -18,6 +18,8 @@
       <hr>
       <!--<label>Which gallery?</label>-->
       {{ render_field(form.location) }}
+      (fill out following section only if 'External show' has been selected in the location fields above)
+      {{ render_field(form.external_location) }}
       <hr>
       <!--<label>Included artists?</label>-->
       {{ render_field(form.artists) }}
@@ -60,36 +62,36 @@
                     sortFieldQuery = '.extra-artist-row-sortfield',
                     removeQuery = '.extra-artist-row-remove',
                     restoreQuery = '.extra-artist-row-restore';
-            
+
                 var remove = function () {
                     $(this).parents('.row').find(nameFieldQuery).prop('disabled', true);
                     $(this).parents('.row').find(sortFieldQuery).prop('disabled', true);
                     $(this).parents('.row').find(restoreQuery).show();
                     $(this).hide();
                 };
-            
+
                 var restore = function () {
                     $(this).parents('.row').find(nameFieldQuery).removeProp('disabled');
                     $(this).parents('.row').find(sortFieldQuery).removeProp('disabled');
                     $(this).parents('.row').find(removeQuery).show();
                     $(this).hide();
                 };
-            
+
                 $(removeQuery).click(remove);
                 $(restoreQuery).click(restore);
-                
+
                 $(addButtonQuery).click(function () {
                     var $nameInput = $(nameInputQuery),
                         $sortInput = $(sortInputQuery),
                         $el = $($(templateQuery).text());
-                    
+
                     $el.find(restoreQuery).click(restore);
                     $el.find(removeQuery).click(remove);
                     $el.find(nameFieldQuery).val($nameInput.val());
                     $el.find(sortFieldQuery).val($sortInput.val());
                     $nameInput.val('');
                     $sortInput.val('');
-                    
+
                     $(containerQuery).append($el);
                 });
             }, false);
@@ -121,7 +123,7 @@
                 <img src="/{{ file.path }}" />
             </div>
           {% endfor %}
-        </div> 
+        </div>
         <br>
         <div class="upload-container">
           <p>
@@ -207,17 +209,17 @@
             {% autoescape false %}
             var preselectedArtworks = JSON.parse('{{ selectedArtworks }}');
             {% endautoescape %}
-            
+
             var preselectedArtworksSort = function (a, b) {
                 var index_a = preselectedArtworks.indexOf(a),
                     index_b = preselectedArtworks.indexOf(b);
-                    
+
                 // a is selected
                 if (index_a > -1) {
                     if (index_b > -1 && index_a > index_b) {
                         return 1;
                     }
-                    
+
                     // a is selected, but b isn't, or b is bigger
                     return -1
                 }
@@ -225,26 +227,26 @@
                 else if (index_b > -1) {
                     return 1;
                 }
-                
+
                 // Both unselected, equal
                 return 0;
             };
-            
+
             var reflowImages = function () {
                 var images = [];
-                
+
                 for (id in artworks) {
                     if (!(id in thumbnails)) {
                         thumbnails[id] = [];
                     }
-                    
+
                     for (var i=0;i<thumbnails[id].length;i++){
                         thumbnails[id][i].$el.detach();
                     }
-                    
+
                     images = images.concat(artworks[id]);
                 }
-                
+
                 images.sort(preselectedArtworksSort);
                 for (var i=0; i<images.length;i++) {
                     var thumb = artworksField.addThumbnail('/' + images[i]);
@@ -254,7 +256,7 @@
                     }
                     thumbnails[id].push(thumb);
                 }
-                
+
                 if ($('[name="artists"]:checked').length < 1) {
                     // Hide artworks div
                     $('#artworks-upload-field .thumbnail-container').hide();
@@ -273,8 +275,8 @@
                     var id = $(this).val();
 
                     if ($(this).prop('checked')) {
-                        
-                        
+
+
                         if (!(id in artworks)) {
                             artworks[id] = [];
                         }
@@ -297,11 +299,11 @@
                                 thumbnails[id][i].$el.detach();
                             }
                         }
-                        
+
                         reflowImages();
                     }
                 });
-                
+
                 $(this).trigger('change');
             });
         }, false);

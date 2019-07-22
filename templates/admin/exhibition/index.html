@@ -19,7 +19,11 @@
                 {% endif %}
               </div>
               <div class="media-body">
-                <code>{{ exhibition.location}} Livornostraat</code><br>
+                {% if exhibition.location == 'external' %}
+                  <code>{{exhibition.location}} — {{exhibition.external_location}}</code>
+                {% else %}
+                  <code>{{exhibition.location}} Livornostraat</code>
+                {% endif %}
                 {% if exhibition.is_group_expo %}
                   (group exhibition) <b>{{ exhibition.exhibition_name }}</b> <br> participants: {{ exhibition['artists']|join(', ', attribute='name') }}
                 {% else %}

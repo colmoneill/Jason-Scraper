@@ -20,7 +20,11 @@ Managing views
                     {% endif %}
                   </div>
                   <div class="media-body">
-                    <code>{{exhibition.location}} Livornostraat</code>
+                    {% if exhibition.location === 'external' %}
+                      <code>{{exhibition.location}} — {{exhibition.external_location}}</code>
+                    {% else %}
+                      <code>{{exhibition.location}} Livornostraat</code>
+                    {% endif %}
                     {% if exhibition.is_group_expo %}
                     <h5 class="media-heading"><a href="/admin/exhib-views/list/{{exhibition._id}}">(group exhibition:) {{exhibition.exhibition_name}}</h5></a>
                     {% else %}

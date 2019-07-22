@@ -1,0 +1,36 @@
+{% extends "admin.html" %}
+{% block title %}
+  artits pages
+{% endblock %}
+{% block body %}
+<div class="col-md-8">
+  <div style="">
+  <h3>Current homepage status</h3>
+  current homepage mode : {{homepage_info.status}}
+  <!-- current link : {{homepage_info.internal_link}} -->
+  <hr>
+  </div>
+  <h3>Manage site homepage display</h3>
+    <br>opt1: side by side 32 / 35 exhibitions (default mode)
+    <br>opt2: only highlight exhibition in showroom 32
+    <br>opt3: only highlight exhibition in showroom 35
+    <br>opt4: external show (custom)
+    <br><br>
+    {% from "helpers/_form.html" import render_field, render_datepicker, upload_field, bound_upload_field, render_uploadfield %}
+    <form method="post" enctype="multipart/form-data" id="homepageForm"  action="">
+        {{ form.csrf_token }}
+        {{ render_field(form.status) }}
+        <hr>
+        {{ render_field(form.choosen_ext_exhibition_id)}}
+        <hr>
+        {{ render_field(form.internal_link) }}
+        <button type="submit" class="btn btn-default" id="submit-button">Submit</button>
+        <button class="btn btn-default hide" disabled="disabled" id="processing-button"><span class="glyphicon glyphicon-refresh spin" aria-hidden="true"></span>&nbsp;Processing...</button>
+    </form>
+    {% if form.errors %}
+            {{ form.errors }}
+        {% endif %}
+
+</div>
+
+{% endblock %}

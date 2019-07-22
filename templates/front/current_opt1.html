@@ -1,19 +1,4 @@
-{% extends "base.html" %}
-	{% block nav_current %}active{% endblock %}
-	{% block title %} | Current{% endblock %}
-
-	{% block body %}
-
-	{% if homepage_info.status == "opt1" %}
-		{% include "front/current_opt1.html" %}
-	{% elif homepage_info.status == "opt2" %}
-		{% include "front/current_opt2.html" %}
-	{% elif homepage_info.status == "opt3" %}
-		{% include "front/current_opt3.html" %}
-	{% elif homepage_info.status == "opt4" %}
-		{% include "front/current_opt4.html" %}
-	{% endif %}
-
+<!-- normal mode exhibitions 32 & 35 side by side -->
 	{% for exhibition in exhibition_35 %}
 		<div class="homepage-exhibition" id="exhibition__35">
 
@@ -117,5 +102,3 @@
 		</a>
 	</div>
 {% endfor %}
-
-{% endblock %}

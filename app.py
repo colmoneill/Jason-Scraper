@@ -88,6 +88,8 @@ def login():
 @app.route("/")
 @app.route("/current/")
 def home():
+    homepage_info = db.homepage.find_one({"_id": 'current_status'})
+    homepage_selected_exhibition = db.exhibitions.find_one({"_id": homepage_info['choosen_ext_exhibition_id']})
     artworks = db.artworks.find().sort("id", -1).limit(10)
     exhibition_32 = db.exhibitions.find({
         "is_published": True,
@@ -101,7 +103,7 @@ def home():
         "end": { "$gte": datetime.combine(date.today(), datetime.min.time()) }
         }).sort("end", 1).limit(1)
 
-    return render_template("front/current.html", exhibition_32=exhibition_32, exhibition_35=exhibition_35)
+    return render_template("front/current.html", homepage_info=homepage_info, homepage_selected_exhibition=homepage_selected_exhibition, exhibition_32=exhibition_32, exhibition_35=exhibition_35)
 
 @app.route("/past/")
 
@@ -403,6 +405,7 @@ app.register_blueprint(admin.image, url_prefix='/admin/image')
 app.register_blueprint(admin.exhib_views, url_prefix='/admin/exhib-views')
 app.register_blueprint(admin.artist_exhib_views, url_prefix='/admin/artist-exhib-views')
 app.register_blueprint(admin.api, url_prefix='/admin/api')
+app.register_blueprint(admin.homepage, url_prefix='/admin/homepage')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
