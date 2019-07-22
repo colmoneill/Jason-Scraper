@@ -89,6 +89,12 @@ def login():
 @app.route("/current/")
 def home():
     homepage_info = db.homepage.find_one({"_id": 'current_status'})
+    try:
+        homepage_selected_exhibition = db.exhibitions.find_one({"_id": homepage_info['choosen_ext_exhibition_id']})
+    except:
+        print('no selected exhibition document yet')
+        homepage_temp = {"_id" : "current_status", "status" : "opt1", "internal_link" : "", "choosen_ext_exhibition_id" : ObjectId()}
+        db.homepage.update({"_id":'current_status'},homepage_temp, upsert=True)
     homepage_selected_exhibition = db.exhibitions.find_one({"_id": homepage_info['choosen_ext_exhibition_id']})
     artworks = db.artworks.find().sort("id", -1).limit(10)
     exhibition_32 = db.exhibitions.find({
