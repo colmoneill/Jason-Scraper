@@ -18,6 +18,10 @@
                 {% endif %}
               </div>
               <div class="media-body">
+                {% if artist.artist_is_project == True %}
+                  <span  title="This refers to the 'artist is project' checkbox, meaning the artist page has been marked to render in the project section and not in the 'normal' represented artists section" class="label label-info">item is marked as a Project</span>
+                  <br>
+                {% endif %}
                 <b>{{ artist.name }}</b>
               </div>
             </div>

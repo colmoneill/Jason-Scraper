@@ -6,7 +6,24 @@
 {% block body %}
 <div class="container">
   <div class="all-col">
-    {% for artist in artists %}
+    {% for artist in normal_artists %}
+       <div class="artist-block">
+         <a href="/artist/{{ artist.slug }}/">
+           {% if artist.coverimage %}
+           <div class="artist-block__image" style="background-image: url('/{{ artist.coverimage.path.replace('/uploads/', '/thumbs/') }}')" alt=""></div>
+           {% else %}
+           <div class="artist-block__image" alt=""></div>
+           {% endif %}
+           <p>{{ artist.name }}</p>
+         </a>
+       </div>
+    {% endfor %}
+  </div>
+  <div class="all-col">
+    <br><br>
+    <h1>Projects</h1>
+    <div class="separation-rule"></div>
+    {% for artist in artist_projects %}
        <div class="artist-block">
          <a href="/artist/{{ artist.slug }}/">
            {% if artist.coverimage %}

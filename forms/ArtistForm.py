@@ -1,6 +1,6 @@
 from flask_wtf import Form
 from flask_pagedown.fields import PageDownField
-from wtforms import StringField, FileField, TextAreaField
+from wtforms import StringField, FileField, TextAreaField, BooleanField
 from wtforms.validators import DataRequired
 
 class ArtistForm(Form):
@@ -8,6 +8,7 @@ class ArtistForm(Form):
     artist_sort = StringField(u'Artist Sorting value // ex: Adamo, David')
     #key image
     #images general
+    artist_is_project = BooleanField('Render this artist page as a "project"')
     wysiwig_artist_info = PageDownField('artist info text')
     wysiwig_artist_bio = PageDownField('artist bio')
     wysiwig_artist_exhibitions_list = PageDownField('exhibition list')

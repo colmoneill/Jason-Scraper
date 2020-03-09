@@ -144,10 +144,20 @@ def upcomingExhibitions():
 
 @app.route("/artists/")
 def artists():
+    normal_artists = []
+    artist_projects = []
     artists = db.artist.find({
     "is_published": True,
     }).sort("artist_sort", 1)
-    return render_template("front/artists.html", artists=artists)
+    for artist in artists:
+        if "artist_is_project" in artist:
+            if artist['artist_is_project'] == False:
+                normal_artists.append(artist)
+            if artist['artist_is_project'] == True:
+                artist_projects.append(artist)
+        else:
+            normal_artists.append(artist)
+    return render_template("front/artists.html", normal_artists=normal_artists, artist_projects=artist_projects)
 
 @app.route("/artist/<slug>/")
 def artist(slug):
