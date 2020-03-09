@@ -19,6 +19,7 @@
        </div>
     {% endfor %}
   </div>
+  {% if artist_projects|length > 1 %}
   <div class="all-col">
     <br><br>
     <h1>Projects</h1>
@@ -36,5 +37,7 @@
        </div>
     {% endfor %}
   </div>
+  {% else %}
+  {% endif %}
 </div>
 {% endblock %}
