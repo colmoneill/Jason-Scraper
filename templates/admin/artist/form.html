@@ -5,7 +5,9 @@
     {{ form.csrf_token }}
     {{ render_field(form.name) }}
     {{ render_field(form.artist_sort) }}
-    {{ render_field(form.artist_is_project) }}
+    <hr>
+    {{ form.artist_is_project }} <label for="">Make artist page a Project page</label><br>
+    Check this box if this artist page needs to be marked as a "project" in the public Artists page.
     <hr>
     <p>This next section labelled 'Artworks & external exhbition views' is both an upload field, and an image gallery organisation area. It manages 3 types of image files: artist artworks, internal exhibition views and external exhibition views.<br> Artworks are uploaded with this field and so are <b>external</b> exhibition views. Internal exhibition views are listed here, to chose which should be displayed, but their upload is managed on their specific exhibition form in Manage Exhibitions.<br><br>
     on upload select this icon <span class="glyphicon glyphicon-picture icon artwork"></span> to signify that this picture is an artwork<br>
