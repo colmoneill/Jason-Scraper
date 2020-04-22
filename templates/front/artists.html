@@ -19,11 +19,13 @@
        </div>
     {% endfor %}
   </div>
-  {% if artist_projects|length > 1 %}
+  {% if artist_projects|length > 0 %}
   <div class="all-col">
     <br><br>
     <h1>Projects</h1>
     <div class="separation-rule"></div>
+  </div>
+  <div class="all-col">
     {% for artist in artist_projects %}
        <div class="artist-block">
          <a href="/artist/{{ artist.slug }}/">
@@ -36,6 +38,7 @@
          </a>
        </div>
     {% endfor %}
+
   </div>
   {% else %}
   {% endif %}
