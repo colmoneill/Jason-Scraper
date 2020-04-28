@@ -5,7 +5,7 @@ venv
 build
 node_modules
 virtual-jason-scraper
-static/_src/node_modules/
+static/_src
 static/_src/node_modules/*
 static/uploads/
 *.log
