@@ -42,7 +42,8 @@ def create():
             'year': form.year.data,
             'medium': form.medium.data,
             'dimensions': form.dimensions.data,
-            'edition': form.edition.data
+            'edition': form.edition.data,
+            'price': form.price.data
         }
 
         artist['images'].append(image)
@@ -77,6 +78,7 @@ def update(image_id):
                 image['medium'] = form.medium.data
                 image['dimensions'] = form.dimensions.data
                 image['edition'] = form.edition.data
+                image['price'] = form.price.data
 
                 db.artist.update({'images._id': image['_id']}, {'$set': { 'images.$': image }})
                 db.artist.update({'selected_images._id': image['_id']}, {'$set': { 'selected_images.$': image }})
