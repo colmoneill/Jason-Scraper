@@ -3,7 +3,7 @@ upload = {
         'allowed_extensions': ['pdf'],
         'upload_folder': 'static/uploads/press/'
     },
-    
+
     'BIOGRAPHY': {
         'allowed_extensions': ['pdf'],
         'upload_folder': 'static/uploads/biography/'
@@ -13,7 +13,7 @@ upload = {
         'allowed_extensions': ['png', 'jpeg', 'jpg', 'gif', 'JPG', 'JPEG', 'GIF'],
         'upload_folder': 'static/uploads/artworks/'
     },
-    
+
     'EXTERNAL_EXHIBITION_VIEW': {
         'allowed_extensions': ['png', 'jpeg', 'jpg', 'gif', 'JPG', 'JPEG', 'GIF'],
         'upload_folder': 'static/uploads/exhibition-view/'

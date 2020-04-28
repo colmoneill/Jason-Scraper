@@ -48,7 +48,7 @@ def fetch_artworks():
 
     AL_artworks = []
     AL_artists = []
-    
+
     url = "http://feeds.artlogic.net/websites/2.0/rodolphejanssen/artworks/json"
 
     while True:
@@ -79,7 +79,7 @@ def fetch_artworks():
         # delete it:
         #if 'artworks.description2' in artwork:
             #del artwork['artworks.description2']
-            
+
         ## upsert int the database:
         #db.AL_artworks.update({"id": artwork['id']}, artwork, upsert=True)
 
@@ -90,27 +90,27 @@ def fetch_artworks():
             print 'created artist'
             artist = {
                 'name': artwork['artist'],
-                'slug': slug, 
+                'slug': slug,
                 'artist_sort': artwork['artist_sort'],
                 'images': [],
                 'selected_images': []
             }
-            
+
             db.artist.insert(artist)
             artist = db.artist.find_one({ "slug": slug })
 
         if artwork['img_url'] is not None \
         and artwork['img_url'] <> '' \
         and artwork['img_url'] <> 'null' :
-            
+
             if 'images' not in artist or type(artist['images']) is not list:
                 artist['images'] = []
-            
+
             if 'selected_images' not in artist or type(artist['selected_images']) is not list:
                 artist['selected_images'] = []
-            
+
             image = find_where('id_AL', artwork['id'], artist['images'])
-            
+
             if not image:
                 print 'created image'
                 extension = os.path.splitext(artwork['img_url'])[1]
@@ -131,9 +131,9 @@ def fetch_artworks():
 
                 artist['images'].append(image)
                 artist['selected_images'].append(image)
-                
-                db.artist.update({'_id': artist['_id']}, {'$set': { 'images': artist['images'], 'selected_images': artist['selected_images'] } })                
-                
+
+                db.artist.update({'_id': artist['_id']}, {'$set': { 'images': artist['images'], 'selected_images': artist['selected_images'] } })
+
             else:
                 print 'updated image'
                 image['title'] = artwork['title']
@@ -141,11 +141,11 @@ def fetch_artworks():
                 image['medium'] = artwork['medium']
                 image['dimensions'] = artwork['dimensions']
                 image['stock_number'] = artwork['stock_number']
-                
+
                 db.artist.update({'images._id': image['_id']}, {'$set': { 'images.$': image }})
                 db.artist.update({'selected_images._id': image['_id']}, {'$set': { 'selected_images.$': image }})
                 db.exhibitions.update({'artworks._id': image['_id']}, {'$set': { 'artworks.$': image }}, multi=True)
-                
+
             artist = db.artist.find_one({"_id": artist['_id']})
             db.exhibitions.update({"artist._id": artist['_id']}, {"$set": { "artist": artist }}, multi=True)
             ## Should update this artist on group exhibitions as well

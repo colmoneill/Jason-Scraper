@@ -8,7 +8,7 @@ secret_key = "abcdefghijklmnopqrstuvwxyz"
 
 client = pymongo.MongoClient('localhost', 27017)
 db = client.artlogic
-appdir = '/home/Jason-Scraper/'
+appdir = '/home/colm/git/Jason-Scraper/static/'
 
 # Logfile location
 logFilename = os.path.join(appdir, 'logs/flask.log')
