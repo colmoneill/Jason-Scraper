@@ -8,7 +8,6 @@
       <br>
       {{ form.csrf_token }}
       <br>
-      <div class="row">
           <div class="col-sm-4">
             {{ render_field(form.stock_number) }}
           </div>
@@ -18,18 +17,18 @@
           <div class="col-sm-4">
             {{ render_field(form.year) }}
           </div>
-      </div>
-      <div class="row">
-          <div class="col-sm-4">
+          <div class="col-sm-6">
             {{ render_field(form.medium) }}
           </div>
-          <div class="col-sm-4">
+          <div class="col-sm-6">
             {{ render_field(form.dimensions) }}
           </div>
-          <div class="col-sm-4">
+          <div class="col-sm-6">
             {{ render_field(form.edition) }}
           </div>
-        </div>
+          <div class="col-sm-6">
+            {{ render_field(form.price) }}
+          </div>
       <button type="submit" class="btn btn-default">Save</button>
   </form>
 {% endblock %}

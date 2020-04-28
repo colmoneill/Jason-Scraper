@@ -20,7 +20,7 @@ Managing views
                     {% endif %}
                   </div>
                   <div class="media-body">
-                    {% if exhibition.location === 'external' %}
+                    {% if exhibition.location == 'external' %}
                       <code>{{exhibition.location}} — {{exhibition.external_location}}</code>
                     {% else %}
                       <code>{{exhibition.location}} Livornostraat</code>
