@@ -21,6 +21,8 @@
               <div class="media-body">
                 {% if exhibition.location == 'external' %}
                   <code>{{exhibition.location}} — {{exhibition.external_location}}</code>
+                {% elif exhibition.location == 'virtual' %}
+                  <code>virtual show</code>
                 {% else %}
                   <code>{{exhibition.location}} Livornostraat</code>
                 {% endif %}

@@ -1,1 +1,98 @@
-virtual_exhibition
+{# virtual_exhibition #}
+
+<div class="container">
+  <div class="all-col title-block">
+    {% if exhibition.is_group_expo %}
+      <h1>{{ exhibition.exhibition_name }}</h1>
+    {% else %}
+      <h1>{{ exhibition.artist.name }}</h1>
+      <h2>{{ exhibition.exhibition_name }}</h2>
+    {% endif %}
+    <h4> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </h4>
+    <h4>{{ exhibition.location }}</h4>
+  </div>
+  <div class="subnav" id="sidebar">
+    <ul>
+      {% if exhibition.artworks %}
+      <li><a class="go-to-anchor" href="#images">Images</a></li>
+      {% endif %}
+      {% if exhibition.is_group_expo %}
+        <li><a class="go-to-anchor" href="#artists">artists</a>
+        {% if exhibition.press_release %}
+        <li><a class="go-to-anchor" href="#press-release">press release</a></li>
+        {% endif %}
+      {% else %}
+        {% if exhibition.press_release %}
+      	<li><a class="go-to-anchor" href="#press-release">press release</a></li>
+        {% endif %}
+        {% if exhibition.artist.is_published %}
+        <li><a href="/artist/{{ exhibition.artist.slug }}">artist's page</a>
+        {% endif %}
+      {% endif %}
+      {% if exhibition.iframe1 %}
+        <li><a class="go-to-anchor" href="#media">Media</a></li>
+      {% endif %}
+    </ul>
+  </div>
+  <div class="subcontent">
+    <section class="subcontent__all-col margin-top-on-mobile" id="images">
+      <div class="separation-rule not-mobile"></div>
+      <div>
+        {% if exhibition.images %}
+    	  	{% for installation_view in exhibition.images %}
+          {# NEW IMAGE VIRTUAL GALLERY VIEWER #}
+          {% endfor %}
+        {% endif %}
+    	  {% if exhibition.artworks %}
+    	  	{% for artwork in exhibition.artworks %}
+          {# NEW IMAGE VIRTUAL GALLERY VIEWER #}
+          {% endfor %}
+        {% endif %}
+      </div>
+    </section>
+
+    {% if exhibition.is_group_expo %}
+      <section class="subcontent__all-col" id="artists">
+        <div class="separation-rule"></div>
+        <div class="group-exhibition-artists">
+          {% for artist in exhibition.all_artists %}
+          <p>
+            {% if 'name' in artist %}
+              {% if artist.is_published %}
+                <a href="/artist/{{ artist.slug }}" >{{ artist.name }}</a>
+              {% else %}
+                {{ artist.name }}
+              {% endif %}
+            {% else %}
+              {{ artist }}
+            {% endif %}
+          </p>
+          {% endfor %}
+     	  </div>
+	  </section>
+	  {% endif %}
+
+    <section class="subcontent__all-col informations" id="press-release">
+		  {% if exhibition.wysiwig_exhibition_description %}
+      <div class="separation-rule"></div>
+        	<div class="text-block">
+				<h1>information</h1>
+				{{ exhibition.wysiwig_exhibition_description|markdown }}
+			</div>
+      {% endif %}
+
+      <div class="download-block">
+      {% if exhibition.press_release %}
+        <h1>press</h1>
+          <div class="download-block__text" id="media">
+            <a class="" href="/{{ exhibition.press_release }}"><h3>Download the press release — PDF ({{ exhibition.press_release_size }})</h3></a><br>
+      {% else %}
+          <div class="download-block__text" id="media">
+      {% endif %}
+            <a href="{{ exhibition.link_url1 }}" target="_blank"><h3>{{ exhibition.link_name1 }}</h3></a><br>
+            <a href="{{ exhibition.link_url2 }}" target="_blank"><h3>{{ exhibition.link_name2 }}</h3></a><br>
+            <a href="{{ exhibition.link_url3 }}" target="_blank"><h3>{{ exhibition.link_name3 }}</h3></a>
+          </div>
+      </div>
+    </section>
+  </div>
