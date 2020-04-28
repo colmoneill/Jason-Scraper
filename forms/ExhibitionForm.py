@@ -15,7 +15,7 @@ class ExhibitionForm(Form):
     exhibition_name = StringField('Exhibition title')
     start = DateTimeField('From', validators=[DataRequired()], format='%d-%m-%Y')
     end = DateTimeField('To', validators=[DataRequired()], format='%d-%m-%Y')
-    location = RadioField(u'Gallery 32 or 35? *', choices = [('35', 'Livourne 35'), ('32', 'Livourne 32'), ('external', 'External show'), ('Virtual', 'Virtual Show')], validators=[DataRequired()])
+    location = RadioField(u'Gallery 32 or 35? *', choices = [('35', 'Livourne 35'), ('32', 'Livourne 32'), ('external', 'External show'), ('virtual', 'Virtual Show')], validators=[DataRequired()])
     external_location = StringField('external location details (Name of venue, event, space)')
     #exhibition_key_img = FileField('exhibition key image')
     wysiwig_exhibition_description = PageDownField('exhibition description')
