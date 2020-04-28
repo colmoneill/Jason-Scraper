@@ -30,9 +30,14 @@
             <li><a href="/admin/homepage/">manage homepage</a></li>
             <li><a href="/admin/exhibition/">edit exhibitions</a></li>
             <li><a href="/admin/artist/">edit artists</a></li>
-            <li><a href="/admin/image/">manage artworks</a></li>
-            <li><a href="/admin/exhib-views/">manage internal views</a></li>
-            <li><a href="/admin/artist-exhib-views/">manage external views</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">manage images<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/admin/image/">manage artworks</a></li>
+                <li><a href="/admin/exhib-views/">manage internal views</a></li>
+                <li><a href="/admin/artist-exhib-views/">manage external views</a></li>
+              </ul>
+            </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="/admin/manage-gallery-info/">edit gallery info</a></li>
