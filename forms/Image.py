@@ -3,7 +3,7 @@
 from flask_wtf import Form
 from wtforms import SelectField, FileField, StringField
 from wtforms.validators import DataRequired
-example_price = "€1.000".decode("utf-8")
+example_price = "€1.000".encode('utf-8').decode('utf-8')
 
 class Image(Form):
     artist = SelectField(u'Select artist *', validators=[DataRequired()])

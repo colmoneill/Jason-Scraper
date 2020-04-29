@@ -13,7 +13,7 @@ from .. import utils
 from bson import ObjectId
 from bson.json_util import dumps as bson_dumps
 import forms
-import config
+from . import config
 import re
 import json
 
@@ -276,7 +276,7 @@ def update(artist_id):
 def deleteArtist(artist_id):
     if request.method == 'POST':
         db.artist.remove({"_id": ObjectId(artist_id)})
-        flash(u'You deleted the artist page', 'warning')
+        flash('You deleted the artist page', 'warning')
         return redirect_flask(url_for('.index'))
 
     return render_template('admin/artist/delete.html')
