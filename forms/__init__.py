@@ -2,6 +2,7 @@ from ArtistForm import ArtistForm
 from ArtistExhibitionView import ArtistExhibitionView
 from ExhibitionForm import ExhibitionForm
 from GroupExhibitionForm import GroupExhibitionForm
+from HomepageForm import HomepageForm
 from GalleryEmployees import GalleryEmployees
 from GalleryHours import GalleryHours
 from Image import Image, ImageUpdate
