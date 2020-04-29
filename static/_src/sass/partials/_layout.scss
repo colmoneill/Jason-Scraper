@@ -49,6 +49,7 @@ body{
 	max-width: $max-vp;
 	margin: 0 auto;
 	padding-bottom: 80px;
+	min-height: 100%;
 	@include clearfix;
 	@include mq(a){
 		width: 94%;

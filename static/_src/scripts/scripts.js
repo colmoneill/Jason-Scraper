@@ -105,10 +105,11 @@ $(document).ready(function() {
 				var artwork_medium = $( source_image_location ).attr( 'data-artworkmedium' ); 
 				var artwork_edition = $( source_image_location ).attr( 'data-artworkedition' ); 
 				var artwork_dimensions = $( source_image_location ).attr( 'data-artworkdimensions' ); 
+				var artwork_price = $( source_image_location ).attr( 'data-price' );
 				var installation_group = $( source_image_location ).attr( 'data-installation-group' ); 
 				var installation_solo = $( source_image_location ).attr( 'data-installation-solo' ); 
 				
-				var artwork_data = [artwork_group_name, artwork_gorup_artist, artwork_artist, artwork_year, artwork_medium, artwork_dimensions, installation_group, installation_solo, artwork_edition];
+				var artwork_data = [artwork_group_name, artwork_gorup_artist, artwork_artist, artwork_year, artwork_medium, artwork_dimensions, installation_group, installation_solo, artwork_edition, artwork_price];
 				 
 				$( '<div id="imagelightbox-caption"></div>' ).appendTo( '#slider-text-box' );
 				

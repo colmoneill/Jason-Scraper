@@ -25,6 +25,15 @@
 		padding-bottom: $image_ratio;
 		@include background-cover;
 	}
+	&__text{
+		margin-top: 16px;
+		h5{
+			text-transform: none;
+			@include adjust-font-size-to(12px);
+			line-height: 1.5;
+			margin-bottom: 0;
+		}
+	}
 	//
 	@include mq-large{
 		&:nth-of-type(-n+4){
@@ -48,6 +57,45 @@
 		}
 		&:nth-of-type(2n){
 			@include last;
+		}
+	}
+}
+
+.image-block--virtual{
+	@extend .col5__span2of4;
+	@extend .col2__span2of2;
+	margin-top: 32px;
+	//
+	@include mq-large{
+		&:nth-of-type(3),
+		&:nth-of-type(4){
+			margin-top: 32px;
+		}
+		&:nth-of-type(2n){
+			@include last;
+		}
+		&:nth-of-type(2n + 1){
+			clear: both;
+		}
+	}
+	@include mq-medium{
+		width: (50% - (3.84615% / 2));
+		&:nth-of-type(3){
+			margin-top: 32px;
+		}
+		&:nth-of-type(2n){
+			@include last;
+		}
+		&:nth-of-type(2n + 1){
+			clear: both;
+			float: left;
+			margin-right: 3.84615%;
+		}
+	}
+	@include mq-small{
+		@include last;
+		&:nth-of-type(2){
+			margin-top: 32px;
 		}
 	}
 }

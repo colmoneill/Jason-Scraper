@@ -7,7 +7,16 @@
       <h2>{{ exhibition.exhibition_name }}</h2>
     {% endif %}
     <h4> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </h4>
-    <h4>{{ exhibition.location }}</h4>
+    {% if exhibition.location == "32" %}
+    	<div class="homepage-exhibition__text--line"></div>
+    	<h5>Rue de Livourne 32 Livornostraat</h5>
+	{% elif exhibition.location == "35" %}	
+		<div class="homepage-exhibition__text--line"></div>
+		<h5>Rue de Livourne 35 Livornostraat</h5>
+    {% else %}
+    	<div class="homepage-exhibition__text--line"></div>
+    	<h5>{{ exhibition.external_location }}</h5>
+    {% endif %}
   </div>
   <div class="subnav" id="sidebar">
     <ul>
