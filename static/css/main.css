@@ -1008,7 +1008,7 @@ section.exhibition-year div:last-child {
     margin-right: 1%;
     box-sizing: border-box;
     /*
-    		-webkit-border-radius:0; 
+    		-webkit-border-radius:0;
     		border-radius:0;
     		border-width: 1px;
     		border-color: $gray-4;
