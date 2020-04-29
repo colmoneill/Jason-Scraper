@@ -102,6 +102,7 @@ $(document).ready(function() {
 				var artwork_gorup_artist= $( source_image_location ).attr( 'data-groupexhibtionartist' );
 				var artwork_artist = $( source_image_location ).attr( 'data-exhibitionartistname' );
 				var artwork_year = $( source_image_location ).attr( 'data-artworkyear' );
+<<<<<<< HEAD
 				var artwork_medium = $( source_image_location ).attr( 'data-artworkmedium' );
 				var artwork_edition = $( source_image_location ).attr( 'data-artworkedition' );
 				var artwork_dimensions = $( source_image_location ).attr( 'data-artworkdimensions' );
@@ -110,6 +111,17 @@ $(document).ready(function() {
 
 				var artwork_data = [artwork_group_name, artwork_gorup_artist, artwork_artist, artwork_year, artwork_medium, artwork_dimensions, installation_group, installation_solo, artwork_edition];
 
+=======
+				var artwork_medium = $( source_image_location ).attr( 'data-artworkmedium' ); 
+				var artwork_edition = $( source_image_location ).attr( 'data-artworkedition' ); 
+				var artwork_dimensions = $( source_image_location ).attr( 'data-artworkdimensions' ); 
+				var artwork_price = $( source_image_location ).attr( 'data-price' );
+				var installation_group = $( source_image_location ).attr( 'data-installation-group' ); 
+				var installation_solo = $( source_image_location ).attr( 'data-installation-solo' ); 
+				
+				var artwork_data = [artwork_group_name, artwork_gorup_artist, artwork_artist, artwork_year, artwork_medium, artwork_dimensions, installation_group, installation_solo, artwork_edition, artwork_price];
+				 
+>>>>>>> 3f7eae50e3b157dcea360911a6c8f395119789bb
 				$( '<div id="imagelightbox-caption"></div>' ).appendTo( '#slider-text-box' );
 
 				for (i = 0; i < artwork_data.length; i++) {
