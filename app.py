@@ -211,7 +211,10 @@ def sort_all_artists (a, b):
 
 @app.route("/group-exhibition/<slug>/")
 def publicviewGroupExhibition(slug):
-    exhibition = db.exhibitions.find_one({'slug': slug})
+    exhibition = db.exhibitions.find_one({
+    'slug': slug,
+    'is_group_expo': True,
+    })
     exhibition['all_artists'] = exhibition['artists'] + exhibition['extra_artists']
     exhibition['all_artists'].sort(cmp=sort_all_artists)
 
