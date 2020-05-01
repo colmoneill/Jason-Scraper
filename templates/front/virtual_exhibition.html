@@ -78,7 +78,7 @@
           {% endfor %}
         {% endif %}
     	  {% if exhibition.artworks %}
-    	  	{% for artwork in exhibition.artworks %}
+    	  	{% for artwork in exhibition.artworks|reverse %}
 				<div class="image-block image-block--virtual">
 					<a href="/{{ artwork.path }}">
 						<div class="image-block__inside" style="background-image: url('/{{ artwork.path }}')"
