@@ -751,14 +751,32 @@ nav {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover; }
+  .image-block__informations {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 12px; }
+    @media only screen and (min-width: 0) and (max-width: 500px) {
+      .image-block__informations {
+        flex-direction: column; } }
   .image-block__text {
-    margin-top: 16px; }
+    flex-grow: 1; }
     .image-block__text h5, .image-block__text .text-block h1, .text-block .image-block__text h1, .image-block__text .download-block h1, .download-block .image-block__text h1 {
       text-transform: none;
       font-size: 0.92308em;
       line-height: 1.58333em;
       line-height: 1.5;
       margin-bottom: 0; }
+  .image-block__link {
+    margin-left: 10px; }
+    @media only screen and (min-width: 0) and (max-width: 500px) {
+      .image-block__link {
+        flex-direction: column;
+        margin-left: 0;
+        margin-top: 6px; } }
+    .image-block__link a {
+      border-bottom: 1px solid black; }
   @media only screen and (min-width: 951px) {
     .image-block:nth-of-type(-n+4) {
       margin-top: 0; }
@@ -1046,7 +1064,7 @@ section.exhibition-year div:last-child {
     margin-right: 1%;
     box-sizing: border-box;
     /*
-    		-webkit-border-radius:0;
+    		-webkit-border-radius:0; 
     		border-radius:0;
     		border-width: 1px;
     		border-color: $gray-4;
