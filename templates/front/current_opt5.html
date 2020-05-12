@@ -1,7 +1,7 @@
 <!-- triptych mode exhibitions 32 & 35 and a selected external show side by side by side -->
 
 <div class="container triptych-wrapper">
-	<div class="triptych-inside">	
+	<div class="triptych-inside">
 	{% for exhibition in exhibition_35 %}
 		<div class="homepage-exhibition homepage-exhibition--3" id="exhibition__35">
 
@@ -102,16 +102,16 @@
 					<h2>{{ exhibition.exhibition_name }}</h2>
 					<h4> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </h4>
 				</div>
-			</a>	
+			</a>
 		{% endif %}
-		
+
 	</div>
 {% endfor %}
 
 		{% if homepage_selected_exhibition.is_group_expo %}
 		<div class="homepage-exhibition homepage-exhibition--3" id="exhibition__other">
 			<a href="/group-exhibition/{{ homepage_selected_exhibition.slug }}/">
-				{% if 'coverimage' in exhibition %}
+				{% if 'coverimage' in homepage_selected_exhibition %}
 				<div class="homepage-exhibition__inside" style="background-image: url('/{{ homepage_selected_exhibition.coverimage.path }}')"></div>
 					{% else %}
 						<div class="homepage-exhibition__landing">
@@ -130,9 +130,9 @@
 							<h4> {{ homepage_selected_exhibition.start.strftime('%d.%m.%Y') }} > {{ homepage_selected_exhibition.end.strftime('%d.%m.%Y') }} </h4>
 						</div>
 			</a>
-	
+
 					{% else %}
-	
+
 					<a href="/exhibition/{{ homepage_selected_exhibition.artist.slug }}/{{homepage_selected_exhibition.start.strftime('%d.%m.%Y') }}">
 						{% if 'coverimage' in exhibition %}
 						<div class="homepage-exhibition__inside" style="background-image: url('/{{ homepage_selected_exhibition.coverimage.path }}')"></div>
@@ -153,9 +153,9 @@
 							<h2>{{ homepage_selected_exhibition.exhibition_name }}</h2>
 							<h4> {{ homepage_selected_exhibition.start.strftime('%d.%m.%Y') }} > {{ homepage_selected_exhibition.end.strftime('%d.%m.%Y') }} </h4>
 						</div>
-					</a>	
+					</a>
 					{% endif %}
-			
+
 		</div>{# closes div link before loop #}
 	</div>
-</div>	
+</div>
