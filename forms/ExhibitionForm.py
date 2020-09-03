@@ -28,3 +28,4 @@ class ExhibitionForm(Form):
     link_url2 = StringField('Paste in full url of link 2')
     link_name3 = StringField('name for link 3')
     link_url3 = StringField('Paste in full url of link 3')
+    embed_video = StringField('Paste embed code of video to display on the page')

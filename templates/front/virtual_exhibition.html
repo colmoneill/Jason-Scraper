@@ -139,6 +139,16 @@
 	  </section>
 	  {% endif %}
 
+    {% if exhibition.embed_video %}
+      <section class="subcontent__all-col informations">
+        <div class="separation-rule"></div>
+          <div class="text-block">
+            <p>{{exhibition.embed_video|safe}}</p>
+          </div>
+      </section>
+    {% endif %}
+
+
     <section class="subcontent__all-col informations" id="press-release">
 		  {% if exhibition.wysiwig_exhibition_description %}
       <div class="separation-rule"></div>
@@ -163,5 +173,5 @@
       </div>
     </section>
   </div>
- 
+
  </div>

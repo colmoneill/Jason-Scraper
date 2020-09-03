@@ -10,7 +10,7 @@
     {% if exhibition.location == "32" %}
     	<div class="homepage-exhibition__text--line"></div>
     	<h5>Rue de Livourne 32 Livornostraat</h5>
-	{% elif exhibition.location == "35" %}	
+	{% elif exhibition.location == "35" %}
 		<div class="homepage-exhibition__text--line"></div>
 		<h5>Rue de Livourne 35 Livornostraat</h5>
     {% else %}
@@ -112,6 +112,15 @@
      	  </div>
 	  </section>
 	  {% endif %}
+
+    {% if exhibition.embed_video %}
+      <section class="subcontent__all-col informations">
+        <div class="separation-rule"></div>
+          <div class="text-block">
+            <p>{{exhibition.embed_video|safe}}</p>
+          </div>
+      </section>
+    {% endif %}
 
     <section class="subcontent__all-col informations" id="press-release">
 		  {% if exhibition.wysiwig_exhibition_description %}

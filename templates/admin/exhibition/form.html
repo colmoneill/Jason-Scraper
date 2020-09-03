@@ -48,9 +48,19 @@
           {{ form.wysiwig_artist_bio(only_preview=True) }}
         </div>
       </div>
-    -->
+      -->
       <hr>
       {{ render_uploadfield(form.press_release) }}
+      <hr>
+      <div class="row">
+        <div class="col-sm-12">
+          <h4>Video embed link</h4>
+        </div>
+          <div class="col-sm-6">
+            {{ render_field(form.embed_video) }}
+            <br>embed code is obtained by clicking on the 'Share' button, either in YouTube or Vimeo, it should look something like:<br> <code><&nbsp;iframe width="560" height="315" src="https://www.youtube.com/embed/rEgNb8xGSxE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen> </ i frame > </code>
+          </div>
+      </div>
       <hr>
       <div class="row">
         <div class="col-sm-12">

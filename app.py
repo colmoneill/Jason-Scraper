@@ -28,6 +28,7 @@ import json
 
 from main import admin, settings
 from main.settings import db, secret_key
+import re
 
 app = Flask(__name__)
 
@@ -194,8 +195,12 @@ def exhibition(slug):
 @app.route("/exhibition/<artist>/<start>/")
 def publicviewExhibition(start, artist):
     start = datetime.strptime(start, ('%d.%m.%Y'))
-
     exhibition = db.exhibitions.find_one({'start': start, 'artist.slug': artist})
+    embed_video = exhibition['embed_video']
+    print(embed_video)
+    embed_video = re.sub('width="\d\d\d"', 'width="100%"', embed_video)
+    print(embed_video)
+    exhibition['embed_video'] = embed_video
 
     if exhibition <> None:
         return render_template('front/exhibition.html', artist=artist, date=date, exhibition=exhibition)
