@@ -253,7 +253,7 @@ a:focus				{outline: none;}
 			}
 		}
 	}
-	p{
+	p, .iframe-wrapper{
 		@extend .col5__span3of4;
 		@extend .col4__span2of3;
 		@include full_on_mq_b;
@@ -316,7 +316,7 @@ a:focus				{outline: none;}
 		@extend .col4__span2of3;
 		@extend .col2__span2of2;
 		@extend .last;
-	}	
+	}
 	&__details{
 		display: inline;
 		margin-left: 8px;

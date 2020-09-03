@@ -117,7 +117,12 @@
       <section class="subcontent__all-col informations">
         <div class="separation-rule"></div>
           <div class="text-block">
-            <p>{{exhibition.embed_video|safe}}</p>
+          <h1>video</h1>
+            <div class="iframe-wrapper">
+              <div class="iframe-wrapper-inside">
+                {{exhibition.embed_video|safe}}
+              </div>
+            </div>
           </div>
       </section>
     {% endif %}
