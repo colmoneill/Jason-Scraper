@@ -139,7 +139,7 @@
 	  </section>
 	  {% endif %}
 
-    {% if exhibition.embed_video %}
+    {% if exhibition.embed_video is defined %}
       <section class="subcontent__all-col informations">
         <div class="separation-rule"></div>
           <div class="text-block">
@@ -151,6 +151,7 @@
             </div>
           </div>
       </section>
+    {% else %}
     {% endif %}
 
 
