@@ -110,12 +110,18 @@
 						</div>
 						<div class="image-block__link">
               {% if exhibition.is_group_expo %}
-              {% set subject = "Enquiry: " + {{ artwork.artist.name }} + " / " + {{ artwork.title }} %}
-							<h5><a href="mailto:julie@rodolphejanssen.com?subject={{subject}}|urlencode">Enquire</a></h5>
-              {% else %}
-              {% set subject = "Enquiry: " + {{ exhibition.artist.name }} + " / " + {{ artwork.title }} %}
-              <h5><a href="mailto:julie@rodolphejanssen.com?subject={{subject}}|urlencode">Enquire</a></h5>
-              {% endif %}
+            {% set ArtistName = artwork.artist.name %}
+            {% set Artwork =  artwork.title %}
+             {% set subject = 'Enquiry: ' ~ ArtistName ~ ' / ' ~ Artwork %}
+             {% set subject = subject|urlencode %}
+             <h5><a href="mailto:julie@rodolphejanssen.com?subject={{subject}}">Enquire</a></h5>
+             {% else %}
+             {% set ArtistName = exhibition.artist.name %}
+             {% set Artwork = artwork.title %}
+             {% set subject = 'Enquiry: ' ~ ArtistName ~ ' / ' ~ Artwork %}
+             {% set subject = subject|urlencode %}
+             <h5><a href="mailto:julie@rodolphejanssen.com?subject={{subject}}">Enquire</a></h5>
+             {% endif %}
             </div>
 					</div>
 				</div>
