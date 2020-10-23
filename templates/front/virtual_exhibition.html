@@ -112,7 +112,7 @@
               {% if exhibition.is_group_expo %}
 							<h5><a href="mailto:julie@rodolphejanssen.com?subject=Enquiry: {{ artwork.artist.name }} / {{ artwork.title }}">Enquire</a></h5>
               {% else %}
-              <h5><a href="mailto:julie@rodolphejanssen.com?subject=Enquiry">Enquire</a></h5>
+              <h5><a href="mailto:julie@rodolphejanssen.com?subject=Enquiry: {{ exhibition.artist.name }} / {% if artwork.title %}{{ artwork.title }}{% endif %}">Enquire</a></h5>
               {% endif %}
             </div>
 					</div>
