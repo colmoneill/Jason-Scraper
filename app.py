@@ -113,7 +113,7 @@ def home():
         "end": { "$gte": datetime.combine(date.today(), datetime.min.time()) }
         }).sort("end", 1).limit(1)
 
-    return render_template("front/2020_10_23-current.html", homepage_info=homepage_info, homepage_selected_exhibition=homepage_selected_exhibition, exhibition_32=exhibition_32, exhibition_35=exhibition_35, current_virtual_exhib=current_virtual_exhib)
+    return render_template("front/current.html", homepage_info=homepage_info, homepage_selected_exhibition=homepage_selected_exhibition, exhibition_32=exhibition_32, exhibition_35=exhibition_35, current_virtual_exhib=current_virtual_exhib)
 
 @app.route("/past/")
 
