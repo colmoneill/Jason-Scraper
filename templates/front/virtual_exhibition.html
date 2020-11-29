@@ -9,7 +9,8 @@
       <h2>{{ exhibition.exhibition_name }}</h2>
     {% endif %}
     <h4> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </h4>
-    <h4>{{ exhibition.location }}</h4>
+	<div class="homepage-exhibition__text--line"></div>
+    <h5>{{ exhibition.external_location }}</h5>
   </div>
   <div class="subnav" id="sidebar">
     <ul>
@@ -40,12 +41,90 @@
       <div>
         {% if exhibition.images %}
     	  	{% for installation_view in exhibition.images %}
-          {# NEW IMAGE VIRTUAL GALLERY VIEWER #}
+				<div class="image-block image-block--virtual">
+					<a href="/{{ installation_view.path }}">
+						<div class="image-block__inside" style="background-image: url('/{{ installation_view.path }}')"
+							{% if exhibition.is_group_expo %}
+								data-installation-group="
+									{% if exhibition.exhibition_name %}{{ exhibition.exhibition_name }} {% if exhibition.exhibition_title %} {{ exhibition.exhibition_title }},{% endif %}{% endif %}installation view,
+									{% if installation_view.institution %}{{installation_view.institution}}, {% else %}rodolphe janssen,{% endif %}
+									{% if installation_view.location %}{{installation_view.location}}, {% else %}Brussels, Belgium{% endif %}
+									{% if installation_view.year %}{{installation_view.year}} {% else %}{{ exhibition.start.strftime('%Y') }}{% endif %}"
+							{% else %}
+								data-installation-solo="
+									{% if installation_view.artist %}{{ installation_view.artist }}{% else %}{{ exhibition.artist.name }}{% endif %},
+									{% if exhibition.exhibition_name %} {{ exhibition.exhibition_name }},{% endif %}{% if installation_view.exhbition_title %} {{ installation_view.exhbition_title }},{% endif %} installation view,
+									{% if installation_view.institution %}{{installation_view.institution}}, {% else %}rodolphe janssen,{% endif %}
+									{% if installation_view.location %}{{installation_view.location}}, {% else %}Brussels, Belgium{% endif %}
+									{% if installation_view.year %}{{installation_view.year}} {% else %}{{ exhibition.start.strftime('%Y') }}{% endif %}"
+							{% endif %} >
+						</div>
+						<div class="image-block__text">
+							{% if exhibition.is_group_expo %}
+								<h5>{% if exhibition.exhibition_name %}{{ exhibition.exhibition_name }} {% if exhibition.exhibition_title %} {{ exhibition.exhibition_title }},{% endif %}{% endif %}installation view</h5>
+								<h5>{% if installation_view.institution %}{{installation_view.institution}}, {% else %}rodolphe janssen{% endif %}</h5>
+								<h5>{% if installation_view.location %}{{installation_view.location}}, {% else %}Brussels, Belgium{% endif %}</h5>
+								<h5>{% if installation_view.year %}{{installation_view.year}} {% else %}{{ exhibition.start.strftime('%Y') }}{% endif %}</h5>
+							{% else %}
+								<h5>{% if installation_view.artist %}{{ installation_view.artist }}{% else %}{{ exhibition.artist.name }}{% endif %}</h5>
+								<h5>{% if exhibition.exhibition_name %} {{ exhibition.exhibition_name }},{% endif %}{% if installation_view.exhbition_title %} {{ installation_view.exhbition_title }},{% endif %} installation view</h5>
+								<h5>{% if installation_view.institution %}{{installation_view.institution}}, {% else %}rodolphe janssen{% endif %}</h5>
+								<h5>{% if installation_view.location %}{{installation_view.location}}, {% else %}Brussels, Belgium{% endif %}</h5>
+								<h5>{% if installation_view.year %}{{installation_view.year}} {% else %}{{ exhibition.start.strftime('%Y') }}{% endif %}</h5>
+							{% endif %}
+						</div>
+					</a>
+				</div>
           {% endfor %}
         {% endif %}
     	  {% if exhibition.artworks %}
     	  	{% for artwork in exhibition.artworks %}
-          {# NEW IMAGE VIRTUAL GALLERY VIEWER #}
+				<div class="image-block image-block--virtual">
+					<a href="/{{ artwork.path }}">
+						<div class="image-block__inside" style="background-image: url('/{{ artwork.path }}')"
+							{% if exhibition.is_group_expo %}
+								data-groupexhibitionname="in {{ exhibition.exhibition_name }}"
+								data-groupexhibtionartist="{% if artwork.artist %}{{ artwork.artist.name }}{% endif %}"
+							{% else %}
+								data-exhibitionartistname="{{ exhibition.artist.name }}"
+							{% endif %}
+								data-artworkyear="{{ artwork.title }}{% if artwork.year %}, {{ artwork.year }}{% endif %}"
+								data-artworkmedium="{{ artwork.medium }}"
+								data-artworkdimensions="{{ artwork.dimensions }}"
+								data-artworkedition="{{ artwork.edition }}"
+								data-price="{{ artwork.price }}">
+						</div>
+					</a>
+					<div class="image-block__informations">
+						<div class="image-block__text">
+							{% if exhibition.is_group_expo %}
+								{% if artwork.artist %}<h5>{{ artwork.artist.name }}{% endif %}</h5>
+							{% else %}
+								<h5>{{ exhibition.artist.name }}</h5>
+							{% endif %}
+								{% if artwork.title %}<h5>{{ artwork.title }}{% if artwork.year %}, {{ artwork.year }}{% endif %}</h5>{% endif %}
+								{% if artwork.medium %}<h5>{{ artwork.medium }}</h5>{% endif %}
+								{% if artwork.dimensions %}<h5>{{ artwork.dimensions }}</h5>{% endif %}
+								{% if artwork.edition %}<h5>{{ artwork.edition }}</h5>{% endif %}
+								{% if artwork.price %}<h5>{{ artwork.price }}</h5>{% endif %}
+						</div>
+						<div class="image-block__link">
+              {% if exhibition.is_group_expo %}
+            {% set ArtistName = artwork.artist.name %}
+            {% set Artwork =  artwork.title %}
+             {% set subject = 'Enquiry: ' ~ ArtistName ~ ' / ' ~ Artwork %}
+             {% set subject = subject|urlencode %}
+             <h5><a href="mailto:julie@rodolphejanssen.com?subject={{subject}}">Enquire</a></h5>
+             {% else %}
+             {% set ArtistName = exhibition.artist.name %}
+             {% set Artwork = artwork.title %}
+             {% set subject = 'Enquiry: ' ~ ArtistName ~ ' / ' ~ Artwork %}
+             {% set subject = subject|urlencode %}
+             <h5><a href="mailto:julie@rodolphejanssen.com?subject={{subject}}">Enquire</a></h5>
+             {% endif %}
+            </div>
+					</div>
+				</div>
           {% endfor %}
         {% endif %}
       </div>
@@ -72,6 +151,22 @@
 	  </section>
 	  {% endif %}
 
+    {% if ((exhibition.embed_video is defined) and (exhibition.embed_video|length > 1)) %}
+      <section class="subcontent__all-col informations">
+        <div class="separation-rule"></div>
+          <div class="text-block">
+          <h1>video</h1>
+            <div class="iframe-wrapper">
+              <div class="iframe-wrapper-inside">
+                {{exhibition.embed_video|safe}}
+              </div>
+            </div>
+          </div>
+      </section>
+    {% else %}
+    {% endif %}
+
+
     <section class="subcontent__all-col informations" id="press-release">
 		  {% if exhibition.wysiwig_exhibition_description %}
       <div class="separation-rule"></div>
@@ -96,3 +191,5 @@
       </div>
     </section>
   </div>
+
+ </div>

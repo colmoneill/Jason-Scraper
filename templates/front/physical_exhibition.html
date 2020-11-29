@@ -7,7 +7,16 @@
       <h2>{{ exhibition.exhibition_name }}</h2>
     {% endif %}
     <h4> {{ exhibition.start.strftime('%d.%m.%Y') }} > {{ exhibition.end.strftime('%d.%m.%Y') }} </h4>
-    <h4>{{ exhibition.location }}</h4>
+    {% if exhibition.location == "32" %}
+    	<div class="homepage-exhibition__text--line"></div>
+    	<h5>Rue de Livourne 32 Livornostraat</h5>
+	{% elif exhibition.location == "35" %}
+		<div class="homepage-exhibition__text--line"></div>
+		<h5>Rue de Livourne 35 Livornostraat</h5>
+    {% else %}
+    	<div class="homepage-exhibition__text--line"></div>
+    	<h5>{{ exhibition.external_location }}</h5>
+    {% endif %}
   </div>
   <div class="subnav" id="sidebar">
     <ul>
@@ -44,15 +53,15 @@
             {% if exhibition.is_group_expo %}
               data-installation-group="
               {% if exhibition.exhibition_name %}{{ exhibition.exhibition_name }} {% if exhibition.exhibition_title %} {{ exhibition.exhibition_title }},{% endif %}{% endif %}installation view,
-              {% if installation_view.institution %}{{installation_view.institution}}, {% else %}rodolphe janssen,{% endif %}
-              {% if installation_view.location %}{{installation_view.location}}, {% else %}Brussels, Belgium{% endif %}
+              {% if installation_view.institution %}{{installation_view.institution}}, {% else %}rodolphe janssen, {% endif %}
+              {% if installation_view.country %}{{installation_view.country}}, {% else %}Brussels, Belgium{% endif %}
               {% if installation_view.year %}{{installation_view.year}} {% else %}{{ exhibition.start.strftime('%Y') }}{% endif %}"
-				  	{% else %}
-					    data-installation-solo="
+			{% else %}
+				data-installation-solo="
               {% if installation_view.artist %}{{ installation_view.artist }}{% else %}{{ exhibition.artist.name }}{% endif %},
               {% if exhibition.exhibition_name %} {{ exhibition.exhibition_name }},{% endif %}{% if installation_view.exhbition_title %} {{ installation_view.exhbition_title }},{% endif %} installation view,
-              {% if installation_view.institution %}{{installation_view.institution}}, {% else %}rodolphe janssen,{% endif %}
-              {% if installation_view.location %}{{installation_view.location}}, {% else %}Brussels, Belgium{% endif %}
+              {% if installation_view.institution %}{{installation_view.institution}}, {% else %}rodolphe janssen, {% endif %}
+              {% if installation_view.country %}{{installation_view.country}}, {% else %}Brussels, Belgium{% endif %}
               {% if installation_view.year %}{{installation_view.year}} {% else %}{{ exhibition.start.strftime('%Y') }}{% endif %}"
 					  {% endif %} >
               </div>
@@ -103,6 +112,21 @@
      	  </div>
 	  </section>
 	  {% endif %}
+
+    {% if ((exhibition.embed_video is defined) and (exhibition.embed_video|length > 1)) %}
+      <section class="subcontent__all-col informations">
+        <div class="separation-rule"></div>
+          <div class="text-block">
+          <h1>video</h1>
+            <div class="iframe-wrapper">
+              <div class="iframe-wrapper-inside">
+                {{exhibition.embed_video|safe}}
+              </div>
+            </div>
+          </div>
+      </section>
+    {% else %}
+    {% endif %}
 
     <section class="subcontent__all-col informations" id="press-release">
 		  {% if exhibition.wysiwig_exhibition_description %}

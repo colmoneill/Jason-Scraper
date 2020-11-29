@@ -8,12 +8,12 @@ $(document).ready(function() {
 		$('a[href^="#"]').on('click', function (e) {
 			e.preventDefault();
 			$(document).off("scroll");
-	 
+
 			$('a').each(function () {
 				$(this).removeClass('points-to');
 			})
 			$(this).addClass('points-to');
-	 
+
 				var target = this.hash;
 				$target = $(target);
 				$('html, body').stop().animate({
@@ -24,7 +24,7 @@ $(document).ready(function() {
 			});
 		});
 	});
-	
+
 	$('#exhibition__35').hover(
 	  function(e) {
 	    $("#logo__35").css('display', 'block');
@@ -41,12 +41,12 @@ $(document).ready(function() {
 	    $("#logo__32").css('display', 'none');
 	  }
 	);
-		
+
 	$('#collapse-bttn').click(function() {
 		$('#exhib-list').toggleClass('list-open');
 		$(this).toggleClass('list-open');
-	});	
- 
+	});
+
 	function onScroll(event){
 		var scrollPosition = $(document).scrollTop();
 		$('.subnav a.go-to-anchor').each(function () {
@@ -61,9 +61,9 @@ $(document).ready(function() {
 			}
 		});
 	}
-	
+
 	//
-	
+
 	$( function()
 	{
 			// OVERLAY
@@ -98,26 +98,35 @@ $(document).ready(function() {
 			captionOn = function()
 			{
 				var source_image_location = 'a[href="' + $( '#imagelightbox' ).attr( 'src' ) + '"] div';
-				var artwork_group_name = $( source_image_location ).attr( 'data-groupexhibitionname' ); 
+				var artwork_group_name = $( source_image_location ).attr( 'data-groupexhibitionname' );
 				var artwork_gorup_artist= $( source_image_location ).attr( 'data-groupexhibtionartist' );
 				var artwork_artist = $( source_image_location ).attr( 'data-exhibitionartistname' );
 				var artwork_year = $( source_image_location ).attr( 'data-artworkyear' );
-				var artwork_medium = $( source_image_location ).attr( 'data-artworkmedium' ); 
-				var artwork_edition = $( source_image_location ).attr( 'data-artworkedition' ); 
-				var artwork_dimensions = $( source_image_location ).attr( 'data-artworkdimensions' ); 
-				var installation_group = $( source_image_location ).attr( 'data-installation-group' ); 
-				var installation_solo = $( source_image_location ).attr( 'data-installation-solo' ); 
-				
+				var artwork_medium = $( source_image_location ).attr( 'data-artworkmedium' );
+				var artwork_edition = $( source_image_location ).attr( 'data-artworkedition' );
+				var artwork_dimensions = $( source_image_location ).attr( 'data-artworkdimensions' );
+				var installation_group = $( source_image_location ).attr( 'data-installation-group' );
+				var installation_solo = $( source_image_location ).attr( 'data-installation-solo' );
+
 				var artwork_data = [artwork_group_name, artwork_gorup_artist, artwork_artist, artwork_year, artwork_medium, artwork_dimensions, installation_group, installation_solo, artwork_edition];
-				 
+
+				var artwork_medium = $( source_image_location ).attr( 'data-artworkmedium' );
+				var artwork_edition = $( source_image_location ).attr( 'data-artworkedition' );
+				var artwork_dimensions = $( source_image_location ).attr( 'data-artworkdimensions' );
+				var artwork_price = $( source_image_location ).attr( 'data-price' );
+				var installation_group = $( source_image_location ).attr( 'data-installation-group' );
+				var installation_solo = $( source_image_location ).attr( 'data-installation-solo' );
+
+				var artwork_data = [artwork_group_name, artwork_gorup_artist, artwork_artist, artwork_year, artwork_medium, artwork_dimensions, installation_group, installation_solo, artwork_edition, artwork_price];
+
 				$( '<div id="imagelightbox-caption"></div>' ).appendTo( '#slider-text-box' );
-				
-				for (i = 0; i < artwork_data.length; i++) { 
+
+				for (i = 0; i < artwork_data.length; i++) {
 					if(artwork_data[i] !='' && typeof artwork_data[i] != 'undefined'){
 						$( '<p>'+ artwork_data[i] +'</p>').appendTo( '#imagelightbox-caption');
 					}
 				}
-				
+
 			},
 			captionOff = function()
 			{
@@ -173,11 +182,11 @@ $(document).ready(function() {
 				var $arrows = $( '<div class="imagelightbox-arrow imagelightbox-arrow-left"><p>&#139; previous</p></div><div class="imagelightbox-arrow imagelightbox-arrow-right"><p>next &#155;</p></div>' );
 
 				$arrows.appendTo( 'body' );
-				
+
 				getArrowsHeight = function() {
 					$arrows.css({'height':($("#slider-text-box").height()+'px')});
 				};
-				
+
 				$(window).resize(function() {
 					getArrowsHeight();
 				});
@@ -212,10 +221,10 @@ $(document).ready(function() {
 				$( '.imagelightbox-arrow' ).remove();
 			};
 });
-	
+
 	$( function()
     	{
-    	
+
     	var selectorF = '.image-block a';
 		var instanceF = $( selectorF ).imageLightbox({
 	        	selector:       'id="imagelightbox"',   // string;

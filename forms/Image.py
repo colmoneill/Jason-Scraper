@@ -12,7 +12,7 @@ class Image(Form):
     stock_number = StringField(u'Stock number')
     year = StringField(u'Year')
     medium = StringField(u'Artwork medium')
-    dimensions = StringField(u'Artwork dimentions (include unit)' , render_kw={"placeholder": "depth x width x height CM"})
+    dimensions = StringField(u'Artwork dimensions (include unit)' , render_kw={"placeholder": "depth x width x height CM"})
     edition = StringField(u'Artwork edition info')
     price = StringField(u'Artwork price (include currency symbol)', render_kw={"placeholder": example_price})
 
@@ -21,6 +21,6 @@ class ImageUpdate(Form):
     stock_number = StringField(u'Stock number')
     year = StringField(u'Year')
     medium = StringField(u'Artwork medium')
-    dimensions = StringField(u'Artwork dimentions (include unit)', render_kw={"placeholder": "depth x width x height CM"})
+    dimensions = StringField(u'Artwork dimensions (include unit)', render_kw={"placeholder": "depth x width x height CM"})
     edition = StringField(u'Artwork edition info')
     price = StringField(u'Artwork price (include currency symbol)', render_kw={"placeholder": example_price})

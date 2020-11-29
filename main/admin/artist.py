@@ -31,9 +31,9 @@ def index():
     artists = db.artist.find().sort("artist_sort", 1)
     return render_template('admin/artist/index.html', artists=artists)
 
-"""    
+"""
     Create artist method
-    
+
 """
 @blueprint.route('/create/', methods=['GET','POST'])
 @login_required
@@ -69,16 +69,16 @@ def create():
             artist['images'] = []
             artist['views'] = []
             artist['selected_images'] = []
-            
+
             uploaded_views = request.files.getlist('views')
-            uploaded_images = request.files.getlist('images')            
-            
+            uploaded_images = request.files.getlist('images')
+
             # Go through added images. Should only be uploaded images
             if 'images' in request.form:
                 for image_name in request.form.getlist('images'):
                     if image_name and image_name.find('uploaded:') > -1:
                         index = int(re.search(':(\d+)$', image_name).group(1))
-                        
+
                         if image_name.find(':artwork:') > -1:
                             # image is an artwork
                             image_path = utils.handle_uploaded_file(
@@ -86,10 +86,10 @@ def create():
                                 config.upload['ARTWORK_IMAGE'],
                                 utils.setfilenameroot(uploaded_images[index].filename, artist['slug'])
                             )
-                            
+
                             image = { '_id': ObjectId(), 'path': image_path }
                             artist['images'].append(image)
-                        
+
                         else:
                             # image is a view
                             image_path = utils.handle_uploaded_file(
@@ -97,12 +97,12 @@ def create():
                                 config.upload['EXTERNAL_EXHIBITION_VIEW'],
                                 utils.setfilenameroot(uploaded_views[index].filename, artist['slug'])
                             )
-                            
+
                             image = { '_id': ObjectId(), 'path': image_path }
                             artist['views'].append(image)
-                        
+
                         artist['selected_images'].append(image)
-            
+
             db.artist.insert(artist)
             flash('You successfully created an artist page', 'success')
 
@@ -123,18 +123,18 @@ def create():
                                 images=[]
                           )
 
-"""    
+"""
     Update artist method
-    
+
 """
 @blueprint.route('/update/<artist_id>', methods=['GET', 'POST'])
 @login_required
 def update(artist_id):
     artist = db.artist.find_one({"_id": ObjectId(artist_id)})
-    
-    # All the images 
+
+    # All the images
     available_images = [image for image in artist['images']]
-    
+
     for image in artist['views']:
         if image and not utils.find_where('_id', image['_id'], available_images):
                 available_images.append(image)
@@ -157,6 +157,7 @@ def update(artist_id):
 
         if form.validate_on_submit():
             formdata = form.data
+            artist['slug'] = utils.slugify(artist['name'])
             artist =  utils.handle_form_data(artist, formdata, ['press_release', 'biography_file'])
 
             if 'press_release' in request.files \
@@ -190,7 +191,7 @@ def update(artist_id):
             # Construct an array to fill with uploaded images
             uploaded_images = []
             uploaded_views = []
-           
+
             if 'images' in request.files:
                 for uploaded_image in request.files.getlist('images'):
                     image_path = utils.handle_uploaded_file(
@@ -198,7 +199,7 @@ def update(artist_id):
                         config.upload['ARTWORK_IMAGE'],
                         utils.setfilenameroot(uploaded_image.filename, artist['slug'])
                     )
-                    
+
                     image = { '_id': ObjectId(), 'path': image_path }
                     artist['images'].append(image)
                     uploaded_images.append(image)
@@ -210,13 +211,13 @@ def update(artist_id):
                         config.upload['EXTERNAL_EXHIBITION_VIEW'],
                         utils.setfilenameroot(uploaded_image.filename, artist['slug'])
                     )
-                    
+
                     image = { '_id': ObjectId(), 'path': image_path }
                     artist['views'].append(image)
                     uploaded_views.append(image)
 
             artist['selected_images'] = []
-            
+
             if 'images' in request.form:
                 # Find all the selected images
                 for path in request.form.getlist('images'):
@@ -231,7 +232,7 @@ def update(artist_id):
                             artist['selected_images'].append(uploaded_views[index])
                     else:
                         image = utils.find_where('path', path, available_images)
-                                                 
+
                         if image:
                             artist['selected_images'].append(image)
 

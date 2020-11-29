@@ -28,6 +28,7 @@ import json
 
 from main import admin, settings
 from main.settings import db, secret_key
+import re
 
 app = Flask(__name__)
 
@@ -106,7 +107,13 @@ def home():
         "end": { "$gte": datetime.combine(date.today(), datetime.min.time()) }
         }).sort("end", 1).limit(1)
 
-    return render_template("front/current.html", homepage_info=homepage_info, homepage_selected_exhibition=homepage_selected_exhibition, exhibition_32=exhibition_32, exhibition_35=exhibition_35)
+    current_virtual_exhib = db.exhibitions.find({
+        "is_published": True,
+        "location": "virtual",
+        "end": { "$gte": datetime.combine(date.today(), datetime.min.time()) }
+        }).sort("end", 1).limit(1)
+
+    return render_template("front/current.html", homepage_info=homepage_info, homepage_selected_exhibition=homepage_selected_exhibition, exhibition_32=exhibition_32, exhibition_35=exhibition_35, current_virtual_exhib=current_virtual_exhib)
 
 @app.route("/past/")
 
@@ -194,7 +201,6 @@ def exhibition(slug):
 @app.route("/exhibition/<artist>/<start>/")
 def publicviewExhibition(start, artist):
     start = datetime.strptime(start, ('%d.%m.%Y'))
-
     exhibition = db.exhibitions.find_one({'start': start, 'artist.slug': artist})
 
     if exhibition != None:
@@ -211,7 +217,10 @@ def sort_all_artists (a, b):
 
 @app.route("/group-exhibition/<slug>/")
 def publicviewGroupExhibition(slug):
-    exhibition = db.exhibitions.find_one({'slug': slug})
+    exhibition = db.exhibitions.find_one({
+    'slug': slug,
+    'is_group_expo': True,
+    })
     exhibition['all_artists'] = exhibition['artists'] + exhibition['extra_artists']
     exhibition['all_artists'].sort(cmp=sort_all_artists)
 
