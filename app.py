@@ -6,7 +6,7 @@ import os
 from datetime import datetime, date, timedelta
 
 # Dependencies: Flask + PIL or Pillowexhibition/create/
-from functools import wraps
+from functools import wraps, cmp_to_key
 from flask import   Flask, flash, send_from_directory, \
                     redirect as redirect_flask, \
                     render_template, url_for, request, \
@@ -180,7 +180,7 @@ def artist(slug):
         "artists._id": artist['_id'],
     }).sort("start", -1)]
 
-    involved_in_all = sorted(involved_in + involved_in_group, cmp=lambda x, y: cmp(x['start'], y['start']), reverse=True)
+    involved_in_all = sorted(involved_in + involved_in_group, key=lambda vs: vs['start'], reverse=True)
 
     for image in artist['selected_images']:
         exhibition = db.exhibitions.find_one({'images._id': image['_id']})
