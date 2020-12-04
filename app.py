@@ -210,6 +210,9 @@ def publicviewExhibition(start, artist):
 """
     Sort function to alphabetically sort all the artitsts in the list
 """
+def cmp(a, b):
+    return (a > b) - (a < b)
+    
 def sort_all_artists (a, b):
     name_a = a['artist_sort'] if type(a) is dict else a
     name_b = b['artist_sort'] if type(b) is dict else b
@@ -222,7 +225,7 @@ def publicviewGroupExhibition(slug):
     'is_group_expo': True,
     })
     exhibition['all_artists'] = exhibition['artists'] + exhibition['extra_artists']
-    exhibition['all_artists'].sort(cmp=sort_all_artists)
+    exhibition['all_artists'].sort(key=cmp_to_key(sort_all_artists))
 
     for artwork in exhibition['artworks']:
         for artist in exhibition['artists']:
