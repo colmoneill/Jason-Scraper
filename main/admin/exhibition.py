@@ -20,7 +20,7 @@ from bson import ObjectId
 from bson.json_util import dumps as bson_dumps
 import forms
 
-import config
+from . import config
 
 import json
 
@@ -154,7 +154,7 @@ def create():
                             })
 
             db.exhibitions.insert(exhibition)
-            flash(u'You successfully created an exhibition', 'success')
+            flash('You successfully created an exhibition', 'success')
 
             if request.is_xhr:
                 return bson_dumps(exhibition), 201
@@ -270,7 +270,7 @@ def update(exhibition_id):
                             exhibition['images'].append(image)
                         
             db.exhibitions.update({"_id": ObjectId(exhibition_id)}, exhibition)
-            flash(u'You successfully updated the exhibition data', 'success')
+            flash('You successfully updated the exhibition data', 'success')
 
             if request.is_xhr:
                 return bson_dumps(exhibition), 201
@@ -294,9 +294,9 @@ def update(exhibition_id):
 @login_required
 def delete(exhibition_id):
     if request.method == 'POST':
-        print exhibition_id
+        print(exhibition_id)
         db.exhibitions.remove({"_id": ObjectId(exhibition_id)})
-        flash(u'You deleted the exhibition', 'warning')
+        flash('You deleted the exhibition', 'warning')
         return redirect_flask(url_for('.index'))
 
     return render_template('admin/exhibition/delete.html')

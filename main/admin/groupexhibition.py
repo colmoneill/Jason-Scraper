@@ -20,7 +20,7 @@ from bson import ObjectId
 from bson.json_util import dumps as bson_dumps
 import forms
 
-import config
+from . import config
 
 import json
 
@@ -35,7 +35,7 @@ blueprint = Blueprint('admin_group-exhibition', __name__)
 @blueprint.route("/")
 @login_required
 def index():
-    print 'exhibition index function'
+    print('exhibition index function')
     exhibitions = db.exhibitions.find()
     return render_template('admin/exhibition/index.html', exhibitions=exhibitions)
 
@@ -72,7 +72,7 @@ def createGroupExhibition():
             exhibition['slug'] = utils.slugify(exhibition['exhibition_name'])
             exhibition_md = form.wysiwig_exhibition_description.data
             exhibition['is_group_expo'] = True
-            extra_artists = zip(request.form.getlist('extra_artists_name'), request.form.getlist('extra_artists_sort'))
+            extra_artists = list(zip(request.form.getlist('extra_artists_name'), request.form.getlist('extra_artists_sort')))
             exhibition['extra_artists'] = [{'name': name, 'artist_sort': sort} for name, sort in extra_artists]
             
             exhibition['artworks'] = []
@@ -151,7 +151,7 @@ def createGroupExhibition():
 
             inserted_id = db.exhibitions.insert(exhibition)
             
-            flash(u'You successfully created the group exhibition, <a href="{1}">{0}</a>'.format(exhibition['exhibition_name'], url_for('.updateGroupExhibition', exhibition_id = inserted_id)), 'success')
+            flash('You successfully created the group exhibition, <a href="{1}">{0}</a>'.format(exhibition['exhibition_name'], url_for('.updateGroupExhibition', exhibition_id = inserted_id)), 'success')
 
             if request.is_xhr:
                 return bson_dumps(exhibition), 201
@@ -177,7 +177,7 @@ def updateGroupExhibition(exhibition_id):
             formdata = form.data
             exhibition = utils.handle_form_data(exhibition, formdata, ['press_release', 'artists', 'extra_artists'])
             exhibition['artists'] = [db.artist.find_one({'_id': ObjectId(artist_id)}) for artist_id in request.form.getlist('artists')]
-            extra_artists = zip(request.form.getlist('extra_artists_name'), request.form.getlist('extra_artists_sort'))
+            extra_artists = list(zip(request.form.getlist('extra_artists_name'), request.form.getlist('extra_artists_sort')))
             exhibition['extra_artists'] = [{'name': name, 'artist_sort': sort} for name, sort in extra_artists]
             exhibition['artworks'] = []
             uploaded_artworks = []
@@ -266,7 +266,7 @@ def updateGroupExhibition(exhibition_id):
                             exhibition['images'].append(image)
 
             db.exhibitions.update({ "_id": ObjectId(exhibition_id) }, exhibition)
-            flash(u'You successfully updated the exhibition data on <a href="{1}">{0}</a>'.format(exhibition['exhibition_name'], url_for('.updateGroupExhibition', exhibition_id = exhibition_id)), 'success')
+            flash('You successfully updated the exhibition data on <a href="{1}">{0}</a>'.format(exhibition['exhibition_name'], url_for('.updateGroupExhibition', exhibition_id = exhibition_id)), 'success')
 
             if request.is_xhr:
                 return bson_dumps(exhibition), 201
@@ -292,9 +292,9 @@ def updateGroupExhibition(exhibition_id):
 @login_required
 def deleteGroupExhibition(exhibition_id):
     if request.method == 'POST':
-        print exhibition_id
+        print(exhibition_id)
         db.exhibitions.remove({"_id": ObjectId(exhibition_id)})
-        flash(u'You deleted the exhibition', 'warning')
+        flash('You deleted the exhibition', 'warning')
         return redirect_flask(url_for('.index'))
 
     return render_template('admin/group-exhibition/exhibitionDelete.html')

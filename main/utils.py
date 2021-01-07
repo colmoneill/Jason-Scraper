@@ -3,7 +3,7 @@
 
 import os
 import re
-import settings
+from . import settings
 import unicodedata
 import json
 
@@ -26,7 +26,7 @@ def slugify(value):
     keys in 'ignore' are ignored
 """
 def handle_form_data (data, formdata, ignore = []):
-    for key, value in formdata.iteritems():
+    for key, value in formdata.items():
         if key not in ignore:
             data[key] = value
 
@@ -95,7 +95,7 @@ def login_required(action):
         if 'logged_in' in session:
             return action (*args, **kwargs)
         else:
-            flash(u'You need to log in first.', 'danger')
+            flash('You need to log in first.', 'danger')
             session['next'] = request.path
             return redirect_flask(url_for('login'))
 

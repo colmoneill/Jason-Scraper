@@ -1,6 +1,6 @@
 import os
 import forms
-import config
+from . import config
 from flask import Blueprint, render_template, abort,\
      url_for, redirect as redirect_flask, request, flash
 
@@ -55,7 +55,7 @@ def create():
         ## Should update this artist on group exhibitions as well
         db.exhibitions.update({"artists._id": ObjectId(formdata['artist'])}, {"$set": {"artists.$": artist}}, multi=True)
 
-        flash(u'You successfully added an image', 'success')
+        flash('You successfully added an image', 'success')
         return redirect_flask(url_for('.index'))
 
     return render_template('admin/image/create.html', form=form)
@@ -89,7 +89,7 @@ def update(image_id):
                 ## Should update this artist on group exhibitions as well
                 db.exhibitions.update({"artists._id": artist['_id']}, {"$set": {"artists.$": artist}}, multi=True)
 
-                flash(u'You just updated this images meta data', 'success')
+                flash('You just updated this images meta data', 'success')
                 return redirect_flask(url_for('.index'))
 
         else:

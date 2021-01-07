@@ -6,7 +6,7 @@ import os
 from datetime import datetime, date, timedelta
 
 # Dependencies: Flask + PIL or Pillowexhibition/create/
-from functools import wraps
+from functools import wraps, cmp_to_key
 from flask import   Flask, flash, send_from_directory, \
                     redirect as redirect_flask, \
                     render_template, url_for, request, \
@@ -53,7 +53,7 @@ JPEG_THUMB_QUALITY = 80 # 'keep' as an alternative
 @app.route("/logout")
 def logout():
     session.pop('logged_in', None)
-    flash(u'You are logged out', 'warning')
+    flash('You are logged out', 'warning')
     return redirect_flask(url_for('login'))
 
 def validate_credentials(username=False, password=False):
@@ -71,11 +71,11 @@ def login():
     if form.is_submitted():
         if validate_credentials(username=form.username.data, password=form.password.data):
             session['logged_in'] = True
-            flash(u'You are logged in! Welcome', 'success')
+            flash('You are logged in! Welcome', 'success')
 
             return redirect_flask(url_for('viewAdmin'))
         else:
-            flash(u'Invalid credentials; Please try again.', 'danger')
+            flash('Invalid credentials; Please try again.', 'danger')
     return render_template('general-login.html', error=error, form=form)
 
 
@@ -134,7 +134,7 @@ def pastExhibitions():
       exhibitions[year].append(exhibition)
 
 
-    years = exhibitions.keys()
+    years = list(exhibitions.keys())
     years.sort(reverse=True)
 
     return render_template("front/past.html", past_exhibitions=exhibitions, years=years)
@@ -180,7 +180,7 @@ def artist(slug):
         "artists._id": artist['_id'],
     }).sort("start", -1)]
 
-    involved_in_all = sorted(involved_in + involved_in_group, cmp=lambda x, y: cmp(x['start'], y['start']), reverse=True)
+    involved_in_all = sorted(involved_in + involved_in_group, key=lambda vs: vs['start'], reverse=True)
 
     for image in artist['selected_images']:
         exhibition = db.exhibitions.find_one({'images._id': image['_id']})
@@ -203,13 +203,16 @@ def publicviewExhibition(start, artist):
     start = datetime.strptime(start, ('%d.%m.%Y'))
     exhibition = db.exhibitions.find_one({'start': start, 'artist.slug': artist})
 
-    if exhibition <> None:
+    if exhibition != None:
         return render_template('front/exhibition.html', artist=artist, date=date, exhibition=exhibition)
     else:
         abort(404)
 """
     Sort function to alphabetically sort all the artitsts in the list
 """
+def cmp(a, b):
+    return (a > b) - (a < b)
+    
 def sort_all_artists (a, b):
     name_a = a['artist_sort'] if type(a) is dict else a
     name_b = b['artist_sort'] if type(b) is dict else b
@@ -222,7 +225,7 @@ def publicviewGroupExhibition(slug):
     'is_group_expo': True,
     })
     exhibition['all_artists'] = exhibition['artists'] + exhibition['extra_artists']
-    exhibition['all_artists'].sort(cmp=sort_all_artists)
+    exhibition['all_artists'].sort(key=cmp_to_key(sort_all_artists))
 
     for artwork in exhibition['artworks']:
         for artist in exhibition['artists']:
@@ -230,7 +233,7 @@ def publicviewGroupExhibition(slug):
                 artwork['artist'] = artist
                 break
 
-    if exhibition <> None:
+    if exhibition != None:
         return render_template('front/exhibition.html', exhibition=exhibition)
     else:
         abort(404)
@@ -287,7 +290,7 @@ def createTeamMember():
         teammember = utils.handle_form_data({}, formdata)
         teammember['slug'] = utils.slugify(teammember['name'])
         db.teammember.insert(teammember)
-        flash(u'You successfully created a new team member', 'success')
+        flash('You successfully created a new team member', 'success')
         return redirect_flask(url_for('listTeamMembers'))
 
     return render_template('admin/gallery/teammembers/galleryTeamMemberCreate.html', form=form)
@@ -309,7 +312,7 @@ def updateTeamMembers(teammember_id):
             utils.handle_form_data(teammember, formdata),
             upsert=True
         )
-        flash(u'You successfully updated the team member entry', 'success')
+        flash('You successfully updated the team member entry', 'success')
         return redirect_flask(url_for('listTeamMembers'))
 
     else:
@@ -321,9 +324,9 @@ def updateTeamMembers(teammember_id):
 @login_required
 def deleteTeamMembers(teammember_id):
     if request.method == 'POST':
-        print teammember_id
+        print(teammember_id)
         db.teammember.remove({"_id": ObjectId(teammember_id)})
-        flash(u'You deleted the team member', 'warning')
+        flash('You deleted the team member', 'warning')
         return redirect_flask(url_for('listTeamMembers'))
 
     return render_template('admin/gallery/teammembers/galleryTeamMemberDelete.html')
@@ -346,7 +349,7 @@ def createOpeningHours():
         formdata = form.data
         openinghour = utils.handle_form_data({}, formdata)
         db.openinghours.insert(openinghour)
-        flash(u'You successfully created the opening hour entry', 'success')
+        flash('You successfully created the opening hour entry', 'success')
         return redirect_flask(url_for('listOpeningHours'))
 
     return render_template('admin/gallery/openinghours/galleryOpeningHoursCreate.html', form=form)
@@ -368,7 +371,7 @@ def updateOpeningHours(opening_hour_id):
                 utils.handle_form_data(opening_hour, formdata),
                 upsert=True
             )
-            flash(u'You successfully updated the opening hour entry', 'success')
+            flash('You successfully updated the opening hour entry', 'success')
             return redirect_flask(url_for('listOpeningHours'))
     else:
         form = forms.GalleryHours(data=opening_hour)
@@ -379,9 +382,9 @@ def updateOpeningHours(opening_hour_id):
 @login_required
 def deleteOpeningHours(opening_hour_id):
     if request.method == 'POST':
-        print opening_hour_id
+        print(opening_hour_id)
         db.openinghours.remove({"_id": ObjectId(opening_hour_id)})
-        flash(u'You successfully deleted the opening hour entry', 'warning')
+        flash('You successfully deleted the opening hour entry', 'warning')
         return redirect_flask(url_for('listOpeningHours'))
 
     return render_template('admin/gallery/openinghours/galleryOpeningHoursDelete.html')
@@ -416,7 +419,7 @@ def regenerateThumbs():
     subprocess.call(parsed_cmd)
     print("removed all thumbs")
     time.sleep(5)
-    flash(u'Thumbnail cache has been deleted, new thumbnails generated.', 'success')
+    flash('Thumbnail cache has been deleted, new thumbnails generated.', 'success')
     return redirect_flask(url_for('viewAdmin'))
     return render_template('admin.html')
 
