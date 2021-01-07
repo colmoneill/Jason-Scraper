@@ -10,7 +10,7 @@
        <div class="artist-block">
          <a href="/artist/{{ artist.slug }}/">
            {% if artist.coverimage %}
-           <div class="artist-block__image" style="background-image: url('/{{ artist.coverimage.path.replace('/uploads/', '/thumbs/') }}')" alt=""></div>
+           <div class="artist-block__image" style="background-image: url('/{{ artist.coverimage.path }}')" alt=""></div>
            {% else %}
            <div class="artist-block__image" alt=""></div>
            {% endif %}
@@ -30,7 +30,7 @@
        <div class="artist-block">
          <a href="/artist/{{ artist.slug }}/">
            {% if artist.coverimage %}
-           <div class="artist-block__image" style="background-image: url('/{{ artist.coverimage.path.replace('/uploads/', '/thumbs/') }}')" alt=""></div>
+           <div class="artist-block__image" style="background-image: url('/{{ artist.coverimage.path }}')" alt=""></div>
            {% else %}
            <div class="artist-block__image" alt=""></div>
            {% endif %}
