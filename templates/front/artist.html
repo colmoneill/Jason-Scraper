@@ -92,7 +92,7 @@
 							<a href="/group-exhibition/{{exhibition.slug }}/">
 								{% if exhibition.coverimage %}
 									<div class="exhibition-block__image">
-										<div class="exhibition-block__inside" style="background-image: url('/{{ exhibition.coverimage.path.replace('/uploads/', '/thumbs/') }}')"></div>
+										<div class="exhibition-block__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
 									</div>
 								{% endif %}
 									<div class="exhibition-block__text">
@@ -109,7 +109,7 @@
 							<a href="/exhibition/{{ exhibition.artist.slug }}/{{exhibition.start.strftime('%d.%m.%Y') }}/">
 								{% if exhibition.coverimage %}
 								<div class="exhibition-block__image">
-									<div class="exhibition-block__inside" style="background-image: url('/{{ exhibition.coverimage.path.replace('/uploads/', '/thumbs/') }}')"></div>
+									<div class="exhibition-block__inside" style="background-image: url('/{{ exhibition.coverimage.path }}')"></div>
 								</div>
 								{% endif %}
 								<div class="exhibition-block__text">
